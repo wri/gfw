@@ -70,7 +70,7 @@ export default {
     forestChange: 2,
   },
   sentence:
-    'From {startYear} to {endYear}, {percentage} of tree cover loss in {location} occurred within {lossPhrase}. The total loss within natural forest was {totalLoss} equivalent to {value} of CO\u2082e emissions.',
+    'From {startYear} to {endYear}, {percentage} of tree cover loss in {location} occurred within {lossPhrase}. The total loss within natural forest was {totalLoss}, equivalent to {value} of CO\u2082e emissions.',
   settings: {
     threshold: 30,
     startYear: MIN_YEAR,

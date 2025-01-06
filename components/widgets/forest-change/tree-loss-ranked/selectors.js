@@ -41,7 +41,7 @@ export const getSummedByYearsData = createSelector(
     const mappedData = regions.map((region) => {
       const isoLoss = Math.round(sumBy(groupedByRegion[region], 'loss')) || 0;
       const regionExtent = extent.find((e) => {
-        return e[regionKey].toString() === region.toString(); // iso is string while adm1 and 2 are numbers
+        return e[regionKey]?.toString() === region.toString(); // iso is string while adm1 and 2 are numbers
       });
       const isoExtent = (regionExtent && regionExtent.extent) || 0;
       const percentageLoss =
