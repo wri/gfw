@@ -493,6 +493,52 @@ export const zeroFillYearsFilter = (
           ...fillObj,
           year,
         };
+        const naturalForestItem = yearData.find(
+          (item) => item.sbtn_natural_forests__class === 'Natural Forest'
+        );
+        const nonNaturalForestItem = yearData.find(
+          (item) => item.sbtn_natural_forests__class === 'Non-Natural Forest'
+        );
+        const unknownItem = yearData.find(
+          (item) => item.sbtn_natural_forests__class === 'Unknown'
+        );
+
+        // if the response for `year` does not have sbtn_natural_forests__class: 'Natural Forest' then need to create one with 0 values so the widget displays the columns correctly
+        if (!naturalForestItem) {
+          yearData.push({
+            ...yearData[0],
+            area: 0,
+            emissions: 0,
+            gfw_gross_emissions_co2e_all_gases__mg: 0,
+            sbtn_natural_forests__class: 'Natural Forest',
+            umd_tree_cover_loss__ha: 0,
+          });
+        }
+
+        // same for Non-Natural Forest
+        if (!nonNaturalForestItem) {
+          yearData.push({
+            ...yearData[0],
+            area: 0,
+            emissions: 0,
+            gfw_gross_emissions_co2e_all_gases__mg: 0,
+            sbtn_natural_forests__class: 'Non-Natural Forest',
+            umd_tree_cover_loss__ha: 0,
+          });
+        }
+
+        // same for Unknown
+        if (!unknownItem) {
+          yearData.push({
+            ...yearData[0],
+            area: 0,
+            emissions: 0,
+            gfw_gross_emissions_co2e_all_gases__mg: 0,
+            sbtn_natural_forests__class: 'Unknown',
+            umd_tree_cover_loss__ha: 0,
+          });
+        }
+
         zeroFilledData.push(yearData);
       });
   }
