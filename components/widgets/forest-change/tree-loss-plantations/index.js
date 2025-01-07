@@ -21,12 +21,15 @@ const MAX_YEAR = 2023;
 
 export default {
   widget: 'treeLossPlantations',
-  title: 'Forest loss in natural forest in {location}',
+  title: {
+    default: 'Forest loss in natural forest in {location}',
+    global: 'Forest loss in natural forest',
+  },
   large: true,
   categories: ['forest-change'],
   subcategories: ['forest-loss'],
-  types: ['country', 'aoi', 'wdpa'],
-  admins: ['adm0', 'adm1', 'adm2'],
+  types: ['global', 'country', 'aoi', 'wdpa'],
+  admins: ['global', 'adm0', 'adm1', 'adm2'],
   alerts: [
     {
       text: 'Not all natural forest area can be monitored with existing data on tree cover loss. See the metadata for more information.',
@@ -69,8 +72,12 @@ export default {
   sortOrder: {
     forestChange: 2,
   },
-  sentence:
-    'From {startYear} to {endYear}, {percentage} of tree cover loss in {location} occurred within {lossPhrase}. The total loss within natural forest was {totalLoss}, equivalent to {value} of CO\u2082e emissions.',
+  sentence: {
+    global:
+      'From {startYear} to {endYear}, {percentage} of tree cover loss <b>globally</b> occurred within {lossPhrase}. The total loss within natural forest was {totalLoss}, equivalent to {value} of CO\u2082e emissions.',
+    region:
+      'From {startYear} to {endYear}, {percentage} of tree cover loss in {location} occurred within {lossPhrase}. The total loss within natural forest was {totalLoss}, equivalent to {value} of CO\u2082e emissions.',
+  },
   settings: {
     threshold: 30,
     startYear: MIN_YEAR,

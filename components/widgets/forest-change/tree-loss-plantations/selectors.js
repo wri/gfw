@@ -9,8 +9,10 @@ import { zeroFillYearsFilter } from 'components/widgets/utils/data';
 const getTotalLoss = (state) => state.data && state.data.totalLoss;
 const getSettings = (state) => state.settings;
 const getLocationName = (state) => state.locationLabel;
+const getTitle = (state) => state.title;
 const getColors = (state) => state.colors;
 const getSentence = (state) => state.sentence;
+const getAdminLevel = (state) => state.adminLevel;
 
 // get lists selected
 export const parseData = createSelector(
@@ -35,32 +37,57 @@ export const parseData = createSelector(
     );
 
     const mappedData = zeroFilledData.map((list) => {
-      const naturalForest = list.find(
+      const naturalForestList = list.filter(
         (item) => item.sbtn_natural_forests__class === 'Natural Forest'
       );
-      const nonNaturalForest = list.find(
+
+      const nonNaturalForestList = list.filter(
         (item) => item.sbtn_natural_forests__class === 'Non-Natural Forest'
       );
       // eslint-disable-next-line no-unused-vars
-      const unknown = list.find(
+      const unknownList = list.filter(
         (item) => item.sbtn_natural_forests__class === 'Unknown'
       );
 
+      const naturalForestArea = naturalForestList?.reduce(
+        (acc, curr) => acc + curr.area,
+        0
+      );
+      const naturalForestEmissions = naturalForestList?.reduce(
+        (acc, curr) => acc + curr.emissions,
+        0
+      );
+      const nonNaturalForestArea = nonNaturalForestList?.reduce(
+        (acc, curr) => acc + curr.area,
+        0
+      );
+      const nonNaturalForestEmissions = nonNaturalForestList?.reduce(
+        (acc, curr) => acc + curr.emissions,
+        0
+      );
+
       return {
-        iso: nonNaturalForest?.iso,
-        outsideAreaLoss: naturalForest?.area || 0,
-        outsideCo2Loss: naturalForest?.emissions || 0,
-        areaLoss: nonNaturalForest?.area || 0,
-        co2Loss: nonNaturalForest?.emissions || 0,
-        totalLoss: (nonNaturalForest?.area || 0) + (naturalForest?.area || 0),
-        year: nonNaturalForest?.year,
+        iso: nonNaturalForestList[0]?.iso || '',
+        outsideAreaLoss: naturalForestArea || 0,
+        outsideCo2Loss: naturalForestEmissions || 0,
+        areaLoss: nonNaturalForestArea || 0,
+        co2Loss: nonNaturalForestEmissions || 0,
+        totalLoss: (nonNaturalForestArea || 0) + (naturalForestArea || 0),
+        year: nonNaturalForestList[0]?.year || '',
       };
     });
 
     const parsedData = uniqBy(mappedData, 'year');
 
     return parsedData;
-  },
+  }
+);
+
+export const parseTitle = createSelector(
+  [getTitle, getLocationName],
+  (title, name) => {
+    return name === 'global' ? title.global : title.default;
+  }
 );
 
 export const parseConfig = createSelector([getColors], (colors) => {
@@ -110,13 +137,15 @@ export const parseConfig = createSelector([getColors], (colors) => {
 });
 
 export const parseSentence = createSelector(
-  [parseData, getSettings, getLocationName, getSentence],
-  (data, settings, locationName, sentence) => {
+  [parseData, getSettings, getLocationName, getSentence, getAdminLevel],
+  (data, settings, locationName, sentences, admLevel) => {
     if (!data) return null;
     const { startYear, endYear } = settings;
     const totalLoss = sumBy(data, 'totalLoss') || 0;
     const outsideLoss = sumBy(data, 'outsideAreaLoss') || 0;
     const outsideEmissions = sumBy(data, 'outsideCo2Loss') || 0;
+    const sentenceSubkey = admLevel === 'global' ? 'global' : 'region';
+    const sentence = sentences[sentenceSubkey];
 
     const lossPhrase = 'natural forest';
     const percentage = (100 * outsideLoss) / totalLoss;
@@ -145,4 +174,5 @@ export default createStructuredSelector({
   data: parseData,
   config: parseConfig,
   sentence: parseSentence,
+  title: parseTitle,
 });
