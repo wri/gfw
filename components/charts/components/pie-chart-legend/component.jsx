@@ -3,10 +3,12 @@ import PropTypes from 'prop-types';
 import { formatNumber } from 'utils/format';
 import cx from 'classnames';
 
+import groupBy from 'lodash/groupBy';
+
 class PieChartLegend extends PureComponent {
   render() {
     const { data, chartSettings = {}, config, className, simple } = this.props;
-    const { size, legend } = chartSettings;
+    const { size, legend, groupedLegends } = chartSettings;
 
     const sizeClass = (() => {
       if (size) return size;
@@ -23,6 +25,58 @@ class PieChartLegend extends PureComponent {
           spaceUnit: item.unit !== '%' && config.unit !== 'countsK',
         })}`?.length > 9
     );
+
+    if (groupedLegends) {
+      const groupedItems = groupBy(data, 'category');
+
+      return (
+        <div
+          className={cx('c-pie-chart-legend', className)}
+          style={{ flexDirection: 'column' }}
+        >
+          {Object.entries(groupedItems).map(([category, categoryItems]) => (
+            <div style={{ display: 'flex', flexDirection: 'column' }}>
+              <h2>{category}</h2>
+              <ul
+                style={{ display: 'flex', justifyContent: 'space-between' }}
+                className={cx({ simple, sizeClass })}
+              >
+                {categoryItems.map((item, index) => {
+                  const value = `${formatNumber({
+                    num: item[config.key],
+                    unit: item.unit ? item.unit : config.unit,
+                    spaceUnit: item.unit !== '%' && config.unit !== 'countsK',
+                  })}`;
+
+                  return (
+                    <li className="legend-item" key={index.toString()}>
+                      <div className="legend-title">
+                        <span style={{ backgroundColor: item.color }}>{}</span>
+                        <p>
+                          {item.label}
+                          {sizeClass === 'x-small' && `- ${value}`}
+                        </p>
+                      </div>
+                      {sizeClass !== 'x-small' && (
+                        <div
+                          className={cx({
+                            'legend-value': true,
+                            'legend-value--small': shouldDisplaySmallerValues,
+                          })}
+                          style={{ color: item.color }}
+                        >
+                          {value}
+                        </div>
+                      )}
+                    </li>
+                  );
+                })}
+              </ul>
+            </div>
+          ))}
+        </div>
+      );
+    }
 
     return (
       <div

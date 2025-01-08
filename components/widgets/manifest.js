@@ -10,7 +10,7 @@ import treeCoverGainOutsidePlantations from 'components/widgets/forest-change/tr
 import treeGainLocated from 'components/widgets/forest-change/tree-gain-located';
 import treeLossLocated from 'components/widgets/forest-change/tree-loss-located';
 import treeLossPlantations from 'components/widgets/forest-change/tree-loss-plantations';
-import treeLossTsc from 'components/widgets/forest-change/tree-loss-drivers';
+import treeLossTsc from 'components/widgets/forest-change/_tree-loss-drivers';
 import treeCoverGainSimple from 'components/widgets/forest-change/tree-cover-gain-simple';
 import glads from 'components/widgets/forest-change/glads';
 // import gladRanked from 'components/widgets/forest-change/glad-ranked';
