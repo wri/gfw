@@ -113,7 +113,6 @@ export default {
             display: 'flex',
             height: 'auto',
             alignItems: 'center',
-            paddingRight: '14%',
           },
         },
       }),
@@ -122,6 +121,7 @@ export default {
   getData: (params) =>
     getTreeCoverLossByDriverType(params).then((response) => {
       const { data } = (response && response.data) || {};
+
       return data;
     }),
   getDataURL: (params) => [
