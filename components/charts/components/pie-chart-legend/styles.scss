@@ -4,6 +4,11 @@
   display: inline-block;
   width: 100%;
 
+  .legend-group-title {
+    margin-bottom: 15px;
+    font-weight: 500;
+  }
+
   .legend-title {
     font-size: rem(12px);
     line-height: 1;

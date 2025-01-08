@@ -36,9 +36,13 @@ class PieChartLegend extends PureComponent {
         >
           {Object.entries(groupedItems).map(([category, categoryItems]) => (
             <div style={{ display: 'flex', flexDirection: 'column' }}>
-              <h2>{category}</h2>
+              <h2 className="legend-group-title">{category}</h2>
               <ul
-                style={{ display: 'flex', justifyContent: 'space-between' }}
+                style={{
+                  display: 'flex',
+                  justifyContent: 'space-between',
+                  flexWrap: 'wrap',
+                }}
                 className={cx({ simple, sizeClass })}
               >
                 {categoryItems.map((item, index) => {
