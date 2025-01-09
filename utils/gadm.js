@@ -3,7 +3,7 @@ export const getGadm36Id = (country, region, subRegion) =>
     subRegion ? `.${subRegion}_1` : '_1'
   }`;
 
-export const parseGadm36Id = (gid) => {
+export const parseGadmId = (gid) => {
   if (!gid) return null;
 
   const ids = gid.split('.');
@@ -26,6 +26,6 @@ export const parseGadm36Id = (gid) => {
 export const getGadmLocationByLevel = ({ adm_level, ...location }) => ({
   type: 'country',
   ...(location?.gid_0 && {
-    ...parseGadm36Id(location[`gid_${adm_level || '0'}`]),
+    ...parseGadmId(location[`gid_${adm_level || '0'}`]),
   }),
 });
