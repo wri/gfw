@@ -112,6 +112,10 @@ class ShowAnalysis extends PureComponent {
     } = this.props;
     const hasWidgets = widgetLayers && !!widgetLayers.length;
 
+    // NOTE: this is a horrible code smell but it was the only workaround
+    // I was able to find to avoid showing the Natural Forest data without widget in the map.
+    const filteredData = data?.filter((d) => d.label !== 'Natural forests');
+
     return (
       <div className="c-show-analysis">
         <div className="show-analysis-body">
@@ -208,7 +212,8 @@ class ShowAnalysis extends PureComponent {
             {(hasLayers || hasWidgets) && !loading && !error && (
               <Fragment>
                 <ul className="draw-stats">
-                  {data && data.map((d) => this.renderStatItem(d))}
+                  {filteredData &&
+                    filteredData.map((d) => this.renderStatItem(d))}
                 </ul>
                 <Widgets simple analysis />
                 <div className="disclaimers">
