@@ -7,7 +7,7 @@ import uniqBy from 'lodash/uniqBy';
 
 import useRouter from 'utils/router';
 import { decodeQueryParams } from 'utils/url';
-import { parseGadm36Id } from 'utils/gadm';
+import { parseGadmId } from 'utils/gadm';
 import { parseStringWithVars } from 'utils/strings';
 
 import { getLocationData } from 'services/location';
@@ -183,8 +183,8 @@ export const getServerSideProps = async ({ params, query, req }) => {
       countryData = {
         ...countryData,
         regions: uniqBy(regions.data).map((row) => ({
-          id: parseGadm36Id(row.id).adm1,
-          value: parseGadm36Id(row.id).adm1,
+          id: parseGadmId(row.id).adm1,
+          value: parseGadmId(row.id).adm1,
           label: row.name,
           name: row.name,
         })),
@@ -197,8 +197,8 @@ export const getServerSideProps = async ({ params, query, req }) => {
       countryData = {
         ...countryData,
         subRegions: uniqBy(subRegions.data).map((row) => ({
-          id: parseGadm36Id(row.id).adm2,
-          value: parseGadm36Id(row.id).adm2,
+          id: parseGadmId(row.id).adm2,
+          value: parseGadmId(row.id).adm2,
           label: row.name,
           name: row.name,
         })),
