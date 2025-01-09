@@ -99,15 +99,7 @@ export default {
 
     return {
       ...((dashboard || embed) && {
-        groupedLegends: true,
         size: 'small',
-        legend: {
-          style: {
-            display: 'flex',
-            justifyContent: 'center',
-            paddingLeft: '8%',
-          },
-        },
         chart: {
           style: {
             display: 'flex',
@@ -116,6 +108,7 @@ export default {
           },
         },
       }),
+      groupedLegends: true,
     };
   },
   getData: (params) =>
