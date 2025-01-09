@@ -127,14 +127,8 @@ export const parseSentence = createSelector(
   }
 );
 
-// export const parseCaution = createSelector(
-//   [getCaution, getAdm0],
-//   (caution, adm0) => (adm0 === 'IDN' ? caution.indonesia : caution.default)
-// );
-
 export default createStructuredSelector({
   data: parseData,
   title: parseTitle,
   sentence: parseSentence,
-  // caution: parseCaution,
 });
