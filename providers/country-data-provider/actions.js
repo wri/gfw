@@ -1,5 +1,5 @@
 import { createAction, createThunkAction } from 'redux/actions';
-import { parseGadm36Id } from 'utils/gadm';
+import { parseGadmId } from 'utils/gadm';
 import uniqBy from 'lodash/uniqBy';
 
 import {
@@ -49,7 +49,7 @@ export const getRegions = createThunkAction(
         const parsedResponse = [];
         uniqBy(response.data).forEach((row) => {
           parsedResponse.push({
-            id: parseGadm36Id(row.id).adm1,
+            id: parseGadmId(row.id).adm1,
             name: row.name,
           });
         });
@@ -73,7 +73,7 @@ export const getSubRegions = createThunkAction(
           const parsedResponse = [];
           uniqBy(rows).forEach((row) => {
             parsedResponse.push({
-              id: parseGadm36Id(row.id).adm2,
+              id: parseGadmId(row.id).adm2,
               name: row.name,
             });
           });

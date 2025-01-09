@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import uniqBy from 'lodash/uniqBy';
 
-import { parseGadm36Id } from 'utils/gadm';
+import { parseGadmId } from 'utils/gadm';
 
 import { getLocationData } from 'services/location';
 import {
@@ -91,8 +91,8 @@ export const getServerSideProps = async ({ params }) => {
       countryData = {
         ...countryData,
         regions: uniqBy(regions.data).map((row) => ({
-          id: parseGadm36Id(row.id).adm1,
-          value: parseGadm36Id(row.id).adm1,
+          id: parseGadmId(row.id).adm1,
+          value: parseGadmId(row.id).adm1,
           label: row.name,
           name: row.name,
         })),
@@ -105,8 +105,8 @@ export const getServerSideProps = async ({ params }) => {
       countryData = {
         ...countryData,
         subRegions: uniqBy(subRegions.data).map((row) => ({
-          id: parseGadm36Id(row.id).adm2,
-          value: parseGadm36Id(row.id).adm2,
+          id: parseGadmId(row.id).adm2,
+          value: parseGadmId(row.id).adm2,
           label: row.name,
           name: row.name,
         })),
