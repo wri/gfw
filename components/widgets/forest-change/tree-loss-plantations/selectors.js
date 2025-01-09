@@ -1,24 +1,24 @@
 import { createSelector, createStructuredSelector } from 'reselect';
 import sumBy from 'lodash/sumBy';
-import groupBy from 'lodash/groupBy';
 import uniqBy from 'lodash/uniqBy';
 import { formatNumber } from 'utils/format';
 import { getColorPalette } from 'components/widgets/utils/colors';
-import { zeroFillYears } from 'components/widgets/utils/data';
+import { zeroFillYearsFilter } from 'components/widgets/utils/data';
 
 // get list data
-const getLossPlantations = (state) => state.data && state.data.lossPlantations;
 const getTotalLoss = (state) => state.data && state.data.totalLoss;
 const getSettings = (state) => state.settings;
 const getLocationName = (state) => state.locationLabel;
+const getTitle = (state) => state.title;
 const getColors = (state) => state.colors;
 const getSentence = (state) => state.sentence;
+const getAdminLevel = (state) => state.adminLevel;
 
 // get lists selected
 export const parseData = createSelector(
-  [getLossPlantations, getTotalLoss, getSettings],
-  (lossPlantations, totalLoss, settings) => {
-    if (!lossPlantations || !totalLoss) return null;
+  [getTotalLoss, getSettings],
+  (totalLoss, settings) => {
+    if (!totalLoss) return null;
     const { startYear, endYear, yearsRange } = settings;
     const years = yearsRange && yearsRange.map((yearObj) => yearObj.value);
     const fillObj = {
@@ -28,41 +28,65 @@ export const parseData = createSelector(
       emissions: 0,
       percentage: 0,
     };
-    const zeroFilledData = zeroFillYears(
-      lossPlantations,
+    const zeroFilledData = zeroFillYearsFilter(
+      totalLoss,
       startYear,
       endYear,
       years,
       fillObj
     );
-    const totalLossByYear = groupBy(totalLoss, 'year');
-    const parsedData = uniqBy(
-      zeroFilledData
-        .filter((d) => d.year >= startYear && d.year <= endYear)
-        .map((d) => {
-          const groupedPlantations = groupBy(lossPlantations, 'year')[d.year];
-          const summedPlatationsLoss =
-            (groupedPlantations && sumBy(groupedPlantations, 'area')) || 0;
-          const summedPlatationsEmissions =
-            (groupedPlantations && sumBy(groupedPlantations, 'emissions')) || 0;
-          const totalLossForYear =
-            (totalLossByYear[d.year] && totalLossByYear[d.year][0]) || {};
 
-          const returnData = {
-            ...d,
-            outsideAreaLoss: totalLossForYear.area - summedPlatationsLoss,
-            areaLoss: summedPlatationsLoss || 0,
-            totalLoss: totalLossForYear.area || 0,
-            outsideCo2Loss:
-              totalLossByYear[d.year]?.[0]?.emissions -
-              summedPlatationsEmissions,
-            co2Loss: summedPlatationsEmissions || 0,
-          };
-          return returnData;
-        }),
-      'year'
-    );
+    const mappedData = zeroFilledData.map((list) => {
+      const naturalForestList = list.filter(
+        (item) => item.sbtn_natural_forests__class === 'Natural Forest'
+      );
+
+      const nonNaturalForestList = list.filter(
+        (item) => item.sbtn_natural_forests__class === 'Non-Natural Forest'
+      );
+      // eslint-disable-next-line no-unused-vars
+      const unknownList = list.filter(
+        (item) => item.sbtn_natural_forests__class === 'Unknown'
+      );
+
+      const naturalForestArea = naturalForestList?.reduce(
+        (acc, curr) => acc + curr.area,
+        0
+      );
+      const naturalForestEmissions = naturalForestList?.reduce(
+        (acc, curr) => acc + curr.emissions,
+        0
+      );
+      const nonNaturalForestArea = nonNaturalForestList?.reduce(
+        (acc, curr) => acc + curr.area,
+        0
+      );
+      const nonNaturalForestEmissions = nonNaturalForestList?.reduce(
+        (acc, curr) => acc + curr.emissions,
+        0
+      );
+
+      return {
+        iso: nonNaturalForestList[0]?.iso || '',
+        outsideAreaLoss: naturalForestArea || 0,
+        outsideCo2Loss: naturalForestEmissions || 0,
+        areaLoss: nonNaturalForestArea || 0,
+        co2Loss: nonNaturalForestEmissions || 0,
+        totalLoss: (nonNaturalForestArea || 0) + (naturalForestArea || 0),
+        year: nonNaturalForestList[0]?.year || '',
+      };
+    });
+
+    const parsedData = uniqBy(mappedData, 'year');
+
     return parsedData;
+  }
+);
+
+export const parseTitle = createSelector(
+  [getTitle, getLocationName],
+  (title, name) => {
+    return name === 'global' ? title.global : title.default;
   }
 );
 
@@ -103,7 +127,7 @@ export const parseConfig = createSelector([getColors], (colors) => {
       },
       {
         key: 'areaLoss',
-        label: 'Plantations',
+        label: 'Non-natural tree cover',
         color: colorRange[0],
         unitFormat: (value) =>
           formatNumber({ num: value, unit: 'ha', spaceUnit: true }),
@@ -113,21 +137,18 @@ export const parseConfig = createSelector([getColors], (colors) => {
 });
 
 export const parseSentence = createSelector(
-  [parseData, getSettings, getLocationName, getSentence],
-  (data, settings, locationName, sentence) => {
+  [parseData, getSettings, getLocationName, getSentence, getAdminLevel],
+  (data, settings, locationName, sentences, admLevel) => {
     if (!data) return null;
     const { startYear, endYear } = settings;
-    const plantationsLoss = sumBy(data, 'areaLoss') || 0;
     const totalLoss = sumBy(data, 'totalLoss') || 0;
     const outsideLoss = sumBy(data, 'outsideAreaLoss') || 0;
     const outsideEmissions = sumBy(data, 'outsideCo2Loss') || 0;
+    const sentenceSubkey = admLevel === 'global' ? 'global' : 'region';
+    const sentence = sentences[sentenceSubkey];
 
-    const lossPhrase =
-      plantationsLoss > outsideLoss ? 'plantations' : 'natural forest';
-    const percentage =
-      plantationsLoss > outsideLoss
-        ? (100 * plantationsLoss) / totalLoss
-        : (100 * outsideLoss) / totalLoss;
+    const lossPhrase = 'natural forest';
+    const percentage = (100 * outsideLoss) / totalLoss;
     const params = {
       location: locationName,
       startYear,
@@ -139,6 +160,7 @@ export const parseSentence = createSelector(
         spaceUnit: true,
       }),
       percentage: formatNumber({ num: percentage, unit: '%' }),
+      totalLoss: formatNumber({ num: outsideLoss, unit: 'ha' }), // using outsideLoss (natural forest) value based on Michelle's feedback
     };
 
     return {
@@ -152,4 +174,5 @@ export default createStructuredSelector({
   data: parseData,
   config: parseConfig,
   sentence: parseSentence,
+  title: parseTitle,
 });
