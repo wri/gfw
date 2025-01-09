@@ -7,7 +7,14 @@ import groupBy from 'lodash/groupBy';
 
 class PieChartLegend extends PureComponent {
   render() {
-    const { data, chartSettings = {}, config, className, simple } = this.props;
+    const {
+      data,
+      chartSettings = {},
+      config,
+      className,
+      simple,
+      onMap,
+    } = this.props;
     const { size, legend, groupedLegends } = chartSettings;
 
     const sizeClass = (() => {
@@ -31,20 +38,19 @@ class PieChartLegend extends PureComponent {
 
       return (
         <div
-          className={cx('c-pie-chart-legend', className)}
-          style={{ flexDirection: 'column' }}
+          className={cx(
+            {
+              'c-pie-chart-legend': true,
+              'c-pie-chart-legend-grouped': groupedLegends,
+              'top-margin-20': groupedLegends && onMap,
+            },
+            className
+          )}
         >
           {Object.entries(groupedItems).map(([category, categoryItems]) => (
-            <div style={{ display: 'flex', flexDirection: 'column' }}>
+            <div className="legend-group">
               <h2 className="legend-group-title">{category}</h2>
-              <ul
-                style={{
-                  display: 'flex',
-                  justifyContent: 'space-between',
-                  flexWrap: 'wrap',
-                }}
-                className={cx({ simple, sizeClass })}
-              >
+              <ul className={cx('legend-group-list', simple, sizeClass)}>
                 {categoryItems.map((item, index) => {
                   const value = `${formatNumber({
                     num: item[config.key],
@@ -127,12 +133,14 @@ class PieChartLegend extends PureComponent {
 }
 
 PieChartLegend.propTypes = {
+  onMap: PropTypes.bool,
   data: PropTypes.array,
   config: PropTypes.object,
   chartSettings: PropTypes.shape({
     size: PropTypes.oneOf(['small', 'x-small']),
     legend: PropTypes.shape({ style: PropTypes.object }),
     chart: PropTypes.shape({ style: PropTypes.object }),
+    groupedLegends: PropTypes.bool,
   }),
   simple: PropTypes.bool,
   className: PropTypes.string,
