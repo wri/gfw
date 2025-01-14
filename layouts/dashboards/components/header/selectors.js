@@ -115,9 +115,13 @@ export const getDownloadLink = createSelector(
     const { admin } = area || {};
     const { adm0 } = admin || {};
 
-    return `https://gfw2-data.s3.amazonaws.com/country-pages/country_stats/download/${DOWNLOAD_VERSION}/${
-      adm0 || location?.adm0 || 'global'
-    }.xlsx`;
+    if (location.type === 'country') {
+      return `https://gfw2-data.s3.amazonaws.com/country-pages/country_stats/download/${DOWNLOAD_VERSION}/${
+        adm0 || location?.adm0 || 'global'
+      }.xlsx`;
+    }
+
+    return `https://gfw2-data.s3.amazonaws.com/country-pages/country_stats/download/gfw_2023_statistics_summary_v30102024.xlsx`;
   }
 );
 
