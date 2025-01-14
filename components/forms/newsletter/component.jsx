@@ -11,6 +11,7 @@ import Select from 'components/forms/components/select';
 import Submit from 'components/forms/components/submit';
 import SuccessMessage from 'components/success-message';
 import Error from 'components/forms/components/error';
+import { preferredLanguages } from 'components/forms/profile/config';
 
 import { email as validateEmail } from 'components/forms/validations';
 import Checkbox from '../components/checkbox/component';
@@ -27,14 +28,6 @@ const sectors = [
   'Private Sector',
   'No Affiliation',
   'Other',
-];
-
-const preferredLanguages = [
-  { label: 'English', value: 'en' },
-  { label: 'Français', value: 'fr' },
-  { label: 'Español', value: 'es' },
-  { label: 'Português', value: 'pt' },
-  { label: 'Bahasa Indonesia', value: 'id' },
 ];
 
 const interests = [
