@@ -5,7 +5,7 @@ export const sectors = {
     'Legislature/Parliament',
     'Ministry/National Agency',
     'Subnational Agency',
-    'Other:'
+    'Other:',
   ],
   'Donor Institution / Agency': [
     'Director/Executive',
@@ -13,7 +13,7 @@ export const sectors = {
     'Researcher',
     'Monitoring/Evaluation',
     'Field/Country Staff',
-    'Other:'
+    'Other:',
   ],
   'Local NGO (national or subnational)': [
     'Director/Executive',
@@ -24,7 +24,7 @@ export const sectors = {
     'Field Staff',
     'Communications Specialist',
     'Park/Forest Ranger',
-    'Other:'
+    'Other:',
   ],
   'International NGO': [
     'Director/Executive',
@@ -34,7 +34,7 @@ export const sectors = {
     'Field/Country Staff',
     'Communications Specialist',
     'Researcher',
-    'Other:'
+    'Other:',
   ],
   'UN or International Organization': [
     'Director/Executive',
@@ -44,7 +44,7 @@ export const sectors = {
     'Monitoring/Evaluation Specialist',
     'GIS/Technical Specialist',
     'Communications Specialist',
-    'Other:'
+    'Other:',
   ],
   'Academic / Research Organization': [
     'Faculty (Primary/Secondary)',
@@ -52,7 +52,7 @@ export const sectors = {
     'Student (Primary/Secondary)',
     'Student (University/Graduate)',
     'Researcher (Post-Doc, Fellow, etc.)',
-    'Other:'
+    'Other:',
   ],
   'Journalist / Media Organization': ['Reporter', 'Editor', 'Other:'],
   'Indigenous or Community-Based Organization': [
@@ -60,7 +60,7 @@ export const sectors = {
     'Forest Manager/Monitor',
     'GIS/Technical Specialist',
     'Communications Specialist',
-    'Other:'
+    'Other:',
   ],
   'Private sector': [
     'Supply Chain Manager',
@@ -68,24 +68,24 @@ export const sectors = {
     'Procurement Staff',
     'Retailer/Trader',
     'Land or Concession Owner',
-    'Other:'
+    'Other:',
   ],
   'Individual / No Affiliation': ['Other:'],
-  Other: ['Other:']
+  Other: ['Other:'],
 };
 
 export const interests = [
-  'Climate/Carbon',
-  'Biodiversity',
-  'Deforestation/Forest Degradation',
-  'Innovations in forest monitoring',
-  'Watersheds ',
-  'General information/Data about forests',
-  'Reforestation/Landscape restoration',
-  'Agricultural supply chains',
+  'Innovations in Monitoring',
   'Fires',
+  'Forest Watcher Mobile App',
+  'Climate and Carbon',
+  'Biodiversity',
+  'Agricultural Supply Chains',
   'Small Grants Fund and Tech Fellowship',
-  'My region or country'
+  'Landscape Restoration',
+  'GFW Users in Action',
+  'Places to Watch alerts',
+  'Deforestation',
 ];
 
 export const howDoYouUse = [
@@ -102,7 +102,7 @@ export const howDoYouUse = [
   'Learn about forests/my country',
   'Inform purchasing/procurement/investment decisions',
   'Educational support materials',
-  'Not sure; new to GFW'
+  'Not sure; new to GFW',
 ];
 
 export const topics = [
@@ -111,5 +111,13 @@ export const topics = [
   'Fires',
   'Forest Watcher Mobile App',
   'Innovations in Monitoring',
-  'Small Grants Fund and Tech Fellowship'
+  'Small Grants Fund and Tech Fellowship',
+];
+
+export const preferredLanguages = [
+  { label: 'English', value: 'en' },
+  { label: 'Français', value: 'fr' },
+  { label: 'Español', value: 'es' },
+  { label: 'Português', value: 'pt' },
+  { label: 'Bahasa Indonesia', value: 'id' },
 ];

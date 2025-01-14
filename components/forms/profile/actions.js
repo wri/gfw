@@ -29,6 +29,8 @@ export const saveProfile = createThunkAction(
       jobTitle,
       signUpForTesting,
       isUserProfileFilled,
+      receive_updates = false,
+      preferred_language = 'en',
     } = fields;
 
     const postData = {
@@ -47,6 +49,8 @@ export const saveProfile = createThunkAction(
           aoiCountry,
           jobTitle,
           areaOrRegionOfInterest,
+          receive_updates,
+          preferred_language,
           subsector:
             subsector && subsector.includes('Other')
               ? `Other: ${subsector_otherInput || ''}`
