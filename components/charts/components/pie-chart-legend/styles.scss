@@ -4,30 +4,8 @@
   display: inline-block;
   width: 100%;
 
-  &-grouped {
-    flex-direction: column;
-  }
-
-  .legend-group {
-    display: flex;
-    flex-direction: column;
-
-    .legend-group-title {
-      margin-bottom: 0.9375rem;
-      font-weight: 500;
-      font-size: 0.875rem;
-    }
-
-    .legend-group-list {
-      display: flex;
-      justify-content: space-between;
-      flex-wrap: wrap;
-      margin-bottom: 1.25rem;
-    }
-  }
-
   .legend-title {
-    font-size: 0.75rem;
+    font-size: rem(12px);
     line-height: 1;
     color: $slate;
     position: relative;
@@ -36,19 +14,19 @@
 
     span {
       display: inline-block;
-      width: 0.75rem;
-      min-width: 0.75rem;
-      min-height: 0.75rem;
-      height: 0.75rem;
-      margin-right: 0.4375rem;
+      width: rem(12px);
+      min-width: rem(12px);
+      min-height: rem(12px);
+      height: rem(12px);
+      margin-right: rem(7px);
       border-radius: 100%;
       align-self: flex-start;
-      margin-top: 0.0625rem;
+      margin-top: 1px;
     }
 
     p {
       color: $slate;
-      font-size: 0.75rem;
+      font-size: rem(12px);
       line-height: 1.4;
     }
   }
@@ -93,8 +71,4 @@
       }
     }
   }
-}
-
-.top-margin-20 {
-  margin-top: 1.25rem;
 }
