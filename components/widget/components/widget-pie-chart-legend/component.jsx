@@ -2,6 +2,8 @@ import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import { formatNumber } from 'utils/format';
 
+import cx from 'classnames';
+
 import PieChart from 'components/charts/pie-chart';
 import PieChartLegend from 'components/charts/components/pie-chart-legend';
 import Button from 'components/ui/button';
@@ -21,6 +23,9 @@ class WidgetPieChart extends PureComponent {
     } = this.props;
     const { pathname } = location;
     const { chartHeight } = settings;
+    const { groupedLegends } = chartSettings || {};
+
+    const onMap = pathname.indexOf('map') !== -1;
 
     const showSettingsBtn =
       settingsBtnConfig &&
@@ -47,7 +52,12 @@ class WidgetPieChart extends PureComponent {
             {settingsBtnConfig.text}
           </Button>
         )}
-        <div className="pie-and-legend">
+        <div
+          className={cx({
+            'pie-and-legend': true,
+            'pie-and-legend-grouped': groupedLegends && onMap,
+          })}
+        >
           <PieChartLegend
             className="cover-legend"
             data={legendData || data}
@@ -57,6 +67,7 @@ class WidgetPieChart extends PureComponent {
               key: 'value',
               ...settings,
             }}
+            onMap={onMap}
             simple={simple}
             chartSettings={chartSettings}
           />

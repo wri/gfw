@@ -6,6 +6,10 @@
     flex-direction: row;
     justify-content: space-between;
     gap: 4%;
+
+    &-grouped {
+      flex-direction: column-reverse;
+    }
   }
 
   .cover-legend {
