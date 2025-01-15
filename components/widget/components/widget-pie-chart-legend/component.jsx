@@ -23,7 +23,7 @@ class WidgetPieChart extends PureComponent {
     } = this.props;
     const { pathname } = location;
     const { chartHeight } = settings;
-    const { groupedLegends } = chartSettings;
+    const { groupedLegends } = chartSettings || {};
 
     const onMap = pathname.indexOf('map') !== -1;
 

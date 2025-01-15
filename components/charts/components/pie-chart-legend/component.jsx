@@ -15,7 +15,7 @@ class PieChartLegend extends PureComponent {
       simple,
       onMap,
     } = this.props;
-    const { size, legend, groupedLegends } = chartSettings;
+    const { size, legend, groupedLegends = null } = chartSettings || {};
 
     const sizeClass = (() => {
       if (size) return size;
