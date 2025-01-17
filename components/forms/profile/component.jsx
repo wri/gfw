@@ -96,6 +96,11 @@ class ProfileForm extends PureComponent {
                         validate={[validateEmail]}
                         required
                       />
+                      <Input
+                        name="old_email"
+                        type="hidden"
+                        value={initialValues.old_email}
+                      />
                       <Select
                         name="sector"
                         label="sector"
