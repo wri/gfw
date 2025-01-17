@@ -1,8 +1,18 @@
 import { createThunkAction } from 'redux/actions';
+import axios from 'axios';
 import { FORM_ERROR } from 'final-form';
 
 import { updateProfile, createProfile } from 'services/user';
 import { setMyGFW } from 'providers/mygfw-provider/actions';
+
+const saveOrttoProfile = async (payload) => {
+  try {
+    await axios.post('/api/ortto', payload);
+  } catch (error) {
+    // eslint-disable-next-line no-console
+    console.error(error);
+  }
+};
 
 export const saveProfile = createThunkAction(
   'saveProfile',
@@ -17,6 +27,7 @@ export const saveProfile = createThunkAction(
       firstName,
       lastName,
       email,
+      old_email,
       country,
       city,
       state,
@@ -76,8 +87,27 @@ export const saveProfile = createThunkAction(
     const updateOrCreate = isUserProfileFilled ? updateProfile : createProfile;
 
     return updateOrCreate(id, postData)
-      .then((response) => {
+      .then(async (response) => {
         if (response.data && response.data.data) {
+          saveOrttoProfile({
+            email,
+            first_name: firstName,
+            last_name: lastName,
+            organization: company,
+            job_title: jobTitle,
+            job_function:
+              subsector && subsector.includes('Other')
+                ? `Other: ${subsector_otherInput || ''}`
+                : subsector,
+            sector,
+            city,
+            country,
+            preferred_language,
+            interests: interests.toString(),
+            receive_updates,
+            old_email,
+          });
+
           const { attributes } = response.data.data;
           dispatch(
             setMyGFW({
