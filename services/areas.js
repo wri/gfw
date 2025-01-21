@@ -2,10 +2,11 @@ import { apiAuthRequest } from 'utils/request';
 import { trackEvent } from 'utils/analytics';
 
 const REQUEST_URL = '/v2/area';
+const SOURCE = `?source[provider]=gadm&source[version]=3.6`;
 
 export const getArea = (id, userToken = null) =>
   apiAuthRequest
-    .get(`${REQUEST_URL}/${id}`, {
+    .get(`${REQUEST_URL}/${id}${SOURCE}`, {
       headers: {
         ...(userToken && {
           Authorization: `Bearer ${userToken}`,
@@ -36,7 +37,7 @@ export const getArea = (id, userToken = null) =>
     });
 
 export const getAreas = () =>
-  apiAuthRequest.get(REQUEST_URL).then((areasResponse) => {
+  apiAuthRequest.get(`${REQUEST_URL}${SOURCE}`).then((areasResponse) => {
     const { data: areas } = areasResponse.data;
 
     return areas.map((area) => {
