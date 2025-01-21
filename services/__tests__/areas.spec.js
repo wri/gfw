@@ -82,7 +82,13 @@ describe('Areas Service', () => {
                       version: '3.6',
                     },
                   },
-                  iso: {},
+                  iso: {
+                    country: 'BRA',
+                    source: {
+                      provider: 'gadm',
+                      version: '3.6',
+                    },
+                  },
                 },
               },
             ],
@@ -104,7 +110,13 @@ describe('Areas Service', () => {
                 version: '3.6',
               },
             },
-            iso: {},
+            iso: {
+              country: 'BRA',
+              source: {
+                provider: 'gadm',
+                version: '3.6',
+              },
+            },
             use: {},
             userArea: true,
           },
