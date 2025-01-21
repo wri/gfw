@@ -2,7 +2,7 @@ import { apiAuthRequest } from 'utils/request';
 import { trackEvent } from 'utils/analytics';
 
 const REQUEST_URL = '/v2/area';
-const SOURCE = `?source[provider]=gadm&source[version]=4.1`;
+const SOURCE = `?source[provider]=gadm&source[version]=3.6`;
 
 export const getArea = (id, userToken = null) =>
   apiAuthRequest

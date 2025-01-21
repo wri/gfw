@@ -28,7 +28,7 @@ describe('Areas Service', () => {
 
   describe('Getting a Single Area', () => {
     describe('The Request to the API', () => {
-      it('should add source params for gadm 4.1', async () => {
+      it('should add source params for gadm 3.6', async () => {
         // arrange
         apiAuthRequest.get.mockResolvedValueOnce({
           data: { data: { attributes: {} } },
@@ -39,7 +39,7 @@ describe('Areas Service', () => {
 
         // assert
         expect(apiAuthRequest.get).toHaveBeenCalledWith(
-          '/v2/area/abcdef123456789?source[provider]=gadm&source[version]=4.1',
+          '/v2/area/abcdef123456789?source[provider]=gadm&source[version]=3.6',
           {
             headers: {},
           }
@@ -50,7 +50,7 @@ describe('Areas Service', () => {
 
   describe('Getting Multiple Areas', () => {
     describe('The Request to the API', () => {
-      it('should add source params for gadm 4.1', async () => {
+      it('should add source params for gadm 3.6', async () => {
         // arrange
         apiAuthRequest.get.mockResolvedValueOnce({
           data: { data: [{ attributes: {} }] },
@@ -61,7 +61,7 @@ describe('Areas Service', () => {
 
         // assert
         expect(apiAuthRequest.get).toHaveBeenCalledWith(
-          '/v2/area?source[provider]=gadm&source[version]=4.1'
+          '/v2/area?source[provider]=gadm&source[version]=3.6'
         );
       });
 
