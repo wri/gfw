@@ -3,12 +3,14 @@ import {
   INTACT_FOREST_LANDSCAPES_DATASET,
   PRIMARY_FOREST_DATASET,
   MANGROVE_FORESTS_DATASET,
+  NATURAL_FOREST,
 } from 'data/datasets';
 import {
   TREE_PLANTATIONS,
   INTACT_FOREST_LANDSCAPES,
   PRIMARY_FOREST,
   MANGROVE_FORESTS,
+  NATURAL_FOREST_2020,
 } from 'data/layers';
 
 export default [
@@ -97,6 +99,20 @@ export default [
       },
     ],
     hidden: false,
+  },
+  {
+    label: 'SBTN natural forest 2020',
+    value: 'natural_forests_2020',
+    dataType: 'number',
+    tableKey: 'sbtn_natural_forests__class',
+    metaKey: 'sbtn_natural_forests_map',
+    global: true,
+    datasets: [
+      {
+        dataset: NATURAL_FOREST,
+        layers: [NATURAL_FOREST_2020],
+      },
+    ],
   },
   {
     label: 'Tree cover loss driver category',

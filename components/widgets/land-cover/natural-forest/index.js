@@ -50,7 +50,7 @@ export default {
       layers: [NATURAL_FOREST_2020],
     },
   ],
-  dataType: 'naturalForest',
+  noStatements: true,
   sortOrder: {
     summary: 6,
     landCover: 1,

@@ -444,6 +444,7 @@ export const getWidgets = createSelector(
         getDataType: dataTypeFn,
         settingsConfig: settingsConfigArr,
         getSettingsConfig: settingsConfigFn,
+        noStatements,
       } = w || {};
       const active =
         (!activeWidgetKey && index === 0) || activeWidgetKey === widget;
@@ -565,6 +566,7 @@ export const getWidgets = createSelector(
         type,
         dataType,
         active,
+        noStatements,
         settings: {
           ...defaultSettings,
           ...allowedFooterSettings,

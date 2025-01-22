@@ -55,12 +55,12 @@ export const parseConfig = createSelector(
     } = data;
     const alertsLabel = indicator
       ? translateText('Other alerts in {indicatorLabel}', {
-          indicatorLabel: indicator.label,
+          indicatorLabel: indicator.label.replace('sbtn', 'SBTN'),
         })
       : translateText('Other alerts');
     const highConfidenceAlertsLabel = indicator
       ? translateText('High confidence alerts in {indicatorLabel}', {
-          indicatorLabel: indicator.label,
+          indicatorLabel: indicator.label.replace('sbtn', 'SBTN'),
         })
       : translateText('High confidence alerts');
 
