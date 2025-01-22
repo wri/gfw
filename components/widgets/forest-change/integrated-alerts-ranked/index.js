@@ -67,12 +67,6 @@ export default {
       whitelist: ['%', 'ha'],
       border: true,
     },
-    {
-      key: 'threshold',
-      label: 'canopy density',
-      type: 'mini-select',
-      metaKey: 'widget_canopy_density',
-    },
   ],
   pendingKeys: ['extentYear', 'threshold'],
   refetchKeys: [
@@ -98,6 +92,7 @@ export default {
       layers: [GLAD_ALERTS],
     },
   ],
+  noStatements: true,
   sortOrder: {
     summary: 6,
     forestChange: 10,
