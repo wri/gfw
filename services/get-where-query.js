@@ -68,6 +68,8 @@ export const getWHEREQuery = (params = {}) => {
     }
 
     const hasPrefixIs__ = hasFilterOption && tableKey.includes('is__');
+    const naturalForest__ =
+      hasFilterOption && tableKey === 'sbtn_natural_forests__class';
     let WHERE = '';
 
     if (hasFilterOption) {
@@ -77,6 +79,10 @@ export const getWHEREQuery = (params = {}) => {
 
       if (!hasPrefixIs__) {
         WHERE = `${WHERE}${tableKey} IS NOT NULL`;
+      }
+
+      if (naturalForest__) {
+        WHERE = `${WHERE} AND ${tableKey} = 'Natural Forest'`;
       }
 
       if (
