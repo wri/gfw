@@ -80,6 +80,7 @@ export default {
       placeholder: 'All categories',
       clearable: true,
       border: true,
+      whitelist: ['aze', 'landmark', 'kba', 'mining', 'wdpa'],
     },
     {
       key: 'dataset',

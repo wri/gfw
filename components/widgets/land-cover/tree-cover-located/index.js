@@ -27,8 +27,7 @@ export default {
   alerts: [
     {
       id: 'tree-cover-located-alert-1',
-      text:
-        'Datasets available here (Tree Cover 2000/ 2010 and Tropical Tree Cover 2020) use different methodologies to measure tree cover. Read [our blog](https://www.globalforestwatch.org/blog/data-and-research/tree-cover-data-comparison/) for more information.',
+      text: 'Datasets available here (Tree Cover 2000/ 2010 and Tropical Tree Cover 2020) use different methodologies to measure tree cover. Read [our blog](https://www.globalforestwatch.org/blog/data-and-research/tree-cover-data-comparison/) for more information.',
       visible: [
         'global',
         'country',
@@ -152,6 +151,7 @@ export default {
         type: 'select',
         placeholder: 'All tree cover',
         clearable: true,
+        blacklist: ['natural_forests_2020'],
       },
       {
         key: 'landCategory',
