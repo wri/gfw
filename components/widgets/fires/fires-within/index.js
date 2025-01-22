@@ -30,6 +30,7 @@ export default {
       placeholder: 'All land cover',
       clearable: true,
       border: false,
+      blacklist: ['natural_forests_2020'],
     },
     {
       key: 'landCategory',

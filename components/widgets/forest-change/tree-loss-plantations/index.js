@@ -68,7 +68,7 @@ export default {
       layers: [FOREST_LOSS],
     },
   ],
-  dataType: 'naturalForest',
+  noStatements: true,
   sortOrder: {
     forestChange: 2,
   },

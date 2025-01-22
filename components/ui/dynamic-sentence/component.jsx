@@ -62,6 +62,10 @@ class DynamicSentence extends PureComponent {
       });
     }
 
+    if (formattedSentence?.includes('sbtn')) {
+      formattedSentence = formattedSentence?.replace('sbtn', 'SBTN');
+    }
+
     formattedSentence = [formattedSentence?.replace('{area}', 'selected area')];
     if (component) {
       const mappedComponent = {
@@ -88,6 +92,17 @@ class DynamicSentence extends PureComponent {
             {translateText(mappedComponent.key)}
           </span>
         </Tooltip>
+      );
+    }
+
+    if (
+      Array.isArray(formattedSentence) &&
+      formattedSentence.length !== 0 &&
+      formattedSentence[0]?.includes('covering a total of')
+    ) {
+      formattedSentence[0] = formattedSentence[0].replace(
+        '<b>covering a total of ',
+        'covering a total of <b>'
       );
     }
 
