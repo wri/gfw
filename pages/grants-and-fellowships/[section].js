@@ -58,7 +58,7 @@ export const getServerSideProps = async ({ query }) => {
         title: 'Projects | Grants & Fellowships | Global Forest Watch',
         section: query?.section,
         projects: parsedProjects || [],
-        allCountries: allCountries?.data?.rows || [],
+        allCountries: allCountries?.data || [],
         projectCountries: uniqCountries || [],
         country: query?.country || '',
         projectsTexts: pageTexts?.[0]?.acf,
