@@ -37,7 +37,7 @@ export const countryConfig = {
     const country = findByIso(countries, adm0);
     const region = findById(regions, `${adm0}.${adm1}_`);
 
-    const { name, ...props } = region;
+    const { name, ...props } = region || {};
 
     return {
       locationName: `${name}, ${country?.name}`,
@@ -59,7 +59,7 @@ export const countryConfig = {
     const region = findById(regions, `${adm0}.${adm1}_`);
     const subRegion = findById(subRegions, `${adm0}.${adm1}.${adm2}_`);
 
-    const { name, ...props } = subRegion;
+    const { name, ...props } = subRegion || {};
 
     return {
       locationName: `${name}, ${country?.name}, ${region?.name}`,
