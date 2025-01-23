@@ -5,9 +5,10 @@ import { getGadm36Id } from 'utils/gadm';
 
 import countryLinks from './country-links.json';
 
-const GADM_DATASET = '/dataset/gadm_administrative_boundaries/v4.1/query';
+export const GADM_DATASET =
+  '/dataset/gadm_administrative_boundaries/v4.1/query';
 
-const SQL_QUERIES = {
+export const SQL_QUERIES = {
   getGADMCountries:
     "SELECT country AS name, gid_0 AS iso FROM gadm_administrative_boundaries WHERE adm_level = '0' ORDER BY country",
   getGADMRegions:
