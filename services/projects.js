@@ -37,7 +37,7 @@ apiFetch.setFetchHandler(async (options) => {
 });
 
 const formatProjects = (projectsData) => {
-  const countries = projectsData?.[1]?.data?.rows;
+  const countries = projectsData?.[1]?.data;
   const projects = projectsData?.[0]?.data;
 
   if (!projects) {
