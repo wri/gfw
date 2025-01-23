@@ -15,8 +15,8 @@ const SQL_QUERIES = {
   getGADMSubRegions:
     "SELECT gid_2 as id, name_2 as name FROM gadm_administrative_boundaries WHERE gid_0 = '{iso}' AND gid_1 = '{adm1}' AND adm_level='2' AND type_2 NOT IN ('Waterbody', 'Water body', 'Water Body') ORDER BY name",
   getFAOCountries:
-    'SELECT iso, country AS name FROM data WHERE 1 = 1 AND year = 2020'
-  };
+    'SELECT iso, country AS name FROM data WHERE 1 = 1 AND year = 2020',
+};
 
 const convertToOptions = (countries) =>
   countries.map((c) => ({ label: c.name, value: c.iso }));
@@ -41,7 +41,7 @@ export const getRegionsProvider = ({ adm0, token }) => {
   return dataRequest.get(url, { cancelToken: token });
 };
 
-export const getSubRegionsProvider = (adm0, adm1, token) => {
+export const getSubRegionsProvider = ({ adm0, adm1, token }) => {
   const url = `${GADM_DATASET}?sql=${SQL_QUERIES.getGADMSubRegions}`
     .replace('{iso}', adm0)
     .replace('{adm1}', getGadm36Id(adm0, adm1));
