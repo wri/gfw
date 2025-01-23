@@ -10,10 +10,14 @@ import {
   getSubRegionsProvider,
 } from 'services/country';
 
+const findByIso = (list, iso) => list?.find((item) => item?.iso === iso);
+const findById = (list, idPrefix) =>
+  list?.find((item) => item?.id.startsWith(idPrefix));
+
 export const countryConfig = {
   adm0: async ({ adm0 }) => {
     const { data: countries } = await getCountriesProvider();
-    const country = countries?.find((countryItem) => countryItem?.iso === adm0);
+    const country = findByIso(countries, adm0);
     const { name, ...props } = country || {};
 
     return {
@@ -30,10 +34,8 @@ export const countryConfig = {
     const { data: countries } = countriesData || {};
     const { data: regions } = regionsData || {};
 
-    const country = countries?.find((countryItem) => countryItem?.iso === adm0);
-    const region = regions?.find((regionItem) =>
-      regionItem?.id.startsWith(`${adm0}.${adm1}_`)
-    );
+    const country = findByIso(countries, adm0);
+    const region = findById(regions, `${adm0}.${adm1}_`);
 
     const { name, ...props } = region;
 
@@ -53,13 +55,9 @@ export const countryConfig = {
     const { data: regions } = regionsData || {};
     const { data: subRegions } = subRegionsData || {};
 
-    const country = countries?.find((countryItem) => countryItem?.iso === adm0);
-    const region = regions?.find((regionItem) =>
-      regionItem?.id.startsWith(`${adm0}.${adm1}_`)
-    );
-    const subRegion = subRegions?.find((subRegionItem) =>
-      subRegionItem?.id.startsWith(`${adm0}.${adm1}.${adm2}_`)
-    );
+    const country = findByIso(countries, adm0);
+    const region = findById(regions, `${adm0}.${adm1}_`);
+    const subRegion = findById(subRegions, `${adm0}.${adm1}.${adm2}_`);
 
     const { name, ...props } = subRegion;
 
