@@ -193,7 +193,7 @@ export const getServerSideProps = async ({ params, query, req }) => {
     }
 
     if (adm1) {
-      const subRegions = await getSubRegionsProvider(adm0, adm1);
+      const subRegions = await getSubRegionsProvider({ adm0, adm1 });
       countryData = {
         ...countryData,
         subRegions: uniqBy(subRegions.data).map((row) => ({
