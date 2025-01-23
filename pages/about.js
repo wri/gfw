@@ -28,7 +28,7 @@ export const getStaticProps = async () => {
     props: {
       impactProjects,
       sgfProjects,
-      countries: countries?.data?.rows,
+      countries: countries?.data,
       notifications: notifications || [],
     },
     revalidate: 10,
