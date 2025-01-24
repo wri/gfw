@@ -1,7 +1,7 @@
 import { all, spread } from 'axios';
 
 import { dataRequest } from 'utils/request';
-import { getGadm36Id } from 'utils/gadm';
+import { getGadmId } from 'utils/gadm';
 
 import countryLinks from './country-links.json';
 
@@ -45,7 +45,7 @@ export const getRegionsProvider = ({ adm0, token }) => {
 export const getSubRegionsProvider = ({ adm0, adm1, token }) => {
   const url = `${GADM_DATASET}?sql=${SQL_QUERIES.getGADMSubRegions}`
     .replace('{iso}', adm0)
-    .replace('{adm1}', getGadm36Id(adm0, adm1));
+    .replace('{adm1}', getGadmId(adm0, adm1));
 
   return dataRequest.get(url, { cancelToken: token });
 };
