@@ -47,10 +47,10 @@ export const getRegions = createThunkAction(
     getRegionsProvider(country)
       .then((response) => {
         const parsedResponse = [];
-        uniqBy(response.data).forEach((row) => {
+        uniqBy(response.data).forEach((region) => {
           parsedResponse.push({
-            id: parseGadmId(row.id).adm1,
-            name: row.name,
+            id: parseGadmId(region.id).adm1,
+            name: region.name,
           });
         });
         dispatch(setRegions(parsedResponse, 'id'));
@@ -69,12 +69,11 @@ export const getSubRegions = createThunkAction(
       dispatch(setSubRegionsLoading(true));
       getSubRegionsProvider({ adm0, adm1, token })
         .then((subRegions) => {
-          const { rows } = subRegions.data;
           const parsedResponse = [];
-          uniqBy(rows).forEach((row) => {
+          uniqBy(subRegions?.data).forEach((subRegion) => {
             parsedResponse.push({
-              id: parseGadmId(row.id).adm2,
-              name: row.name,
+              id: parseGadmId(subRegion.id).adm2,
+              name: subRegion.name,
             });
           });
           dispatch(setSubRegions(uniqBy(parsedResponse, 'id')));
