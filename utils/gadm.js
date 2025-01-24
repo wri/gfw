@@ -1,4 +1,4 @@
-export const getGadm36Id = (country, region, subRegion) =>
+export const getGadmId = (country, region, subRegion) =>
   `${country}${region ? `.${region}` : ''}${
     subRegion ? `.${subRegion}_1` : '_1'
   }`;
