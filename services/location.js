@@ -14,10 +14,29 @@ const findByIso = (list, iso) => list?.find((item) => item?.iso === iso);
 const findById = (list, idPrefix) =>
   list?.find((item) => item?.id.startsWith(idPrefix));
 
+const getBaseLocationData = async ({ adm0, adm1, adm2 }) => {
+  const [countriesData, regionsData, subRegionsData] = await Promise.all([
+    getCountriesProvider(),
+    adm1 ? getRegionsProvider({ adm0 }) : null,
+    adm2 ? getSubRegionsProvider({ adm0, adm1 }) : null,
+  ]);
+
+  const { data: countries } = countriesData || {};
+  const { data: regions } = regionsData || {};
+  const { data: subRegions } = subRegionsData || {};
+
+  const country = findByIso(countries, adm0);
+  const region = adm1 ? findById(regions, `${adm0}.${adm1}_`) : null;
+  const subRegion = adm2
+    ? findById(subRegions, `${adm0}.${adm1}.${adm2}_`)
+    : null;
+
+  return { country, region, subRegion };
+};
+
 export const countryConfig = {
   adm0: async ({ adm0 }) => {
-    const { data: countries } = await getCountriesProvider();
-    const country = findByIso(countries, adm0);
+    const { country } = await getBaseLocationData({ adm0 });
     const { name, ...props } = country || {};
 
     return {
@@ -26,17 +45,7 @@ export const countryConfig = {
     };
   },
   adm1: async ({ adm0, adm1 }) => {
-    const [countriesData, regionsData] = await Promise.all([
-      getCountriesProvider(),
-      getRegionsProvider({ adm0 }),
-    ]);
-
-    const { data: countries } = countriesData || {};
-    const { data: regions } = regionsData || {};
-
-    const country = findByIso(countries, adm0);
-    const region = findById(regions, `${adm0}.${adm1}_`);
-
+    const { country, region } = await getBaseLocationData({ adm0, adm1 });
     const { name, ...props } = region || {};
 
     return {
@@ -45,20 +54,11 @@ export const countryConfig = {
     };
   },
   adm2: async ({ adm0, adm1, adm2 }) => {
-    const [countriesData, regionsData, subRegionsData] = await Promise.all([
-      getCountriesProvider(),
-      getRegionsProvider({ adm0 }),
-      getSubRegionsProvider({ adm0, adm1 }),
-    ]);
-
-    const { data: countries } = countriesData || {};
-    const { data: regions } = regionsData || {};
-    const { data: subRegions } = subRegionsData || {};
-
-    const country = findByIso(countries, adm0);
-    const region = findById(regions, `${adm0}.${adm1}_`);
-    const subRegion = findById(subRegions, `${adm0}.${adm1}.${adm2}_`);
-
+    const { country, region, subRegion } = await getBaseLocationData({
+      adm0,
+      adm1,
+      adm2,
+    });
     const { name, ...props } = subRegion || {};
 
     return {
