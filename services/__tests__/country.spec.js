@@ -11,7 +11,6 @@ import {
   getCategorisedCountries,
   getCountryLinksSerialized,
   GADM_DATASET,
-  SQL_QUERIES,
 } from 'services/country';
 import countryLinks from 'services/country-links.json';
 
@@ -49,7 +48,7 @@ describe('country service', () => {
       const result = await getCountriesProvider();
 
       expect(dataRequest.get).toHaveBeenCalledWith(
-        `${GADM_DATASET}?sql=${SQL_QUERIES.getGADMCountries}`
+        `${GADM_DATASET}?sql=SELECT country AS name, gid_0 AS iso FROM gadm_administrative_boundaries WHERE adm_level = '0' ORDER BY country`
       );
       expect(result).toEqual(mockResponse);
     });
@@ -63,10 +62,7 @@ describe('country service', () => {
       const result = await getRegionsProvider({ adm0: 'BRA' });
 
       expect(dataRequest.get).toHaveBeenCalledWith(
-        `${GADM_DATASET}?sql=${SQL_QUERIES.getGADMRegions}`.replace(
-          '{iso}',
-          'BRA'
-        ),
+        `${GADM_DATASET}?sql=SELECT name_1 AS name, gid_1 AS id FROM gadm_administrative_boundaries WHERE adm_level='1' AND gid_0 = 'BRA' ORDER BY name`,
         { cancelToken: undefined }
       );
       expect(result).toEqual(mockResponse);
@@ -81,9 +77,7 @@ describe('country service', () => {
       const result = await getSubRegionsProvider({ adm0: 'BRA', adm1: '25' });
 
       expect(dataRequest.get).toHaveBeenCalledWith(
-        `${GADM_DATASET}?sql=${SQL_QUERIES.getGADMSubRegions}`
-          .replace('{iso}', 'BRA')
-          .replace('{adm1}', 'BRA.25_1'),
+        `${GADM_DATASET}?sql=SELECT gid_2 as id, name_2 as name FROM gadm_administrative_boundaries WHERE gid_0 = 'BRA' AND gid_1 = 'BRA.25_1' AND adm_level='2' AND type_2 NOT IN ('Waterbody', 'Water body', 'Water Body') ORDER BY name`,
         { cancelToken: undefined }
       );
       expect(result).toEqual(mockResponse);
@@ -98,7 +92,7 @@ describe('country service', () => {
       const result = await getFAOCountriesProvider();
 
       expect(dataRequest.get).toHaveBeenCalledWith(
-        `dataset/fao_forest_extent/v2020/query/json?sql=${SQL_QUERIES.getFAOCountries}`
+        'dataset/fao_forest_extent/v2020/query/json?sql=SELECT iso, country AS name FROM data WHERE year = 2020'
       );
       expect(result).toEqual(mockResponse);
     });
