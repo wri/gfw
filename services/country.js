@@ -12,7 +12,7 @@ export const SQL_QUERIES = {
   getGADMCountries:
     "SELECT country AS name, gid_0 AS iso FROM gadm_administrative_boundaries WHERE adm_level = '0' ORDER BY country",
   getGADMRegions:
-    "SELECT name_1 AS name, gid_1 AS id FROM gadm_administrative_boundaries WHERE adm_level='1' AND gid_0 = '{iso}' ORDER BY name ",
+    "SELECT name_1 AS name, gid_1 AS id FROM gadm_administrative_boundaries WHERE adm_level='1' AND gid_0 = '{iso}' ORDER BY name",
   getGADMSubRegions:
     "SELECT gid_2 as id, name_2 as name FROM gadm_administrative_boundaries WHERE gid_0 = '{iso}' AND gid_1 = '{adm1}' AND adm_level='2' AND type_2 NOT IN ('Waterbody', 'Water body', 'Water Body') ORDER BY name",
   getFAOCountries: 'SELECT iso, country AS name FROM data WHERE year = 2020',
