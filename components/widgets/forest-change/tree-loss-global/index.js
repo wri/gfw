@@ -8,8 +8,7 @@ export default {
   title: 'Global Annual Tree cover loss',
   alerts: [
     {
-      text:
-        'The methods behind this data have changed over time. Be cautious comparing old and new data, especially before/after 2015. [Read more here](https://www.globalforestwatch.org/blog/data-and-research/tree-cover-loss-satellite-data-trend-analysis/).',
+      text: 'The methods behind this data have changed over time. Be cautious comparing old and new data, especially before/after 2015. [Read more here](https://www.globalforestwatch.org/blog/data-and-research/tree-cover-loss-satellite-data-trend-analysis/).',
       visible: ['global', 'country', 'geostore', 'aoi', 'wdpa', 'use'],
     },
   ],
@@ -25,7 +24,7 @@ export default {
     {
       key: 'forestType',
       label: 'Forest Type',
-      whitelist: ['ifl', 'primary_forest'],
+      whitelist: ['ifl', 'primary_forest', 'plantations'],
       type: 'select',
       placeholder: 'All tree cover',
       clearable: true,

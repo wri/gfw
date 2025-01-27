@@ -52,7 +52,7 @@ export default {
     {
       key: 'forestType',
       label: 'Forest Type',
-      whitelist: ['ifl', 'mangroves_2016'],
+      whitelist: ['ifl', 'mangroves_2016', 'plantations'],
       type: 'select',
       placeholder: 'All tree cover',
       clearable: true,
