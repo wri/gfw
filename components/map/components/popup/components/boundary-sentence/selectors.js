@@ -34,7 +34,7 @@ export const getSentence = createSelector(
       ];
     }
 
-    if (Number(adm_level) === '1') {
+    if (Number(adm_level) === 1) {
       locationNames = [locationNameTranslated, translateText(country)];
     }
 
