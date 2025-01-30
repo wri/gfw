@@ -6,7 +6,7 @@ const getInteractionData = (state, { data }) => data;
 
 /**
  * Returns an object with the selected location name, its area and a sentence do be displayed.
- * @param {method} createSelector - return a memoized outut selector.
+ * @param {method} createSelector - return a memoized output selector.
  * @see https://reselect.js.org/introduction/getting-started/#output-selector for implementation details
  * @param {selector} getInteractionData - data from the area clicked by user
  * @return {object} sentence, location name and area.
@@ -14,8 +14,8 @@ const getInteractionData = (state, { data }) => data;
 export const getSentence = createSelector(
   [getInteractionData],
   ({ data } = {}) => {
-    const { adm_level, gid_0, name_1, country } = data;
-    let name = adm_level > 0 ? data[`name_${adm_level}`] : country;
+    const { adm_level, gid_0, name_1, name_0, country } = data;
+    let name = adm_level > 0 ? data[`name_${adm_level}`] : country || name_0;
 
     if (!gid_0) {
       name = data[Object.keys(data).find((k) => k.includes('name'))];
@@ -30,12 +30,15 @@ export const getSentence = createSelector(
       locationNames = [
         locationNameTranslated,
         translateText(name_1),
-        translateText(country),
+        translateText(country || name_0),
       ];
     }
 
     if (Number(adm_level) === 1) {
-      locationNames = [locationNameTranslated, translateText(country)];
+      locationNames = [
+        locationNameTranslated,
+        translateText(country || name_0),
+      ];
     }
 
     const locationName = locationNames.join(', ');
