@@ -16,17 +16,17 @@ export const calculateData = createSelector(
     const { variable } = settings;
     const extent = (data && data.extent) || 0;
     const soil = (data && data.gfw_soil_carbon_stocks_2000__mg_c) || 0;
-    const soilDensity = (data && data.soilCarbonDensity) || 0;
-
-    const aboveGroundCarbon =
-      (data && data.gfw_aboveground_carbon_stocks_2000__mg_c) || 0;
-    const belowGroundCarbon =
-      (data && data.gfw_belowground_carbon_stocks_2000__mg_c) || 0;
+    const soilDensity = (data && data.biomassdensity) || 0;
 
     const aboveGroundCarbonDensity =
-      extent > 0 ? aboveGroundCarbon / extent : 0;
+      (data && data.gfw_aboveground_carbon_stocks_2000__mg_c) || 0;
     const belowGroundCarbonDensity =
-      extent > 0 ? belowGroundCarbon / extent : 0;
+      (data && data.gfw_belowground_carbon_stocks_2000__mg_c) || 0;
+
+    const aboveGroundCarbon =
+      extent > 0 ? aboveGroundCarbonDensity * extent : 0;
+    const belowGroundCarbon =
+      extent > 0 ? belowGroundCarbonDensity * extent : 0;
     const total = soil + aboveGroundCarbon + belowGroundCarbon;
 
     return {

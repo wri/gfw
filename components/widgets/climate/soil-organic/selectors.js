@@ -22,7 +22,7 @@ export const getSortedData = createSelector(
   [getData, getSettings, getAdm1, getAdm2],
   (data, settings, adm1, adm2) => {
     if (isEmpty(data)) return null;
-    // console.log('soil-organic', { data, settings })
+
     let regionKey = 'iso';
     if (adm1) regionKey = 'adm1';
     if (adm2) regionKey = 'adm2';
@@ -121,10 +121,10 @@ export const parseSentence = createSelector(
         settings.unit === 'totalBiomass'
           ? formatNumber({ num: percent, unit: '%' })
           : formatNumber({
-            num: avgBiomDensity,
-            unit: 'tC/ha',
-            spaceUnit: true,
-          });
+              num: avgBiomDensity,
+              unit: 'tC/ha',
+              spaceUnit: true,
+            });
 
       const labels = {
         globalDensity: 'soil organic carbon density',
@@ -134,9 +134,10 @@ export const parseSentence = createSelector(
       // Properties defined for labels and sentences are named in a way that relates with the display
       // but the units are somewhat fixed, due to their dependency on the whitelists for settings dropdowns.
       // We map them here.
-      const sentenceLabelProperty = settings.unit === 'totalBiomass' ? 'globalBiomass' : 'globalDensity';
+      const sentenceLabelProperty =
+        settings.unit === 'totalBiomass' ? 'globalBiomass' : 'globalDensity';
       const sentence = sentences[sentenceLabelProperty];
-      const label = labels[sentenceLabelProperty]
+      const label = labels[sentenceLabelProperty];
 
       return {
         sentence,
@@ -145,7 +146,7 @@ export const parseSentence = createSelector(
           value,
         },
       };
-    };
+    }
 
     // Standard processing for adm1 and adm2 areas, same sentence, same formatting.
     const location_id = location && location.value;
