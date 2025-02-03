@@ -9,11 +9,25 @@ const getColors = (state) => state.colors;
 const getSettings = (state) => state.settings;
 const getTitle = (state) => state.title;
 const getSentences = (state) => state.sentences;
-const getCaution = (state) => state.caution;
 const getLocationLabel = (state) => state.locationLabel;
-const getAdm0 = (state) => state.adm0;
 const getSortedCategories = () =>
   tscLossCategories.sort((a, b) => (a.position > b.position ? 1 : -1));
+
+const groupedLegends = {
+  'commodity driven deforestation': 'Drivers of temporary deforestation',
+  forestry: 'Drivers of temporary deforestation',
+  'forest management': 'Drivers of temporary  deforestation',
+  'shifting cultivation': 'Drivers of temporary deforestation',
+  'shifting agriculture': 'Drivers of temporary deforestation',
+  wildfire: 'Drivers of temporary deforestation',
+  'other natural disasters': 'Drivers of temporary  deforestation',
+  'hard commodities': 'Drivers of permanent deforestation',
+  'Drivers of permanent deforestation agriculture':
+    'Drivers of permanent deforestation',
+  'settlements and infrastructure': 'Drivers of permanent deforestation',
+  urbanization: 'Drivers of permanent deforestation',
+  unknown: 'Drivers of permanent deforestation',
+};
 
 export const getPermanentCategories = createSelector(
   [getSortedCategories],
@@ -47,6 +61,7 @@ export const parseData = createSelector(
       return {
         label: driver_type,
         value: loss_area_ha,
+        category: groupedLegends[driver_type.toLowerCase()],
         color: categoryColors[driver_type],
         percentage: (loss_area_ha * 100) / totalLoss,
       };
@@ -112,14 +127,8 @@ export const parseSentence = createSelector(
   }
 );
 
-export const parseCaution = createSelector(
-  [getCaution, getAdm0],
-  (caution, adm0) => (adm0 === 'IDN' ? caution.indonesia : caution.default)
-);
-
 export default createStructuredSelector({
   data: parseData,
   title: parseTitle,
   sentence: parseSentence,
-  caution: parseCaution,
 });
