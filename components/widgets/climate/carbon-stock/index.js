@@ -1,7 +1,9 @@
 import { all, spread } from 'axios';
 
-import { getSoilOrganicCarbon } from 'services/climate';
-import { getBiomassStock } from 'services/analysis-cached';
+import {
+  getBiomassStock,
+  getSoilOrganicCarbon,
+} from 'services/analysis-cached';
 
 import getWidgetProps from './selectors';
 
@@ -45,16 +47,13 @@ export default {
   getData: (params) =>
     all([getSoilOrganicCarbon(params), getBiomassStock(params)]).then(
       spread((soilOrganicCarbon, biomassResponse) => {
-        const { adm0, adm1, adm2 } = params;
         const { data } = biomassResponse.data;
-        const { rows } = soilOrganicCarbon.data;
-        const soilCarbonData = rows.find(
-          (el) => el.iso === adm0 && el.admin_1 === adm1 && el.admin_2 === adm2
-        );
+        const soilCarbonData = soilOrganicCarbon.data;
         let parsedData = {};
         if (data && data.length === 1) {
           parsedData = {
             ...data[0],
+            ...soilCarbonData[0],
             soilCarbon: soilCarbonData.soil_carbon__t || 0,
             soilCarbonDensity: soilCarbonData.soil_carbon_density__t_ha || 0,
           };
