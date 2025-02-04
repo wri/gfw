@@ -49,6 +49,14 @@ export default {
   },
   settingsConfig: [
     {
+      key: 'forestType',
+      label: 'Forest Type',
+      whitelist: ['plantations'],
+      type: 'select',
+      placeholder: 'All tree cover',
+      clearable: true,
+    },
+    {
       key: 'tscDriverGroup',
       label: 'drivers',
       type: 'select',
