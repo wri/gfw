@@ -12,13 +12,8 @@ export const setMainMapSettings = createAction('setMainMapSettings');
  * @see https://redux.js.org/usage/writing-logic-thunks for implementation details
  * @param {string} setMainMapAnalysisView - Action name
  * @param {function} - Arrow function
-<<<<<<< HEAD
  * @param {object} data - area data (adm_level, gid_0, country, ...)
  * @param {object} layer - political boundaries obejct from Layer API
-=======
-  * @param {object} data - area data (adm_level, gid_0, country, ...) 
-  * @param {object} layer - political boundaries obejct from Layer API 
->>>>>>> 9e41484f80 (feat(jsdoc): add JSDoc)
  */
 export const setMainMapAnalysisView = createThunkAction(
   'setMainMapAnalysisView',
@@ -29,7 +24,6 @@ export const setMainMapAnalysisView = createThunkAction(
       const { query, pushQuery } = useRouter();
       const { map, mainMap } = query || {};
 
-<<<<<<< HEAD
       let payload = {};
 
       if (data) {
@@ -67,26 +61,6 @@ export const setMainMapAnalysisView = createThunkAction(
             },
           },
         });
-=======
-    let payload = {};
-    if (data) {
-      if (analysisEndpoint === 'admin') {
-        payload = {
-          type: 'country',
-          ...getGadmLocationByLevel(data),
-        };
-      } else if (analysisEndpoint === 'wdpa' && (cartodb_id || wdpaid)) {
-        payload = {
-          type: analysisEndpoint,
-          adm0: wdpaid || cartodb_id,
-        };
-      } else if (cartodb_id && tableName) {
-        payload = {
-          type: 'use',
-          adm0: tableName,
-          adm1: cartodb_id,
-        };
->>>>>>> 9e41484f80 (feat(jsdoc): add JSDoc)
       }
     }
 );
