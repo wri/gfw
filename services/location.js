@@ -1,44 +1,71 @@
 import lowerCase from 'lodash/lowerCase';
 import startCase from 'lodash/startCase';
-import { cartoRequest } from 'utils/request';
+
 import { getGeodescriberByGeostore } from 'services/geodescriber';
 import { getDatasetQuery } from 'services/datasets';
 import { getArea } from 'services/areas';
+import {
+  getCountriesProvider,
+  getRegionsProvider,
+  getSubRegionsProvider,
+} from 'services/country';
+
+const findByIso = (list, iso) => list?.find((item) => item?.iso === iso);
+const findById = (list, idPrefix) =>
+  list?.find((item) => item?.id.startsWith(idPrefix));
+
+const getBaseLocationData = async ({ adm0, adm1, adm2 }) => {
+  const [countriesData, regionsData, subRegionsData] = await Promise.all([
+    getCountriesProvider(),
+    adm1 ? getRegionsProvider({ adm0 }) : null,
+    adm2 ? getSubRegionsProvider({ adm0, adm1 }) : null,
+  ]);
+
+  const { data: countries } = countriesData || {};
+  const { data: regions } = regionsData || {};
+  const { data: subRegions } = subRegionsData || {};
+
+  const country = findByIso(countries, adm0);
+  const region = adm1 ? findById(regions, `${adm0}.${adm1}_`) : null;
+  const subRegion = adm2
+    ? findById(subRegions, `${adm0}.${adm1}.${adm2}_`)
+    : null;
+
+  return { country, region, subRegion };
+};
 
 export const countryConfig = {
-  adm0: (params) =>
-    cartoRequest(
-      `/sql?q=SELECT iso, name_engli as name FROM gadm36_countries WHERE iso = '${params.adm0}' AND iso != 'XCA' AND iso != 'TWN'`
-    ).then((response) => {
-      const { name, ...props } = response?.data?.rows?.[0];
+  adm0: async ({ adm0 }) => {
+    const { country } = await getBaseLocationData({ adm0 });
+    const { name, ...props } = country || {};
 
-      return {
-        locationName: name,
-        ...props,
-      };
-    }),
-  adm1: (params) =>
-    cartoRequest(
-      `/sql?q=SELECT iso, gid_1 as id, name_0 as adm0, name_1 as adm1 FROM gadm36_adm1 WHERE gid_1 = '${params.adm0}.${params.adm1}_1' AND iso != 'XCA' AND iso != 'TWN'`
-    ).then((response) => {
-      const { adm1, adm0, ...props } = response?.data?.rows?.[0];
+    return {
+      locationName: name,
+      ...props,
+    };
+  },
+  adm1: async ({ adm0, adm1 }) => {
+    const { country, region } = await getBaseLocationData({ adm0, adm1 });
+    const { name, ...props } = region || {};
 
-      return {
-        locationName: `${adm1}, ${adm0}`,
-        ...props,
-      };
-    }),
-  adm2: (params) =>
-    cartoRequest(
-      `/sql?q=SELECT gid_2, name_0 as adm0, name_1 as adm1, name_2 as adm2 FROM gadm36_adm2 WHERE gid_2 = '${params.adm0}.${params.adm1}.${params.adm2}_1' AND iso != 'XCA' AND iso != 'TWN'`
-    ).then((response) => {
-      const { adm2, adm1, adm0, ...props } = response?.data?.rows?.[0];
+    return {
+      locationName: `${name}, ${country?.name}`,
+      ...props,
+    };
+  },
+  adm2: async ({ adm0, adm1, adm2 }) => {
+    const { country, region, subRegion } = await getBaseLocationData({
+      adm0,
+      adm1,
+      adm2,
+    });
+    const { name, ...props } = subRegion || {};
 
-      return {
-        locationName: `${adm2}, ${adm1}, ${adm0}`,
-        ...props,
-      };
-    }),
+    return {
+      locationName: `${name}, ${country?.name}, ${region?.name}`,
+      ...props,
+    };
+  },
 };
 
 export const geostoreConfig = {
