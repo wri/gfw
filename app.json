@@ -15,15 +15,6 @@
     "NEXT_PUBLIC_ANALYTICS_PROPERTY_ID": {
       "required": true
     },
-    "NEXT_PUBLIC_AWS_ACCESS_KEY_ID": {
-      "required": true
-    },
-    "NEXT_PUBLIC_AWS_REGION": {
-      "required": true
-    },
-    "NEXT_PUBLIC_AWS_SECRET_ACCESS_KEY": {
-      "required": true
-    },
     "NEXT_PUBLIC_BITLY_TOKEN": {
       "required": true
     },
