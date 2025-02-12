@@ -49,6 +49,14 @@ export default {
   },
   settingsConfig: [
     {
+      key: 'forestType',
+      label: 'Forest Type',
+      whitelist: ['plantations'],
+      type: 'select',
+      placeholder: 'All tree cover',
+      clearable: true,
+    },
+    {
       key: 'tscDriverGroup',
       label: 'drivers',
       type: 'select',
@@ -101,10 +109,14 @@ export default {
   sentences: {
     initial:
       'In {location} from {startYear} to {endYear}, {permPercent} of tree cover loss occurred in areas where the dominant drivers of loss resulted in {deforestation}.',
+    initialWithIndicator:
+      'In {location} from {startYear} to {endYear}, {permPercent} of tree cover loss in {indicator} occurred in areas where the dominant drivers of loss resulted in {deforestation}.',
     noLoss:
       'In {location} from {startYear} to {endYear}, <b>no</b> tree cover loss occurred in areas where the dominant drivers of loss resulted in {deforestation}.',
     globalInitial:
       '{location} from {startYear} to {endYear}, {permPercent} of tree cover loss occurred in areas where the dominant drivers of loss resulted in {deforestation}.',
+    globalWithIndicator:
+      '{location} from {startYear} to {endYear}, {permPercent} of tree cover loss in {indicator} occurred in areas where the dominant drivers of loss resulted in {deforestation}.',
   },
   whitelists: {
     checkStatus: true,
