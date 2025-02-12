@@ -13,6 +13,7 @@ import tscLossCategories from 'data/tsc-loss-categories.json';
 
 // get list data
 const getLoss = (state) => state.data && state.data.loss;
+const getIndicator = (state) => state.indicator;
 const getSettings = (state) => state.settings;
 const getLocationName = (state) => state.locationLabel;
 const getColors = (state) => state.colors;
@@ -206,15 +207,22 @@ export const parseConfig = createSelector(
 export const parseSentence = createSelector(
   [
     getFilteredData,
+    getIndicator,
     getAllLoss,
     getSettings,
     getLocationName,
     getSentences,
     getPermCats,
   ],
-  (data, allLoss, settings, locationName, sentences, permCats) => {
+  (data, indicator, allLoss, settings, locationName, sentences, permCats) => {
     if (isEmpty(data)) return null;
-    const { initial, globalInitial, noLoss } = sentences;
+    const {
+      initial,
+      initialWithIndicator,
+      globalInitial,
+      globalWithIndicator,
+      noLoss,
+    } = sentences;
     const { startYear, endYear } = settings;
 
     const filteredLoss =
@@ -226,11 +234,17 @@ export const parseSentence = createSelector(
       (allLoss && allLoss.length && sumBy(allLoss, 'area')) || 0;
     const permPercent = (permLoss && (permLoss / totalLoss) * 100) || 0;
 
-    let sentence = locationName === 'global' ? globalInitial : initial;
+    let sentence = indicator ? initialWithIndicator : initial;
+
     if (!permLoss) sentence = noLoss;
+
+    if (locationName === 'global') {
+      sentence = indicator ? globalWithIndicator : globalInitial;
+    }
 
     const params = {
       location: locationName === 'global' ? 'Globally' : locationName,
+      indicator: indicator && indicator.label,
       startYear,
       endYear,
       permPercent: formatNumber({ num: permPercent, unit: '%' }),
