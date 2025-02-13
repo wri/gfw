@@ -25,10 +25,10 @@ const getWDPAGeostore = ({ id, token }) =>
   );
 
 /**
- * Push the parameters from the area clicked to the URL query
- * @param {string} url - Url with the Resource Watch endpoint
+ * Fetch geostore from Data API
+ * @param {string} url - geostore path e.g /geostore/admin/BRA/25/390
  * @param {string} token - Optional token for axios cancelToken
- * @return {object} - An object with geojson and bbox objects and area id
+ * @return {object} - An object with area id, geojson and bbox objects
  *
  */
 const fetchGeostore = ({ url, token }) =>
