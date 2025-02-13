@@ -33,7 +33,7 @@ const getWDPAGeostore = ({ id, token }) =>
  */
 const fetchGeostore = ({ url, token }) =>
   dataRequest
-    .get(`https://data-api.globalforestwatch.org/${url}`, {
+    .get(`https://data-api.globalforestwatch.org${url}`, {
       cancelToken: token,
     })
     .then((response) => {
