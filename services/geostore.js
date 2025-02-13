@@ -33,12 +33,14 @@ const getWDPAGeostore = ({ id, token }) =>
  */
 const fetchGeostore = ({ url, token }) =>
   dataRequest
-    .get(`https://data-api.globalforestwatch.org${url}`, {
-      cancelToken: token,
-    })
+    .get(
+      `https://data-api.globalforestwatch.org${url}?source[provider]=gadm&source[version]=3.6`,
+      {
+        cancelToken: token,
+      }
+    )
     .then((response) => {
       const { attributes: geostore } = response?.data || {};
-      console.log('RESPONSE', response?.data);
 
       return {
         geojson: geostore?.geojson,
