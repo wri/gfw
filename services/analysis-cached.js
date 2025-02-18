@@ -2836,8 +2836,8 @@ export const getOrganicSoilCarbonGrouped = (params) => {
   return dataRequest.get(url).then((response) => {
     return response?.data?.map((d) => ({
       ...d,
-      biomass: d.gfw_soil_carbon_stocks_2000__Mg_C,
-      biomassDensity: d.soil_carbon_density__t_ha,
+      biomass: d.gfw_soil_carbon_stocks_2000__Mg_C || 0,
+      biomassDensity: d.soil_carbon_density__t_ha || 0,
     }));
   });
 };
