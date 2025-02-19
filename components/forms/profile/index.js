@@ -18,7 +18,7 @@ const splitLastName = (fullName) => {
 };
 
 const mapStateToProps = ({ myGfw, countryData }) => {
-  const { howDoYouUse, subsector, firstName, fullName, lastName } =
+  const { howDoYouUse, subsector, firstName, fullName, lastName, email } =
     myGfw.data || {};
 
   const subsectorHasOther = subsector && subsector.includes('Other');
@@ -43,6 +43,7 @@ const mapStateToProps = ({ myGfw, countryData }) => {
       myGfw.data && {
         initialValues: {
           ...myGfw.data,
+          old_email: email,
           firstName: firstName || (fullName && splitFirstName(fullName)),
           lastName: lastName || (fullName && splitLastName(fullName)),
           subsector: subsectorOther ? 'Other:' : subsector,
