@@ -391,7 +391,6 @@ export const getLossNaturalForest = (params) => {
     ...params,
     dataset: 'annual',
     datasetType: 'change',
-    version: 'v20240815',
   });
 
   if (!requestUrl) {
@@ -1104,7 +1103,6 @@ export const getNaturalForest = async (params) => {
     ...params,
     dataset: 'annual',
     datasetType: 'summary',
-    version: 'v20240815',
   });
 
   if (!requestUrl) {
@@ -1221,7 +1219,6 @@ export const getExtentNaturalForest = (params) => {
     ...params,
     dataset: 'annual',
     datasetType: 'summary',
-    version: 'v20240815',
   });
 
   if (!requestUrl) {
