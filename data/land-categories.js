@@ -107,6 +107,22 @@ export default [
     ],
   },
   {
+    label: 'Global peat lands',
+    preserveString: true,
+    dataType: 'keyword',
+    value: '', // still need to change to global peat lands
+    metaKey: '', // still need to change to global peat lands
+    tableKey: 'is__gfw_peatlands',
+    global: false,
+    datasets: [
+      {
+        dataset: IND_PEAT_LANDS_DATASET, // still need to change to global peat lands
+        layers: [IND_PEAT_LANDS], // still need to change to global peat lands
+      },
+    ],
+    hidden: true, // FIXME: we are temporary hiding this option until further notice, see FLAG-827 for reference.
+  },
+  {
     label: 'Indonesia & Malaysia peat lands',
     preserveString: true,
     dataType: 'keyword',
