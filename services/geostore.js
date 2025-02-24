@@ -1,10 +1,6 @@
-import { apiRequest } from 'utils/request';
+import { apiRequest, dataRequest } from 'utils/request';
 
 import { getDatasetQuery, getDatasetGeostore } from 'services/datasets';
-
-import BBOXS from 'data/bboxs.json';
-
-const LARGE_ISOS = ['USA', 'RUS', 'CAN', 'CHN', 'BRA', 'IDN', 'AUS'];
 
 const getWDPAGeostore = ({ id, token }) =>
   getDatasetQuery({
@@ -28,25 +24,54 @@ const getWDPAGeostore = ({ id, token }) =>
     })
   );
 
+/**
+ * Fetch geostore from Data API
+ * @param {string} url - geostore path e.g /geostore/admin/BRA/25/390
+ * @param {string} token - Optional token for axios cancelToken
+ * @return {object} - An object with area id, geojson and bbox objects
+ *
+ */
+const fetchGeostore = ({ url, token }) =>
+  dataRequest
+    .get(
+      `https://data-api.globalforestwatch.org${url}?source[provider]=gadm&source[version]=3.6`,
+      {
+        cancelToken: token,
+      }
+    )
+    .then((response) => {
+      const { attributes: geostore } = response?.data || {};
+
+      return {
+        geojson: geostore?.geojson,
+        id: geostore?.hash,
+        bbox: geostore?.bbox,
+      };
+    });
+
 export const getGeostore = ({ type, adm0, adm1, adm2, token }) => {
   if (!type || !adm0) return null;
 
-  let thresh = adm1 ? 0.0005 : 0.005;
-  let url = '/v2/geostore';
+  const adminURL = `/geostore/admin/${adm0}${adm1 ? `/${adm1}` : ''}${
+    adm2 ? `/${adm2}` : ''
+  }`;
 
   switch (type) {
     case 'country':
-      thresh = LARGE_ISOS.includes(adm0) ? 0.05 : 0.005;
-      url = url.concat(
-        `/admin/${adm0}${adm1 ? `/${adm1}` : ''}${adm2 ? `/${adm2}` : ''}`
-      );
-      break;
+      return fetchGeostore({
+        url: adminURL,
+        token,
+      });
     case 'use':
-      url = url.concat(`/use/${adm0}/${adm1}`);
-      break;
+      return fetchGeostore({
+        url: `/geostore/use/${adm0}${adm1 ? `/${adm1}` : ''}`,
+        token,
+      });
     case 'geostore':
-      url = url.concat(`/${adm0}`);
-      break;
+      return fetchGeostore({
+        url: `/geostore/use/${adm0}`,
+        token,
+      });
     case 'wdpa':
       return getWDPAGeostore({
         id: adm0,
@@ -55,17 +80,6 @@ export const getGeostore = ({ type, adm0, adm1, adm2, token }) => {
     default:
       return false;
   }
-
-  return apiRequest
-    .get(`${url}?thresh=${thresh}`, { cancelToken: token })
-    .then((response) => {
-      const { attributes: geostore } = response?.data?.data || {};
-      return {
-        ...geostore,
-        id: geostore?.hash,
-        bbox: BBOXS[adm0] || geostore?.bbox,
-      };
-    });
 };
 
 export const saveGeostore = (geojson, onUploadProgress, onDownloadProgress) => {
