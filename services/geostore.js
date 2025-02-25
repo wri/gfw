@@ -50,7 +50,7 @@ const setThreshold = (iso, adm1, adm2) => {
  * @return {object} - An object with area id, geojson and bbox objects
  *
  */
-const fetchGeostore = ({ url, token, queryParams }) => {
+const fetchGeostore = ({ url, token, queryParams = '' }) => {
   return dataRequest
     .get(`https://data-api.globalforestwatch.org${url}?${queryParams}`, {
       cancelToken: token,
