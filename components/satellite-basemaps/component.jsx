@@ -63,6 +63,15 @@ const SatelliteBasemaps = ({
     }
   }, [isTropics, defaultSatSet]);
 
+  let sortedBasemaps = basemaps;
+  if (basemaps.length >= 4) {
+    sortedBasemaps = [
+      basemaps[1],
+      ...basemaps.slice(0, 1),
+      ...basemaps.slice(2),
+    ];
+  }
+
   const handleToggleActive = () => {
     setOpen(!activeBasemap.active);
     setMapBasemap({
@@ -142,7 +151,7 @@ const SatelliteBasemaps = ({
         <section className="satellite-basemaps">
           <h4>SATELLITE IMAGERY</h4>
           <ul>
-            {basemaps.map((basemap) => {
+            {sortedBasemaps.map((basemap) => {
               return (
                 <li
                   key={`satellite-basemap-${basemap.value}`}

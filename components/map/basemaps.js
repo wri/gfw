@@ -51,6 +51,7 @@ export default {
     baseStyle: false,
     hasSettings: false,
     infoModal: 'satellite_basemap',
+    caveat: '(global)',
     image: satelliteImage,
     basemapGroup: 'basemap-satellite',
     labelsGroup: 'labels-dark',
