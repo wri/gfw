@@ -19,7 +19,6 @@ export const fetchGeostore = createThunkAction(
   'fetchGeostore',
   (params) => (dispatch) => {
     const { type, adm0, adm1, adm2, token } = params;
-
     if (type && adm0) {
       dispatch(setGeostoreLoading({ loading: true, error: false }));
       getGeostore({ type, adm0, adm1, adm2, token })

@@ -52,9 +52,8 @@ const fetchGeostore = ({ url, token }) =>
 export const getGeostore = ({ type, adm0, adm1, adm2, token }) => {
   if (!type || !adm0) return null;
 
-  const adminURL = `/geostore/admin/${adm0}${adm1 ? `/${adm1}` : ''}${
-    adm2 ? `/${adm2}` : ''
-  }`;
+  const adminURL = `/geostore/admin/${adm0}${adm1 ? `/${adm1}` : ''}${adm2 ? `/${adm2}` : ''
+    }`;
 
   switch (type) {
     case 'country':
