@@ -25,20 +25,36 @@ const getWDPAGeostore = ({ id, token }) =>
   );
 
 /**
+ * Calculate the threshold for geostore endpoint
+ * Big countries has a different threshold. eg. Brazil
+ * @param {string} iso - admin level 0 (e.g BRA)
+ * @param {string} adm1 - admin level 1 (e.g 25)
+ * @param {string} adm2 - admin level 2 (e.g 390)
+ * @return {number} - threshold value
+ *
+ */
+const setThreshold = (iso, adm1, adm2) => {
+  const bigCountries = ['USA', 'RUS', 'CAN', 'CHN', 'BRA', 'IDN'];
+  const baseThresh = bigCountries.includes(iso) ? 0.1 : 0.005;
+  if (iso && !adm1 && !adm2) {
+    return baseThresh;
+  }
+  return adm1 && !adm2 ? baseThresh / 10 : baseThresh / 100;
+};
+
+/**
  * Fetch geostore from Data API
  * @param {string} url - geostore path e.g /geostore/admin/BRA/25/390
  * @param {string} token - Optional token for axios cancelToken
+ * @param {string} queryParams - Optional query parameters
  * @return {object} - An object with area id, geojson and bbox objects
  *
  */
-const fetchGeostore = ({ url, token }) =>
-  dataRequest
-    .get(
-      `https://data-api.globalforestwatch.org${url}?source[provider]=gadm&source[version]=3.6`,
-      {
-        cancelToken: token,
-      }
-    )
+const fetchGeostore = ({ url, token, queryParams = '' }) => {
+  return dataRequest
+    .get(`https://data-api.globalforestwatch.org${url}?${queryParams}`, {
+      cancelToken: token,
+    })
     .then((response) => {
       const { attributes: geostore } = response?.data || {};
 
@@ -48,28 +64,35 @@ const fetchGeostore = ({ url, token }) =>
         bbox: geostore?.bbox,
       };
     });
+};
 
 export const getGeostore = ({ type, adm0, adm1, adm2, token }) => {
   if (!type || !adm0) return null;
 
-  const adminURL = `/geostore/admin/${adm0}${adm1 ? `/${adm1}` : ''}${
-    adm2 ? `/${adm2}` : ''
-  }`;
+  const sourceProvider = 'source[provider]=gadm';
+  const sourceVersion = 'source[version]=3.6';
+  const threshold = `simplify=${setThreshold(adm0, adm1, adm2)}`;
+  const queryParams = `${sourceProvider}&${sourceVersion}`;
 
   switch (type) {
     case 'country':
       return fetchGeostore({
-        url: adminURL,
+        url: `/geostore/admin/${adm0}${adm1 ? `/${adm1}` : ''}${
+          adm2 ? `/${adm2}` : ''
+        }`,
+        queryParams: `${queryParams}&${threshold}`,
         token,
       });
     case 'use':
       return fetchGeostore({
-        url: `/geostore/use/${adm0}${adm1 ? `/${adm1}` : ''}`,
+        url: `/geostore/use/${adm0}/${adm1}`,
+        queryParams,
         token,
       });
     case 'geostore':
       return fetchGeostore({
-        url: `/geostore/use/${adm0}`,
+        url: `/geostore/${adm0}`,
+        queryParams,
         token,
       });
     case 'wdpa':
