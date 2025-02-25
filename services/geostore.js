@@ -72,7 +72,7 @@ export const getGeostore = ({ type, adm0, adm1, adm2, token }) => {
   const sourceProvider = 'source[provider]=gadm';
   const sourceVersion = 'source[version]=3.6';
   const threshold = `simplify=${setThreshold(adm0, adm1, adm2)}`;
-  const queryParams = `${sourceProvider}&${sourceVersion}&${threshold}`;
+  const queryParams = `${sourceProvider}&${sourceVersion}`;
 
   switch (type) {
     case 'country':
@@ -80,7 +80,7 @@ export const getGeostore = ({ type, adm0, adm1, adm2, token }) => {
         url: `/geostore/admin/${adm0}${adm1 ? `/${adm1}` : ''}${
           adm2 ? `/${adm2}` : ''
         }`,
-        queryParams,
+        queryParams: `${queryParams}&${threshold}`,
         token,
       });
     case 'use':
