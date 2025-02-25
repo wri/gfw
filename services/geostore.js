@@ -24,13 +24,22 @@ const getWDPAGeostore = ({ id, token }) =>
     })
   );
 
-const parseSimplifyGeom = (iso, id1, id2) => {
+/**
+ * Calculate the threshold for geostore endpoint
+ * Big countries has a different threshold. eg. Brazil
+ * @param {string} iso - admin level 0 (e.g BRA)
+ * @param {string} adm1 - admin level 1 (e.g 25)
+ * @param {string} adm2 - admin level 2 (e.g 390)
+ * @return {number} - threshold value
+ *
+ */
+const setThreshold = (iso, adm1, adm2) => {
   const bigCountries = ['USA', 'RUS', 'CAN', 'CHN', 'BRA', 'IDN'];
   const baseThresh = bigCountries.includes(iso) ? 0.1 : 0.005;
-  if (iso && !id1 && !id2) {
+  if (iso && !adm1 && !adm2) {
     return baseThresh;
   }
-  return id1 && !id2 ? baseThresh / 10 : baseThresh / 100;
+  return adm1 && !adm2 ? baseThresh / 10 : baseThresh / 100;
 };
 
 /**
@@ -62,7 +71,7 @@ export const getGeostore = ({ type, adm0, adm1, adm2, token }) => {
 
   const sourceProvider = 'source[provider]=gadm';
   const sourceVersion = 'source[version]=3.6';
-  const threshold = `simplify=${parseSimplifyGeom(adm0, adm1, adm2)}`;
+  const threshold = `simplify=${setThreshold(adm0, adm1, adm2)}`;
   const queryParams = `${sourceProvider}&${sourceVersion}&${threshold}`;
 
   switch (type) {
