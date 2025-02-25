@@ -85,13 +85,13 @@ export const getGeostore = ({ type, adm0, adm1, adm2, token }) => {
       });
     case 'use':
       return fetchGeostore({
-        url: `/geostore/use/${adm0}${adm1 ? `/${adm1}` : ''}`,
+        url: `/geostore/use/${adm0}/${adm1}`,
         queryParams,
         token,
       });
     case 'geostore':
       return fetchGeostore({
-        url: `/geostore/use/${adm0}`,
+        url: `/geostore/${adm0}`,
         queryParams,
         token,
       });
