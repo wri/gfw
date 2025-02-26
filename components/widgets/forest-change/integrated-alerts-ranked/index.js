@@ -98,6 +98,7 @@ export default {
       layers: [GLAD_ALERTS],
     },
   ],
+  noStatements: true,
   sortOrder: {
     summary: 6,
     forestChange: 10,
