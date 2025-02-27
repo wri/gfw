@@ -19,11 +19,11 @@ function handleTitle(basemap) {
   return (
     <>
       <span className="label-caveat">
-        <span className="label">{basemap.label}</span>
+        <span className="label">{basemap?.label || ''}</span>
         {basemap?.caveat && <span className="caveat">{basemap.caveat}</span>}
       </span>
-      {basemap.value === 'planet' &&
-        basemap.active &&
+      {basemap?.value === 'planet' &&
+        basemap?.active &&
         basemap?.planetPeriod?.period && (
           <span className="title-active-value">
             {basemap.planetPeriod.period}
@@ -73,27 +73,27 @@ const SatelliteBasemaps = ({
   }
 
   const handleToggleActive = () => {
-    setOpen(!activeBasemap.active);
+    setOpen(!activeBasemap?.active);
     setMapBasemap({
-      value: activeBasemap.active ? 'default' : activeBasemap.value,
-      ...(activeBasemap.value === 'planet' && {
+      value: activeBasemap?.active ? 'default' : activeBasemap?.value,
+      ...(activeBasemap?.value === 'planet' && {
         color: '',
         name: planetPeriods[planetPeriods.length - 1].value,
         imageType: planetPeriods[planetPeriods.length - 1].imageType,
       }),
-      ...(activeBasemap.value === 'landsat' && {
+      ...(activeBasemap?.value === 'landsat' && {
         year: landsatYear,
       }),
     });
     setMainMapSettings({
-      showRecentImagery: activeBasemap.active
+      showRecentImagery: activeBasemap?.active
         ? false
-        : activeBasemap.value === 'recentImagery',
+        : activeBasemap?.value === 'recentImagery',
     });
     trackEvent({
       category: 'Map data',
       action: 'Basemap changed',
-      label: upperFirst(activeBasemap.value),
+      label: upperFirst(activeBasemap?.value),
     });
   };
 
@@ -125,15 +125,15 @@ const SatelliteBasemaps = ({
       <header className="header">
         <button
           className="show-satellite-basemap-btn"
-          title={`${activeBasemap.active ? 'Disable' : 'Enable'} ${
-            activeBasemap.label
+          title={`${activeBasemap?.active ? 'Disable' : 'Enable'} ${
+            activeBasemap?.label || ''
           }`}
           onClick={handleToggleActive}
         >
           <Checkbox
             id="satellite-imagery-checkbox"
             className="satellite-basemap-checkbox"
-            value={activeBasemap.active}
+            value={activeBasemap?.active}
           />
         </button>
         <button
