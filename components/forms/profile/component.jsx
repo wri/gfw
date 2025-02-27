@@ -14,6 +14,7 @@ import Submit from 'components/forms/components/submit';
 import ConfirmationMessage from 'components/confirmation-message';
 import Button from 'components/ui/button';
 import Error from 'components/forms/components/error';
+import { preferredLanguages } from 'components/forms/profile/config';
 
 import {
   email as validateEmail,
@@ -95,6 +96,11 @@ class ProfileForm extends PureComponent {
                         validate={[validateEmail]}
                         required
                       />
+                      <Input
+                        name="old_email"
+                        type="hidden"
+                        value={initialValues.old_email}
+                      />
                       <Select
                         name="sector"
                         label="sector"
@@ -155,15 +161,17 @@ class ProfileForm extends PureComponent {
                         label="What topics are you interested in?"
                         multiple
                         required
-                        options={[
-                          ...sortBy(
-                            interests.map((r) => ({
-                              label: r,
-                              value: r.replace(/( )+|(\/)+/g, '_'),
-                            })),
-                            'label'
-                          ),
-                        ]}
+                        options={interests.map((r) => ({
+                          label: r,
+                          value: r.replace(/( )+|(\/)+/g, '_').toLowerCase(),
+                        }))}
+                      />
+                      <Select
+                        name="preferred_language"
+                        label="Preferred Language"
+                        description="Please note that most communications will be sent in English."
+                        placeholder="Select a preferred language"
+                        options={preferredLanguages}
                       />
                       <Checkbox
                         name="howDoYouUse"
@@ -207,6 +215,11 @@ class ProfileForm extends PureComponent {
                       <Checkbox
                         name="signUpForTesting"
                         label="Would you like to help us test new application features?"
+                        options={[{ label: 'Yes', value: 'true' }]}
+                      />
+                      <Checkbox
+                        name="receive_updates"
+                        label="WOULD YOU LIKE TO RECEIVE UPDATES ON NEWS AND EVENTS FROM GLOBAL FOREST?"
                         options={[{ label: 'Yes', value: 'true' }]}
                       />
                       <Error
