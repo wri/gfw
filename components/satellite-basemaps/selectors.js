@@ -49,7 +49,7 @@ export const getActiveDynoBasemap = createSelector(
     if (!basemaps || !activeBasemap) {
       return null;
     }
-    const defaultBasemap = find(basemaps, { value: 'planet' });
+    const defaultBasemap = find(basemaps, { value: 'satellite' });
     const dynoBasemap = find(basemaps, { value: activeBasemap.value });
 
     if (dynoBasemap) {
