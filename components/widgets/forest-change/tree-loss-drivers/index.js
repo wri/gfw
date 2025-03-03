@@ -14,7 +14,10 @@ import {
 import treeLoss from 'components/widgets/forest-change/tree-loss';
 import { getExtent, getLoss } from 'services/analysis-cached';
 
+import { createRequestByGeostoryId, getDataByGeostoreId, getDataFromLink } from 'services/datamart';
+import { DATA_API_URL } from 'utils/request';
 import getWidgetProps from './selectors';
+
 
 const MIN_YEAR = 2001;
 const MAX_YEAR = 2023;
@@ -121,8 +124,30 @@ export default {
   whitelists: {
     checkStatus: true,
   },
-  getData: (params) =>
-    all([
+  getData: async (params) => {
+    const response = await getDataByGeostoreId({ geostoreId: '972c24e1da2c2baacc7572ee9501abde', canopy: 1 });
+
+    if (response.status !== 404) {
+      // then fetch the data:
+      console.log('link exists, need to fetch: ', response.link);
+      const firstTry = await getDataFromLink({ url: response.link });
+      console.log('firstTry: ', firstTry);
+    } else {
+      // make post to create the data in back end
+      console.log('make post to create the data in back end');
+      const submitted = await createRequestByGeostoryId({ geostoreId: '972c24e1da2c2baacc7572ee9501abde', canopy: 1 });
+      console.log('> submitted: ', submitted);
+
+      // get link and fetch
+      const secondTry = await getDataFromLink({ url: submitted.data.link.replace(DATA_API_URL, '') });
+
+      // TODO: 
+
+      console.log('secondTry: ', secondTry);
+    }
+
+    /*
+    return all([
       getLoss({ ...params, landCategory: 'tsc', lossTsc: true }),
       getExtent({ ...params }),
     ]).then(
@@ -154,7 +179,9 @@ export default {
           },
         };
       })
-    ),
+    );
+    */
+  },
   getDataURL: (params) => [
     getLoss({
       ...params,
