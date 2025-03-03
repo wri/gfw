@@ -50,9 +50,9 @@ const SatelliteBasemaps = ({
   useEffect(() => {
     if (isTropics && !defaultSatSet) {
       setMapBasemap({
-        value: 'planet',
+        value: 'satellite',
         color: '',
-        name: planetPeriods[planetPeriods.length - 1].value,
+        name: '',
       });
       setDefaultSatSet(true);
       trackEvent({
