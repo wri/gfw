@@ -98,6 +98,8 @@ const SatelliteBasemaps = ({
   };
 
   const handleSetSatelliteBasemap = (e, value) => {
+    console.log('val: ', value);
+    console.log('planetPeriods: ', planetPeriods);
     e.stopPropagation();
     setMapBasemap({
       value,
