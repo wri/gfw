@@ -16,13 +16,13 @@ const parseArea = (area) => {
     },
     ...(iso &&
       iso.country && {
-      admin: {
-        adm0: iso.country,
-        adm1: iso.region,
-        adm2: iso.subregion,
-        ...admin,
-      },
-    }),
+        admin: {
+          adm0: iso.country,
+          adm1: iso.region,
+          adm2: iso.subregion,
+          ...admin,
+        },
+      }),
     userArea: true,
   };
 };
@@ -39,7 +39,7 @@ export const getArea = (id, userToken = null) =>
     .then((areaResponse) => {
       const { data: area } = areaResponse.data;
 
-      return parseArea(area)
+      return parseArea(area);
     });
 
 export const getAreas = () => {
@@ -48,23 +48,27 @@ export const getAreas = () => {
     .then((areasResponse) => {
       const { data: areas } = areasResponse.data;
 
-      return areas.map((area) => parseArea(area))
-    })
+      return areas.map((area) => parseArea(area));
+    });
 
   const gadm41 = apiAuthRequest
     .get(`${REQUEST_URL}?source[provider]=gadm&source[version]=4.1`)
-    .then((areasResponse) => {
-      const { data: areas } = areasResponse.data;
+    .then(() => {
+      // Commenting this logic to avoid gadm 4.1 in production
+      // .then((areasResponse) => {
+      // const { data: areas } = areasResponse.data;
 
-      return areas.map((area) => parseArea(area))
-    })
+      // return areas.map((area) => parseArea(area))
+
+      return [];
+    });
 
   return Promise.all([gadm36, gadm41]).then(([areas36, areas41]) => {
     // logic to return only unique values, preferring 4.1 over 3.6
     const areasMap = new Map();
 
-    areas36.map(area => areasMap.set(area.id, area));
-    areas41.map(area => areasMap.set(area.id, area));
+    areas36.map((area) => areasMap.set(area.id, area));
+    areas41.map((area) => areasMap.set(area.id, area));
 
     return Array.from(areasMap.values());
   });
