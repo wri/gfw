@@ -53,14 +53,10 @@ export const getAreas = () => {
 
   const gadm41 = apiAuthRequest
     .get(`${REQUEST_URL}?source[provider]=gadm&source[version]=4.1`)
-    .then(() => {
-      // Commenting this logic to avoid gadm 4.1 in production
-      // .then((areasResponse) => {
-      // const { data: areas } = areasResponse.data;
+    .then((areasResponse) => {
+      const { data: areas } = areasResponse.data;
 
-      // return areas.map((area) => parseArea(area))
-
-      return [];
+      return areas.map((area) => parseArea(area));
     });
 
   return Promise.all([gadm36, gadm41]).then(([areas36, areas41]) => {
