@@ -1,6 +1,6 @@
 import { jest } from '@jest/globals';
 
-import { getArea, getAreas, saveArea, deleteArea } from '../areas';
+import { getAreas, saveArea, deleteArea } from '../areas';
 import { apiAuthRequest } from '../../utils/request';
 import { trackEvent } from '../../utils/analytics';
 
@@ -26,32 +26,13 @@ describe('Areas Service', () => {
     jest.clearAllMocks();
   });
 
-  describe('Getting a Single Area', () => {
-    describe('The Request to the API', () => {
-      it('should add source params for gadm 3.6', async () => {
-        // arrange
-        apiAuthRequest.get.mockResolvedValueOnce({
-          data: { data: { attributes: {} } },
-        });
-
-        // act
-        await getArea('abcdef123456789');
-
-        // assert
-        expect(apiAuthRequest.get).toHaveBeenCalledWith(
-          '/v2/area/abcdef123456789?source[provider]=gadm&source[version]=3.6',
-          {
-            headers: {},
-          }
-        );
-      });
-    });
-  });
-
   describe('Getting Multiple Areas', () => {
     describe('The Request to the API', () => {
-      it('should add source params for gadm 3.6', async () => {
+      it('should add source params for gadm', async () => {
         // arrange
+        apiAuthRequest.get.mockResolvedValueOnce({
+          data: { data: [{ attributes: {} }] },
+        });
         apiAuthRequest.get.mockResolvedValueOnce({
           data: { data: [{ attributes: {} }] },
         });
@@ -65,7 +46,7 @@ describe('Areas Service', () => {
         );
       });
 
-      it('should return a valid array containing area item', async () => {
+      it('should return a valid array containing area item giving preferrence for gadm 4.1', async () => {
         // arrange
         apiAuthRequest.get.mockResolvedValueOnce({
           data: {
@@ -94,6 +75,33 @@ describe('Areas Service', () => {
             ],
           },
         });
+        apiAuthRequest.get.mockResolvedValueOnce({
+          data: {
+            data: [
+              {
+                type: 'area',
+                id: '67892867738cd20016c88173',
+                attributes: {
+                  name: 'Brazil',
+                  admin: {
+                    adm0: 'BRA',
+                    source: {
+                      provider: 'gadm',
+                      version: '4.1',
+                    },
+                  },
+                  iso: {
+                    country: 'BRA',
+                    source: {
+                      provider: 'gadm',
+                      version: '4.1',
+                    },
+                  },
+                },
+              },
+            ],
+          },
+        });
 
         // act
         const result = await getAreas();
@@ -107,14 +115,16 @@ describe('Areas Service', () => {
               adm0: 'BRA',
               source: {
                 provider: 'gadm',
-                version: '3.6',
+                // version: '4.1',
+                version: '3.6', // remove it before release gadm 4.1
               },
             },
             iso: {
               country: 'BRA',
               source: {
                 provider: 'gadm',
-                version: '3.6',
+                // version: '4.1',
+                version: '3.6', // remove it before release gadm 4.1
               },
             },
             use: {},
