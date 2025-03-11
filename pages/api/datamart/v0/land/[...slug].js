@@ -28,7 +28,6 @@ import { GFW_DATA_API, GFW_STAGING_DATA_API } from 'utils/apis';
 
 const ENVIRONMENT = process.env.NEXT_PUBLIC_FEATURE_ENV;
 
-// We never use the staging api
 export const DATA_API_URL =
   ENVIRONMENT === 'staging' ? GFW_STAGING_DATA_API : GFW_DATA_API;
 

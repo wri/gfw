@@ -1,5 +1,10 @@
 import qs from 'qs';
 import { dataRequest } from 'utils/request';
+import { GFW_DATA_API, GFW_STAGING_DATA_API } from 'utils/apis';
+
+const ENVIRONMENT = process.env.NEXT_PUBLIC_FEATURE_ENV;
+export const DATA_API_URL =
+  ENVIRONMENT === 'staging' ? GFW_STAGING_DATA_API : GFW_DATA_API;
 
 /**
  * @typedef {object} DataLinkObject
@@ -84,6 +89,12 @@ export const createRequestByGeostoryId = async ({
  * @param {string} request.url - url
  * @returns {Promise<GetResponseObject>} response.
  */
-export const getDataFromLink = ({ url }) => {
-  return dataRequest.get(url);
+export const getDataFromLink = async ({ url }) => {
+    const response = await dataRequest.get(url.replace(DATA_API_URL, ''));
+
+    if (response.data?.status === 'failed') {
+      throw new Error(response.data);
+    }
+
+    return response;
 };

@@ -125,7 +125,19 @@ export default {
     checkStatus: true,
   },
   getData: async (params) => {
-    const response = await getDataByGeostoreId({ geostoreId: '972c24e1da2c2baacc7572ee9501abde', canopy: 1 });
+    const {
+      adm0,
+      adm1,
+      adm2,
+      analysis,
+      dashboard,
+      geostore,
+      threshold,
+      type, // country, global etc
+    } = params;
+
+    // TODO: depending on type, send either geostore or adm0, adm1 etc
+    const response = await getDataByGeostoreId({ dataset: 'tree_cover_loss_by_driver', geostoreId: 'c3833748f6815d31bad47d47f147c0f0', canopy: threshold });
 
     if (response.status !== 404) {
       // then fetch the data:
@@ -135,11 +147,11 @@ export default {
     } else {
       // make post to create the data in back end
       console.log('make post to create the data in back end');
-      const submitted = await createRequestByGeostoryId({ geostoreId: '972c24e1da2c2baacc7572ee9501abde', canopy: 1 });
+      const submitted = await createRequestByGeostoryId({ dataset: 'tree_cover_loss_by_driver', geostoreId: 'c3833748f6815d31bad47d47f147c0f0', canopy: threshold });
       console.log('> submitted: ', submitted);
 
       // get link and fetch
-      const secondTry = await getDataFromLink({ url: submitted.data.link.replace(DATA_API_URL, '') });
+      const secondTry = await getDataFromLink({ url: submitted.data.link });
 
       // TODO: 
 
