@@ -6,6 +6,7 @@ import { format, differenceInMonths } from 'date-fns';
 
 const selectPlanetBasemaps = (state) => {
   // This can be either rgb<string> hex value <#xxx> or nir<string>
+  console.log('> selectPlanetBasemaps: ', state.planet?.data);
   return state.planet?.data;
 };
 
@@ -19,7 +20,9 @@ export const getPlanetBasemaps = createSelector(
   [selectPlanetBasemaps],
   (planetBasemaps) => {
     if (!planetBasemaps || isEmpty(planetBasemaps)) return null;
-    return sortBy(
+
+    console.log('> before sorting getPlanetBasemaps: ', planetBasemaps);
+    const res = sortBy(
       planetBasemaps.map(({ name, first_acquired, last_acquired } = {}) => {
         const startDate = cleanPlanetDate(first_acquired);
         const endDate = cleanPlanetDate(last_acquired);
@@ -62,5 +65,8 @@ export const getPlanetBasemaps = createSelector(
       }),
       'sortOrder'
     ).reverse();
+
+    console.log('> after sort: ', res);
+    return res;
   }
 );
