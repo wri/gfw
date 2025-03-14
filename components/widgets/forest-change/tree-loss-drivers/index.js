@@ -14,8 +14,7 @@ import {
 import treeLoss from 'components/widgets/forest-change/tree-loss';
 import { getExtent, getLoss } from 'services/analysis-cached';
 
-import { createRequestByGeostoryId, getDataByGeostoreId, getDataFromLink } from 'services/datamart';
-import { DATA_API_URL } from 'utils/request';
+import { fetchDataMart } from 'services/datamart';
 import getWidgetProps from './selectors';
 
 
@@ -135,28 +134,22 @@ export default {
       threshold,
       type, // country, global etc
     } = params;
+    const dataset = 'tree_cover_loss_by_driver';
 
     // TODO: depending on type, send either geostore or adm0, adm1 etc
-    const response = await getDataByGeostoreId({ dataset: 'tree_cover_loss_by_driver', geostoreId: 'c3833748f6815d31bad47d47f147c0f0', canopy: threshold });
+    const response = await fetchDataMart({
+      dataset,
+      geostoreId: 'c3833748f6815d31bad47d47f147c0f0',
+      isGlobal: false,
+      adm0: '',
+      adm1: '',
+      adm2: '',
+      isAnalyis: true,
+      threshold: 27,
+      isDownload: false,
+    });
 
-    if (response.status !== 404) {
-      // then fetch the data:
-      console.log('link exists, need to fetch: ', response.link);
-      const firstTry = await getDataFromLink({ url: response.link });
-      console.log('firstTry: ', firstTry);
-    } else {
-      // make post to create the data in back end
-      console.log('make post to create the data in back end');
-      const submitted = await createRequestByGeostoryId({ dataset: 'tree_cover_loss_by_driver', geostoreId: 'c3833748f6815d31bad47d47f147c0f0', canopy: threshold });
-      console.log('> submitted: ', submitted);
-
-      // get link and fetch
-      const secondTry = await getDataFromLink({ url: submitted.data.link });
-
-      // TODO: 
-
-      console.log('secondTry: ', secondTry);
-    }
+    return response;
 
     /*
     return all([
