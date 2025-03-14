@@ -40,15 +40,6 @@ export default {
       clearable: true,
     },
     {
-      key: 'landCategory',
-      label: 'Land Category',
-      type: 'select',
-      whitelist: ['mining', 'wdpa', 'landmark'],
-      placeholder: 'All categories',
-      clearable: true,
-      border: true,
-    },
-    {
       key: 'deforestationAlertsDataset',
       label: 'Alert type',
       type: 'select',
@@ -66,12 +57,6 @@ export default {
       type: 'switch',
       whitelist: ['%', 'ha'],
       border: true,
-    },
-    {
-      key: 'threshold',
-      label: 'canopy density',
-      type: 'mini-select',
-      metaKey: 'widget_canopy_density',
     },
   ],
   pendingKeys: ['extentYear', 'threshold'],
@@ -98,6 +83,7 @@ export default {
       layers: [GLAD_ALERTS],
     },
   ],
+  noStatements: true,
   sortOrder: {
     summary: 6,
     forestChange: 10,
