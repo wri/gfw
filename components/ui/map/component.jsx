@@ -271,6 +271,9 @@ class Map extends Component {
           onResize={this.onResize}
           onLoad={this.onLoad}
           getCursor={getCursor}
+          // If the `transitionDuration` is not 0, then the map becomes sluggish when panned or zoomed. Nevertheless,
+          // we still want a transition when flying between locations.
+          transitionDuration={flying ? viewport.transitionDuration || 0 : 0}
           transitionInterpolator={new FlyToInterpolator()}
           transitionEasing={easeCubic}
           preventStyleDiffing

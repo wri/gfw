@@ -48,7 +48,9 @@ export const getMapViewport = createSelector([getMapSettings], (settings) => {
     pitch,
     latitude: center?.lat,
     longitude: center?.lng,
-    transitionDuration: 500,
+    // The map transition needs to always be 0 otherwise the map becomes sluggish when panned or zoomed. Only set a
+    // different value when flying between locations and only temporarily.
+    transitionDuration: 0,
   };
 });
 
