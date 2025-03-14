@@ -40,15 +40,6 @@ export default {
       clearable: true,
     },
     {
-      key: 'landCategory',
-      label: 'Land Category',
-      type: 'select',
-      whitelist: ['mining', 'wdpa', 'landmark'],
-      placeholder: 'All categories',
-      clearable: true,
-      border: true,
-    },
-    {
       key: 'deforestationAlertsDataset',
       label: 'Alert type',
       type: 'select',
