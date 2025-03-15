@@ -107,7 +107,7 @@ class ChoseAnalysisContainer extends PureComponent {
       setAnalysisLoading({
         error: 'File too large',
         errorMessage:
-          'The recommended maximum fle size is 1MB. Anything larger than that may not work properly.'
+          'The recommended maximum file size is 1MB. Anything larger than that may not work properly.'
       });
     } else {
       setAnalysisLoading({

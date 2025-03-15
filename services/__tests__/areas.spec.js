@@ -46,7 +46,7 @@ describe('Areas Service', () => {
         );
       });
 
-      it('should return a valid array containing area item giving preferrence for gadm 4.1', async () => {
+      it('should return a valid array containing area item giving preference for gadm 4.1', async () => {
         // arrange
         apiAuthRequest.get.mockResolvedValueOnce({
           data: {
