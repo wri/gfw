@@ -90,9 +90,9 @@ export default {
     globalNoIndicator:
       'In the last {timeframe}, there were {totalFires} fires alerts detected {location}',
     withInd:
-      'In the last {timeframe}, {firesWithinPerc} of all fires alerts detected in {location} ocurred within {indicator}',
+      'In the last {timeframe}, {firesWithinPerc} of all fires alerts detected in {location} occurred within {indicator}',
     globalWithInd:
-      'In the last {timeframe}, {firesWithinPerc} of all fires alerts detected {location} ocurred within {indicator}',
+      'In the last {timeframe}, {firesWithinPerc} of all fires alerts detected {location} occurred within {indicator}',
     highConfidence: ', considering <b>high confidence</b> alerts only.',
   },
   whitelists: {

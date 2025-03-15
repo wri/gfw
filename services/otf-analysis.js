@@ -39,7 +39,7 @@ class OTFAnalysis {
       match.forEach((v) => {
         const paramValue = v.replace(/{|}/g, '');
         if (!has(params, paramValue)) {
-          this.throwError(`param ${paramValue} does not exsist in params`);
+          this.throwError(`param ${paramValue} does not exist in params`);
         }
         serializedProp = serializedProp.replace(v, params[paramValue]);
       });
@@ -73,7 +73,7 @@ class OTFAnalysis {
     dependences.forEach((dep) => {
       if (!has(otfData, dep)) {
         this.throwError(
-          `data dependency ${dep} does not exsist in data/otf-data.js`
+          `data dependency ${dep} does not exist in data/otf-data.js`
         );
       }
 

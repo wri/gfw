@@ -221,7 +221,7 @@ export default {
       title: 'Climate',
       subtitle: 'Recovery state',
       text:
-        'Sustainable forest management, improved land tenure, conservation and restoration are all valuable strategies for preserving forests as a natural climate solution. These solutions can have positive economic, biodiversity and societal impacts. Improvements in forest monitoring data and technology faciliate implementation of these solutions.',
+        'Sustainable forest management, improved land tenure, conservation and restoration are all valuable strategies for preserving forests as a natural climate solution. These solutions can have positive economic, biodiversity and societal impacts. Improvements in forest monitoring data and technology facilitate implementation of these solutions.',
       img1x: climate4,
       img2x: climate4Large,
       prompts: [

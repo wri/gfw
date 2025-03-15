@@ -9,7 +9,7 @@ export const sgfBenefits = [
 ];
 
 export const fellowshipBenefits = [
-  'A monthly stipend, and access to additional discretionary funds for feld visits, equipment purchases, professional development, or workshop costs.',
+  'A monthly stipend, and access to additional discretionary funds for field visits, equipment purchases, professional development, or workshop costs.',
   'All expenses paid (airfare, visa costs, meals and accommodation) to participate in tech camp and the GFW User Summit in Washington, DC.',
   'Training by experts in forest monitoring, land use planning, advocacy and enforcement, and project design and implementation.',
   'Participation in the GFW partnership and SGF/Fellowship alumni community.',

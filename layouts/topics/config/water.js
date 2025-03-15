@@ -62,7 +62,7 @@ export default {
         },
         {
           id: 'water-explore-data',
-          content: 'Mangrove forests around the world are visable on GFW.',
+          content: 'Mangrove forests around the world are visible on GFW.',
           btnText: 'Explore the data',
           link: `/map?map=eyJkYXRhc2V0cyI6W3siZGF0YXNldCI6ImJkNWQ3OTI0LTYxMWUtNDMwMi05MTg1LTgwNTRhY2IwYjQ0YiIsIm9wYWNpdHkiOjEsInZpc2liaWxpdHkiOnRydWUsImxheWVycyI6WyI0OWUzZjk1NS0yYmFiLTRmNzMtODU4OS1jOWMwMzliOGRhMjkiXX0seyJkYXRhc2V0IjoiZmRjOGRjMWItMjcyOC00YTc5LWIyM2YtYjA5NDg1MDUyYjhkIiwibGF5ZXJzIjpbIjZmNjc5OGU2LTM5ZWMtNDE2My05NzllLTE4MmE3NGNhNjVlZSIsImM1ZDFlMDEwLTM4M2EtNDcxMy05YWFhLTQ0ZjcyOGMwNTcxYyJdLCJvcGFjaXR5IjoxLCJ2aXNpYmlsaXR5Ijp0cnVlfV0sImNhbkJvdW5kIjpmYWxzZSwiem9vbSI6NCwiY2VudGVyIjp7ImxhdCI6LTIuNjkxMTE4MjkwMjQ4MjEzNCwibG5nIjoxMjEuOTk1MTE3MTg3NDg4M30sImJib3giOm51bGx9`,
           position: [31, 71],

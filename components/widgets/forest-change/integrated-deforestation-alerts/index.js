@@ -26,7 +26,7 @@ import OTF from 'services/otfv2';
 import { isMapPage } from 'utils/location';
 import { handleAlertSystem } from 'components/widgets/utils/alertSystem';
 
-// imported functions for retreiving glad alerts from tables
+// imported functions for retrieving glad alerts from tables
 import { fetchIntegratedAlerts } from 'services/analysis-cached';
 
 import { shouldQueryPrecomputedTables } from 'components/widgets/utils/helpers';
