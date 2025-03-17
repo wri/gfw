@@ -52,6 +52,7 @@ const getLatestAlerts = ({ location, params }) =>
 
 class AoICard extends PureComponent {
   static propTypes = {
+    admin: PropTypes.object,
     name: PropTypes.string,
     tags: PropTypes.array,
     application: PropTypes.string,
@@ -64,6 +65,7 @@ class AoICard extends PureComponent {
     onFetchAlerts: PropTypes.func,
     status: PropTypes.string,
     setConfirmSubscriptionModalSettings: PropTypes.func,
+    openOutdatedAreaModal: PropTypes.func,
     confirmed: PropTypes.bool,
     id: PropTypes.string,
   };
@@ -131,6 +133,7 @@ class AoICard extends PureComponent {
 
   render() {
     const {
+      admin,
       tags,
       name,
       application,
@@ -142,9 +145,13 @@ class AoICard extends PureComponent {
       location,
       status,
       setConfirmSubscriptionModalSettings,
+      openOutdatedAreaModal,
       id,
       confirmed,
     } = this.props;
+
+    const isOutdatedGadmArea =
+      admin?.source?.provider === 'gadm' && admin?.source?.version === '3.6';
     const {
       loading,
       alerts: { glads, fires, error: dataError },
@@ -235,6 +242,20 @@ class AoICard extends PureComponent {
                   </button>
                 </Fragment>
               )}
+            </div>
+          )}
+          {isOutdatedGadmArea && (
+            <div className="subscribed">
+              <Icon icon={warningIcon} className="warning-icon" />
+              <button
+                onClick={(e) => {
+                  e.stopPropagation();
+                  e.preventDefault();
+                  openOutdatedAreaModal();
+                }}
+              >
+                Outdated area, notifications paused
+              </button>
             </div>
           )}
           {!simple && !isPending && (
