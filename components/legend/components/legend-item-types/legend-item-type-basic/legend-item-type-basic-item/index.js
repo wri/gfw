@@ -30,9 +30,9 @@ class LegendItem extends React.PureComponent {
         <div
           className={`icon-${icon}`}
           style={{
-            boderRightWidth: size / 2,
-            boderLeftWidth: size / 2,
-            boderBottomWidth: size,
+            borderRightWidth: size / 2,
+            borderLeftWidth: size / 2,
+            borderBottomWidth: size,
             borderBottomColor: color,
           }}
         />
