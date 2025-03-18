@@ -17,8 +17,22 @@
 
   input,
   textarea,
-  select {
+  select,
+  .checkbox-option {
     max-width: rem(350px);
+  }
+
+  .checkbox-option {
+    margin: 0;
+
+    > span {
+      align-items: start;
+    }
+
+    label {
+      text-transform: uppercase;
+      font-weight: 700;
+    }
   }
 
   .submit-btn {

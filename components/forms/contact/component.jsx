@@ -10,6 +10,7 @@ import Button from 'components/ui/button';
 
 import Error from 'components/forms/components/error';
 import Input from 'components/forms/components/input';
+import Checkbox from 'components/forms/components/checkbox';
 import Select from 'components/forms/components/select';
 import Submit from 'components/forms/components/submit';
 
@@ -98,6 +99,20 @@ class ContactForm extends PureComponent {
                       validate={[email]}
                       required
                     />
+                    <Input
+                      name="first_name"
+                      type="text"
+                      label="first name"
+                      placeholder=""
+                      required
+                    />
+                    <Input
+                      name="last_name"
+                      type="text"
+                      label="last name"
+                      placeholder=""
+                      required
+                    />
                     <Select
                       name="topic"
                       label="topic"
@@ -118,6 +133,17 @@ class ContactForm extends PureComponent {
                       type="textarea"
                       placeholder={activeTopic && activeTopic.placeholder}
                       required
+                    />
+                    <Checkbox
+                      name="signup"
+                      type="checkbox"
+                      options={[
+                        {
+                          label:
+                            'I would like to receive updates on news and events from Global Forest Watch',
+                          value: 'signup',
+                        },
+                      ]}
                     />
                     <Error
                       valid={valid}
