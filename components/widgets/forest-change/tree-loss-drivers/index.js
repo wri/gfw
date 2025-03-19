@@ -14,7 +14,9 @@ import {
 import treeLoss from 'components/widgets/forest-change/tree-loss';
 import { getExtent, getLoss } from 'services/analysis-cached';
 
+import { fetchDataMart } from 'services/datamart';
 import getWidgetProps from './selectors';
+
 
 const MIN_YEAR = 2001;
 const MAX_YEAR = 2023;
@@ -121,8 +123,36 @@ export default {
   whitelists: {
     checkStatus: true,
   },
-  getData: (params) =>
-    all([
+  getData: async (params) => {
+    const {
+      adm0,
+      adm1,
+      adm2,
+      analysis,
+      dashboard,
+      geostore,
+      threshold,
+      type, // country, global etc
+    } = params;
+    const dataset = 'tree_cover_loss_by_driver';
+
+    // TODO: depending on type, send either geostore or adm0, adm1 etc
+    const response = await fetchDataMart({
+      dataset,
+      geostoreId: 'c3833748f6815d31bad47d47f147c0f0',
+      isGlobal: false,
+      adm0: '',
+      adm1: '',
+      adm2: '',
+      isAnalyis: true,
+      threshold: 27,
+      isDownload: false,
+    });
+
+    return response;
+
+    /*
+    return all([
       getLoss({ ...params, landCategory: 'tsc', lossTsc: true }),
       getExtent({ ...params }),
     ]).then(
@@ -154,7 +184,9 @@ export default {
           },
         };
       })
-    ),
+    );
+    */
+  },
   getDataURL: (params) => [
     getLoss({
       ...params,
