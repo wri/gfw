@@ -48,7 +48,7 @@ describe('country service', () => {
       const result = await getCountriesProvider();
 
       expect(dataRequest.get).toHaveBeenCalledWith(
-        `${GADM_DATASET}?sql=SELECT country AS name, gid_0 AS iso FROM gadm_administrative_boundaries WHERE adm_level = '0' AND gid_0 NOT IN ('Z01', 'Z02', 'Z03', 'Z04', 'Z05', 'Z06', 'Z07', 'Z08', 'Z09') ORDER BY country`
+        `${GADM_DATASET}?sql=SELECT country AS name, gid_0 AS iso FROM gadm_administrative_boundaries WHERE adm_level = '0' AND gid_0 NOT IN ('Z01', 'Z02', 'Z03', 'Z04', 'Z05', 'Z06', 'Z07', 'Z08', 'Z09', 'TWN', 'XCA') ORDER BY country`
       );
       expect(result).toEqual(mockResponse);
     });
