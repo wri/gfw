@@ -72,16 +72,31 @@ export const getCountryLinksSerialized = async () => {
 export const getCategorisedCountries = (asOptions = false) =>
   all([getCountriesProvider(), getFAOCountriesProvider()]).then(
     spread((gadm41Countries, faoCountries) => {
+      // GADM 4.1 cut short names larger than 32 characters,
+      // We are enforcing the long name for these cases
+      const shortenedCountries = {
+        'United States Minor Outlying Isl':
+          'United States Minor Outlying Islands',
+        'South Georgia and the South Sand':
+          'South Georgia and the South Sandwich Islands',
+      };
+
+      const gadm41CountriesWithLongNames = gadm41Countries.data.map((country) =>
+        shortenedCountries[country.name]
+          ? { ...country, name: shortenedCountries[country.name] }
+          : country
+      );
+
       return {
         gadmCountries: asOptions
-          ? convertToOptions(gadm41Countries.data)
-          : gadm41Countries.data,
+          ? convertToOptions(gadm41CountriesWithLongNames)
+          : gadm41CountriesWithLongNames,
         faoCountries: asOptions
           ? convertToOptions(faoCountries.data)
           : faoCountries.data,
         countries: asOptions
-          ? convertToOptions(gadm41Countries.data)
-          : gadm41Countries.data,
+          ? convertToOptions(gadm41CountriesWithLongNames)
+          : gadm41CountriesWithLongNames,
       };
     })
   );
