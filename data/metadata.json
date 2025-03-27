@@ -38,8 +38,7 @@
   "gfw_wood_fiber",
   "wdpa_protected_areas",
   "intl_rivers_dam_hotspots",
-  "landmark_indigenous_and_community_lands",
-  "landmark_natural_resource_rights",
+  "landmark_ip_lc_and_indicative_poly",
   "licadho_khm_economic_land_concessions",
   "khm_protected_areas",
   "haka_idn_leuser",
@@ -58,6 +57,10 @@
   "birdlife_key_biodiversity_areas",
   "ci_biodiversity_hotspots",
   "birdlife_endemic_bird_areas",
-  "osm_logging_roads",
-  "per_protected_areas"
+  "concesiones_forestales",
+  "wur_forest_roads",
+  "per_protected_areas",
+  "gfw_reforestable_extent_aboveground_carbon_potential_sequestration",
+  "sbtn_natural_forests_map",
+  "gfw_places_to_watch"
 ]
