@@ -8,7 +8,6 @@ import lowerCase from 'lodash/lowerCase';
 import Button from 'components/ui/button';
 import Icon from 'components/ui/icon';
 import Tip from 'components/ui/tip';
-import SatelliteBasemaps from 'components/satellite-basemaps';
 
 import linkIcon from 'assets/icons/link.svg?sprite';
 
@@ -141,9 +140,6 @@ class MiniLegend extends PureComponent {
               <Icon icon={linkIcon} className="info-icon" />
             </Button>
           </div>
-        </div>
-        <div className="satellite-basemaps-wrapper">
-          <SatelliteBasemaps />
         </div>
       </div>
     ) : null;

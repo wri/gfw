@@ -4,8 +4,6 @@ import find from 'lodash/find';
 
 import { getBasemaps, getBasemap } from 'components/map/selectors';
 
-import { getPeriodOptions } from './settings/planet-menu/selectors';
-
 import { getSelectedYear } from './settings/landsat-menu/selectors';
 
 const getLocation = (state) => state.location && state.location;
@@ -33,18 +31,10 @@ export const getActiveDynoBasemap = createSelector(
     getDynoBasemaps,
     getBasemap,
     isTropics,
-    getPeriodOptions,
     getMapBasemapSettings,
     getBasemaps,
   ],
-  (
-    location,
-    basemaps,
-    activeBasemap,
-    tropics,
-    planetPeriods,
-    mapBasemapSettings
-  ) => {
+  (location, basemaps, activeBasemap, tropics, mapBasemapSettings) => {
     const isDashboard = location.pathname.includes('/dashboards/');
     if (!basemaps || !activeBasemap) {
       return null;
@@ -55,17 +45,10 @@ export const getActiveDynoBasemap = createSelector(
     if (dynoBasemap) {
       return {
         ...dynoBasemap,
-        ...(isDashboard &&
-          dynoBasemap.value !== 'planet' && {
-            ...defaultBasemap,
-          }),
+        ...(isDashboard && {
+          ...defaultBasemap,
+        }),
         settings: mapBasemapSettings,
-        ...(dynoBasemap &&
-          dynoBasemap?.value === 'planet' && {
-            planetPeriod: planetPeriods?.length
-              ? planetPeriods.find((p) => p.value === mapBasemapSettings.name)
-              : null,
-          }),
         active: true,
       };
     }
@@ -74,9 +57,6 @@ export const getActiveDynoBasemap = createSelector(
       return {
         ...defaultBasemap,
         settings: mapBasemapSettings,
-        ...(defaultBasemap.value === 'planet' && {
-          planetPeriod: planetPeriods?.length ? planetPeriods[0] : null,
-        }),
         active: false,
       };
     }
@@ -87,7 +67,6 @@ export const getActiveDynoBasemap = createSelector(
 
 export const getBasemapProps = createStructuredSelector({
   activeBasemap: getActiveDynoBasemap,
-  planetPeriods: getPeriodOptions,
   landsatYear: getSelectedYear,
   basemaps: getDynoBasemaps,
   isTropics,
