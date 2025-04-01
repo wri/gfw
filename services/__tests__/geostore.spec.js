@@ -55,7 +55,7 @@ describe('fetchGeostore', () => {
     });
 
     expect(dataRequest.get).toHaveBeenCalledWith(
-      'https://data-api.globalforestwatch.org/geostore/admin/BRA?source[provider]=gadm&source[version]=4.1&simplify=0.1',
+      '/geostore/admin/BRA?source[provider]=gadm&source[version]=4.1&simplify=0.1',
       expect.any(Object)
     );
   });
@@ -86,7 +86,7 @@ describe('fetchGeostore', () => {
     });
 
     expect(dataRequest.get).toHaveBeenCalledWith(
-      'https://data-api.globalforestwatch.org/geostore/admin/BRA/25?source[provider]=gadm&source[version]=4.1&simplify=0.01',
+      '/geostore/admin/BRA/25?source[provider]=gadm&source[version]=4.1&simplify=0.01',
       expect.any(Object)
     );
   });
