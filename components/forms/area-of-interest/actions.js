@@ -67,7 +67,7 @@ export const saveAreaOfInterest = createThunkAction(
           admin: {
             source: {
               provider: 'gadm',
-              version: '3.6',
+              version: '4.1',
             },
             adm0,
             adm1,
