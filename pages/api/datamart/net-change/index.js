@@ -1,24 +1,24 @@
-import { dataRequest } from 'utils/request';
+import { dataMartRequest } from 'utils/request';
 
-// this PoC is only meant for net change widget (we chose net change for its simplicity)
-export default async (req, res) => {
-  // example request:
-  // localhost:3000/api/datamart/net-change/?type=global&adm0=MEX&adm1=9&adm2=3&download=true
-  const { adm0 = '', adm1 = '', adm2 = '', download } = req.query;
+const get_net_tree_cover_change_results = async (iso, adm1, adm2) => {
+  const paramStr = `?iso=${iso}${adm1 ? `&adm1=${adm1}` : ''}${
+    adm2 ? `&adm2=${adm2}` : ''
+  }`;
+  const url = `/datamart/analysis/forest_change/tree_cover_change/net_tree_cover_change${paramStr}`;
+  // console.info(`Data Mart Request: ${url}`);
+  const response = await dataMartRequest.get(url);
 
-  const isDownload = download === 'true';
+  return [response?.data];
+};
 
+const get_net_tree_cover_change_download_url = async (adm0, adm1, adm2) => {
   // checks
   if (adm1 === undefined && adm2 !== undefined) {
-    return res.status(400).send({
-      message: 'if adm2 is present, adm1 can not be empty',
-    });
+    throw new Error('if adm2 is present, adm1 can not be empty');
   }
 
   if (!adm0 && (adm1 || adm2)) {
-    return res.status(400).send({
-      message: 'if adm1 or adm2 are present, adm0 can not be empty',
-    });
+    throw new Error('if adm1 or adm2 are present, adm0 can not be empty');
   }
 
   let url = '/dataset';
@@ -71,22 +71,30 @@ export default async (req, res) => {
     fieldsList.push('adm2_name');
   }
 
-  url = `${url}/${dataset}/v202209/${
-    isDownload ? 'download/csv' : 'query'
-  }?sql=SELECT ${fieldsList} FROM data ${where}`;
+  url = `${url}/${dataset}/v202209/download/csv?sql=SELECT ${fieldsList} FROM data ${where}`;
+  // console.info(`Download url: ${url}`);
 
-  if (isDownload) {
-    return res.status(200).json({
-      data: {
-        url,
-      },
+  return { url };
+};
+
+// this PoC is only meant for net change widget (we chose net change for its simplicity)
+export default async (req, res) => {
+  const { adm0 = '', adm1 = '', adm2 = '', download } = req.query;
+  const isDownload = download === 'true';
+  let response = null;
+
+  try {
+    if (isDownload) {
+      response = await get_net_tree_cover_change_download_url(adm0, adm1, adm2);
+    } else {
+      response = await get_net_tree_cover_change_results(adm0, adm1, adm2);
+    }
+
+    return res.status(200).json({ data: response });
+  } catch (error) {
+    // console.error('Error fetching net tree cover change data from the GFW data mart:', { message: error.message });
+    return res.status(500).json({
+      error: 'Failed to fetch net tree cover change data.',
     });
   }
-
-  // fetch
-  const response = await dataRequest.get(url);
-
-  return res.status(200).json({
-    data: response?.data,
-  });
 };
