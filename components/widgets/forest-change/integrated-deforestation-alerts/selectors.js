@@ -104,15 +104,24 @@ export const parseConfig = createSelector(
     } = data;
 
     const lowAlertsLabel = indicator
-      ? `Detection by a single alert system in ${indicator.label}`
+      ? `Detection by a single alert system in ${indicator.label.replace(
+          'sbtn',
+          'SBTN'
+        )}`
       : 'Detection by a single alert system';
 
     const highAlertsLabel = indicator
-      ? `High confidence detection by a single alert system in ${indicator.label}`
+      ? `High confidence detection by a single alert system in ${indicator.label.replace(
+          'sbtn',
+          'SBTN'
+        )}`
       : 'High confidence detection by a single alert system';
 
     const highestAlertsLabel = indicator
-      ? `Highest confidence detection by multiple alert systems in ${indicator.label}`
+      ? `Highest confidence detection by multiple alert systems in ${indicator.label.replace(
+          'sbtn',
+          'SBTN'
+        )}`
       : 'Highest confidence detection by multiple alert systems';
 
     const highColour = colors.integratedHigh;
@@ -201,11 +210,12 @@ export const parseSentence = createSelector(
       totalArea: !totalArea
         ? ' '
         : translateText('covering a total of {area}', {
-          area: formatNumber({
-            num: totalArea,
-            unit: 'ha',
-            spaceUnit: true,
-          })}),
+            area: formatNumber({
+              num: totalArea,
+              unit: 'ha',
+              spaceUnit: true,
+            }),
+          }),
       total: formatNumber({ num: totalAlertCount, unit: ',' }),
       highConfPerc:
         highAlertPercentage === 0
