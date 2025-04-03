@@ -18,7 +18,7 @@ class MenuMobile extends PureComponent {
                 small
                 key={s.slug}
                 {...s}
-                hightlight={s.highlight}
+                highlight={s.highlight}
                 onClick={() => onToggleMenu(s.active ? '' : s.slug)}
               />
             ))}
