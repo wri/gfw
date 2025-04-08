@@ -201,11 +201,12 @@ export const parseSentence = createSelector(
       totalArea: !totalArea
         ? ' '
         : translateText('covering a total of {area}', {
-          area: formatNumber({
-            num: totalArea,
-            unit: 'ha',
-            spaceUnit: true,
-          })}),
+            area: formatNumber({
+              num: totalArea,
+              unit: 'ha',
+              spaceUnit: true,
+            }),
+          }),
       total: formatNumber({ num: totalAlertCount, unit: ',' }),
       highConfPerc:
         highAlertPercentage === 0
@@ -220,7 +221,7 @@ export const parseSentence = createSelector(
       ...((systemSlug === 'glad_l' && {
         component: {
           key: 'high confidence alerts',
-          fine: true,
+          fine: false,
           tooltip:
             'Alerts are classified as high confidence when a second satellite pass has also identified the pixel as an alert. Most of the alerts that remain unclassified have not had another satelite pass, due to the 8-day revisit time or cloud cover.',
         },
@@ -228,7 +229,7 @@ export const parseSentence = createSelector(
         (systemSlug === 'glad_s2' && {
           component: {
             key: 'high confidence alerts',
-            fine: true,
+            fine: false,
             tooltip:
               'Alerts are classified as high confidence when at least two or four subsequent observations are labeled as forest loss.',
           },
@@ -236,7 +237,7 @@ export const parseSentence = createSelector(
         (systemSlug === 'radd' && {
           component: {
             key: 'high confidence alerts',
-            fine: true,
+            fine: false,
             tooltip:
               'Alerts are marked as high confidence when they reach a probability threshold of 97.5% across multiple images in a 90-day window.',
           },
