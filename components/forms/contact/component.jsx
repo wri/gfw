@@ -3,8 +3,10 @@ import PropTypes from 'prop-types';
 import { Form } from 'react-final-form';
 import { FORM_ERROR } from 'final-form';
 
-import { submitContactForm } from 'services/forms';
-
+import {
+  submitContactForm,
+  submitNewsletterSubscription,
+} from 'services/forms';
 import Link from 'next/link';
 import Button from 'components/ui/button';
 
@@ -33,7 +35,34 @@ class ContactForm extends PureComponent {
         : 'en';
 
     return submitContactForm({ ...values, language })
-      .then(() => {})
+      .then(async () => {
+        const { signup } = values;
+        if (signup) {
+          const ipAddress = await fetch('https://api.ipify.org/?format=json')
+            .then((response) => response.json())
+            .then((data) => data?.ip);
+
+          const { email: userEmail, first_name, last_name, tool } = values;
+          const postData = {
+            email: userEmail,
+            first_name,
+            last_name,
+            tool,
+            website: 'globalforestwatch.org',
+            'form-name': 'GFW Contact Us Form',
+            ip_address: ipAddress,
+          };
+
+          submitNewsletterSubscription(postData).catch((error) => {
+            if (!error.response) {
+              return {
+                [FORM_ERROR]: 'Newsletter Service unavailable',
+              };
+            }
+            return undefined;
+          });
+        }
+      })
       .catch((error) => {
         const { errors } = error.response && error.response.data;
         return {
