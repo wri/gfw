@@ -6,7 +6,7 @@ import { getGadmId } from 'utils/gadm';
 import countryLinks from './country-links.json';
 
 export const GADM_DATASET =
-  '/dataset/gadm_administrative_boundaries/v4.1/query';
+  '/dataset/gadm_administrative_boundaries/v4.1.75/query';
 
 export const SQL_QUERIES = {
   getGADMCountries:
