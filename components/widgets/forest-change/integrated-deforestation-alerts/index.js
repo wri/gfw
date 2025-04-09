@@ -58,9 +58,9 @@ export default {
     withInd:
       'There were {total} deforestation alerts reported within {indicator} in {location} between {startDate} and {endDate}, {totalArea} of which {highConfPerc} were high confidence alerts detected by a single system and {highestConfPerc} were alerts detected by multiple systems.',
     singleSystem:
-      'There were {total} {system} alerts reported in {location} between {startDate} and {endDate}, {totalArea} of which {highConfPerc} were {highConfidenceAlerts}.',
+      'There were {total} {system} alerts reported in {location} between {startDate} and {endDate}, {totalArea} of which {highConfPerc} were {high confidence alerts}.',
     singleSystemWithInd:
-      'There were {total} {system} alerts reported within {indicator} in {location} between {startDate} and {endDate}, {totalArea} of which {highConfPerc} were {highConfidenceAlerts}.',
+      'There were {total} {system} alerts reported within {indicator} in {location} between {startDate} and {endDate}, {totalArea} of which {highConfPerc} were {high confidence alerts}.',
     highConf:
       'There were {total} high or highest confidence {system} alerts reported in {location} between {startDate} and {endDate}, {totalArea}.',
     noReportedAlerts:
