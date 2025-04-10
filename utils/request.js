@@ -67,19 +67,6 @@ export const dataRequest = axios.create({
   transformResponse: [(data) => JSON.parse(data)?.data],
 });
 
-dataRequest.interceptors.request.use((config) => {
-  const method = (config.method || '').toLowerCase();
-
-  if (method === 'get') {
-    const fullUrl = new URL(config.url || '', DATA_API_URL);
-    fullUrl.searchParams.set('t', Date.now().toString());
-
-    config.url = fullUrl.pathname + fullUrl.search;
-  }
-
-  return config;
-});
-
 export const dataMartRequest = axios.create({
   ...defaultRequestConfig,
   ...(isServer && {
