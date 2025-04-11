@@ -52,7 +52,7 @@ const setThreshold = (iso, adm1, adm2) => {
  */
 const fetchGeostore = ({ url, token, queryParams = '' }) => {
   return dataRequest
-    .get(`https://data-api.globalforestwatch.org${url}?${queryParams}`, {
+    .get(`${url}?${queryParams}`, {
       cancelToken: token,
     })
     .then((response) => {
@@ -70,15 +70,16 @@ export const getGeostore = ({ type, adm0, adm1, adm2, token }) => {
   if (!type || !adm0) return null;
 
   const sourceProvider = 'source[provider]=gadm';
-  const sourceVersion = 'source[version]=3.6';
+  const sourceVersion = 'source[version]=4.1';
   const threshold = `simplify=${setThreshold(adm0, adm1, adm2)}`;
   const queryParams = `${sourceProvider}&${sourceVersion}`;
 
   switch (type) {
     case 'country':
       return fetchGeostore({
-        url: `/geostore/admin/${adm0}${adm1 ? `/${adm1}` : ''}${adm2 ? `/${adm2}` : ''
-          }`,
+        url: `/geostore/admin/${adm0}${adm1 ? `/${adm1}` : ''}${
+          adm2 ? `/${adm2}` : ''
+        }`,
         queryParams: `${queryParams}&${threshold}`,
         token,
       });
