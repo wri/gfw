@@ -14,6 +14,22 @@
     margin-left: 5px;
   }
 
+  // If `.c-legend-item-basic` is placed before `.legend-basic-group` i.e. it's a group title
+  &:has(+ .legend-basic-group) {
+    // Hide the icon
+    > .icon-square,
+    > .icon-line,
+    > .icon-circle,
+    > .icon-triangle,
+    .custom-icon {
+      display: none;
+    }
+
+    .name {
+      font-weight: 700;
+    }
+  }
+
   > .icon-square,
   > .icon-line,
   > .icon-circle,
