@@ -1,5 +1,5 @@
 import qs from 'qs';
-import { dataRequest } from 'utils/request';
+import { dataRequest, dataDownloadRequest } from 'utils/request';
 import { GFW_DATA_API, GFW_STAGING_DATA_API } from 'utils/apis';
 
 const ENVIRONMENT = process.env.NEXT_PUBLIC_FEATURE_ENV;
@@ -56,10 +56,13 @@ const getDataByParams = async ({ dataset, aoi, canopy }) => {
 
   const requestUrl = `${url}/?${qs.stringify(params)}`;
 
+  console.log('>>>> getDataByParams requestUrl: ', requestUrl);
+
   let response;
 
   try {
     response = await dataRequest.get(requestUrl);
+    console.log('>>>> getDataByParams response: ', response);
   } catch (error) {
     if (error.response?.status === 404) {
       return new Promise((resolve) => {
@@ -79,10 +82,10 @@ const getDataByParams = async ({ dataset, aoi, canopy }) => {
  * 2
  * @param {Object} request - request
  * @param {string} request.dataset - dataset.
- * @param {string} request.geostoreId - a geostore id.
  * @param {number} request.canopy - canopy filter.
  * @param {Object} request.aoi - area of interest.
- * @param {Object} request.aoi.type - type of aoi.
+ * @param {string} request.aoi.geostoreId - a geostore id.
+ * @param {string} request.aoi.type - type of aoi.
  * @param {string} request.aoi.country - country.
  * @param {string} request.aoi.region - region.
  * @param {string} request.aoi.subregion - subregion.
@@ -90,9 +93,9 @@ const getDataByParams = async ({ dataset, aoi, canopy }) => {
  */
 const createRequestByParams = async ({
   dataset,
-  geostoreId,
   canopy,
   aoi: {
+  geostoreId,
    type,
    country,
    region,
@@ -121,11 +124,15 @@ const createRequestByParams = async ({
  * 3
  * @param {Object} request - request
  * @param {string} request.url - url
+ * @param {boolean} request.isDownload -- isDownload
  * @returns {Promise<GetResponseObject>} response.
  */
-const getDataFromLink = async ({ url }) => {
-    // return dataRequest.get(url.replace(DATA_API_URL, ''));
+const getDataFromLink = async ({ url, isDownload }) => {
+  console.log('>>> isdownload: ', isDownload);
+
+  return isDownload ? dataDownloadRequest.get(url.replace(DATA_API_URL, '')) : dataRequest.get(url.replace(DATA_API_URL, ''));
   // TODO: remove this fixture with real request:
+  /*
   return {
     "data":
       {
@@ -181,6 +188,7 @@ const getDataFromLink = async ({ url }) => {
       },
       "status": "success"
   };
+  */
 };
 
 
@@ -195,7 +203,7 @@ const wait = (ms) => new Promise(resolve => setTimeout(resolve, ms));
  * @param {string} finalErr
  * @returns
  */
-const retryRequest = async (fn, params, retries = 3, interval = 1000, finalErr = 'Retry failed') => {
+const retryRequest = async (fn, params, retries = 5, interval = 2000, finalErr = 'Retry failed') => {
   try {
     const response = await fn(params);
 
@@ -258,7 +266,6 @@ export const fetchDataMart = async ({
   adm1,
   adm2,
   threshold,
-  // eslint-disable-next-line no-unused-vars
   isDownload,
   // eslint-disable-next-line no-unused-vars
   retries,
@@ -279,7 +286,7 @@ export const fetchDataMart = async ({
 
   if (response.status !== 404) {
     console.log('link exists, need to fetch: ', response.link);
-    const existing = await retryRequest(getDataFromLink, { url: response.link });
+    const existing = await retryRequest(getDataFromLink, { url: response.link, isDownload });
     console.log('existing: ', existing);
     return existing;
   }
@@ -302,7 +309,7 @@ export const fetchDataMart = async ({
     // get link and fetch
 
     // retry based on secondTry.headers['retry-after]
-    const secondTry = await retryRequest(getDataFromLink, { url: submitted.data.link });
+    const secondTry = await retryRequest(getDataFromLink, { url: submitted.data.link, isDownload });
 
     console.log('secondTry: ', secondTry);
     return secondTry;

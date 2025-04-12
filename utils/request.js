@@ -61,6 +61,21 @@ export const dataRequest = axios.create({
   transformResponse: [(data) => JSON.parse(data)?.data],
 });
 
+export const dataDownloadRequest = axios.create({
+  ...defaultRequestConfig,
+  ...(isServer && {
+    baseURL: DATA_API_URL,
+    headers: {
+      'x-api-key': DATA_API_KEY,
+      'Content-Type': 'text/csv',
+    },
+  }),
+  ...(!isServer && {
+    baseURL: PROXIES.DATA_API,
+  }),
+});
+
+
 export const dataMartRequest = axios.create({
   ...defaultRequestConfig,
   ...(isServer && {

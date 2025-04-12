@@ -119,7 +119,7 @@ export default {
       type,
     } = params;
 
-    const dataset = 'tree_cover_loss_by_driver';
+    const DATASET = 'tree_cover_loss_by_driver';
     const HARDCODED_GEOSTORE = 'c3833748f6815d31bad47d47f147c0f0';
 
     let mappedType =  '';
@@ -138,7 +138,7 @@ export default {
 
     // TODO: depending on type, send either geostore or adm0, adm1 etc
     const response = await fetchDataMart({
-      dataset,
+      dataset: DATASET,
       //geostoreId: geostore?.id,
       //type: mappedType,
       geostoreId: HARDCODED_GEOSTORE,
@@ -151,9 +151,18 @@ export default {
       isDownload: false,
     });
 
-    console.log('response: ', response);
+    console.log('fetchDataMart response: ', response);
 
-    return response.data?.tree_cover_loss_by_driver;
+    if (response.data?.status === 'failed') {
+      throw new Error(response.data.message);
+    }
+
+    console.log('fetchDataMart tree_cover_loss_by_driver: ', response.data?.result);
+
+    return response.data?.result.tree_cover_loss_by_driver.map((item) => ({
+      driver_type: item.drivers_type,
+      loss_area_ha: item.loss_area_ha,
+    }));
   },
   /*
     getTreeCoverLossByDriverType(params).then((response) => {

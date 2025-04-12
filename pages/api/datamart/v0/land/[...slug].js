@@ -1,8 +1,8 @@
 // eslint-disable-next-line no-unused-vars
 import { NextApiRequest, NextApiResponse } from 'next';
 import {
-  createRequestByGeostoryId,
-  getDataByGeostoreId,
+  createRequestByParams,
+  getDataByParams,
   getDataFromLink,
 } from 'services/datamart';
 import { GFW_DATA_API, GFW_STAGING_DATA_API } from 'utils/apis';
@@ -35,7 +35,7 @@ export const DATA_API_URL =
  * @param {NextApiRequest} req
  * @param {NextApiResponse} res
  */
-const fetchDataByDatasetAndGeostore = async (req, res) => {
+const fetchData = async (req, res) => {
   const { query } = req;
   // TODO: add more parameters to the query like, global, adm9, adm1, etc etc etc
   const { slug: slugs, geostore_id, canopy_cover } = query;
@@ -46,7 +46,7 @@ const fetchDataByDatasetAndGeostore = async (req, res) => {
   }
 
   if (slugs.length === 1) {
-    const dataByGeostore = await getDataByGeostoreId({
+    const dataByGeostore = await getDataByParams({
       dataset: slugs[0],
       geostoreId: geostore_id,
       canopy: canopy_cover,
@@ -76,7 +76,7 @@ const fetchDataByDatasetAndGeostore = async (req, res) => {
 const postData = async (req, res) => {
   const { query } = req;
   // TODO: add more parameters to the query like, global, adm9, adm1, etc etc etc
-  const { slug: slugs, geostore_id, canopy_cover } = query;
+  const { slug: slugs, geostore_id, canopy_cover, country, adm1, adm2, type } = query;
 
   if (slugs.length === 0) {
     res.status(400).send();
@@ -84,9 +84,15 @@ const postData = async (req, res) => {
   }
 
   try {
-    const submitted = await createRequestByGeostoryId({
+    const submitted = await createRequestByParams({
       dataset: slugs[0],
-      geostoreId: geostore_id,
+      aoi: {
+        geostore_id,
+        country,
+        region: adm1,
+        subregion: adm2,
+        type,
+      },
       canopy: canopy_cover,
     });
 
@@ -104,12 +110,13 @@ const postData = async (req, res) => {
  * @param {NextApiResponse} res
  */
 export default async (req, res) => {
+  // it is not entering this proxy!!!
   switch (req.method) {
     case 'POST':
       postData(req, res);
       break;
     case 'GET':
-      fetchDataByDatasetAndGeostore(req, res);
+      fetchData(req, res);
       break;
     default:
       res.send(405);
