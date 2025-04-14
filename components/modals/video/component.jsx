@@ -6,7 +6,7 @@ import Modal from 'components/modal';
 const ModalVideo = ({ open, src, onRequestClose }) => (
   <Modal
     open={open}
-    contentLabel="What is global forest wathc video"
+    contentLabel="What is global forest watch video"
     onRequestClose={onRequestClose}
     className="c-modal-video"
   >
@@ -16,7 +16,7 @@ const ModalVideo = ({ open, src, onRequestClose }) => (
       height="100%"
       frameBorder="0"
       allowFullScreen
-      title="What is global forest wathc video"
+      title="What is global forest watch video"
     />
   </Modal>
 );

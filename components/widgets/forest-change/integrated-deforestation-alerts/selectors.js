@@ -223,7 +223,7 @@ export const parseSentence = createSelector(
           key: 'high confidence alerts',
           fine: false,
           tooltip:
-            'Alerts are classified as high confidence when a second satellite pass has also identified the pixel as an alert. Most of the alerts that remain unclassified have not had another satelite pass, due to the 8-day revisit time or cloud cover.',
+            'Alerts are classified as high confidence when a second satellite pass has also identified the pixel as an alert. Most of the alerts that remain unclassified have not had another satellite pass, due to the 8-day revisit time or cloud cover.',
         },
       }) ||
         (systemSlug === 'glad_s2' && {

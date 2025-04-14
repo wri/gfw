@@ -65,7 +65,7 @@ class LegendTypeChoropleth extends React.PureComponent {
             )}
           </ul>
         </div>
-        {/* TODO: Pedro: This is ugly, should be programatic */}
+        {/* TODO: Pedro: This is ugly, should be programmatic */}
         {dataset === 'forest-net-change' && (
           <div
             style={{
