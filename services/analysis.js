@@ -75,8 +75,7 @@ const reduceAnalysisResponse = (response) => {
   const { attributes } = data || {};
   if (attributes) {
     const fetchType = data && data.type;
-    const fetchKey =
-      fetchType === 'umd' ? 'umd-loss-gain' : fetchType.toLowerCase();
+    const fetchKey = fetchType.toLowerCase();
     return {
       [fetchKey]: attributes,
     };
