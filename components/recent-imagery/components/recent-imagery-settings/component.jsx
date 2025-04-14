@@ -202,7 +202,7 @@ class RecentImagerySettings extends PureComponent {
           {!error && (!tiles || !tiles.length) && !loading && (
             <NoContent
               className="placeholder"
-              message="We can't find additional images for the selection"
+              message="We can't find additional images for the selection. Increase cloud cover percentage to retrieve more images."
             />
           )}
           {loading && !error && <Loader className="placeholder" />}
