@@ -7,6 +7,12 @@ $layout-breakpoint-xl: 1024px;
 $layout-breakpoint-2xl: 1280px;
 $layout-breakpoint-3xl: 1536px;
 
+.embed-widget {
+  .c-composed-chart {
+    overflow: hidden !important;
+  }
+}
+
 .c-composed-chart {
   width: 100%;
   overflow-x: hidden;

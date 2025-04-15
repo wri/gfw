@@ -78,15 +78,7 @@ class Widgets extends PureComponent {
     const hasWidgets = !isEmpty(allWidgets) && !isEmpty(widgetGroups);
 
     return (
-      <div
-        className={cx(
-          'c-widgets',
-          className,
-          { simple },
-          { embed },
-          { 'no-widgets': !hasWidgets }
-        )}
-      >
+      <div>
         {loadingData && <Loader className="widgets-loader large" />}
 
         {!loadingData && hasWidgets && (
