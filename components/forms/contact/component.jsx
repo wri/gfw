@@ -3,13 +3,16 @@ import PropTypes from 'prop-types';
 import { Form } from 'react-final-form';
 import { FORM_ERROR } from 'final-form';
 
-import { submitContactForm } from 'services/forms';
-
+import {
+  submitContactForm,
+  submitNewsletterSubscription,
+} from 'services/forms';
 import Link from 'next/link';
 import Button from 'components/ui/button';
 
 import Error from 'components/forms/components/error';
 import Input from 'components/forms/components/input';
+import Checkbox from 'components/forms/components/checkbox';
 import Select from 'components/forms/components/select';
 import Submit from 'components/forms/components/submit';
 
@@ -32,7 +35,34 @@ class ContactForm extends PureComponent {
         : 'en';
 
     return submitContactForm({ ...values, language })
-      .then(() => {})
+      .then(async () => {
+        const { signup } = values;
+        if (signup) {
+          const ipAddress = await fetch('https://api.ipify.org/?format=json')
+            .then((response) => response.json())
+            .then((data) => data?.ip);
+
+          const { email: userEmail, first_name, last_name, tool } = values;
+          const postData = {
+            email: userEmail,
+            first_name,
+            last_name,
+            tool,
+            website: 'globalforestwatch.org',
+            'form-name': 'GFW Contact Us Form',
+            ip_address: ipAddress,
+          };
+
+          submitNewsletterSubscription(postData).catch((error) => {
+            if (!error.response) {
+              return {
+                [FORM_ERROR]: 'Newsletter Service unavailable',
+              };
+            }
+            return undefined;
+          });
+        }
+      })
       .catch((error) => {
         const { errors } = error.response && error.response.data;
         return {
@@ -98,6 +128,20 @@ class ContactForm extends PureComponent {
                       validate={[email]}
                       required
                     />
+                    <Input
+                      name="first_name"
+                      type="text"
+                      label="first name"
+                      placeholder=""
+                      required
+                    />
+                    <Input
+                      name="last_name"
+                      type="text"
+                      label="last name"
+                      placeholder=""
+                      required
+                    />
                     <Select
                       name="topic"
                       label="topic"
@@ -118,6 +162,17 @@ class ContactForm extends PureComponent {
                       type="textarea"
                       placeholder={activeTopic && activeTopic.placeholder}
                       required
+                    />
+                    <Checkbox
+                      name="signup"
+                      type="checkbox"
+                      options={[
+                        {
+                          label:
+                            'I would like to receive updates on news and events from Global Forest Watch',
+                          value: 'signup',
+                        },
+                      ]}
                     />
                     <Error
                       valid={valid}
