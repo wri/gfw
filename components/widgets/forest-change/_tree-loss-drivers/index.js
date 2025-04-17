@@ -136,6 +136,9 @@ export default {
       }
     }
 
+    console.log('>>> poarams: ', params);
+    console.log('>>> adms: ', adm0, adm1, adm2);
+
     // TODO: depending on type, send either geostore or adm0, adm1 etc
     const response = await fetchDataMart({
       dataset: DATASET,

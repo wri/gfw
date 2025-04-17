@@ -67,7 +67,7 @@ export const dataDownloadRequest = axios.create({
     baseURL: DATA_API_URL,
     headers: {
       'x-api-key': DATA_API_KEY,
-      'Content-Type': 'text/csv',
+      'Accept': 'text/csv',
     },
   }),
   ...(!isServer && {
