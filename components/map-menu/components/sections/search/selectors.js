@@ -1,6 +1,6 @@
 import { createSelector, createStructuredSelector } from 'reselect';
 import { deburrUpper } from 'utils/strings';
-import { getGadm36Id } from 'utils/gadm';
+import { getGadmId } from 'utils/gadm';
 import sortBy from 'lodash/sortBy';
 import { translateText, selectActiveLang } from 'utils/lang';
 
@@ -49,7 +49,7 @@ const getLocations = createSelector(
   (locations, location) => {
     if (!locations) return null;
     const { adm0, adm1, adm2 } = location;
-    const gadmId = getGadm36Id(adm0, adm1, adm2);
+    const gadmId = getGadmId(adm0, adm1, adm2);
 
     return locations
       .map((l) => ({

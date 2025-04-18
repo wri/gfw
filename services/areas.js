@@ -27,20 +27,33 @@ const parseArea = (area) => {
   };
 };
 
-export const getArea = (id, userToken = null) =>
-  apiAuthRequest
-    .get(`${REQUEST_URL}/${id}`, {
-      headers: {
-        ...(userToken && {
-          Authorization: `Bearer ${userToken}`,
-        }),
-      },
-    })
-    .then((areaResponse) => {
-      const { data: area } = areaResponse.data;
+export const getArea = async (id, userToken = null) => {
+  const getRequest = async (version) => {
+    const response = await apiAuthRequest.get(
+      `${REQUEST_URL}/${id}?source[provider]=gadm&source[version]=${version}`,
+      {
+        headers: {
+          ...(userToken && {
+            Authorization: `Bearer ${userToken}`,
+          }),
+        },
+      }
+    );
+    const { data } = response.data;
+    return data;
+  };
 
-      return parseArea(area);
-    });
+  let gadmArea = await getRequest('4.1');
+
+  const isEmpty =
+    !gadmArea || (Array.isArray(gadmArea) && gadmArea.length === 0);
+
+  if (isEmpty) {
+    gadmArea = await getRequest('3.6');
+  }
+
+  return parseArea(gadmArea);
+};
 
 export const getAreas = () => {
   const gadm36 = apiAuthRequest
@@ -53,14 +66,10 @@ export const getAreas = () => {
 
   const gadm41 = apiAuthRequest
     .get(`${REQUEST_URL}?source[provider]=gadm&source[version]=4.1`)
-    .then(() => {
-      // Commenting this logic to avoid gadm 4.1 in production
-      // .then((areasResponse) => {
-      // const { data: areas } = areasResponse.data;
+    .then((areasResponse) => {
+      const { data: areas } = areasResponse.data;
 
-      // return areas.map((area) => parseArea(area))
-
-      return [];
+      return areas.map((area) => parseArea(area));
     });
 
   return Promise.all([gadm36, gadm41]).then(([areas36, areas41]) => {

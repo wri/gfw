@@ -84,7 +84,14 @@ export const getFirstUserArea = createSelector([getUserAreas], (areas) =>
 
 export const getAdm0Data = createSelector(
   [getAdminMetadata],
-  (data) => data && data.adm0
+  (data) =>
+    data &&
+    data.adm0.sort((a, b) =>
+      a.label.localeCompare(b.label, 'en', {
+        sensitivity: 'base',
+        ignorePunctuation: true,
+      })
+    )
 );
 
 export const getAdm1Data = createSelector(

@@ -53,10 +53,16 @@ export const dataRequest = axios.create({
     baseURL: DATA_API_URL,
     headers: {
       'x-api-key': DATA_API_KEY,
+      'Cache-Control': 'no-cache, no-store, must-revalidate',
+      Pragma: 'no-cache',
+      Expires: '0',
     },
   }),
   ...(!isServer && {
     baseURL: PROXIES.DATA_API,
+    'Cache-Control': 'no-cache, no-store, must-revalidate',
+    Pragma: 'no-cache',
+    Expires: '0',
   }),
   transformResponse: [(data) => JSON.parse(data)?.data],
 });
