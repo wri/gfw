@@ -56,13 +56,13 @@ const getDataByParams = async ({ dataset, aoi, canopy }) => {
 
   const requestUrl = `${url}/?${qs.stringify(params)}`;
 
-  console.log('>>>> getDataByParams requestUrl: ', requestUrl);
+  // console.log('>>>> getDataByParams requestUrl: ', requestUrl);
 
   let response;
 
   try {
     response = await dataRequest.get(requestUrl);
-    console.log('>>>> getDataByParams response: ', response);
+    // console.log('>>>> getDataByParams response: ', response);
   } catch (error) {
     if (error.response?.status === 404) {
       return new Promise((resolve) => {
@@ -115,7 +115,7 @@ const createRequestByParams = async ({
   };
 
   const response = await dataRequest.post(url, params);
-  console.log('POST response: ', response);
+  // console.log('POST response: ', response);
 
   return response;
 };
@@ -128,8 +128,6 @@ const createRequestByParams = async ({
  * @returns {Promise<GetResponseObject>} response.
  */
 const getDataFromLink = async ({ url, isDownload }) => {
-  console.log('>>> isdownload: ', isDownload);
-
   return isDownload ? dataDownloadRequest.get(url.replace(DATA_API_URL, '')) : dataRequest.get(url.replace(DATA_API_URL, ''));
   // TODO: remove this fixture with real request:
   /*
@@ -281,18 +279,14 @@ export const fetchDataMart = async ({
       subregion: adm2,
     },
   });
-
-  console.log('>> response: ', response);
-
   if (response.status !== 404) {
-    console.log('link exists, need to fetch: ', response.link);
+    // link exists, need to fetch
     const existing = await retryRequest(getDataFromLink, { url: response.link, isDownload });
-    console.log('existing: ', existing);
+
     return existing;
   }
 
     // make post to create the data in back end
-    console.log('make post to create the data in back end');
     const submitted = await createRequestByParams({
       dataset,
       geostoreId,
@@ -304,13 +298,9 @@ export const fetchDataMart = async ({
         subregion: adm2,
       },
     });
-    console.log('> submitted: ', submitted);
-
-    // get link and fetch
 
     // retry based on secondTry.headers['retry-after]
     const secondTry = await retryRequest(getDataFromLink, { url: submitted.data.link, isDownload });
 
-    console.log('secondTry: ', secondTry);
     return secondTry;
 };
