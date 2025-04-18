@@ -7,10 +7,10 @@ import {
   POLITICAL_BOUNDARIES,
   TREE_COVER_LOSS_BY_DOMINANT_DRIVER,
 } from 'data/layers';
-
-import { getTreeCoverLossByDriverType } from 'services/analysis-cached';
-
+import { fetchDataMart } from 'services/datamart';
 import getWidgetProps from './selectors';
+
+const DATASET = 'tree_cover_loss_by_driver';
 
 export default {
   widget: 'treeLossTsc',
@@ -92,14 +92,116 @@ export default {
       groupedLegends: true,
     };
   },
-  getData: (params) =>
+  /**
+   *
+   * @param {Object} params
+   * @param {String} params.adm0
+   * @param {String} params.adm1
+   * @param {String} params.adm2
+   * @param {boolean} params.analysis true if widget is rendered in map, otherwise false
+   * @param {boolean} params.dashboard true if widget is rendered in dashboard, false otherwise
+   * @param {Object} params.geostore
+   * @param {string} params.geostore.id gesotore id
+   * @param {string} params.threshold threshold value
+   * @param {string} params.type country, global
+   * @returns
+   */
+  getData: async (params) => {
+    const {
+      adm0,
+      adm1,
+      adm2,
+      analysis,
+      // eslint-disable-next-line no-unused-vars
+      dashboard,
+      geostore,
+      threshold,
+      type,
+    } = params;
+    // const HARDCODED_GEOSTORE = 'c3833748f6815d31bad47d47f147c0f0';
+
+    let mappedType = '';
+
+    if (analysis) {
+      mappedType = 'geostore';
+    } else {
+      if (type === 'global') {
+        mappedType = 'global';
+      }
+
+      if (adm0 !== undefined && adm0 !== null) {
+        mappedType = 'admin';
+      }
+    }
+
+    // TODO: depending on type, send either geostore or adm0, adm1 etc
+    const response = await fetchDataMart({
+      dataset: DATASET,
+      geostoreId: geostore?.id,
+      type: mappedType,
+      // geostoreId: HARDCODED_GEOSTORE,
+      // type: 'geostore',
+      adm0,
+      adm1,
+      adm2,
+      threshold,
+      isDownload: false,
+    });
+
+    if (response.data?.status === 'failed') {
+      throw new Error(response.data.message);
+    }
+
+    return response.data?.result.tree_cover_loss_by_driver.map((item) => ({
+      driver_type: item.drivers_type,
+      loss_area_ha: item.loss_area_ha,
+    }));
+  },
+  /*
     getTreeCoverLossByDriverType(params).then((response) => {
       const { data } = (response && response.data) || {};
 
       return data;
     }),
-  getDataURL: (params) => [
-    getTreeCoverLossByDriverType({ ...params, download: true }),
-  ],
+    */
+  getDataURL: (params) => {
+    const {
+      adm0,
+      adm1,
+      adm2,
+      analysis,
+      // eslint-disable-next-line no-unused-vars
+      dashboard,
+      geostore,
+      threshold,
+      type,
+    } = params;
+    let mappedType = '';
+
+    if (analysis) {
+      mappedType = 'geostore';
+    } else {
+      if (type === 'global') {
+        mappedType = 'global';
+      }
+
+      if (adm0 !== undefined && adm0 !== null) {
+        mappedType = 'admin';
+      }
+    }
+
+    return [
+      fetchDataMart({
+        dataset: DATASET,
+        geostoreId: geostore?.id,
+        type: mappedType,
+        adm0,
+        adm1,
+        adm2,
+        threshold,
+        isDownload: true,
+      }),
+    ];
+  },
   getWidgetProps,
 };

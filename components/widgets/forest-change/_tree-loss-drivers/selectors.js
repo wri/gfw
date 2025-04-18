@@ -39,10 +39,10 @@ export const getFilteredData = createSelector(
   [getData, getSortedCategories],
   (data, sortedCategories) =>
     data && data.length
-      ? sortedCategories
+    ? sortedCategories
           .map(({ value }) => data.find((item) => item.driver_type === value))
           .filter((item) => item)
-      : []
+    : []
 );
 
 export const parseData = createSelector(

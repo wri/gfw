@@ -19,7 +19,7 @@ const ENVIRONMENT = process.env.NEXT_PUBLIC_FEATURE_ENV;
 const GFW_API_URL = GFW_API;
 const GFW_WIDGET_METADATA_API_URL =
   ENVIRONMENT === 'staging' ? GFW_STAGING_METADATA_API : GFW_METADATA_API;
-const DATA_API_URL =
+export const DATA_API_URL =
   ENVIRONMENT === 'staging' ? GFW_STAGING_DATA_API : GFW_DATA_API;
 
 // We never use the `staging-api.resourcewatch.org`.
@@ -60,6 +60,21 @@ export const dataRequest = axios.create({
   }),
   transformResponse: [(data) => JSON.parse(data)?.data],
 });
+
+export const dataDownloadRequest = axios.create({
+  ...defaultRequestConfig,
+  ...(isServer && {
+    baseURL: DATA_API_URL,
+    headers: {
+      'x-api-key': DATA_API_KEY,
+      'Accept': 'text/csv',
+    },
+  }),
+  ...(!isServer && {
+    baseURL: PROXIES.DATA_API,
+  }),
+});
+
 
 export const dataMartRequest = axios.create({
   ...defaultRequestConfig,
