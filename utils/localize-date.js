@@ -1,4 +1,5 @@
 import dateFnsformat from 'date-fns/format';
+import { parseISO } from 'date-fns';
 import { enUS, es, ptBR, zhCN, fr, id } from 'date-fns/locale';
 
 // TX language codes (set in localStorage) mapping to ISO codes that date-fns uses for locales
@@ -16,7 +17,7 @@ export const localizeDate = (date, lang = 'en', format = 'PP') => {
   const dateFnsLocale = TX_LANGUAGE_TO_DATEFNS_LOCALE_MAPPING[lang];
 
   // Format the date.
-  const localizedDate = dateFnsformat(new Date(date), format, {
+  const localizedDate = dateFnsformat(parseISO(date), format, {
     locale: dateFnsLocale,
   });
 
@@ -27,9 +28,9 @@ export const localizeDate = (date, lang = 'en', format = 'PP') => {
 export const localizeWidgetSentenceDate = (date, lang = 'en') => {
   const DATE_FORMAT_MAPPING = {
     en: "do 'of' LLLL yyyy",
-    zh: "do LLLL yyyy",
-    fr: "do LLLL yyyy",
-    id: "do LLLL yyyy",
+    zh: 'do LLLL yyyy',
+    fr: 'do LLLL yyyy',
+    id: 'do LLLL yyyy',
     pt_BR: "d 'de' LLLL 'de' yyyy",
     es_MX: "d 'de' LLLL 'de' yyyy",
   };
@@ -38,4 +39,4 @@ export const localizeWidgetSentenceDate = (date, lang = 'en') => {
   const localizedDate = localizeDate(date, lang, format);
 
   return localizedDate;
-}
+};
