@@ -7,10 +7,10 @@ import {
   POLITICAL_BOUNDARIES,
   TREE_COVER_LOSS_BY_DOMINANT_DRIVER,
 } from 'data/layers';
-
-import { getTreeCoverLossByDriverType } from 'services/analysis-cached';
 import { fetchDataMart } from 'services/datamart';
 import getWidgetProps from './selectors';
+
+const DATASET = 'tree_cover_loss_by_driver';
 
 export default {
   widget: 'treeLossTsc',
@@ -118,11 +118,9 @@ export default {
       threshold,
       type,
     } = params;
-
-    const DATASET = 'tree_cover_loss_by_driver';
     // const HARDCODED_GEOSTORE = 'c3833748f6815d31bad47d47f147c0f0';
 
-    let mappedType =  '';
+    let mappedType = '';
 
     if (analysis) {
       mappedType = 'geostore';
@@ -141,8 +139,8 @@ export default {
       dataset: DATASET,
       geostoreId: geostore?.id,
       type: mappedType,
-      //geostoreId: HARDCODED_GEOSTORE,
-      //type: 'geostore',
+      // geostoreId: HARDCODED_GEOSTORE,
+      // type: 'geostore',
       adm0,
       adm1,
       adm2,
@@ -166,8 +164,44 @@ export default {
       return data;
     }),
     */
-  getDataURL: (params) => [
-    getTreeCoverLossByDriverType({ ...params, download: true }),
-  ],
+  getDataURL: (params) => {
+    const {
+      adm0,
+      adm1,
+      adm2,
+      analysis,
+      // eslint-disable-next-line no-unused-vars
+      dashboard,
+      geostore,
+      threshold,
+      type,
+    } = params;
+    let mappedType = '';
+
+    if (analysis) {
+      mappedType = 'geostore';
+    } else {
+      if (type === 'global') {
+        mappedType = 'global';
+      }
+
+      if (adm0 !== undefined && adm0 !== null) {
+        mappedType = 'admin';
+      }
+    }
+
+    return [
+      fetchDataMart({
+        dataset: DATASET,
+        geostoreId: geostore?.id,
+        type: mappedType,
+        adm0,
+        adm1,
+        adm2,
+        threshold,
+        isDownload: true,
+      }),
+    ];
+  },
   getWidgetProps,
 };
