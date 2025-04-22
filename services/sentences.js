@@ -40,7 +40,7 @@ export const adminSentences = {
   countrySpecific: {
     IDN: 'In 2001, {location} had {primaryForest} of primary forest*, extending over {percentagePrimaryForest} of its land area. In {year}, it lost {primaryLoss} of primary forest*, equivalent to {emissionsPrimary} of CO₂ emissions.',
   },
-  co2Emissions: ', equivalent to {emissionsTreeCover} of CO\u2082 emissions.',
+  co2Emissions: ', equivalent to {emissions} of CO\u2082 emissions.',
   end: '.',
 };
 
@@ -167,9 +167,8 @@ const getNaturalForestSentenceData = async (params = GLOBAL_LOCATION) => {
     let emissions = 0;
 
     lossNaturalForestResponse.data.data.forEach((item) => {
-      emissions += item.gfw_gross_emissions_co2e_all_gases__mg;
-
       if (item.sbtn_natural_forests__class === 'Natural Forest') {
+        emissions += item.gfw_gross_emissions_co2e_all_gases__mg;
         lossArea += item.area;
       }
     });
