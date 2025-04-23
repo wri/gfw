@@ -143,7 +143,7 @@ export default {
     {
       title: 'GFW Pro',
       description:
-        'Assess deforestation risk in commodity supply chains and ensure robust reporting and compliance with regulations like the EUDR.',
+        'Assess deforestation risk in commodity supply chains and ensure robust reporting and compliance with regulations like the EUDR',
       background: proImage,
       extLink: 'https://pro.globalforestwatch.org',
       color: '#404042',
