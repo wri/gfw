@@ -3,11 +3,11 @@ import { getGadmId, parseGadmId, getGadmLocationByLevel } from 'utils/gadm';
 
 describe('getGadmId', () => {
   it('should generate the correct GADM ID for country and region levels', () => {
-    expect(getGadmId('BRA', '25')).toBe('BRA.25_1');
+    expect(getGadmId('BRA', '25')).toBe('BRA.25');
   });
 
   it('should generate the correct GADM ID for country, region, and sub-region levels', () => {
-    expect(getGadmId('BRA', '25', '390')).toBe('BRA.25.390_1');
+    expect(getGadmId('BRA', '25', '390')).toBe('BRA.25.390');
   });
 });
 

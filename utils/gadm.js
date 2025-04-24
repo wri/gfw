@@ -1,7 +1,5 @@
 export const getGadmId = (country, region, subRegion) =>
-  `${country}${region ? `.${region}` : ''}${
-    subRegion ? `.${subRegion}_1` : '_1'
-  }`;
+  `${country}${region ? `.${region}` : ''}${subRegion ? `.${subRegion}` : ''}`;
 
 export const parseGadmId = (gid) => {
   if (!gid) return null;

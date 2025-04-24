@@ -14,7 +14,7 @@ export const SQL_QUERIES = {
   getGADMRegions:
     "SELECT name_1 AS name, gid_1 AS id FROM gadm_administrative_boundaries WHERE adm_level='1' AND gid_0 = '{iso}' ORDER BY name",
   getGADMSubRegions:
-    "SELECT gid_2 as id, name_2 as name FROM gadm_administrative_boundaries WHERE gid_0 = '{iso}' AND gid_1 = '{adm1}' AND adm_level='2' AND type_2 NOT IN ('Waterbody', 'Water body', 'Water Body') ORDER BY name",
+    "SELECT gid_2 as id, name_2 as name FROM gadm_administrative_boundaries WHERE gid_0 = '{iso}' AND gid_1 IN ('{adm1}_1', '{adm1}_2', '{adm1}_3') AND adm_level='2' AND type_2 NOT IN ('Waterbody', 'Water body', 'Water Body') ORDER BY name",
   getFAOCountries: 'SELECT iso, country AS name FROM data WHERE year = 2020',
 };
 
@@ -44,7 +44,7 @@ export const getRegionsProvider = ({ adm0, token }) => {
 export const getSubRegionsProvider = ({ adm0, adm1, token }) => {
   const url = `${GADM_DATASET}?sql=${SQL_QUERIES.getGADMSubRegions}`
     .replace('{iso}', adm0)
-    .replace('{adm1}', getGadmId(adm0, adm1));
+    .replaceAll('{adm1}', getGadmId(adm0, adm1));
 
   return dataRequest.get(url, { cancelToken: token });
 };

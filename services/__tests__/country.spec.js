@@ -77,7 +77,7 @@ describe('country service', () => {
       const result = await getSubRegionsProvider({ adm0: 'BRA', adm1: '25' });
 
       expect(dataRequest.get).toHaveBeenCalledWith(
-        `${GADM_DATASET}?sql=SELECT gid_2 as id, name_2 as name FROM gadm_administrative_boundaries WHERE gid_0 = 'BRA' AND gid_1 = 'BRA.25_1' AND adm_level='2' AND type_2 NOT IN ('Waterbody', 'Water body', 'Water Body') ORDER BY name`,
+        `${GADM_DATASET}?sql=SELECT gid_2 as id, name_2 as name FROM gadm_administrative_boundaries WHERE gid_0 = 'BRA' AND gid_1 IN ('BRA.25_1', 'BRA.25_2', 'BRA.25_3') AND adm_level='2' AND type_2 NOT IN ('Waterbody', 'Water body', 'Water Body') ORDER BY name`,
         { cancelToken: undefined }
       );
       expect(result).toEqual(mockResponse);
