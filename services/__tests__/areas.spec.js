@@ -42,7 +42,7 @@ describe('Areas Service', () => {
 
         // assert
         expect(apiAuthRequest.get).toHaveBeenCalledWith(
-          '/v2/area?source[provider]=gadm&source[version]=3.6'
+          '/v2/area?source[provider]=gadm&source[version]=4.1'
         );
       });
 
@@ -60,14 +60,14 @@ describe('Areas Service', () => {
                     adm0: 'BRA',
                     source: {
                       provider: 'gadm',
-                      version: '3.6',
+                      version: '4.1',
                     },
                   },
                   iso: {
                     country: 'BRA',
                     source: {
                       provider: 'gadm',
-                      version: '3.6',
+                      version: '4.1',
                     },
                   },
                 },
@@ -115,16 +115,14 @@ describe('Areas Service', () => {
               adm0: 'BRA',
               source: {
                 provider: 'gadm',
-                // version: '4.1',
-                version: '3.6', // remove it before release gadm 4.1
+                version: '4.1',
               },
             },
             iso: {
               country: 'BRA',
               source: {
                 provider: 'gadm',
-                // version: '4.1',
-                version: '3.6', // remove it before release gadm 4.1
+                version: '4.1',
               },
             },
             use: {},

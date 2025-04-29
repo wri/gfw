@@ -17,6 +17,7 @@ import Pill from 'components/ui/pill';
 import Loader from 'components/ui/loader';
 import Paginate from 'components/paginate';
 import ConfirmSubscriptionModal from 'components/modals/confirm-subscription';
+import OutdatedAreaModal from 'components/modals/outdated-area/OutdatedAreaModal';
 
 import editIcon from 'assets/icons/edit.svg?sprite';
 import shareIcon from 'assets/icons/share.svg?sprite';
@@ -51,6 +52,7 @@ class MapMenuMyGFW extends PureComponent {
     unselectedTags: [],
     pageSize: 6,
     pageNum: 0,
+    outdatedAreaModalOpen: false,
   };
 
   static getDerivedStateFromProps(prevProps, prevState) {
@@ -294,7 +296,15 @@ class MapMenuMyGFW extends PureComponent {
                     tabIndex={0}
                     key={area.id}
                   >
-                    <AoICard index={i} {...area} simple />
+                    <AoICard
+                      index={i}
+                      {...area}
+                      simple
+                      openOutdatedAreaModal={() =>
+                        this.setState({
+                          outdatedAreaModalOpen: true,
+                        })}
+                    />
                     {active && this.renderAoiActions()}
                   </div>
                 );
@@ -370,6 +380,13 @@ class MapMenuMyGFW extends PureComponent {
           />
         )}
         <ConfirmSubscriptionModal />
+        <OutdatedAreaModal
+          isOpen={this.state.outdatedAreaModalOpen}
+          handleCloseModal={() =>
+            this.setState({
+              outdatedAreaModalOpen: false,
+            })}
+        />
       </div>
     );
   }

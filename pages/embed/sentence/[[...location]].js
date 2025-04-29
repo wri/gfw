@@ -2,11 +2,10 @@ import { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import uniqBy from 'lodash/uniqBy';
 
-import { parseGadm36Id } from 'utils/gadm';
+import { parseGadmId } from 'utils/gadm';
 
 import { getLocationData } from 'services/location';
 import {
-  // getCountriesProvider,
   getRegionsProvider,
   getSubRegionsProvider,
   getCategorisedCountries,
@@ -91,9 +90,9 @@ export const getServerSideProps = async ({ params }) => {
       const countryLinks = await getCountryLinksSerialized();
       countryData = {
         ...countryData,
-        regions: uniqBy(regions.data.rows).map((row) => ({
-          id: parseGadm36Id(row.id).adm1,
-          value: parseGadm36Id(row.id).adm1,
+        regions: uniqBy(regions.data).map((row) => ({
+          id: parseGadmId(row.id).adm1,
+          value: parseGadmId(row.id).adm1,
           label: row.name,
           name: row.name,
         })),
@@ -102,12 +101,12 @@ export const getServerSideProps = async ({ params }) => {
     }
 
     if (adm1) {
-      const subRegions = await getSubRegionsProvider(adm0, adm1);
+      const subRegions = await getSubRegionsProvider({ adm0, adm1 });
       countryData = {
         ...countryData,
-        subRegions: uniqBy(subRegions.data.rows).map((row) => ({
-          id: parseGadm36Id(row.id).adm2,
-          value: parseGadm36Id(row.id).adm2,
+        subRegions: uniqBy(subRegions.data).map((row) => ({
+          id: parseGadmId(row.id).adm2,
+          value: parseGadmId(row.id).adm2,
           label: row.name,
           name: row.name,
         })),
@@ -151,21 +150,6 @@ export const getServerSideProps = async ({ params }) => {
     };
   }
 };
-//
-// export const getStaticPaths = async () => {
-//   const countryData = await getCountriesProvider();
-//   const { rows: countries } = countryData?.data || {};
-//   const countryPaths = countries.map((c) => ({
-//     params: {
-//       location: ['country', c.iso],
-//     },
-//   }));
-//
-//   return {
-//     paths: ['/embed/sentence/', ...countryPaths] || [],
-//     fallback: true,
-//   };
-// };
 
 const getSentenceClientSide = async (
   locationNames = null,
