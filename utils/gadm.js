@@ -1,9 +1,7 @@
-export const getGadm36Id = (country, region, subRegion) =>
-  `${country}${region ? `.${region}` : ''}${
-    subRegion ? `.${subRegion}_1` : '_1'
-  }`;
+export const getGadmId = (country, region, subRegion) =>
+  `${country}${region ? `.${region}` : ''}${subRegion ? `.${subRegion}` : ''}`;
 
-export const parseGadm36Id = (gid) => {
+export const parseGadmId = (gid) => {
   if (!gid) return null;
 
   const ids = gid.split('.');
@@ -18,9 +16,14 @@ export const parseGadm36Id = (gid) => {
   };
 };
 
-export const getGadmLocationByLevel = ({ level, ...location }) => ({
+/**
+ * @param {string} adm_level - The administrative level
+ * @param {object} location - Location object from user's clicked area
+ * @return {object} - Object with area type, location and gadm properties
+ */
+export const getGadmLocationByLevel = ({ adm_level, ...location }) => ({
   type: 'country',
   ...(location?.gid_0 && {
-    ...parseGadm36Id(location[`gid_${level || '0'}`]),
+    ...parseGadmId(location[`gid_${adm_level || '0'}`]),
   }),
 });

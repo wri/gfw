@@ -16,6 +16,7 @@ import Dropdown from 'components/ui/dropdown';
 import Search from 'components/ui/search';
 import Paginate from 'components/paginate';
 import ConfirmSubscriptionModal from 'components/modals/confirm-subscription';
+import OutdatedAreaModal from 'components/modals/outdated-area/OutdatedAreaModal';
 
 import mapIcon from 'assets/icons/view-map.svg?sprite';
 import editIcon from 'assets/icons/edit.svg?sprite';
@@ -42,6 +43,7 @@ class AreasTable extends PureComponent {
     alerts: {},
     pageSize: 6,
     pageNum: 0,
+    outdatedAreaModalOpen: false,
   };
 
   componentDidUpdate(prevProps) {
@@ -252,6 +254,10 @@ class AreasTable extends PureComponent {
                           this.setState({
                             alerts: { ...allAlerts, [area.id]: alertsResponse },
                           })}
+                        openOutdatedAreaModal={() =>
+                          this.setState({
+                            outdatedAreaModalOpen: true,
+                          })}
                       />
                     </div>
                   </Tooltip>
@@ -320,6 +326,13 @@ class AreasTable extends PureComponent {
           />
         )}
         <ConfirmSubscriptionModal />
+        <OutdatedAreaModal
+          isOpen={this.state.outdatedAreaModalOpen}
+          handleCloseModal={() =>
+            this.setState({
+              outdatedAreaModalOpen: false,
+            })}
+        />
       </div>
     );
   }

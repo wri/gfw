@@ -95,7 +95,6 @@ export const getLayerEndpoints = createSelector(
 
     const { type, adm2 } = location;
     const routeType = type === 'country' ? 'admin' : type;
-    const lossLayer = layers.find((l) => l.metadata === 'tree_cover_loss');
     const hasWidgetLayers = widgetLayers && !!widgetLayers.length;
 
     const admLevel = locationLevelToStr(location);
@@ -122,10 +121,6 @@ export const getLayerEndpoints = createSelector(
             version: analysisConfig.version || 'v1',
             slug: analysisConfig.service,
             params: {
-              ...(analysisConfig.service === 'umd-loss-gain' &&
-                lossLayer && {
-                  ...lossLayer.decodeParams,
-                }),
               ...decodeParams,
               ...params,
               query: analysisConfig.query,
