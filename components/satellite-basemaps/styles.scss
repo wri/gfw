@@ -65,6 +65,18 @@
     }
   }
 
+  .satellite-dummy {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    padding: 10px 15px;
+    text-align: left;
+
+    img {
+      opacity: 50%;
+    }
+  }
+
   .satellite-basemap {
     &--cta {
       display: flex;
