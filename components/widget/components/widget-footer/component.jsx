@@ -15,13 +15,21 @@ class WidgetFooter extends PureComponent {
     showAttributionLink: PropTypes.bool,
     alertSystem: PropTypes.string,
     decorationMessage: PropTypes.string,
+    admLevel: PropTypes.string,
+    adm0: PropTypes.string,
   };
 
-  renderAlert = (alerts, alertSystem, type, locationType) => {
+  renderAlert = (alerts, alertSystem, type, locationType, admLevel, adm0) => {
     if (!alerts) return null;
 
     return alerts.map((alert, index) => {
-      if (alert.system === alertSystem || alertSystem === 'all') {
+      const validation = alert.hasConstraints
+        ? (alert.system === alertSystem || alertSystem === 'all') &&
+          alert.constraints?.admins?.includes(admLevel) &&
+          alert.constraints?.countries?.includes(adm0)
+        : alert.system === alertSystem || alertSystem === 'all';
+
+      if (validation) {
         return (
           <WidgetAlert
             key={`alert-${index}`}
@@ -45,6 +53,8 @@ class WidgetFooter extends PureComponent {
       showAttributionLink,
       alertSystem,
       decorationMessage,
+      admLevel,
+      adm0,
     } = this.props;
 
     const statementsMapped = statements && statements.join(' | ');
@@ -59,7 +69,14 @@ class WidgetFooter extends PureComponent {
             dangerouslySetInnerHTML={{ __html: decorationMessage }}
           />
         )}
-        {this.renderAlert(alerts, alertSystem, type, locationType)}
+        {this.renderAlert(
+          alerts,
+          alertSystem,
+          type,
+          locationType,
+          admLevel,
+          adm0
+        )}
         {statementsMapped && !!statementsMapped.length && (
           <div className="notranslate">{ReactHtmlParser(statementsMapped)}</div>
         )}
