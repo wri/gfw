@@ -12,7 +12,7 @@ import {
 
 import { isMapPage } from 'utils/location';
 
-// function for retreiving glad alerts from tables
+// function for retrieving glad alerts from tables
 import {
   fetchGladAlertsSum,
   fetchGladAlertsSumOTF,

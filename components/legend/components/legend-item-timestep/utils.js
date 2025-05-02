@@ -70,7 +70,7 @@ export const getTicks = (timelineConfig = {}) => {
   }
 
 
-  // Otherwise, let's add default marks at the begginig and the end
+  // Otherwise, let's add default marks at the beginnig and the end
   const minMark = 0;
   const maxMark = moment.utc(maxDate).diff(moment.utc(minDate), interval);
 

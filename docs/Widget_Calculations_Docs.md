@@ -140,7 +140,7 @@ where $v_w$ is the smoothed value (mean, or std) for week $w$.
 
 #### 1d.ii. Windowed Smoothing
 
-In the case of the cumulative Fires widget, we cannot exploit the cyclic nature of the data, since each year's cumulative data is independant of all others. Here we must employ a windowed smoothing method (or, [Boxcar](https://en.wikipedia.org/wiki/Boxcar_function) smoothing).
+In the case of the cumulative Fires widget, we cannot exploit the cyclic nature of the data, since each year's cumulative data is independent of all others. Here we must employ a windowed smoothing method (or, [Boxcar](https://en.wikipedia.org/wiki/Boxcar_function) smoothing).
 
 Here an average is taken at every isoweek, with the slice size ($b%) changing as we iterate over the array so that the smoothing is weakest towards both ends of the array.
 
@@ -198,7 +198,7 @@ where the full-width half-maximum counts ($c_{fwhm}$ ) is:
 
 Using the FWHM allows us to account for locations where there are fires in every week of the year (mostly larger location such as ISO-level countries etc).
 
->> Note that FWHM was chosen rather arbitrarily; and we could, if we wished, define some other threshold to denote the bgining of the fire season (e.g. 30% of the peak). There is a danger that the lower the thresold, the more prone to mis-calculatioon this method becomes, since multi-modal data may cross the threshold more than once per year.
+>> Note that FWHM was chosen rather arbitrarily; and we could, if we wished, define some other threshold to denote the bgining of the fire season (e.g. 30% of the peak). There is a danger that the lower the threshold, the more prone to mis-calculatioon this method becomes, since multi-modal data may cross the threshold more than once per year.
 
 This value is $w_{peak}$ is then used to generate the human-readable estimate of the start date such as:
 
@@ -232,7 +232,7 @@ In the simple case (GLAD widget), where the period is a single week - we calcula
 
 > $\delta_w$ = $\frac{c_w-\bar{c}_w}{\sigma_w}$
 
-Now, if the distance from the mean is between $\pm1$, that week's value is within a single standard deviate and can be considered a 'normal' or 'average' nnumber of alerts for that particular week.
+Now, if the distance from the mean is between $\pm1$, that week's value is within a single standard deviate and can be considered a 'normal' or 'average' number of alerts for that particular week.
 
 Outside of this the number of counts can be considered statistically significantly different from the norm, and is categorised as follows:
 

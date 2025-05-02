@@ -2051,7 +2051,7 @@ export const fetchGladAlertsDaily = (params) => {
     datasetType: 'daily',
     // version override necessary here (no 'latest' defined)
     version: 'latest',
-    // Refernces the base SQL from the SQL_QUERIES object
+    // References the base SQL from the SQL_QUERIES object
   })}${SQL_QUERIES.integratedAlertsDaily}`;
 
   if (download) {
@@ -2104,7 +2104,7 @@ export const fetchGladAlertsDailyRanked = (params) => {
     datasetType: 'daily',
     // version override necessary here (no 'latest' defined)
     version: 'latest',
-    // Refernces the base SQL from the SQL_QUERIES object
+    // References the base SQL from the SQL_QUERIES object
   })}${SQL_QUERIES.integratedAlertsRanked}`;
 
   if (download) {

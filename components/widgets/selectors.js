@@ -693,7 +693,7 @@ export const getNoDataMessage = createSelector(
   (title, category) => {
     if (!title || !category) return 'No data available';
     if (!category) return `No data available for ${title}`;
-    return `No ${lowerCase(category)} data avilable for ${title}`;
+    return `No ${lowerCase(category)} data available for ${title}`;
   }
 );
 

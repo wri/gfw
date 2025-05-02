@@ -34,7 +34,7 @@ While mathematically you can go from *Above Ground Biomass* to *Below Ground Car
  - AGB -> BGB -> BGC 
  - AGB -> AGC -> BGC
   
-they actually give slightly different results computationally due to rounding errors which incrase with the startiing values. The biologically correct way to get from *Above Ground Biomass* to *Below Ground Carbon* is to do the former: AGB -> BGB -> BGC. 
+they actually give slightly different results computationally due to rounding errors which increase with the startiing values. The biologically correct way to get from *Above Ground Biomass* to *Below Ground Carbon* is to do the former: AGB -> BGB -> BGC. 
 
 Therefre, so that we are consistent, we have the following functions defined:
 

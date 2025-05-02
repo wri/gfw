@@ -49,7 +49,7 @@ export default {
         {
           id: 'comms-learn',
           content:
-            'Learn about the differences beteween traditional cultivation practices and deforestation.',
+            'Learn about the differences between traditional cultivation practices and deforestation.',
           btnText: 'Read the blog',
           link:
             'https://blog.globalforestwatch.org/data/new-map-helps-distinguish-between-cyclical-farming-and-deforestation-in-the-congo-basin',
