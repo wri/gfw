@@ -35,6 +35,7 @@ export default {
       type: 'select',
       placeholder: 'All land cover',
       clearable: true,
+      blacklist: ['natural_forests_2020'],
     },
     {
       key: 'decile',
