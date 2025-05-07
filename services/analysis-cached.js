@@ -398,7 +398,7 @@ export const getLossNaturalForest = (params) => {
   }
 
   const url = encodeURI(
-    `${requestUrl}${SQL_QUERIES.lossNaturalForest}&ts=${Date.now()}`
+    `${requestUrl}${SQL_QUERIES.lossNaturalForest}`
       .replace(
         /{select_location}/g,
         getLocationSelect({ ...params, cast: false })
@@ -1226,7 +1226,7 @@ export const getExtentNaturalForest = (params) => {
   }
 
   const url = encodeURI(
-    `${requestUrl}${SQL_QUERIES.extentNaturalForest}&ts=${Date.now()}`
+    `${requestUrl}${SQL_QUERIES.extentNaturalForest}`
       .replace(
         /{select_location}/g,
         getLocationSelect({ ...params, cast: false })
