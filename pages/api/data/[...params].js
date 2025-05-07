@@ -16,11 +16,16 @@ export const config = {
   },
 };
 
-export default (req, res) =>
-  httpProxyMiddleware(req, res, {
+export default (req, res) => {
+  let isDataMartDownload = false;
+
+  if (req.query['datamart-csv']) {
+    isDataMartDownload = true;
+  }
+
+  return httpProxyMiddleware(req, res, {
     // You can use the `http-proxy` option
     target: DATA_API_URL,
-    // In addition, you can use the `pathRewrite` option provided by `next-http-proxy`
     pathRewrite: [
       {
         patternStr: `^/?${PROXIES.DATA_API}`,
@@ -29,8 +34,12 @@ export default (req, res) =>
     ],
     headers: {
       'x-api-key': GFW_API_KEY,
+      ...(isDataMartDownload && {
+        'Accept': 'text/csv',
+      }),
     },
     followRedirects: true,
   }).catch(async (error) => {
     res.end(error.message);
   });
+}

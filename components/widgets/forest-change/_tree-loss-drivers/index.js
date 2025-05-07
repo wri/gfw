@@ -7,10 +7,11 @@ import {
   POLITICAL_BOUNDARIES,
   TREE_COVER_LOSS_BY_DOMINANT_DRIVER,
 } from 'data/layers';
-
-import { getTreeCoverLossByDriverType } from 'services/analysis-cached';
-
+import { fetchDataMart } from 'services/datamart';
 import getWidgetProps from './selectors';
+import { shouldQueryPrecomputedTables } from '../../utils/helpers';
+
+const DATASET = 'tree_cover_loss_by_driver';
 
 export default {
   widget: 'treeLossTsc',
@@ -62,7 +63,7 @@ export default {
   settings: {
     threshold: 30,
     startYear: 2001,
-    endYear: 2021,
+    endYear: 2023,
     chartHeight: 230,
     extentYear: 2000,
   },
@@ -92,14 +93,111 @@ export default {
       groupedLegends: true,
     };
   },
-  getData: (params) =>
-    getTreeCoverLossByDriverType(params).then((response) => {
-      const { data } = (response && response.data) || {};
+  /**
+   *
+   * @param {Object} params
+   * @param {String} params.adm0
+   * @param {String} params.adm1
+   * @param {String} params.adm2
+   * @param {boolean} params.analysis true if widget is rendered in map, otherwise false
+   * @param {boolean} params.dashboard true if widget is rendered in dashboard, false otherwise
+   * @param {Object} params.geostore
+   * @param {string} params.geostore.id gesotore id
+   * @param {string} params.threshold threshold value
+   * @param {string} params.type country, global
+   * @returns
+   */
+  getData: async (params) => {
+    const {
+      adm0,
+      adm1,
+      adm2,
+      analysis,
+      // eslint-disable-next-line no-unused-vars
+      dashboard,
+      geostore,
+      threshold,
+      type,
+    } = params;
 
-      return data;
-    }),
-  getDataURL: (params) => [
-    getTreeCoverLossByDriverType({ ...params, download: true }),
-  ],
+    let mappedType = '';
+
+    if (analysis) {
+      mappedType = 'geostore';
+    } else {
+      if (type === 'global') {
+        mappedType = 'global';
+      }
+
+      if (adm0 !== undefined && adm0 !== null) {
+        mappedType = 'admin';
+      }
+    }
+
+    const response = await fetchDataMart({
+      dataset: DATASET,
+      geostoreId: geostore?.id,
+      type:
+        analysis && shouldQueryPrecomputedTables(params) ? 'admin' : mappedType, // checking to not send geostore_id when analyizing entire countries (only in map page, analysis: true)
+      adm0,
+      adm1,
+      adm2,
+      threshold,
+      isDownload: false,
+    });
+
+    if (response.data?.status === 'failed') {
+      throw new Error(response.data.message);
+    }
+
+    return response.data?.result.tree_cover_loss_by_driver.map((item) => ({
+      driver_type: item.drivers_type,
+      loss_area_ha: item.loss_area_ha,
+    }));
+  },
+  getDataURL: async (params) => {
+    const {
+      adm0,
+      adm1,
+      adm2,
+      analysis,
+      // eslint-disable-next-line no-unused-vars
+      dashboard,
+      geostore,
+      threshold,
+      type,
+    } = params;
+    let mappedType = '';
+
+    if (analysis) {
+      mappedType = 'geostore';
+    } else {
+      if (type === 'global') {
+        mappedType = 'global';
+      }
+
+      if (adm0 !== undefined && adm0 !== null) {
+        mappedType = 'admin';
+      }
+    }
+
+    const res = await fetchDataMart({
+      dataset: DATASET,
+      geostoreId: geostore?.id,
+      type: mappedType,
+      adm0,
+      adm1,
+      adm2,
+      threshold,
+      isDownload: true,
+    });
+
+    return [
+      {
+        name: DATASET,
+        url: res,
+      },
+    ];
+  },
   getWidgetProps,
 };

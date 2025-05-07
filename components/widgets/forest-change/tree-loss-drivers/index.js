@@ -1,4 +1,3 @@
-import { all, spread } from 'axios';
 import { getYearsRangeFromMinMax } from 'components/widgets/utils/data';
 
 import {
@@ -12,8 +11,9 @@ import {
 } from 'data/layers';
 
 import treeLoss from 'components/widgets/forest-change/tree-loss';
-import { getExtent, getLoss } from 'services/analysis-cached';
+import { getLoss } from 'services/analysis-cached';
 
+// import { fetchDataMart } from 'services/datamart';
 import getWidgetProps from './selectors';
 
 const MIN_YEAR = 2001;
@@ -121,40 +121,40 @@ export default {
   whitelists: {
     checkStatus: true,
   },
-  getData: (params) =>
-    all([
-      getLoss({ ...params, landCategory: 'tsc', lossTsc: true }),
-      getExtent({ ...params }),
-    ]).then(
-      spread((loss, extent) => {
-        let data = {};
-        if (loss && loss.data && extent && extent.data) {
-          data = {
-            loss: loss.data.data.filter(
-              (d) => d.tsc_tree_cover_loss_drivers__driver !== 'Unknown'
-            ),
-            extent: (loss.data.data && extent.data.data[0].value) || 0,
-          };
-        }
+  getData: async (params) => {
+    const response = await getLoss({
+      ...params,
+      landCategory: 'tsc',
+      lossTsc: true,
+    });
 
-        const { startYear, endYear, range } = getYearsRangeFromMinMax(
-          MIN_YEAR,
-          MAX_YEAR
-        );
+    let data = {};
 
-        return {
-          ...data,
-          settings: {
-            startYear,
-            endYear,
-            yearsRange: range,
-          },
-          options: {
-            years: range,
-          },
-        };
-      })
-    ),
+    if (response && response.data) {
+      data = {
+        loss: response.data.data.filter(
+          (d) => d.tsc_tree_cover_loss_drivers__driver !== 'Unknown'
+        ),
+      };
+    }
+
+    const { startYear, endYear, range } = getYearsRangeFromMinMax(
+      MIN_YEAR,
+      MAX_YEAR
+    );
+
+    return {
+      ...data,
+      settings: {
+        startYear,
+        endYear,
+        yearsRange: range,
+      },
+      options: {
+        years: range,
+      },
+    };
+  },
   getDataURL: (params) => [
     getLoss({
       ...params,
@@ -162,7 +162,6 @@ export default {
       lossTsc: true,
       download: true,
     }),
-    getExtent({ ...params, download: true }),
   ],
   getWidgetProps,
 };
