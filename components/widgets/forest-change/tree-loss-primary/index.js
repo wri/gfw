@@ -206,12 +206,7 @@ export default {
    */
   // eslint-disable-next-line no-unused-vars
   isPlaceholderImage: ({ location, category }) => {
-    return (
-      location.type === 'country' &&
-      location.adm0 === 'IDN' &&
-      !location.pathname.includes('embed') &&
-      (category === 'summary' || !category)
-    );
+    return false;
   },
   getWidgetProps,
 };
