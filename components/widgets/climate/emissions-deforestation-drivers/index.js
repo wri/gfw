@@ -26,16 +26,39 @@ export default {
   widget: 'emissionsDeforestationDrivers',
   title:
     'Forest-related greenhouse gas emissions in {location} by dominant driver',
-  admins: ['adm0', 'adm1'],
-  types: ['country', 'aoi', 'wdpa'],
+  admins: ['adm0', 'adm1', 'adm2'],
+  types: ['geostore', 'country', 'aoi', 'use', 'wdpa'],
   settingsConfig: [
     {
-      key: 'tscDriverGroup',
-      label: 'drivers',
+      key: 'gasesIncluded',
+      label: 'Greenhouse gases included',
       type: 'select',
+      border: true,
     },
-    ...emissionsDeforestation.settingsConfig,
+    {
+      key: 'forestType',
+      label: 'Forest Type',
+      type: 'select',
+      placeholder: 'All tree cover',
+      clearable: true,
+    },
+    {
+      key: 'landCategory',
+      label: 'Land Category',
+      type: 'select',
+      placeholder: 'All categories',
+      clearable: true,
+      border: true,
+    },
+    {
+      key: 'threshold',
+      label: 'canopy density',
+      type: 'mini-select',
+      whitelist: [30, 50, 75],
+      metaKey: 'widget_canopy_density',
+    },
   ],
+  chartType: 'pieChart',
   datasets: [
     // TODO BIOMASS LOSS LAYER
     {
@@ -83,6 +106,23 @@ export default {
   whitelists: {
     adm0: biomassLossIsos,
     checkStatus: true,
+  },
+  getChartSettings: (params) => {
+    const { dashboard, embed } = params;
+
+    return {
+      ...((dashboard || embed) && {
+        size: 'small',
+        chart: {
+          style: {
+            display: 'flex',
+            height: 'auto',
+            alignItems: 'center',
+          },
+        },
+      }),
+      groupedLegends: true,
+    };
   },
   getData: (params) =>
     getEmissions({ ...params, landCategory: 'tsc', byDriver: true }).then(
