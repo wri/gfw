@@ -37,10 +37,15 @@
         }
       }
     }
+
+    // Make sure the last `.legend-basic-group` doesn't have a bottom padding (used to separate the groups)
+    li:last-child .legend-basic-group {
+      padding-bottom: 0;
+    }
   }
 
   .legend-basic-group {
-    padding: 8px 0 0 10px;
+    padding: 0.3125rem 0 1 0.75rem;
   }
 
   li {
