@@ -113,10 +113,15 @@ export const fetchDatasets = createThunkAction(
                       const { tiles } = source || {}; // previously url
                       const decodeFunction =
                         decodeLayersConfig[decode_function];
-                      const customColor =
-                        legendConfig &&
-                        legendConfig.items &&
-                        legendConfig.items[0].color;
+
+                      const hasGroupedLegend =
+                        Array.isArray(legendConfig?.items) &&
+                        legendConfig.items.length > 0 &&
+                        Array.isArray(legendConfig.items[0]?.items);
+
+                      const customColor = hasGroupedLegend
+                        ? legendConfig?.items?.[0]?.items?.[0]?.color
+                        : legendConfig?.items?.[0]?.color;
 
                       // check if has a timeline
                       const hasParamsTimeline =
