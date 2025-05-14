@@ -25,6 +25,21 @@ export const getPermCats = createSelector([], () =>
   tscLossCategories.filter((x) => x.permanent).map((el) => el.value.toString())
 );
 
+const groupedLegends = {
+  'class_Commodity driven deforestation': 'Drivers of deforestation',
+  class_Forestry: 'Drivers of temporary disturbances',
+  'forest management': 'Drivers of temporary disturbances',
+  'shifting cultivation': 'Drivers of temporary disturbances',
+  'class_Shifting agriculture': 'Drivers of temporary disturbances',
+  class_Wildfire: 'Drivers of temporary disturbances',
+  'other natural disasters': 'Drivers of temporary disturbances',
+  'hard commodities': 'Drivers of deforestation',
+  'Drivers of deforestation agriculture': 'Drivers of deforestation',
+  'settlements and infrastructure': 'Drivers of deforestation',
+  class_Urbanization: 'Drivers of deforestation',
+  unknown: 'Drivers of deforestation',
+};
+
 export const mergeDataWithCetagories = createSelector(
   [getEmissions, getPermCats],
   (data, permCats) => {
@@ -100,26 +115,81 @@ export const getDrivers = createSelector(
 );
 
 // get lists selected
-export const parseData = createSelector([getFilteredData], (data) => {
-  if (isEmpty(data)) return null;
-  const groupedData = groupBy(data, 'year');
-  const x = Object.keys(groupedData).map((y) => {
-    const groupedByBound = groupBy(groupedData[y], 'bound1');
-    const datakeys = entries(groupedByBound).reduce((acc, [key, value]) => {
-      const areaSum = sumBy(value, 'selectedEmissions');
+export const parseData = createSelector(
+  [getFilteredData, getColors],
+  (data, colors) => {
+    if (isEmpty(data)) return null;
+    const groupedData = groupBy(data, 'year');
+    const x = Object.keys(groupedData).map((y) => {
+      const groupedByBound = groupBy(groupedData[y], 'bound1');
+      const datakeys = entries(groupedByBound).reduce((acc, [key, value]) => {
+        const areaSum = sumBy(value, 'selectedEmissions');
+        return {
+          ...acc,
+          [`class_${key}`]: areaSum < 1000 ? Math.round(areaSum) : areaSum,
+        };
+      }, {});
       return {
-        ...acc,
-        [`class_${key}`]: areaSum < 1000 ? Math.round(areaSum) : areaSum,
+        year: y,
+        total: sum(Object.values(datakeys)),
+        ...datakeys,
       };
-    }, {});
-    return {
-      year: y,
-      total: sum(Object.values(datakeys)),
-      ...datakeys,
-    };
-  });
-  return x;
-});
+    });
+
+    const categoryColors = colors.lossDrivers;
+    /**
+     * [
+     *   {
+     *     year: string;
+     *     total: number;
+     *     'class_Commodity driven deforestation': number;
+     *     'class_Forestry': number;
+     *     'class_Shifting agriculture': number;
+     *     'class_Urbanization': number;
+     *     'class_Wildfire': number;
+     *   },
+     * ]
+     */
+    const dataList = Object.values(x);
+    const totalsEntry = dataList.reduce(
+      (acc, entry) => ({
+        total: acc.total + entry.total,
+        'class_Commodity driven deforestation':
+          acc['class_Commodity driven deforestation'] +
+          (entry['class_Commodity driven deforestation'] || 0),
+        class_Forestry: acc.class_Forestry + (entry.class_Forestry || 0),
+        'class_Shifting agriculture':
+          acc['class_Shifting agriculture'] +
+          (entry['class_Shifting agriculture'] || 0),
+        class_Urbanization:
+          acc.class_Urbanization + (entry.class_Urbanization || 0),
+        class_Wildfire: acc.class_Wildfire + (entry.class_Wildfire || 0),
+      }),
+      {
+        total: 0,
+        'class_Commodity driven deforestation': 0,
+        class_Forestry: 0,
+        'class_Shifting agriculture': 0,
+        class_Urbanization: 0,
+        class_Wildfire: 0,
+      }
+    );
+
+    const formattedResult = Object.entries(totalsEntry)
+      .filter(([key]) => key !== 'total')
+      .map(([key, value]) => {
+        return {
+          label: key.replace('class_', ''),
+          value,
+          category: groupedLegends[key],
+          color: categoryColors[key.replace('class_', '')],
+          percentage: (value * 100) / totalsEntry.total,
+        };
+      });
+
+    return formattedResult;
+  }
+);
 
 export const parseConfig = createSelector(
   [getColors, getFilteredData, getDrivers, getSettings],
