@@ -38,7 +38,7 @@ export const adminSentences = {
   withPlantationLoss:
     'In 2020, {location} had {naturalForest} of natural forest, extending over {percentage} of its land area. In {year}, it lost {naturalLoss} of natural forest',
   countrySpecific: {
-    IDN: 'In 2001, {location} had {primaryForest} of primary forest*, extending over {percentagePrimaryForest} of its land area. In {year}, it lost {primaryLoss} of primary forest*, equivalent to {emissionsPrimary} of CO₂ emissions.',
+    IDN: 'In 2020, {location} had {primaryForest} of natural forest, extending over {percentagePrimaryForest} of its land area. In {year}, it lost {primaryLoss} of natural forest, equivalent to {emissionsPrimary} of CO₂ emissions.',
   },
   co2Emissions: ', equivalent to {emissions} of CO\u2082 emissions.',
   end: '.',
@@ -149,7 +149,7 @@ const getNaturalForestSentenceData = async (params = GLOBAL_LOCATION) => {
     const extentNaturalForestResponse = await getExtentNaturalForest(params);
     const lossNaturalForestResponse = await getLossNaturalForest({
       ...params,
-      umd_tree_cover_loss__year: 2023,
+      umd_tree_cover_loss__year: 2024,
       isNaturalForest: true,
     });
 
@@ -180,7 +180,7 @@ const getNaturalForestSentenceData = async (params = GLOBAL_LOCATION) => {
       primaryExtent: 0,
       totalLoss: {
         area: lossArea,
-        year: 2023,
+        year: 2024,
         emissions,
       },
       plantationsLoss: {
