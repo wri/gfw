@@ -45,9 +45,15 @@
       "Commodity driven deforestation": "#F41D36",
       "Shifting agriculture": "#efd31a",
       "Forestry": "#2FBF71",
-      "Wildfire": "#ad6824",
       "Urbanization": "#B235CC",
-      "Unknown": "#555"
+      "Unknown": "#555",
+      "Logging": "#51A44E",
+      "Shifting cultivation": "#E9D700",
+      "Wildfire": "#895128",
+      "Other natural disturbances": "#3A209A",
+      "Settlements & Infrastructure": "#A354A0",
+      "Hard commodities": "#E58074",
+      "Permanent agriculture": "#E39D29"
     }
   },
   "gain": {
@@ -84,8 +90,15 @@
       "Commodity driven deforestation": "#DF511E",
       "Shifting agriculture": "#F9A000",
       "Forestry": "#898522",
-      "Wildfire": "#895122",
-      "Urbanization": "#892227"
+      "Urbanization": "#892227",
+      "Unknown": "#555",
+      "Logging": "#51A44E",
+      "Shifting cultivation": "#E9D700",
+      "Wildfire": "#895128",
+      "Other natural disturbances": "#3A209A",
+      "Settlements & Infrastructure": "#A354A0",
+      "Hard commodities": "#E58074",
+      "Permanent agriculture": "#E39D29"
     }
   },
   "plantations": {
