@@ -69,9 +69,9 @@ export default {
   },
   sentences: {
     globalInitial:
-      '<b>Globally</b> from {startYear} to {endYear}, {lossPercentage} of tree cover loss occurred in areas where the dominant drivers of loss resulted in {deforestation}.',
+      '<b>Globally</b> from {startYear} to {endYear}, {lossPercentage} of tree cover loss occurred in areas where the dominant drivers of loss resulted in deforestation.',
     initial:
-      'In {location} from {startYear} to {endYear}, {lossPercentage} of tree cover loss occurred in areas where the dominant drivers of loss resulted in {deforestation}.',
+      'In {location} from {startYear} to {endYear}, {lossPercentage} of tree cover loss occurred in areas where the dominant drivers of loss resulted in deforestation.',
   },
   whitelists: {
     checkStatus: true,
