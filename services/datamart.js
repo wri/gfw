@@ -52,6 +52,11 @@ const getDataByParams = async ({ dataset, aoi, canopy }) => {
         subregion: aoi.subregion,
       }),
     },
+    dataset_version: { // TODO: these hardcoded params will be removed soon since they'll be default after the TCL release, ask Daniel Mannarino
+      umd_tree_cover_density_2000: 'v1.8',
+      umd_tree_cover_loss: 'v1.12',
+      wri_google_tree_cover_loss_drivers: 'v1.12',
+    }
   };
 
   const requestUrl = `${url}/?${qs.stringify(params)}`;
@@ -108,6 +113,11 @@ const createRequestByParams = async ({
         subregion: aoi.subregion,
       }),
     },
+    dataset_version: { // TODO: these hardcoded params will be removed soon since they'll be default after the TCL release, ask Daniel Mannarino
+      umd_tree_cover_density_2000: 'v1.8',
+      umd_tree_cover_loss: 'v1.12',
+      wri_google_tree_cover_loss_drivers: 'v1.12',
+    }
   };
 
   const response = await dataRequest.post(url, params);

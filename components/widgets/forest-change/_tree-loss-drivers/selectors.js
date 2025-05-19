@@ -14,18 +14,14 @@ const getSortedCategories = () =>
   tscLossCategories.sort((a, b) => (a.position > b.position ? 1 : -1));
 
 const groupedLegends = {
-  'commodity driven deforestation': 'Drivers of deforestation',
-  forestry: 'Drivers of temporary disturbances',
-  'forest management': 'Drivers of temporary disturbances',
-  'shifting cultivation': 'Drivers of temporary disturbances',
-  'shifting agriculture': 'Drivers of temporary disturbances',
-  wildfire: 'Drivers of temporary disturbances',
-  'other natural disasters': 'Drivers of temporary disturbances',
-  'hard commodities': 'Drivers of deforestation',
-  'Drivers of deforestation agriculture': 'Drivers of deforestation',
-  'settlements and infrastructure': 'Drivers of deforestation',
-  urbanization: 'Drivers of deforestation',
-  unknown: 'Drivers of deforestation',
+  'Hard commodities': 'Drivers of deforestation',
+  Logging: 'Drivers of temporary disturbances',
+  'Other natural disturbances': 'Drivers of temporary disturbances',
+  'Permanent agriculture': 'Drivers of deforestation',
+  'Settlements & Infrastructure': 'Drivers of deforestation',
+  'Shifting cultivation': 'Drivers of temporary disturbances',
+  Unknown: 'Drivers of deforestation',
+  Wildfire: 'Drivers of temporary disturbances',
 };
 
 export const getPermanentCategories = createSelector(
@@ -60,7 +56,7 @@ export const parseData = createSelector(
       return {
         label: driver_type,
         value: loss_area_ha,
-        category: groupedLegends[driver_type.toLowerCase()],
+        category: groupedLegends[driver_type],
         color: categoryColors[driver_type],
         percentage: (loss_area_ha * 100) / totalLoss,
       };

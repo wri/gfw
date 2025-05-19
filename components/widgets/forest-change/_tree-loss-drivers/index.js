@@ -19,8 +19,8 @@ export default {
     initial: 'Tree cover loss by dominant driver in {location}',
     global: 'Global tree cover loss by dominant driver',
   },
-  types: ['global', 'country'],
-  admins: ['global', 'adm0'],
+  types: ['global', 'country', 'geostore', 'aoi', 'use', 'wdpa'],
+  admins: ['global', 'adm0', 'adm1', 'adm2'],
   categories: ['summary', 'forest-change'],
   subcategories: ['forest-loss'],
   large: true,
@@ -100,7 +100,6 @@ export default {
    * @param {String} params.adm1
    * @param {String} params.adm2
    * @param {boolean} params.analysis true if widget is rendered in map, otherwise false
-   * @param {boolean} params.dashboard true if widget is rendered in dashboard, false otherwise
    * @param {Object} params.geostore
    * @param {string} params.geostore.id gesotore id
    * @param {string} params.threshold threshold value
@@ -108,17 +107,7 @@ export default {
    * @returns
    */
   getData: async (params) => {
-    const {
-      adm0,
-      adm1,
-      adm2,
-      analysis,
-      // eslint-disable-next-line no-unused-vars
-      dashboard,
-      geostore,
-      threshold,
-      type,
-    } = params;
+    const { adm0, adm1, adm2, analysis, geostore, threshold, type } = params;
 
     let mappedType = '';
 
@@ -156,17 +145,7 @@ export default {
     }));
   },
   getDataURL: async (params) => {
-    const {
-      adm0,
-      adm1,
-      adm2,
-      analysis,
-      // eslint-disable-next-line no-unused-vars
-      dashboard,
-      geostore,
-      threshold,
-      type,
-    } = params;
+    const { adm0, adm1, adm2, analysis, geostore, threshold, type } = params;
     let mappedType = '';
 
     if (analysis) {
