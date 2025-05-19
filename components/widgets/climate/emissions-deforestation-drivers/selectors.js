@@ -28,7 +28,6 @@ const groupedLegends = {
   'Permanent agriculture': 'Drivers of deforestation',
   'Settlements & Infrastructure': 'Drivers of deforestation',
   'Shifting cultivation': 'Drivers of temporary disturbances',
-  Unknown: 'Drivers of deforestation',
   Wildfire: 'Drivers of temporary disturbances',
 };
 
@@ -135,9 +134,6 @@ export const parseData = createSelector(
       'Shifting cultivation':
         data.find((item) => item.driver_type === 'Shifting cultivation')
           ?.gross_carbon_emissions_Mg || 0,
-      Unknown:
-        data.find((item) => item.driver_type === 'Unknown')
-          ?.gross_carbon_emissions_Mg || 0,
       Wildfire:
         data.find((item) => item.driver_type === 'Wildfire')
           ?.gross_carbon_emissions_Mg || 0,
@@ -152,6 +148,7 @@ export const parseData = createSelector(
           category: groupedLegends[key],
           color: categoryColors[key],
           percentage: (value * 100) / totalsEntry.total,
+          unit: 'tCO2',
         };
       });
 
@@ -293,11 +290,6 @@ export const parseSentence = createSelector(
         unit: 'tCO2',
         spaceUnit: true,
       }),
-      component: {
-        key: 'permanent deforestation',
-        tooltip:
-          'The drivers of permanent deforestation are mainly urbanization and commodity-driven deforestation. Shifting agriculture may or may not lead to deforestation, depending upon the impact and permanence of agricultural activities.',
-      },
     };
 
     return {

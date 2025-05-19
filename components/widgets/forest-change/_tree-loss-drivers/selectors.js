@@ -20,7 +20,6 @@ const groupedLegends = {
   'Permanent agriculture': 'Drivers of deforestation',
   'Settlements & Infrastructure': 'Drivers of deforestation',
   'Shifting cultivation': 'Drivers of temporary disturbances',
-  Unknown: 'Drivers of deforestation',
   Wildfire: 'Drivers of temporary disturbances',
 };
 
@@ -46,21 +45,28 @@ export const parseData = createSelector(
     if (!filteredData || isEmpty(filteredData)) return null;
 
     const categoryColors = colors.lossDrivers;
-
     const totalLoss = filteredData.reduce(
-      (acc, { loss_area_ha }) => acc + loss_area_ha,
+      (acc, { loss_area_ha, driver_type }) => {
+        if (driver_type === 'Unknown') {
+          return acc;
+        }
+
+        return acc + loss_area_ha;
+      },
       0
     );
 
-    return filteredData.map(({ driver_type, loss_area_ha }) => {
-      return {
-        label: driver_type,
-        value: loss_area_ha,
-        category: groupedLegends[driver_type],
-        color: categoryColors[driver_type],
-        percentage: (loss_area_ha * 100) / totalLoss,
-      };
-    });
+    return filteredData
+      .filter((item) => item.driver_type !== 'Unknown')
+      .map(({ driver_type, loss_area_ha }) => {
+        return {
+          label: driver_type,
+          value: loss_area_ha,
+          category: groupedLegends[driver_type],
+          color: categoryColors[driver_type],
+          percentage: (loss_area_ha * 100) / totalLoss,
+        };
+      });
   }
 );
 
@@ -76,27 +82,32 @@ export const parseTitle = createSelector(
 );
 
 export const parseSentence = createSelector(
-  [
-    getFilteredData,
-    getSentences,
-    getSettings,
-    getLocationLabel,
-    getPermanentCategories,
-  ],
-  (filteredData, sentences, settings, location, permanentCategories) => {
+  [getFilteredData, getSentences, getSettings, getLocationLabel],
+  (filteredData, sentences, settings, location) => {
     if (!filteredData) return null;
     const { globalInitial, initial } = sentences;
     const { startYear, endYear } = settings;
     const sentence = location === 'global' ? globalInitial : initial;
 
     const totalLoss = filteredData.reduce(
-      (acc, { loss_area_ha }) => acc + loss_area_ha,
+      (acc, { loss_area_ha, driver_type }) => {
+        if (driver_type === 'Unknown') {
+          return acc;
+        }
+
+        return acc + loss_area_ha;
+      },
       0
     );
 
     const permanentLoss = filteredData.reduce(
-      (acc, { driver_type, loss_area_ha }) =>
-        permanentCategories.includes(driver_type) ? acc + loss_area_ha : acc,
+      (acc, { driver_type, loss_area_ha }) => {
+        if (groupedLegends[driver_type] !== 'Drivers of deforestation') {
+          return acc;
+        }
+
+        return acc + loss_area_ha;
+      },
       0
     );
 
@@ -108,11 +119,6 @@ export const parseSentence = createSelector(
         num: (permanentLoss * 100) / totalLoss,
         unit: '%',
       }),
-      component: {
-        key: 'deforestation',
-        tooltip:
-          'The Drivers of deforestation are mainly urbanization and commodity-driven deforestation. Shifting agriculture may or may not lead to deforestation, depending upon the impact and permanence of agricultural activities.',
-      },
     };
 
     return {

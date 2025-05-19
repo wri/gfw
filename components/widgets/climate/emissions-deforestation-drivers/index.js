@@ -77,11 +77,11 @@ export default {
   },
   sentences: {
     initial:
-      'In {location} from {startYear} to {endYear}, an average of {totalEmissions} occurred in areas where the dominant drivers of tree cover loss resulted in {permanent deforestation}',
+      'In {location} from {startYear} to {endYear}, an average of {totalEmissions} <b>per year</b> occurred in areas where the dominant drivers of tree cover loss resulted in deforestation',
     noLoss:
-      'In {location} from {startYear} to {endYear}, <b>no emissions</b> in areas where the dominant drivers of tree cover loss resulted in {permanent deforestation}',
+      'In {location} from {startYear} to {endYear}, <b>no emissions</b> in areas where the dominant drivers of tree cover loss resulted in deforestation',
     globalInitial:
-      'In {location} from {startYear} to {endYear}, {totalEmissions} in areas where the dominant drivers of tree cover loss resulted in {permanent deforestation}',
+      'In {location} from {startYear} to {endYear}, {totalEmissions} <b>per year</b> in areas where the dominant drivers of tree cover loss resulted in deforestation',
     co2Only: ', considering emissions from CO\u2082 only.',
     nonCo2Only: ', considering only emissions from non-CO\u2082 gases only.',
   },
