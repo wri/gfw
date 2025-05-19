@@ -19,8 +19,11 @@ import {
 import indonesiaPlaceholder from 'assets/images/indonesia-primary-forest-loss-2023.png';
 import getWidgetProps from './selectors';
 
+const { pathname } = location;
+
 const MIN_YEAR = 2002;
-const MAX_YEAR = 2024;
+const MAX_YEAR =
+  pathname.includes('/aoi/') || pathname.includes('/geostore/') ? 2023 : 2024;
 
 const getGlobalLocation = (params) => ({
   adm0: params.type === 'global' ? null : params.adm0,
@@ -42,6 +45,10 @@ export default {
     {
       text: 'The methods behind this data have changed over time. Be cautious comparing old and new data, especially before/after 2015. [Read more here](https://www.globalforestwatch.org/blog/data-and-research/tree-cover-loss-satellite-data-trend-analysis/).',
       visible: ['global', 'country', 'geostore', 'aoi', 'wdpa', 'use'],
+    },
+    {
+      text: 'This custom area analysis does not yet include 2024 tree cover loss data. This update will be available in the coming days.',
+      visible: ['aoi', 'geostore'],
     },
   ],
   large: true,

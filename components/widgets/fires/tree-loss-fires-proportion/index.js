@@ -15,8 +15,11 @@ import {
 
 import getWidgetProps from './selectors';
 
-const MAX_YEAR = 2024;
+const { pathname } = location;
+
 const MIN_YEAR = 2001;
+const MAX_YEAR =
+  pathname.includes('/aoi/') || pathname.includes('/geostore/') ? 2023 : 2024;
 
 const getGlobalLocation = (params) => ({
   adm0: params.type === 'global' ? null : params.adm0,
@@ -37,6 +40,12 @@ export default {
   visible: ['dashboard', 'analysis'],
   chartType: 'pieChart',
   colors: 'lossFires',
+  alerts: [
+    {
+      text: 'This custom area analysis does not yet include 2024 tree cover loss data. This update will be available in the coming days.',
+      visible: ['aoi', 'geostore'],
+    },
+  ],
   settingsConfig: [
     {
       key: 'forestType',
