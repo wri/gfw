@@ -56,6 +56,9 @@ class PieChartLegend extends PureComponent {
                     num: item[config.key],
                     unit: item.unit ? item.unit : config.unit,
                     spaceUnit: item.unit !== '%' && config.unit !== 'countsK',
+                    ...(item.suffix && {
+                      suffix: item.suffix,
+                    }),
                   })}`;
 
                   return (
