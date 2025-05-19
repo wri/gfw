@@ -19,8 +19,11 @@ import {
 import indonesiaPlaceholder from 'assets/images/indonesia-primary-forest-loss-2023.png';
 import getWidgetProps from './selectors';
 
+const { pathname } = location;
+
 const MIN_YEAR = 2002;
-const MAX_YEAR = 2024;
+const MAX_YEAR =
+  pathname.includes('/aoi/') || pathname.includes('/geostore/') ? 2023 : 2024;
 
 const getGlobalLocation = (params) => ({
   adm0: params.type === 'global' ? null : params.adm0,

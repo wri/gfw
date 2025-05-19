@@ -15,8 +15,11 @@ import {
 
 import getWidgetProps from './selectors';
 
-const MAX_YEAR = 2024;
+const { pathname } = location;
+
 const MIN_YEAR = 2001;
+const MAX_YEAR =
+  pathname.includes('/aoi/') || pathname.includes('/geostore/') ? 2023 : 2024;
 
 const getGlobalLocation = (params) => ({
   adm0: params.type === 'global' ? null : params.adm0,

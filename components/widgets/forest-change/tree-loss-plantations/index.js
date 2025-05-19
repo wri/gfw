@@ -16,8 +16,11 @@ import {
 
 import getWidgetProps from './selectors';
 
+const { pathname } = location;
+
 const MIN_YEAR = 2021;
-const MAX_YEAR = 2024;
+const MAX_YEAR =
+  pathname.includes('/aoi/') || pathname.includes('/geostore/') ? 2023 : 2024;
 
 export default {
   widget: 'treeLossPlantations',

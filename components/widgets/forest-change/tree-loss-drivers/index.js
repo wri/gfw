@@ -16,8 +16,11 @@ import { getLoss } from 'services/analysis-cached';
 // import { fetchDataMart } from 'services/datamart';
 import getWidgetProps from './selectors';
 
+const { pathname } = location;
+
 const MIN_YEAR = 2001;
-const MAX_YEAR = 2024;
+const MAX_YEAR =
+  pathname.includes('/aoi/') || pathname.includes('/geostore/') ? 2023 : 2024;
 
 export default {
   ...treeLoss,

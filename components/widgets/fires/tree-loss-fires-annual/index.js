@@ -25,6 +25,12 @@ const getGlobalLocation = (params) => ({
   adm2: params.type === 'global' ? null : params.adm2,
 });
 
+const { pathname } = location;
+
+const MIN_YEAR = 2001;
+const MAX_YEAR =
+  pathname.includes('/aoi/') || pathname.includes('/geostore/') ? 2023 : 2024;
+
 export default {
   widget: 'treeLossFiresAnnual',
   title: {
@@ -635,8 +641,8 @@ export default {
   settings: {
     threshold: 30,
     ifl: 2000,
-    startYear: 2001,
-    endYear: 2024,
+    startYear: MIN_YEAR,
+    endYear: MAX_YEAR,
   },
   getData: (params = {}) => {
     const { adm0, adm1, adm2, type, startYear, endYear } = params || {};
