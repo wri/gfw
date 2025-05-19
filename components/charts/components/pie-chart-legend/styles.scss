@@ -27,8 +27,8 @@
 
     .legend-group-list.grid-layout {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
-      grid-gap: 10px;
+      grid-template-columns: repeat(auto-fill, minmax(8.125rem, 1fr));
+      grid-gap: 0.625rem;
     }
 
     /* Ensure legend items take full width within their grid cell */
