@@ -39,6 +39,10 @@ export default {
         icon: 'warning',
         visible: ['global', 'country', 'geostore', 'aoi', 'wdpa', 'use'],
       },
+      {
+        text: 'This custom area analysis does not yet include 2024 tree cover loss data. This update will be available in the coming days.',
+        visible: ['aoi', 'geostore'],
+      },
     ],
     indonesia: [
       {

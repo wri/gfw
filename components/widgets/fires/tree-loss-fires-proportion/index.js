@@ -40,6 +40,12 @@ export default {
   visible: ['dashboard', 'analysis'],
   chartType: 'pieChart',
   colors: 'lossFires',
+  alerts: [
+    {
+      text: 'This custom area analysis does not yet include 2024 tree cover loss data. This update will be available in the coming days.',
+      visible: ['aoi', 'geostore'],
+    },
+  ],
   settingsConfig: [
     {
       key: 'forestType',

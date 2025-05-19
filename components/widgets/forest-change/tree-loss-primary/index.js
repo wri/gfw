@@ -46,6 +46,10 @@ export default {
       text: 'The methods behind this data have changed over time. Be cautious comparing old and new data, especially before/after 2015. [Read more here](https://www.globalforestwatch.org/blog/data-and-research/tree-cover-loss-satellite-data-trend-analysis/).',
       visible: ['global', 'country', 'geostore', 'aoi', 'wdpa', 'use'],
     },
+    {
+      text: 'This custom area analysis does not yet include 2024 tree cover loss data. This update will be available in the coming days.',
+      visible: ['aoi', 'geostore'],
+    },
   ],
   large: true,
   visible: ['dashboard', 'analysis'],
