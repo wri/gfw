@@ -50,7 +50,14 @@ class PieChartLegend extends PureComponent {
           {Object.entries(groupedItems).map(([category, categoryItems]) => (
             <div className="legend-group">
               <h2 className="legend-group-title">{category}</h2>
-              <ul className={cx('legend-group-list', simple, sizeClass)}>
+              <ul
+                className={cx(
+                  'legend-group-list',
+                  'grid-layout',
+                  simple,
+                  sizeClass
+                )}
+              >
                 {categoryItems.map((item, index) => {
                   const value = `${formatNumber({
                     num: item[config.key],
