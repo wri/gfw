@@ -30,7 +30,7 @@ export default {
   title:
     'Forest-related greenhouse gas emissions in {location} by dominant driver',
   admins: ['adm0', 'adm1', 'adm2'],
-  types: ['geostore', 'country', 'aoi', 'use', 'wdpa'],
+  types: ['country', 'use', 'wdpa'],
   settingsConfig: [
     {
       key: 'threshold',

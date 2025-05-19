@@ -19,7 +19,7 @@ export default {
     initial: 'Tree cover loss by dominant driver in {location}',
     global: 'Global tree cover loss by dominant driver',
   },
-  types: ['global', 'country', 'geostore', 'aoi', 'use', 'wdpa'],
+  types: ['global', 'country', 'use', 'wdpa'],
   admins: ['global', 'adm0', 'adm1', 'adm2'],
   categories: ['summary', 'forest-change'],
   subcategories: ['forest-loss'],
