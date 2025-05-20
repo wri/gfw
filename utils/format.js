@@ -59,7 +59,7 @@ const formatWithProperSpecifier = ({
 };
 
 export const formatNumber = (args) => {
-  const { num, unit, returnUnit = true, spaceUnit = false } = args;
+  const { num, unit, returnUnit = true, spaceUnit = false, suffix = '' } = args;
 
   if (unit === '') return format('.2f')(num);
   if (unit === ',') return format(',')(num);
@@ -68,6 +68,10 @@ export const formatNumber = (args) => {
 
   if (unit === 'tCO2') {
     formattedNumber = `${formattedNumber}tCO\u2082e`;
+  }
+
+  if (suffix !== '') {
+    formattedNumber = `${formattedNumber} ${suffix}`;
   }
 
   if (spaceUnit) {

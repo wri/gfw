@@ -26,10 +26,11 @@ export default {
   },
   lossDriverLayer: {
     statementHighlight: 'Hover for details on drivers classes.',
-    tooltipDesc: `Commodity driven deforestation: Large-scale deforestation linked primarily to commercial agricultural expansion.\n
-      Shifting agriculture: Temporary loss or permanent deforestation due to small- and medium-scale agriculture.\n
-      Forestry: Temporary loss from plantation and natural forest harvesting, with some deforestation of primary forests.\n
-      Wildfire: Temporary loss, does not include fire clearing for agriculture.\n
-      Urbanization: Deforestation for expansion/intensification of urban centers.`,
+    tooltipDesc: `Permanent agriculture: Long-term, permanent tree cover loss for small- to large-scale agriculture. \n
+      Hard commodities: Loss due to the establishment or expansion of mining or energy infrastructure.\n
+      Shifting cultivation: Tree cover loss due to small- to medium-scale clearing for temporary cultivation that is later abandoned and followed by subsequent regrowth of secondary forest or vegetation.\n
+      Logging: Forest management and logging activities occurring within managed, natural or semi-natural forests and plantations, often with evidence of forest regrowth or planting in subsequent years.\n
+      Settlements and infrastructure: Tree cover loss due to expansion and intensification of roads, settlements, urban areas, or built infrastructure (not associated with other classes).\n
+      Other natural disturbances: Tree cover loss due to other non-fire natural disturbances (e.g., landslides, insect outbreaks, river meandering).`,
   },
 };

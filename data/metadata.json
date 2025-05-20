@@ -62,5 +62,6 @@
   "per_protected_areas",
   "gfw_reforestable_extent_aboveground_carbon_potential_sequestration",
   "sbtn_natural_forests_map",
-  "gfw_places_to_watch"
+  "gfw_places_to_watch",
+  "wri_google_tree_cover_loss_drivers"
 ]

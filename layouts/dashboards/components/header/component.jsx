@@ -1,4 +1,4 @@
-import React, { PureComponent, Fragment } from 'react';
+import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
 import Link from 'next/link';
@@ -186,16 +186,6 @@ class Header extends PureComponent {
 
     const displaySentence =
       !sentence || isEmpty(sentence) ? globalSentence : sentence;
-
-    if (
-      location &&
-      location.adm0 === 'IDN' &&
-      !location.adm1 &&
-      !location.adm2
-    ) {
-      displaySentence.sentence +=
-        ' <b>144 kha</b> of this loss was found to be within Indonesia’s official forest land cover classes and with a patch size larger than two hectares according to MoEF-WRI analysis.';
-    }
 
     const countrySelectorData = this.getCountrySelectorData();
     const regionData = this.getAdm1SelectorData();
@@ -423,22 +413,6 @@ class Header extends PureComponent {
                   className="sentence"
                   sentence={displaySentence}
                 />
-                {location && location.adm0 === 'IDN' && (
-                  <Fragment>
-                    <p className="disclaimer">
-                      *Much of the primary forest loss in Indonesia according to
-                      the GFW analysis is within areas that Indonesia classifies
-                      as secondary forest and other land cover (e.g., mixed dry
-                      land agriculture, estate crop, plantation forest, shrub
-                      and others). This is because the GFW primary forest
-                      definition is different than Indonesia’s official primary
-                      forest definition and classification. GFW’s statistics on
-                      loss of primary forests in Indonesia are therefore
-                      considerably higher than the official Indonesian
-                      statistics on deforestation in primary forest.
-                    </p>
-                  </Fragment>
-                )}
                 {forestAtlasLink && isCountryDashboard && (
                   <Button
                     className="forest-atlas-btn"

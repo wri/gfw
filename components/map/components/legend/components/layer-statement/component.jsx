@@ -22,7 +22,6 @@ class LayerStatement extends PureComponent {
         hideOnClick
         html={<Tip text={tooltipDesc} className={tooltipClassname} />}
         position="top"
-        followCursor
         animateFill={false}
       >
         <div className={cx('c-layer-statement', className)}>
