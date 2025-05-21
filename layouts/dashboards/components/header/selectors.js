@@ -12,7 +12,7 @@ import {
 } from 'providers/areas-provider/selectors';
 
 const isServer = typeof window === 'undefined';
-const DOWNLOAD_VERSION = '2023';
+const DOWNLOAD_VERSION = '2024';
 
 // get list data
 export const selectLocation = (state) =>
@@ -128,7 +128,7 @@ export const getDownloadLink = createSelector(
       }.xlsx`;
     }
 
-    return `https://gfw2-data.s3.amazonaws.com/country-pages/country_stats/download/gfw_2023_statistics_summary_v30102024.xlsx`;
+    return 'https://gfw2-data.s3.amazonaws.com/country-pages/country_stats/download/2024/global_05212025.xlsx';
   }
 );
 

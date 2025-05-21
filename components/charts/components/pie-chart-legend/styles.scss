@@ -24,6 +24,17 @@
       flex-wrap: wrap;
       margin-bottom: 1.25rem;
     }
+
+    .legend-group-list.grid-layout {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(8.125rem, 1fr));
+      grid-gap: 0.625rem;
+    }
+
+    /* Ensure legend items take full width within their grid cell */
+    .legend-group-list.grid-layout .legend-item {
+      width: 100%;
+    }
   }
 
   .legend-title {

@@ -8,6 +8,7 @@ class CustomPieChart extends PureComponent {
   render() {
     const {
       data,
+      // eslint-disable-next-line no-unused-vars
       maxSize,
       dataKey,
       innerRadius,
@@ -24,7 +25,7 @@ class CustomPieChart extends PureComponent {
 
     return (
       <div className={cx('c-pie-chart', className)} style={chart?.style}>
-        <ResponsiveContainer width="99%" height={maxSize}>
+        <ResponsiveContainer height={230}>
           <PieChart>
             <Pie
               data={data}

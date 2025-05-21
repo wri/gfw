@@ -20,7 +20,7 @@ import indonesiaPlaceholder from 'assets/images/indonesia-primary-forest-loss-20
 import getWidgetProps from './selectors';
 
 const MIN_YEAR = 2002;
-const MAX_YEAR = 2023;
+const MAX_YEAR = 2024;
 
 const getGlobalLocation = (params) => ({
   adm0: params.type === 'global' ? null : params.adm0,
@@ -206,12 +206,7 @@ export default {
    */
   // eslint-disable-next-line no-unused-vars
   isPlaceholderImage: ({ location, category }) => {
-    return (
-      location.type === 'country' &&
-      location.adm0 === 'IDN' &&
-      !location.pathname.includes('embed') &&
-      (category === 'summary' || !category)
-    );
+    return false;
   },
   getWidgetProps,
 };

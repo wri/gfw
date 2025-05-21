@@ -1,23 +1,23 @@
 [
   {
-    "label": "Commodity Driven Deforestation",
-    "value": "Commodity driven deforestation",
+    "label": "Hard commodities",
+    "value": "Hard commodities",
     "permanent": true,
     "position": 0
   },
   {
-    "label": "Forestry",
-    "value": "Forestry",
+    "label": "Logging",
+    "value": "Logging",
     "position": 1
   },
   {
-    "label": "Shifting Agriculture",
-    "value": "Shifting agriculture",
+    "label": "Other natural disturbances",
+    "value": "Other natural disturbances",
     "position": 2
   },
   {
-    "label": "Urbanization",
-    "value": "Urbanization",
+    "label": "Permanent agriculture",
+    "value": "Permanent agriculture",
     "permanent": true,
     "position": 3
   },
@@ -30,5 +30,15 @@
     "label": "Unknown",
     "value": "Unknown",
     "position": 5
+  },
+  {
+    "label": "Settlements & Infrastructure",
+    "value": "Settlements & Infrastructure",
+    "position": 6
+  },
+  {
+    "label": "Shifting cultivation",
+    "value": "Shifting cultivation",
+    "position": 7
   }
 ]
