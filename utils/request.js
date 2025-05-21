@@ -98,6 +98,12 @@ export const metadataWidgetRequest = {
     const config = {
       method: 'GET',
       cache: 'no-store',
+      headers: {
+        'Cache-Control': 'no-cache',
+        Pragma: 'no-cache',
+        'If-None-Match': '', // impede cache baseado em ETag
+        ...(options.headers || {}),
+      },
       ...defaultRequestConfig,
       ...options,
     };
