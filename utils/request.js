@@ -97,7 +97,7 @@ export const metadataWidgetRequest = {
     const baseUrl = getWidgetBaseUrl();
     const config = {
       method: 'GET',
-      cache: 'no-store',
+      next: { revalidate: 120 },
       ...defaultRequestConfig,
       ...options,
     };
