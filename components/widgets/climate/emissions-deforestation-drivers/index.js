@@ -63,7 +63,7 @@ export default {
       layers: [TREE_COVER_LOSS_BY_DOMINANT_DRIVER],
     },
   ],
-  metaKey: 'widget_forest_carbon_emissions_by_driver_v20240308',
+  metaKey: 'widget_forest_carbon_emissions_by_driver',
   colors: 'climate',
   sortOrder: {
     climate: 3,
