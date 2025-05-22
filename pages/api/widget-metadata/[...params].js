@@ -8,7 +8,7 @@ const GFW_METADATA_API_URL =
 export default async (req, res) => {
   try {
     const path = req.query.params.join('/');
-    const url = `${GFW_METADATA_API_URL}/${path}/`;
+    const url = `${GFW_METADATA_API_URL}/${path}/?ts=${Date.now()}`;
     const response = await axios.get(url);
 
     return res.status(200).json(response.data);
