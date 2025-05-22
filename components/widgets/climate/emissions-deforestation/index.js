@@ -84,7 +84,7 @@ export default {
   pendingKeys: ['threshold'],
   refetchKeys: ['threshold', 'landCategory', 'forestType'],
   visible: ['dashboard', 'analysis', 'aoi'],
-  metaKey: 'widget_forest_carbon_emissions',
+  metaKey: 'widget_gfw_forest_carbon_emissions',
   dataType: 'flux',
   colors: 'climate',
   sortOrder: {
