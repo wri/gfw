@@ -14,6 +14,8 @@ export default async (req, res) => {
       headers: {
         'Cache-Control': 'no-cache',
         Pragma: 'no-cache',
+        'If-None-Match': '',
+        Accept: 'application/json',
       },
     });
 
