@@ -9,7 +9,14 @@ export default async (req, res) => {
     const path = req.query.params.join('/');
     const url = `${GFW_METADATA_API_URL}/${path}/`;
 
-    const response = await fetch(url, { next: { revalidate: 120 } });
+    const response = await fetch(url, {
+      headers: {
+        'Cache-Control': 'no-cache, no-store, must-revalidate',
+        Pragma: 'no-cache',
+        Expires: '0',
+      },
+      next: { revalidate: 120 },
+    });
     console.log('FETCHED FROM API');
     console.log('[Headers] Response Headers:');
 
