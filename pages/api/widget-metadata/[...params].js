@@ -10,9 +10,12 @@ export default async (req, res) => {
     const url = `${GFW_METADATA_API_URL}/${path}/`;
 
     const response = await fetch(url, { next: { revalidate: 120 } });
+    console.log('FETCHED FROM API');
+    console.log('[Headers] Response Headers:');
 
-    if (!response.ok) {
-      throw new Error(`Request failed with status ${response.status}`);
+    // eslint-disable-next-line no-restricted-syntax
+    for (const [key, value] of response.headers.entries()) {
+      console.log(`  ${key}: ${value}`);
     }
 
     const data = await response.json();
