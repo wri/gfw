@@ -85,15 +85,43 @@ export const metadataRequest = axios.create({
   }),
 });
 
-export const metadataWidgetRequest = axios.create({
-  ...defaultRequestConfig,
-  ...(isServer && {
-    baseURL: GFW_WIDGET_METADATA_API_URL,
-  }),
-  ...(!isServer && {
-    baseURL: PROXIES.WIDGET_METADATA_API,
-  }),
-});
+const getWidgetBaseUrl = () => {
+  if (isServer) {
+    return GFW_WIDGET_METADATA_API_URL;
+  }
+  return PROXIES.WIDGET_METADATA_API;
+};
+
+export const metadataWidgetRequest = {
+  get: async (endpoint, options = {}) => {
+    const baseUrl = getWidgetBaseUrl();
+    const config = {
+      method: 'GET',
+      cache: 'no-store',
+      headers: {
+        'Cache-Control': 'no-cache',
+        Pragma: 'no-cache',
+        'If-None-Match': '', // impede cache baseado em ETag
+        ...(options.headers || {}),
+      },
+      ...defaultRequestConfig,
+      ...options,
+    };
+
+    const url = `${baseUrl}/${endpoint}?_=${Date.now()}`;
+    const response = await fetch(url, config);
+    const data = await response.json();
+
+    return {
+      data,
+      status: response.status,
+      statusText: response.statusText,
+      headers: response.headers,
+      config,
+      request: response,
+    };
+  },
+};
 
 export const rwRequest = axios.create({
   ...defaultRequestConfig,
