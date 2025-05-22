@@ -9,7 +9,13 @@ export default async (req, res) => {
     const path = req.query.params.join('/');
     const url = `${GFW_METADATA_API_URL}/${path}/`;
 
-    const response = await fetch(url);
+    const response = await fetch(url, {
+      method: 'GET',
+      headers: {
+        'Cache-Control': 'no-cache',
+        Pragma: 'no-cache',
+      },
+    });
 
     if (!response.ok) {
       throw new Error(`Request failed with status ${response.status}`);
