@@ -97,18 +97,11 @@ export const metadataWidgetRequest = {
     const baseUrl = getWidgetBaseUrl();
     const config = {
       method: 'GET',
-      cache: 'no-store',
-      headers: {
-        'Cache-Control': 'no-cache',
-        Pragma: 'no-cache',
-        'If-None-Match': '', // impede cache baseado em ETag
-        ...(options.headers || {}),
-      },
       ...defaultRequestConfig,
       ...options,
     };
 
-    const url = `${baseUrl}/${endpoint}?_=${Date.now()}`;
+    const url = `${baseUrl}/${endpoint}`;
     const response = await fetch(url, config);
     const data = await response.json();
 
