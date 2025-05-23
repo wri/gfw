@@ -311,11 +311,18 @@ export const parseSentence = (
     spaceUnit: true,
   });
 
+  // TODO: this was requested by Melissa Rose in TCL-2024 release on 2025-05-23: just wanted to follow up on one last platform request now that the widget metadata has been updated. Could we change the 9.99 to 10 in "In 2020, the world had 3.68 Gha of natural forest, extending over 28% of its land area. In 2024, it lost 26.8 Mha of natural forest, equivalent to 9.99 Gt of CO₂ emissions.?"
+  const [numberAsString, unit] = emissionsNaturalForest.split(' ');
+
+  const roundedEmissionsNaturalForest = Math.round(Number(numberAsString || 0));
+  const roundedEmissionsNaturalForestFormatted = `${roundedEmissionsNaturalForest} ${unit}`;
+
   const emissionsFormatted = formatNumber({
     num: emissions,
     unit: 't',
     spaceUnit: true,
   });
+
   const emissionsPrimaryFormatted = formatNumber({
     num: emissionsPrimary || 0,
     unit: 't',
@@ -345,7 +352,10 @@ export const parseSentence = (
     percentageNatForest: `${percentageNatForest}`,
     percentagePrimaryForest: `${percentagePrimaryForest}`,
     loss: `${loss}`,
-    emissions: `${emissionsNaturalForest}`,
+    emissions:
+      locationObj.type === 'global'
+        ? roundedEmissionsNaturalForestFormatted
+        : emissionsNaturalForest,
     emissionsTreeCover: `${emissionsFormatted}`,
     emissionsPrimary: `${emissionsPrimaryFormatted}`,
     year,
