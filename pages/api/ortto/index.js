@@ -18,6 +18,10 @@ export default async (req, res) => {
     interests,
     receive_updates,
     old_email,
+    message,
+    tool,
+    topic,
+    source,
   } = req.body;
 
   const forwarded = req.headers['x-forwarded-for'];
@@ -47,20 +51,29 @@ export default async (req, res) => {
   const formData = new FormData();
 
   formData.append('email', email);
-  formData.append('old_email', old_email);
   formData.append('first_name', first_name);
   formData.append('last_name', last_name);
-  formData.append('organization', organization);
-  formData.append('job_title', job_title);
-  formData.append('job_function', job_function);
-  formData.append('sector', sector);
-  formData.append('city', city);
-  formData.append('country', country);
-  formData.append('preferred_language', preferred_language);
-  formData.append('interests', filteredInterests.join());
-  formData.append('receive_updates', receive_updates);
   formData.append('ip_addr', ip);
-  formData.append('form_name', 'GFW My Profile Update');
+
+  if (source && source === 'contactUsForm') {
+    formData.append('message', message);
+    formData.append('tool', tool);
+    formData.append('topic', topic);
+    formData.append('form_name', 'GFW Contact Us Form');
+    formData.append('website', 'globalforestwatch.org');
+  } else {
+    formData.append('old_email', old_email);
+    formData.append('organization', organization);
+    formData.append('job_title', job_title);
+    formData.append('job_function', job_function);
+    formData.append('sector', sector);
+    formData.append('city', city);
+    formData.append('country', country);
+    formData.append('preferred_language', preferred_language);
+    formData.append('interests', filteredInterests.join());
+    formData.append('receive_updates', receive_updates);
+    formData.append('form_name', 'GFW My Profile Update');
+  }
 
   try {
     await axios.post('https://ortto.wri.org/custom-forms/gfw/', formData, {
