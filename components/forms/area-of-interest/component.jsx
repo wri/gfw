@@ -125,13 +125,8 @@ class AreaOfInterestForm extends PureComponent {
   handleSaveAoi(values) {
     const { saveAreaOfInterest } = this.props;
     const out = { ...values };
-    // TODO: What was this?
-    // const { alerts } = values;
-    // if (alerts.indexOf('deforestationAlerts') > -1) {
-    //   out.deforestationAlerts = true;
-    //   out.alerts = without(alerts, 'deforestationAlerts');
-    // }
-    saveAreaOfInterest(out);
+
+    return saveAreaOfInterest(out);
   }
 
   render() {
