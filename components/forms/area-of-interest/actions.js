@@ -109,9 +109,11 @@ export const saveAreaOfInterest = createThunkAction(
         })
         .catch((error) => {
           const { errors } = error.response.data;
+          const defaultMessage =
+            "We're sorry, something went wrong. Try refreshing the page or check your connection.";
 
           return {
-            [FORM_ERROR]: errors[0].detail,
+            [FORM_ERROR]: errors?.[0]?.detail ?? defaultMessage,
           };
         });
     }
