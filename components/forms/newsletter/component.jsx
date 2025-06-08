@@ -11,7 +11,7 @@ import Select from 'components/forms/components/select';
 import Submit from 'components/forms/components/submit';
 import SuccessMessage from 'components/success-message';
 import Error from 'components/forms/components/error';
-import { preferredLanguages } from 'components/forms/profile/config';
+import { preferredLanguages, interests } from 'components/forms/profile/config';
 
 import { email as validateEmail } from 'components/forms/validations';
 import Checkbox from '../components/checkbox/component';
@@ -29,20 +29,6 @@ const sectors = [
   'No Affiliation',
   'Other',
 ];
-
-const interests = [
-  'Innovations in Monitoring',
-  'Fires',
-  'Forest Watcher Mobile App',
-  'Climate and Carbon',
-  'Biodiversity',
-  'Agricultural Supply Chains',
-  'Small Grants Fund and Tech Fellowship',
-  'Landscape Restoration',
-  'GFW Users in Action',
-  'Places to Watch alerts',
-];
-
 class NewsletterForm extends PureComponent {
   static propTypes = {
     countries: PropTypes.array,
@@ -81,6 +67,8 @@ class NewsletterForm extends PureComponent {
       person_source_details: 'https://www.globalforestwatch.org',
       ip_address: ipAddress,
     };
+
+    // TODO: send ortto request
 
     return submitNewsletterSubscription(postData)
       .then(() => {})
