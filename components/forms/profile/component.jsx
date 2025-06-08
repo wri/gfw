@@ -101,6 +101,11 @@ class ProfileForm extends PureComponent {
                         type="hidden"
                         value={initialValues.old_email}
                       />
+                      <Checkbox
+                        name="receive_updates"
+                        label="WOULD YOU LIKE TO RECEIVE UPDATES ON NEWS AND EVENTS FROM GLOBAL FOREST WATCH?"
+                        options={[{ label: 'Yes', value: 'true' }]}
+                      />
                       <Select
                         name="sector"
                         label="sector"
@@ -215,11 +220,6 @@ class ProfileForm extends PureComponent {
                       <Checkbox
                         name="signUpForTesting"
                         label="Would you like to help us test new application features?"
-                        options={[{ label: 'Yes', value: 'true' }]}
-                      />
-                      <Checkbox
-                        name="receive_updates"
-                        label="WOULD YOU LIKE TO RECEIVE UPDATES ON NEWS AND EVENTS FROM GLOBAL FOREST?"
                         options={[{ label: 'Yes', value: 'true' }]}
                       />
                       <Error
