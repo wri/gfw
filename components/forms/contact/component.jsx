@@ -17,6 +17,7 @@ import Submit from 'components/forms/components/submit';
 import { email as emailValidator } from 'components/forms/validations';
 
 import axios from 'axios';
+import { ORTTO_REQUESTS_TYPES } from 'pages/api/ortto/constants';
 import { topics, tools } from './config';
 
 const isServer = typeof window === 'undefined';
@@ -58,7 +59,7 @@ class ContactForm extends PureComponent {
       if (receive_updates) {
         const orttoData = {
           ...data,
-          source: 'contactUsForm',
+          source: ORTTO_REQUESTS_TYPES.CONTACT_US_FORM,
         };
 
         await axios.post('/api/ortto', orttoData);
