@@ -253,7 +253,8 @@ class Header extends PureComponent {
                     });
                   }}
                 >
-                  <Icon icon={downloadIcon} />
+                  <Icon icon={downloadIcon} style={{ width: '0.75rem' }} />
+                  Download
                 </Button>
               )}
 
