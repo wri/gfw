@@ -2,6 +2,7 @@ import React, { PureComponent, Fragment } from 'react';
 import PropTypes from 'prop-types';
 import { Form } from 'react-final-form';
 import { FORM_ERROR } from 'final-form';
+import axios from 'axios';
 
 import { submitNewsletterSubscription } from 'services/forms';
 
@@ -14,6 +15,7 @@ import Error from 'components/forms/components/error';
 import { preferredLanguages, interests } from 'components/forms/profile/config';
 
 import { email as validateEmail } from 'components/forms/validations';
+import { ORTTO_REQUESTS_TYPES } from 'pages/api/ortto/constants';
 import Checkbox from '../components/checkbox/component';
 
 const sectors = [
@@ -68,19 +70,19 @@ class NewsletterForm extends PureComponent {
       ip_address: ipAddress,
     };
 
-    // TODO: send ortto request
-
-    return submitNewsletterSubscription(postData)
-      .then(() => {})
-      .catch((error) => {
-        if (!error.response) {
-          return true;
-        }
-
-        return {
-          [FORM_ERROR]: 'Service unavailable',
-        };
+    try {
+      await submitNewsletterSubscription(postData);
+      await axios.post('/api/ortto', {
+        ...postData,
+        source: ORTTO_REQUESTS_TYPES.SUBSCRIBE_FORM,
       });
+
+      return true;
+    } catch (error) {
+      return {
+        [FORM_ERROR]: 'Service unavailable',
+      };
+    }
   };
 
   render() {

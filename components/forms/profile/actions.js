@@ -4,10 +4,14 @@ import { FORM_ERROR } from 'final-form';
 
 import { updateProfile, createProfile } from 'services/user';
 import { setMyGFW } from 'providers/mygfw-provider/actions';
+import { ORTTO_REQUESTS_TYPES } from 'pages/api/ortto/constants';
 
 const saveOrttoProfile = async (payload) => {
   try {
-    await axios.post('/api/ortto', payload);
+    await axios.post('/api/ortto', {
+      ...payload,
+      source: ORTTO_REQUESTS_TYPES.MY_GFW_PROFILE_FORM,
+    });
   } catch (error) {
     // eslint-disable-next-line no-console
     console.error(error);
