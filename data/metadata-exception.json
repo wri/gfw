@@ -6,5 +6,6 @@
   "satellite_basemap",
   "planet_basemap",
   "landsat_basemap",
-  "recent_satellite_imagery"
+  "recent_satellite_imagery",
+  "osm_logging_roads"
 ]
