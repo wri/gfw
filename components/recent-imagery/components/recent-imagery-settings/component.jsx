@@ -20,14 +20,78 @@ import BANDS from 'data/bands.json';
 
 import RecentImageryThumbnail from '../recent-imagery-thumbnail';
 
+const MIN_DATE = moment('2013-01-01').startOf('day').toDate();
+const MAX_DATE = moment().startOf('day').toDate();
+
 class RecentImagerySettings extends PureComponent {
   state = {
     selected: null,
     clouds: this.props.settings.clouds,
+    selectedDate: this.getStartOfDayDate(),
   };
+
+  getStartOfDayDate() {
+    return this.props.settings.date
+      ? moment(this.props.settings.date).startOf('day').toDate()
+      : moment().startOf('day').toDate();
+  }
+
+  static getDerivedStateFromProps(nextProps, prevState) {
+    const newDate = nextProps.settings.date
+      ? moment(nextProps.settings.date).startOf('day').toDate()
+      : moment().startOf('day').toDate();
+
+    if (
+      !prevState.selectedDate ||
+      newDate.getTime() !== prevState.selectedDate.getTime()
+    ) {
+      return { selectedDate: newDate };
+    }
+    return null;
+  }
 
   handleCloundsChange = (clouds) => {
     this.setState({ clouds });
+  };
+
+  handleWeeksChange = (option) => {
+    const { setRecentImagerySettings } = this.props;
+    setRecentImagerySettings({ weeks: option });
+    trackEvent({
+      category: 'Map settings',
+      action: 'Recent imagery feature',
+      label: 'User changes date range',
+    });
+  };
+
+  handleOptionChange = (option) => {
+    const { setRecentImagerySettings, resetRecentImageryData } = this.props;
+    resetRecentImageryData();
+    setRecentImagerySettings({
+      bands: option === '0' ? 0 : option,
+      selected: null,
+      selectedIndex: 0,
+    });
+    trackEvent({
+      category: 'Map settings',
+      action: 'Recent imagery feature',
+      label: 'User changes image type',
+    });
+  };
+
+  handleDateChange = (d) => {
+    const newDate = moment(d).format('YYYY-MM-DD');
+
+    if (newDate !== this.props.settings.date) {
+      const { setRecentImagerySettings } = this.props;
+      setRecentImagerySettings({ date: newDate });
+
+      trackEvent({
+        category: 'Map settings',
+        action: 'Recent imagery feature',
+        label: 'User changes start date',
+      });
+    }
   };
 
   render() {
@@ -36,13 +100,14 @@ class RecentImagerySettings extends PureComponent {
       activeTile,
       tiles,
       loading,
-      settings: { date, weeks, bands },
+      settings: { weeks, bands },
       setRecentImagerySettings,
       setRecentImageryLoading,
-      resetRecentImageryData,
       error,
     } = this.props;
     const selected = this.state.selected || activeTile || {};
+
+    const { selectedDate } = this.state;
 
     return (
       <div
@@ -60,31 +125,15 @@ class RecentImagerySettings extends PureComponent {
                 theme="theme-dropdown-native-button-green"
                 value={weeks}
                 options={WEEKS}
-                onChange={(option) => {
-                  setRecentImagerySettings({ weeks: option });
-                  trackEvent({
-                    category: 'Map settings',
-                    action: 'Recent imagery feature',
-                    label: 'User changes date range',
-                  });
-                }}
+                onChange={this.handleWeeksChange}
                 native
               />
               <div className="before">before</div>
               <Datepicker
-                selected={date ? new Date(date) : new Date()}
-                onChange={(d) => {
-                  setRecentImagerySettings({
-                    date: moment(d).format('YYYY-MM-DD'),
-                  });
-                  trackEvent({
-                    category: 'Map settings',
-                    action: 'Recent imagery feature',
-                    label: 'User changes start date',
-                  });
-                }}
-                minDate={new Date('2013-01-01')}
-                maxDate={new Date()}
+                selected={selectedDate}
+                onChange={this.handleDateChange}
+                minDate={MIN_DATE}
+                maxDate={MAX_DATE}
                 popperPlacement="bottom-end"
               />
             </div>
@@ -142,19 +191,7 @@ class RecentImagerySettings extends PureComponent {
                   theme="theme-dropdown-native-button-green"
                   value={bands}
                   options={BANDS}
-                  onChange={(option) => {
-                    resetRecentImageryData();
-                    setRecentImagerySettings({
-                      bands: option === '0' ? 0 : option,
-                      selected: null,
-                      selectedIndex: 0,
-                    });
-                    trackEvent({
-                      category: 'Map settings',
-                      action: 'Recent imagery feature',
-                      label: 'User changes image type',
-                    });
-                  }}
+                  onChange={this.handleOptionChange}
                   native
                 />
               </div>

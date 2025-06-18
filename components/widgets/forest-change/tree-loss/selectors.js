@@ -122,6 +122,7 @@ const parseSentence = createSelector(
       noLoss,
       noLossWithIndicator,
       co2Emissions,
+      warning,
     } = sentences;
     const { startYear, endYear, extentYear } = settings;
     const extent = Array.isArray(extentData)
@@ -139,7 +140,7 @@ const parseSentence = createSelector(
     if (tropical && totalLoss > 0) {
       sentence = `${sentence}, ${co2Emissions}`;
     }
-    sentence = `${sentence}.`;
+    sentence = `${sentence}. ${warning}`;
 
     const params = {
       indicator: indicator && indicator.label,
