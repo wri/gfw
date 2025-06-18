@@ -107,14 +107,16 @@ export default {
   },
   sentence: {
     initial:
-      'From {startYear} to {endYear}, {location} lost {loss} of tree cover, equivalent to a {percent} decrease in tree cover since {extentYear}',
+      'From {startYear} to {endYear}, {location} lost {loss} of tree cover, equivalent to a {percent} of the {extentYear} tree cover area',
     withIndicator:
-      'From {startYear} to {endYear}, {location} lost {loss} of tree cover in {indicator}, equivalent to a {percent} decrease in tree cover since {extentYear}',
+      'From {startYear} to {endYear}, {location} lost {loss} of tree cover in {indicator}, equivalent to a {percent} of the {extentYear} tree cover area',
     noLoss:
       'From {startYear} to {endYear}, {location} lost {loss} of tree cover',
     noLossWithIndicator:
       'From {startYear} to {endYear}, {location} lost {loss} of tree cover in {indicator}',
     co2Emissions: 'and {emissions} of CO\u2082e emissions',
+    warning:
+      'This does not account for gains in tree cover over the same period.',
   },
   settings: {
     threshold: 30,

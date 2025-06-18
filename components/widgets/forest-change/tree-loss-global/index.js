@@ -14,9 +14,9 @@ export default {
   ],
   sentence: {
     initial:
-      'From {startYear} to {endYear}, there was a total of {loss} of tree cover loss {location}, equivalent to a {percent} decrease in tree cover since {extentYear} and {emissions} of CO\u2082 emissions.',
+      'From {startYear} to {endYear}, there was a total of {loss} of tree cover loss {location}, equivalent to a {percent} of the {extentYear} tree cover area, and {emissions} of CO\u2082 emissions. This does not account for gains in tree cover over the same period.',
     withInd:
-      'From {startYear} to {endYear}, there was a total of {loss} of tree cover loss {location} within {indicator}, equivalent to a {percent} decrease in tree cover since {extentYear} and {emissions} of CO\u2082 emissions.',
+      'From {startYear} to {endYear}, there was a total of {loss} of tree cover loss {location} within {indicator}, equivalent to a {percent} of the {extenetYear}, and {emissions} of CO\u2082 emissions. This does not account for gains in tree cover over the same period.',
   },
   types: ['global'],
   admins: ['global'],
