@@ -47,7 +47,6 @@ class ContactForm extends PureComponent {
       last_name: lastName,
       email,
       message,
-      receive_updates,
       tool,
       topic,
     };
@@ -58,6 +57,7 @@ class ContactForm extends PureComponent {
       if (receive_updates) {
         const orttoData = {
           ...data,
+          receive_updates,
           source: 'contactUsForm',
         };
 
