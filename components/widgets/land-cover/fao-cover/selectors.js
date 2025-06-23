@@ -66,11 +66,7 @@ export const parseSentence = createSelector(
     const { area_ha, extent, forest_primary } = data;
     const { faoYear } = settings;
 
-    const primaryPercent =
-      forest_primary > 0
-        ? (forest_primary / extent) * 100
-        : (extent / area_ha) * 100;
-
+    const primaryPercent = (forest_primary * 100) / area_ha;
     const percent = (extent / area_ha) * 100;
     const params = {
       location: locationName === 'global' ? 'globally' : locationName,
