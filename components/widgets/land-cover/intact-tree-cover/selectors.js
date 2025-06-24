@@ -44,18 +44,14 @@ export const parseSentence = createSelector(
   [parseData, getLocationName, getIndicator, getSentences],
   (parsedData, locationName, indicator, sentences) => {
     if (!parsedData) return null;
-    const {
-      initial,
-      withIndicator,
-      noIntact,
-      noIntactWithIndicator,
-    } = sentences;
+    const { initial, withIndicator, noIntact, noIntactWithIndicator } =
+      sentences;
     const totalExtent = parsedData
-      .filter((d) => d.label !== 'Non-Forest')
       .map((d) => d.value)
       .reduce((sum, d) => sum + d);
-    const intactData = parsedData.find((d) => d.label === 'Intact Forest')
-      .value;
+    const intactData = parsedData.find(
+      (d) => d.label === 'Intact Forest'
+    ).value;
     const intactPercentage = intactData && (intactData / totalExtent) * 100;
     const indicatorLabel =
       indicator && indicator.label ? indicator.label : null;

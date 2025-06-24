@@ -85,11 +85,9 @@ export const parseSentence = createSelector(
       : 'treeCover';
     const sentence =
       sentences[sentenceKey][sentenceSubkey][sentenceTreeCoverType];
-    const indicators = indicator?.value?.split('__') || [];
-    const hasPlantations = indicators.includes('plantations');
 
-    const { cover, plantations, totalCover, totalArea } = data;
-    const top = !hasPlantations ? cover - plantations : plantations;
+    const { cover, totalCover, totalArea } = data;
+    const top = cover;
     const bottom = indicator ? totalCover : totalArea;
     const percentCover = (100 * top) / bottom;
 

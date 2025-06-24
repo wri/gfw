@@ -47,11 +47,11 @@ export const parseSentence = createSelector(
     if (!parsedData || !locationName) return null;
     const { initial, withIndicator } = sentences;
     const totalExtent = parsedData
-      .filter((d) => d.label !== 'Non-Forest')
       .map((d) => d.value)
       .reduce((sum, d) => sum + d);
-    const primaryData = parsedData.find((d) => d.label === 'Primary Forest')
-      .value;
+    const primaryData = parsedData.find(
+      (d) => d.label === 'Primary Forest'
+    ).value;
     const primaryPercentage = primaryData && (primaryData / totalExtent) * 100;
     const indicatorLabel =
       indicator && indicator.label ? indicator.label : null;
