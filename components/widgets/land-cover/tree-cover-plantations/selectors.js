@@ -36,13 +36,13 @@ export const parseData = createSelector(
 );
 
 export const parseSentence = createSelector(
-  [getData, parseData, getLocatonName, getSentences],
-  (rawData, data, locationName, sentences) => {
+  [parseData, getLocatonName, getSentences],
+  (data, locationName, sentences) => {
     if (isEmpty(data) || !sentences) return null;
 
     const { initial } = sentences;
     const top = data.slice(0, 1);
-    const areaPerc = (100 * (sumBy(top, 'value') || 0)) / rawData.totalArea;
+    const areaPerc = sumBy(top, 'percentage');
     const topExtent = sumBy(top, 'value') || 0;
     const params = {
       location: locationName,
