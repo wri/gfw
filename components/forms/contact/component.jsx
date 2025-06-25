@@ -53,7 +53,7 @@ class ContactForm extends PureComponent {
     };
 
     try {
-      const res = await submitContactForm({ ...data, language });
+      await submitContactForm({ ...data, language });
 
       if (receive_updates) {
         const orttoData = {
@@ -65,7 +65,7 @@ class ContactForm extends PureComponent {
         await axios.post('/api/ortto', orttoData);
       }
 
-      return res;
+      return true;
     } catch (error) {
       const { errors } = error.response && error.response.data;
       return {
