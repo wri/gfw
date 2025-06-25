@@ -49,6 +49,7 @@ class ContactForm extends PureComponent {
       message,
       tool,
       topic,
+      signup: receive_updates,
     };
 
     try {
