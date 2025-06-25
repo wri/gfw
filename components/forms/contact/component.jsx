@@ -8,13 +8,15 @@ import { submitContactForm } from 'services/forms';
 import Link from 'next/link';
 import Button from 'components/ui/button';
 
+import Checkbox from 'components/forms/components/checkbox';
 import Error from 'components/forms/components/error';
 import Input from 'components/forms/components/input';
 import Select from 'components/forms/components/select';
 import Submit from 'components/forms/components/submit';
 
-import { email } from 'components/forms/validations';
+import { email as emailValidator } from 'components/forms/validations';
 
+import axios from 'axios';
 import { topics, tools } from './config';
 
 const isServer = typeof window === 'undefined';
@@ -25,22 +27,51 @@ class ContactForm extends PureComponent {
     initialValues: PropTypes.object,
   };
 
-  sendContactForm = (values) => {
+  sendContactForm = async (values) => {
     const language =
       !isServer && window.Transifex
         ? window.Transifex.live.getSelectedLanguageCode()
         : 'en';
+    const {
+      firstName,
+      lastName,
+      email,
+      message,
+      receive_updates,
+      tool,
+      topic,
+    } = values;
 
-    return submitContactForm({ ...values, language })
-      .then(() => {})
-      .catch((error) => {
-        const { errors } = error.response && error.response.data;
-        return {
-          [FORM_ERROR]:
-            (errors && error.length && errors[0].detail) ||
-            'Service unavailable',
+    const data = {
+      first_name: firstName,
+      last_name: lastName,
+      email,
+      message,
+      tool,
+      topic,
+    };
+
+    try {
+      const res = await submitContactForm({ ...data, language });
+
+      if (receive_updates) {
+        const orttoData = {
+          ...data,
+          receive_updates,
+          source: 'contactUsForm',
         };
-      });
+
+        await axios.post('/api/ortto', orttoData);
+      }
+
+      return res;
+    } catch (error) {
+      const { errors } = error.response && error.response.data;
+      return {
+        [FORM_ERROR]:
+          (errors && error.length && errors[0].detail) || 'Service unavailable',
+      };
+    }
   };
 
   render() {
@@ -95,7 +126,19 @@ class ContactForm extends PureComponent {
                       type="email"
                       label="email"
                       placeholder="example@globalforestwatch.org"
-                      validate={[email]}
+                      validate={[emailValidator]}
+                      required
+                    />
+                    <Input
+                      name="firstName"
+                      type="text"
+                      label="first name"
+                      required
+                    />
+                    <Input
+                      name="lastName"
+                      type="text"
+                      label="last name"
                       required
                     />
                     <Select
@@ -118,6 +161,11 @@ class ContactForm extends PureComponent {
                       type="textarea"
                       placeholder={activeTopic && activeTopic.placeholder}
                       required
+                    />
+                    <Checkbox
+                      name="receive_updates"
+                      label="I WOULD LIKE TO RECEIVE UPDATES ON NEWS AND EVENTS FROM GLOBAL FOREST WATCH"
+                      options={[{ label: 'Yes', value: 'true' }]}
                     />
                     <Error
                       valid={valid}
