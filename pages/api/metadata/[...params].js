@@ -29,13 +29,19 @@ export default async (req, res) => {
     const url = `${GFW_DATA_API}/dataset/${safePaths[0]}`;
 
     const datasetMetadata = await axios.get(url);
-    const datasetVersionMetadata = await axios.get(`${url}/latest/metadata`);
-    const dataVersionMetadataObject = datasetVersionMetadata.data.data;
+    let datasetVersionMetadata;
+
+    try {
+      datasetVersionMetadata = await axios.get(`${url}/latest/metadata`);
+    } catch (error) {
+      datasetVersionMetadata = { data: { data: {} } };
+    }
+    const dataVersionMetadataObject = datasetVersionMetadata?.data?.data;
 
     const response = {
-      ...datasetMetadata.data.data,
+      ...datasetMetadata?.data?.data,
       metadata: {
-        ...datasetMetadata.data.data.metadata,
+        ...datasetMetadata?.data?.data?.metadata,
       },
     };
 
@@ -43,11 +49,13 @@ export default async (req, res) => {
      * Merging the metadata from the second request
      * avoiding overwrite the object properties with null value
      */
-    Object.keys(dataVersionMetadataObject).forEach((key) => {
-      if (dataVersionMetadataObject[key] !== null) {
-        response.metadata[key] = dataVersionMetadataObject[key];
-      }
-    });
+    if (dataVersionMetadataObject) {
+      Object.keys(dataVersionMetadataObject).forEach((key) => {
+        if (dataVersionMetadataObject[key] !== null) {
+          response.metadata[key] = dataVersionMetadataObject[key];
+        }
+      });
+    }
 
     return res.status(200).json(response);
   } catch (error) {
