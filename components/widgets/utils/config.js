@@ -206,6 +206,8 @@ export const getWidgetDatasets = ({
   threshold,
   dataset,
   adminLevel,
+  endDate,
+  startDate,
 }) => {
   return (
     datasets &&
@@ -232,6 +234,16 @@ export const getWidgetDatasets = ({
               trimEndDate: `${endYear || year}-12-31`,
             },
           }),
+          ...(startDate &&
+            endDate && {
+              timelineParams: {
+                startDate,
+                endDate,
+                trimEndDate: endDate,
+                startDateAbsolute: startDate,
+                endDateAbsolute: endDate,
+              },
+            }),
           ...(weeks && {
             timelineParams: {
               startDate: moment(latestDate || undefined)
