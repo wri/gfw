@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { ORTTO_REQUESTS_TYPES } from './constants';
 
 export default async (req, res) => {
   if (req.method !== 'POST') {
@@ -51,28 +52,47 @@ export default async (req, res) => {
   formData.append('last_name', last_name);
   formData.append('ip_addr', ip);
 
-  if (source && source === 'contactUsForm') {
-    formData.append('message', message);
-    formData.append('tool', tool);
-    formData.append('topic', topic);
-    formData.append('form_name', 'GFW Contact Us Form');
-    formData.append('website', 'globalforestwatch.org');
-  } else {
-    const filteredInterests = interests
-      .split(',')
-      .filter((item) => INTERESTS.includes(item.toLowerCase()));
+  let filteredInterests;
 
-    formData.append('old_email', old_email);
-    formData.append('organization', organization);
-    formData.append('job_title', job_title);
-    formData.append('job_function', job_function);
-    formData.append('sector', sector);
-    formData.append('city', city);
-    formData.append('country', country);
-    formData.append('preferred_language', preferred_language);
-    formData.append('interests', filteredInterests.join());
-    formData.append('receive_updates', receive_updates);
-    formData.append('form_name', 'GFW My Profile Update');
+  switch (source) {
+    case ORTTO_REQUESTS_TYPES.MY_GFW_PROFILE_FORM:
+      filteredInterests = interests
+        .split(',')
+        .filter((item) => INTERESTS.includes(item.toLowerCase()));
+
+      formData.append('old_email', old_email);
+      formData.append('organization', organization);
+      formData.append('job_title', job_title);
+      formData.append('job_function', job_function);
+      formData.append('sector', sector);
+      formData.append('city', city);
+      formData.append('country', country);
+      formData.append('preferred_language', preferred_language);
+      formData.append('interests', filteredInterests.join());
+      formData.append('receive_updates', receive_updates);
+      formData.append('form_name', 'GFW My Profile Update');
+      break;
+    case ORTTO_REQUESTS_TYPES.CONTACT_US_FORM:
+      formData.append('message', message);
+      formData.append('tool', tool);
+      formData.append('topic', topic);
+      formData.append('receive_updates', receive_updates);
+      formData.append('website', 'globalforestwatch.org');
+      formData.append('form_name', 'GFW Contact Us Form');
+      break;
+    case ORTTO_REQUESTS_TYPES.SUBSCRIBE_FORM:
+      formData.append('job_title', job_title);
+      formData.append('organization', organization);
+      formData.append('sector', sector);
+      formData.append('city', city);
+      formData.append('country', country);
+      formData.append('preferred_language', preferred_language);
+      formData.append('interests', filteredInterests.join());
+      formData.append('form_name', 'GFW Deforestation');
+      break;
+    default:
+      // return error
+      return res.status(400).end();
   }
 
   try {
