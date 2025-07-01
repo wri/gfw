@@ -148,13 +148,6 @@ class DropdownContainer extends PureComponent {
     });
   };
 
-  onClickOutside = () => {
-    const { native } = this.props;
-    if (!native) {
-      this.setState({ isOpen: false });
-    }
-  };
-
   render() {
     const { isOpen, showGroup, inputValue, highlightedIndex } = this.state;
 
@@ -185,7 +178,6 @@ DropdownContainer.propTypes = {
   groupKey: PropTypes.string,
   placeholder: PropTypes.string,
   onChange: PropTypes.func,
-  native: PropTypes.bool,
 };
 
 export default connect(mapStateToProps, null)(DropdownContainer);
