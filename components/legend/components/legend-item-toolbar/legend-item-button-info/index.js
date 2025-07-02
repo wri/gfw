@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 
 import Tooltip from 'components/tooltip';
 import Icon from 'components/ui/icon';
+import { LAYERS_TOOLTIPS } from './utils';
 
 class LegendItemButtonInfo extends PureComponent {
   static propTypes = {
@@ -13,6 +14,7 @@ class LegendItemButtonInfo extends PureComponent {
     tooltipOpened: PropTypes.bool,
     tooltipText: PropTypes.string,
     scrolling: PropTypes.bool,
+    id: PropTypes.string,
 
     // ACTIONS
     onChangeInfo: PropTypes.func,
@@ -44,6 +46,7 @@ class LegendItemButtonInfo extends PureComponent {
 
   render() {
     const {
+      id,
       activeLayer,
       tooltipOpened,
       icon,
@@ -53,9 +56,11 @@ class LegendItemButtonInfo extends PureComponent {
     } = this.props;
     const { visible } = this.state;
 
+    const text = LAYERS_TOOLTIPS[id] || tooltipText;
+
     return (
       <Tooltip
-        overlay={tooltipText || 'Layer info'}
+        overlay={text || 'Layer info'}
         overlayClassName="c-rc-tooltip -default"
         placement="top"
         trigger={tooltipOpened ? '' : 'hover'}
