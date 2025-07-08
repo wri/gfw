@@ -39,7 +39,7 @@ import faoCover from 'components/widgets/land-cover/fao-cover';
 import intactTreeCover from 'components/widgets/land-cover/intact-tree-cover';
 import primaryForest from 'components/widgets/land-cover/primary-forest';
 import treeCoverLocated from 'components/widgets/land-cover/tree-cover-located';
-import USLandCover from 'components/widgets/land-cover/us-land-cover';
+// import USLandCover from 'components/widgets/land-cover/us-land-cover';
 import rankedForestTypes from 'components/widgets/land-cover/ranked-forest-types';
 import treeCoverDensity from 'components/widgets/land-cover/tree-cover-density';
 import naturalForest from 'components/widgets/land-cover/natural-forest';
@@ -96,7 +96,7 @@ export default {
   treeCover2010,
   treeCoverRanked,
   rankedPlantations,
-  USLandCover,
+  // USLandCover,
   treeCoverPlantations,
   faoCover,
   intactTreeCover,
