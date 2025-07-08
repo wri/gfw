@@ -16,7 +16,24 @@ class LayerStatement extends PureComponent {
       tooltipDesc,
     } = this.props;
 
-    return tooltipDesc ? (
+    let statementTitle = statementPlain;
+    let statementDesc = statementHighlight;
+    let tooltip = tooltipDesc;
+
+    // TODO: how to refactor this? where to put it
+    if (
+      [
+        'Indigenous and Community Lands (Polygons)',
+        'Indigenous and Community Lands (Points)',
+      ].includes(this.props.activeLayer?.name)
+    ) {
+      statementTitle =
+        'Note that the absence of data does not indicate the absence of Indigenous or Community land.';
+      statementDesc = '';
+      tooltip = undefined;
+    }
+
+    return tooltip ? (
       <Tooltip
         theme="tip"
         hideOnClick
@@ -25,12 +42,12 @@ class LayerStatement extends PureComponent {
         animateFill={false}
       >
         <div className={cx('c-layer-statement', className)}>
-          {statementPlain}
-          <span>{statementHighlight}</span>
+          {statementTitle}
+          <span>{statementDesc}</span>
         </div>
       </Tooltip>
     ) : (
-      <div className={cx('c-layer-statement', className)}>{statementPlain}</div>
+      <div className={cx('c-layer-statement', className)}>{statementTitle}</div>
     );
   }
 }
@@ -41,6 +58,7 @@ LayerStatement.propTypes = {
   statementPlain: PropTypes.string,
   statementHighlight: PropTypes.string,
   tooltipDesc: PropTypes.string,
+  activeLayer: PropTypes.object,
 };
 
 export default LayerStatement;
