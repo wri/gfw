@@ -358,6 +358,7 @@ export const getStatements = ({
   landCategory,
   forestType,
   datasets,
+  noStatements,
 }) => {
   if (!settings) return null;
   const { extentYear, threshold, decile } = settings;
@@ -440,7 +441,7 @@ export const getStatements = ({
     ...(indicatorStatements || []),
   ]);
 
-  if (dataType === 'naturalForest') {
+  if (noStatements) {
     return [];
   }
 
