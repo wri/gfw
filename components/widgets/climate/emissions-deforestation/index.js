@@ -26,11 +26,14 @@ const MAX_YEAR = 2024;
 export default {
   ...treeLoss,
   widget: 'emissionsDeforestation',
-  title: 'Forest-related greenhouse gas emissions in {location}',
+  title: {
+    global: 'Global Forest-related greenhouse gas emissions',
+    default: 'Forest-related greenhouse gas emissions in {location}',
+  },
   large: true,
   categories: ['climate'],
-  types: ['geostore', 'country', 'aoi', 'use', 'wdpa'],
-  admins: ['adm0', 'adm1', 'adm2'],
+  types: ['geostore', 'global', 'country', 'aoi', 'use', 'wdpa'],
+  admins: ['global', 'adm0', 'adm1', 'adm2'],
   chartType: 'composedChart',
   settingsConfig: [
     {

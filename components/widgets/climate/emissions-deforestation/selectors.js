@@ -8,6 +8,7 @@ import {
 } from 'components/widgets/utils/data';
 
 // get list data
+const getTitle = (state) => state.title;
 const getData = (state) => state.data && state.data.loss;
 const getSettings = (state) => state.settings;
 const getColors = (state) => state.colors;
@@ -166,9 +167,17 @@ export const parseAlerts = createSelector(
   }
 );
 
+export const parseTitle = createSelector(
+  [getTitle, getLocationName],
+  (title, name) => {
+    return name === 'global' ? title.global : title.default;
+  }
+);
+
 export default createStructuredSelector({
   data: parseData,
   config: parseConfig,
   sentence: parseSentence,
   alerts: parseAlerts,
+  title: parseTitle,
 });
