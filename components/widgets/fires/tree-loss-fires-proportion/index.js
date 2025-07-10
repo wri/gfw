@@ -44,7 +44,7 @@ export default {
       type: 'select',
       placeholder: 'All tree cover',
       clearable: true,
-      blacklist: ['mangroves_2016'],
+      blacklist: ['mangroves_2016', 'natural_forests_2020'],
     },
     {
       key: 'landCategory',
