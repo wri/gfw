@@ -235,11 +235,11 @@ export const getWidgetDatasets = ({
             },
           }),
           ...(startDate &&
+            endDate &&
             endDate && {
               timelineParams: {
                 startDate,
                 endDate,
-                trimEndDate: endDate,
                 startDateAbsolute: startDate,
                 endDateAbsolute: endDate,
               },
