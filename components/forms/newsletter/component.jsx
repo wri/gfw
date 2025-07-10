@@ -1,7 +1,7 @@
 import React, { PureComponent, Fragment } from 'react';
 import PropTypes from 'prop-types';
 import { Form } from 'react-final-form';
-import { FORM_ERROR } from 'final-form';
+// import { FORM_ERROR } from 'final-form';
 import axios from 'axios';
 
 import { submitNewsletterSubscription } from 'services/forms';
@@ -77,11 +77,14 @@ class NewsletterForm extends PureComponent {
         source: ORTTO_REQUESTS_TYPES.SUBSCRIBE_FORM,
       });
 
+      window.location.href = '/thank-you';
       return true;
     } catch (error) {
-      return {
-        [FORM_ERROR]: 'Service unavailable',
-      };
+      window.location.href = '/thank-you';
+      return true;
+      // return {
+      //   [FORM_ERROR]: 'Service unavailable',
+      // };
     }
   };
 
