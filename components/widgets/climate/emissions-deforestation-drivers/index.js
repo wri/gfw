@@ -27,10 +27,13 @@ const DATASET = 'tree_cover_loss_by_driver';
 export default {
   ...emissionsDeforestation,
   widget: 'emissionsDeforestationDrivers',
-  title:
-    'Forest-related greenhouse gas emissions in {location} by dominant driver',
-  admins: ['adm0', 'adm1', 'adm2'],
-  types: ['country', 'use'],
+  title: {
+    global: 'Global Forest-related greenhouse gas emissions by dominant driver',
+    default:
+      'Forest-related greenhouse gas emissions in {location} by dominant driver',
+  },
+  admins: ['adm0', 'global', 'adm1', 'adm2'],
+  types: ['country', 'global', 'use'],
   settingsConfig: [
     {
       key: 'threshold',
@@ -81,7 +84,7 @@ export default {
     noLoss:
       'In {location} from {startYear} to {endYear}, <b>no emissions</b> in areas where the dominant drivers of tree cover loss resulted in deforestation',
     globalInitial:
-      'In {location} from {startYear} to {endYear}, {totalEmissions} <b>per year</b> in areas where the dominant drivers of tree cover loss resulted in deforestation',
+      'Globally from 2001 to 2024, an average of {totalEmissions} per year occurred in areas where the dominant drivers of loss resulted in deforestation.',
     co2Only: ', considering emissions from CO\u2082 only.',
     nonCo2Only: ', considering only emissions from non-CO\u2082 gases only.',
   },
