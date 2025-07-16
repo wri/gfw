@@ -15,7 +15,7 @@ const Footer = ({ setModalContactUsOpen }) => {
         'osano-cm-view__list osano-cm-list'
       )[0].children;
 
-      if (length >= 4) {
+      if (length > 4) {
         // remove "Do not sell"
         document.getElementsByClassName(
           'osano-cm-view__list osano-cm-list'
