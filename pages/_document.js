@@ -177,13 +177,6 @@ export default class MyDocument extends Document {
                     setTimeout(() => {
                       document.getElementsByClassName('osano-cm-window__widget osano-cm-widget osano-cm-widget--position_right')[0].style.display = 'none';
 
-                      var length = document.getElementsByClassName('osano-cm-view__list osano-cm-list')[0].children.length;
-
-                      if (length >= 4) {
-                      // remove "Do not sell"
-                      document.getElementsByClassName('osano-cm-view__list osano-cm-list')[0].children[length - 1].style.display = 'none';
-                      }
-
                     }, 100);
                   });
                 `,
