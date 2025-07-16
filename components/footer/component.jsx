@@ -10,6 +10,17 @@ const Footer = ({ setModalContactUsOpen }) => {
     if (isOsanoEnabled) {
       // eslint-disable-next-line no-undef
       Osano.cm.showDrawer('osano-cm-dom-info-dialog-open');
+
+      const { length } = document.getElementsByClassName(
+        'osano-cm-view__list osano-cm-list'
+      )[0].children;
+
+      if (length >= 4) {
+        // remove "Do not sell"
+        document.getElementsByClassName(
+          'osano-cm-view__list osano-cm-list'
+        )[0].children[length - 1].style.display = 'none';
+      }
     }
   };
 
