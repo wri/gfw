@@ -58,8 +58,6 @@ const makeMapStateToProps = () => {
 
 class WidgetsContainer extends PureComponent {
   static propTypes = {
-    getWidgetsData: PropTypes.func,
-    location: PropTypes.object,
     category: PropTypes.string,
     activeWidget: PropTypes.object,
     setMapSettings: PropTypes.func,
@@ -70,11 +68,7 @@ class WidgetsContainer extends PureComponent {
   };
 
   componentDidMount() {
-    const { getWidgetsData, location, activeWidget, embed } = this.props;
-    if (location.type === 'global') {
-      getWidgetsData();
-    }
-
+    const { activeWidget, embed } = this.props;
     if (!embed && activeWidget && activeWidget.datasets) {
       this.syncWidgetWithMap();
     }
@@ -82,11 +76,9 @@ class WidgetsContainer extends PureComponent {
 
   componentDidUpdate(prevProps) {
     const {
-      getWidgetsData,
       setWidgetsCategory,
       activeWidget,
       embed,
-      location,
       category,
       setActiveWidget,
     } = this.props;
@@ -94,10 +86,6 @@ class WidgetsContainer extends PureComponent {
     if (!isEqual(category, prevProps.category)) {
       setActiveWidget(null);
       setWidgetsCategory(category);
-    }
-
-    if (location.type === 'global' && prevProps.location?.type !== 'global') {
-      getWidgetsData();
     }
 
     // if widget is active and layers or params change push to map
