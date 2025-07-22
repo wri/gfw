@@ -1,5 +1,5 @@
 import qs from 'qs';
-import { cartoRequest, dataMartRequest, dataRequest } from 'utils/request';
+import { dataMartRequest, dataRequest } from 'utils/request';
 import { PROXIES } from 'utils/proxies';
 
 import forestTypes from 'data/forest-types';
@@ -63,8 +63,6 @@ const SQL_QUERIES = {
     'SELECT {select_location}, alert__week, alert__year, SUM(alert__count) AS alert__count, confidence__cat FROM data {WHERE} AND alert__year >= {alert__year} AND alert__week >= 1 GROUP BY alert__year, alert__week ORDER BY alert__week DESC, alert__year DESC',
   firesDailySum: `SELECT {select_location}, confidence__cat, SUM(alert__count) AS alert__count FROM data {WHERE} AND alert__date >= '{startDate}' AND alert__date <= '{endDate}' GROUP BY {location}, confidence__cat`,
   firesDailySumOTF: `SELECT SUM(alert__count) AS alert__count, confidence__cat FROM data WHERE alert__date >= '{startDate}' AND alert__date <= '{endDate}' GROUP BY confidence__cat&geostore_id={geostoreId}&geostore_origin=rw`,
-  nonGlobalDatasets:
-    'SELECT {polynames} FROM polyname_whitelist WHERE iso is null AND adm1 is null AND adm2 is null',
   getLocationPolynameWhitelist:
     'SELECT {select_location}, {polynames} FROM data {WHERE}',
   alertsWeekly:
@@ -2856,15 +2854,6 @@ const buildPolynameSelects = (nonTable, dataset) => {
     );
   });
   return polyString;
-};
-
-// get counts of countries that each forest type and land category intersects with
-export const getNonGlobalDatasets = () => {
-  const url = `/sql?q=${SQL_QUERIES.nonGlobalDatasets}`.replace(
-    '{polynames}',
-    buildPolynameSelects(true, 'annual')
-  );
-  return cartoRequest.get(url);
 };
 
 // get a boolean list of forest types and land categories inside a given shape
