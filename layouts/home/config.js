@@ -151,4 +151,34 @@ export default {
       className: 'pro',
     },
   ],
+  news: [
+    {
+      name: 'Radar for Detecting Deforestation',
+      description:
+        'RADD deforestation alerts monitor forests through the clouds.',
+      link: 'https://blog.globalforestwatch.org/data-and-research/radd-radar-alerts/',
+    },
+    {
+      name: 'Tropical Tree Cover replaces Trees in Mosaic Landscapes',
+      description: 'Read our blog on the new data',
+      link: 'https://www.wri.org/update/higher-res-data-set-now-shows-trees-inside-and-outside-forests-across-tropics',
+    },
+    {
+      name: '2024 Tree Cover Loss Analysis',
+      description: 'View on the Global Forest Review',
+      link: 'https://gfr.wri.org/latest-analysis-deforestation-trends?utm_campaign=tcl2024&utm_medium=bitly&utm_source=GFWHomepage',
+    },
+    {
+      name: 'New Forest Watcher Features',
+      description:
+        "Explore Forest Watcher's new features that make team management easier than ever",
+      link: 'https://www.globalforestwatch.org/help/forest-watcher/',
+    },
+    {
+      name: 'Forest Carbon Fluxes',
+      description:
+        'Global maps on GFW provide spatially explicit data on net carbon fluxes from forests.',
+      link: 'https://blog.globalforestwatch.org/data-and-research/forest-carbon-flux-data-explained/',
+    },
+  ],
 };
