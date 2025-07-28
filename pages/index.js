@@ -5,7 +5,6 @@ import PropTypes from 'prop-types';
 
 import Home from 'layouts/home';
 
-import { getNewsArticles } from 'services/news';
 import { getPublishedNotifications } from 'services/notifications';
 
 const HomePage = (props) => (
@@ -23,12 +22,10 @@ const HomePage = (props) => (
 );
 
 export const getStaticProps = async () => {
-  const newsArticles = await getNewsArticles();
   const notifications = await getPublishedNotifications();
 
   return {
     props: {
-      news: newsArticles || [],
       notifications: notifications || [],
     },
     revalidate: 10,
