@@ -40,5 +40,10 @@
     "label": "Shifting cultivation",
     "value": "Shifting cultivation",
     "position": 7
+  },
+  {
+    "label": "Forestry",
+    "value": "Forestry",
+    "position": 8
   }
 ]
