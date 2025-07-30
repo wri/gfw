@@ -55,6 +55,7 @@ export const ALLIANCE_FOR_ZERO_EXSTINCTION =
 export const INDIGENOUS_AND_COMMUNITY_LANDS =
   'indigenous-and-community-lands-2019';
 export const IND_PEAT_LANDS = 'indonesia-peat-lands-2012';
+export const GLOBAL_PEATLAND = 'global-peatland';
 export const IND_FOREST_MAMATORIUM = 'indonesia-forest-moratorium';
 export const PRIMARY_FOREST = 'primary-forests-2001';
 export const MANGROVE_FORESTS = 'mangrove-forests-1996';

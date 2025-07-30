@@ -50,6 +50,7 @@ export const ALLIANCE_FOR_ZERO_EXSTINCTION_DATASET =
   'alliance-for-zero-extinction-sites';
 export const INDIGENOUS_AND_COMMUNITY_LANDS_DATASET = 'landmark';
 export const IND_PEAT_LANDS_DATASET = 'indonesia-peat-lands';
+export const GLOBAL_PEATLANDS_DATASET = 'global-peatland';
 export const IND_FOREST_MAMATORIUM_DATASET = 'indonesia-forest-moratorium';
 export const PRIMARY_FOREST_DATASET = 'primary-forests';
 export const MANGROVE_FORESTS_DATASET = 'mangrove-forests';

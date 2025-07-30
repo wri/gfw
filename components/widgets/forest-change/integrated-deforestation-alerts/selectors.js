@@ -260,6 +260,7 @@ export const parseSentence = createSelector(
       singleSystemWithInd,
       highConf,
       noReportedAlerts,
+      peatlands,
     } = sentences;
     let sentence = indicator ? withInd : initial;
 
@@ -278,6 +279,11 @@ export const parseSentence = createSelector(
 
     if (totalAlertCount === 0) {
       sentence = noReportedAlerts;
+    }
+
+    // managing special case for global peatlands
+    if (indicator?.value === 'gfw_peatlands') {
+      sentence = peatlands;
     }
 
     return {
