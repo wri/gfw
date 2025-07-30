@@ -63,6 +63,8 @@ export default {
       'There were {total} {system} alerts reported within {indicator} in {location} between {startDate} and {endDate}, {totalArea} of which {highConfPerc} were {high confidence alerts}.',
     highConf:
       'There were {total} high or highest confidence {system} alerts reported in {location} between {startDate} and {endDate}, {totalArea}.',
+    peatlands:
+      'There were {total} high or highest confidence {system} alerts reported within {indicator} in {location} between {startDate} and {endDate}, {totalArea}.',
     noReportedAlerts:
       'There were {total} deforestation alerts reported in {location} between {startDate} and {endDate}.',
   },
@@ -134,6 +136,7 @@ export default {
       label: 'Land Category',
       type: 'select',
       placeholder: 'All categories',
+      blacklist: ['gfw_peatlands'],
       clearable: true,
       border: true,
     },
