@@ -19,7 +19,7 @@ export default {
     initial: 'Tree cover loss by dominant driver in {location}',
     global: 'Global tree cover loss by dominant driver',
   },
-  types: ['global', 'country', 'use'],
+  types: ['global', 'country', 'use', 'wdpa', 'aoi', 'geostore'],
   admins: ['global', 'adm0', 'adm1', 'adm2'],
   categories: ['summary', 'forest-change'],
   subcategories: ['forest-loss'],
@@ -113,6 +113,10 @@ export default {
 
     if (analysis) {
       mappedType = 'geostore';
+
+      if (type === 'wdpa') {
+        mappedType = 'protected_area';
+      }
     } else {
       if (type === 'global') {
         mappedType = 'global';
@@ -127,7 +131,7 @@ export default {
       dataset: DATASET,
       geostoreId: geostore?.id,
       type:
-        analysis && shouldQueryPrecomputedTables(params) ? 'admin' : mappedType, // checking to not send geostore_id when analyizing entire countries (only in map page, analysis: true)
+        mappedType === 'geostore' && shouldQueryPrecomputedTables(params) ? 'admin' : mappedType, // checking to not send geostore_id when analyizing entire countries (only in map page, analysis: true)
       adm0,
       adm1,
       adm2,
@@ -150,6 +154,10 @@ export default {
 
     if (analysis) {
       mappedType = 'geostore';
+
+      if (type === 'wdpa') {
+        mappedType = 'protected_area';
+      }
     } else {
       if (type === 'global') {
         mappedType = 'global';
