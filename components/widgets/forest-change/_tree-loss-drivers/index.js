@@ -131,7 +131,9 @@ export default {
       dataset: DATASET,
       geostoreId: geostore?.id,
       type:
-        mappedType === 'geostore' && shouldQueryPrecomputedTables(params) ? 'admin' : mappedType, // checking to not send geostore_id when analyizing entire countries (only in map page, analysis: true)
+        mappedType === 'geostore' && shouldQueryPrecomputedTables(params)
+          ? 'admin'
+          : mappedType, // checking to not send geostore_id when analyizing entire countries (only in map page, analysis: true)
       adm0,
       adm1,
       adm2,
@@ -152,6 +154,7 @@ export default {
     const { adm0, adm1, adm2, analysis, geostore, threshold, type } = params;
     let mappedType = '';
 
+    // in download, analysis comes undefined whereas in getData it comes as true, therefore I had to re-organize the if validations to account correctly for wdpa
     if (analysis) {
       mappedType = 'geostore';
 
@@ -166,12 +169,19 @@ export default {
       if (adm0 !== undefined && adm0 !== null) {
         mappedType = 'admin';
       }
+
+      if (type === 'wdpa') {
+        mappedType = 'protected_area';
+      }
     }
 
     const res = await fetchDataMart({
       dataset: DATASET,
       geostoreId: geostore?.id,
-      type: mappedType,
+      type:
+        mappedType === 'geostore' && shouldQueryPrecomputedTables(params)
+          ? 'admin'
+          : mappedType, // checking to not send geostore_id when analyizing entire countries (only in map page, analysis: true)
       adm0,
       adm1,
       adm2,
