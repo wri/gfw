@@ -1,26 +1,7 @@
-import { cartoRequest } from 'utils/request';
 import apiFetch from '@wordpress/api-fetch';
 import axios from 'axios';
 
 import { getCountriesProvider } from 'services/country';
-
-const SQL_QUERIES = {
-  impactProjects: 'SELECT * FROM gfw_outcomes_for_about_page_images',
-  sgfProjects: 'SELECT * FROM sgf_stories',
-};
-
-export const getImpactProjects = () => {
-  const url = `/sql?q=${SQL_QUERIES.impactProjects}`;
-  return cartoRequest.get(url).then((response) =>
-    response?.data?.rows?.map((d) => ({
-      id: d.cartodb_id,
-      summary: d.outcome,
-      image: d.image,
-      imageCredit: d.image_credit,
-      extLink: d.link,
-    }))
-  );
-};
 
 apiFetch.setFetchHandler(async (options) => {
   const headers = { 'Content-Type': 'application/json' };
