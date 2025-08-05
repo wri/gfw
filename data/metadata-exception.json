@@ -7,5 +7,6 @@
   "planet_basemap",
   "landsat_basemap",
   "recent_satellite_imagery",
-  "osm_logging_roads"
+  "osm_logging_roads",
+  "widget_tsc_drivers"
 ]
