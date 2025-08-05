@@ -21,6 +21,7 @@ const groupedLegends = {
   'Settlements & Infrastructure': 'Drivers of deforestation',
   'Shifting cultivation': 'Drivers of temporary disturbances',
   Wildfire: 'Drivers of temporary disturbances',
+  Forestry: 'Drivers of deforestation',
 };
 
 export const getPermanentCategories = createSelector(
@@ -31,12 +32,13 @@ export const getPermanentCategories = createSelector(
 
 export const getFilteredData = createSelector(
   [getData, getSortedCategories],
-  (data, sortedCategories) =>
-    data && data.length
+  (data, sortedCategories) => {
+    return data && data.length
       ? sortedCategories
           .map(({ value }) => data.find((item) => item.driver_type === value))
           .filter((item) => item)
-      : []
+      : [];
+  }
 );
 
 export const parseData = createSelector(
