@@ -28,7 +28,7 @@ const DATA_API_URL =
  * @param {Object} request - request
  * @param {string} request.dataset - dataset.
  * @param {Object} request.aoi - area of interest.
- * @param {'global' | 'admin' | 'geostore'} request.aoi.type - type of aoi.
+ * @param {'global' | 'admin' | 'geostore' | 'wdpa'} request.aoi.type - type of aoi.
  * @param {string} request.aoi.geostore_id - a geostore id.
  * @param {string} request.aoi.country - country.
  * @param {string} request.aoi.region - region.
@@ -40,7 +40,9 @@ const getDataByParams = async ({ dataset, aoi, canopy }) => {
   const url = `/v0/land/${dataset}`;
 
   const params = {
-    canopy_cover: canopy,
+    ...(aoi.type !== 'protected_area' && {
+      canopy_cover: canopy,
+    }),
     aoi: {
       type: aoi.type,
       ...(aoi.type === 'geostore' && {
@@ -51,12 +53,26 @@ const getDataByParams = async ({ dataset, aoi, canopy }) => {
         region: aoi.region,
         subregion: aoi.subregion,
       }),
+      ...(aoi.type === 'protected_area' && {
+        wdpa_id: aoi.country,
+        geostore_id: undefined,
+        country: undefined,
+        region: undefined,
+        subregion: undefined,
+      }),
     },
-    dataset_version: { // TODO: these hardcoded params will be removed soon since they'll be default after the TCL release, ask Daniel Mannarino
-      umd_tree_cover_density_2000: 'v1.8',
-      umd_tree_cover_loss: 'v1.12',
-      wri_google_tree_cover_loss_drivers: 'v1.12',
-    }
+    ...(aoi.type !== 'protected_area' && {
+        dataset_version: { // TODO: these hardcoded params will be removed soon since they'll be default after the TCL release, ask Daniel Mannarino
+          umd_tree_cover_density_2000: 'v1.8',
+          umd_tree_cover_loss: 'v1.12',
+          wri_google_tree_cover_loss_drivers: 'v1.12',
+        },
+      }),
+    ...(aoi.type === 'protected_area' && {
+        dataset_version: { // TODO: these hardcoded params will be removed soon since they'll be default after the TCL release, ask Daniel Mannarino
+          wri_google_tree_cover_loss_drivers: 'v1.12',
+        },
+      }),
   };
 
   const requestUrl = `${url}/?${qs.stringify(params)}`;
@@ -101,7 +117,9 @@ const createRequestByParams = async ({
   const url = `/v0/land/${dataset}`;
 
   const params = {
-    canopy_cover: canopy,
+    ...(aoi.type !== 'protected_area' && {
+      canopy_cover: canopy,
+    }),
     aoi: {
       type: aoi.type,
       ...(aoi.type === 'geostore' && {
@@ -112,12 +130,26 @@ const createRequestByParams = async ({
         region: aoi.region,
         subregion: aoi.subregion,
       }),
+      ...(aoi.type === 'protected_area' && {
+        wdpa_id: aoi.country,
+        geostore_id: undefined,
+        country: undefined,
+        region: undefined,
+        subregion: undefined,
+      }),
     },
-    dataset_version: { // TODO: these hardcoded params will be removed soon since they'll be default after the TCL release, ask Daniel Mannarino
-      umd_tree_cover_density_2000: 'v1.8',
-      umd_tree_cover_loss: 'v1.12',
-      wri_google_tree_cover_loss_drivers: 'v1.12',
-    }
+    ...(aoi.type !== 'protected_area' && {
+        dataset_version: { // TODO: these hardcoded params will be removed soon since they'll be default after the TCL release, ask Daniel Mannarino
+          umd_tree_cover_density_2000: 'v1.8',
+          umd_tree_cover_loss: 'v1.12',
+          wri_google_tree_cover_loss_drivers: 'v1.12',
+        },
+      }),
+    ...(aoi.type === 'protected_area' && {
+        dataset_version: { // TODO: these hardcoded params will be removed soon since they'll be default after the TCL release, ask Daniel Mannarino
+          wri_google_tree_cover_loss_drivers: 'v1.12',
+        },
+      }),
   };
 
   const response = await dataRequest.post(url, params);
