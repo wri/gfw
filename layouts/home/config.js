@@ -25,7 +25,7 @@ export default {
     {
       title: 'Discover the world’s forests through data',
       summary:
-        'Explore over 100 global and local data sets to learn about conservation, land use, forest communities, and much more.',
+        'Explore over 65 global and local data sets to learn about conservation, land use, forest communities, and much more.',
       buttons: [
         {
           text: 'EXPLORE OUR DATA',
