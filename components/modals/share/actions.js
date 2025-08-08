@@ -1,6 +1,6 @@
 import { createAction, createThunkAction } from 'redux/actions';
 
-import { getShortenUrl } from 'services/bitly';
+import { getShortenUrl } from 'services/shortio';
 
 import { saveAreaOfInterest } from 'components/forms/area-of-interest/actions';
 
@@ -24,9 +24,10 @@ export const setShareModal = createThunkAction(
 
     getShortenUrl(shareUrl)
       .then((response) => {
+        console.log('shortio response: ', response);
         let shortShareUrl = '';
         if (response.status < 400) {
-          shortShareUrl = response.data.link;
+          shortShareUrl = response.data.shortURL;
           dispatch(setShareUrl(shortShareUrl));
         } else {
           dispatch(setShareLoading(false));

@@ -2,14 +2,16 @@ import request from 'utils/request';
 
 export const getShortenUrl = (longUrl) =>
   request.post(
-    'https://api-ssl.bitly.com/v4/shorten',
+    'https://api.short.io/links',
     {
-      long_url: longUrl,
+      allowDuplicates: false,
+      originalURL: longUrl,
+      ttl: 'TTL',
     },
     {
       headers: {
         'content-type': 'application/json',
-        Authorization: `Bearer ${process.env.NEXT_PUBLIC_BITLY_TOKEN}`,
+        Authorization: `Bearer ${process.env.NEXT_PUBLIC_SHORTIO_API_KEY}`,
       },
     }
   );
