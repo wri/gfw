@@ -44,12 +44,7 @@ export const getRecentImageryData = createThunkAction(
                 },
               })
             );
-            dispatch(
-              setRecentImagerySettings({
-                selected: null,
-                selectedIndex: 0,
-              })
-            );
+
             dispatch(setRecentImageryLoading({ loading: false, error: false }));
           }
         })

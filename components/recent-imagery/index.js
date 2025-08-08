@@ -22,6 +22,7 @@ class RecentImageryContainer extends PureComponent {
   componentDidMount = () => {
     const { active, position, dates, settings, getRecentImageryData } =
       this.props;
+
     if (this.getDataSource) {
       this.getDataSource.cancel();
     }
