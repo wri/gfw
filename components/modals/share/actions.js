@@ -24,7 +24,6 @@ export const setShareModal = createThunkAction(
 
     getShortenUrl(shareUrl)
       .then((response) => {
-        console.log('shortio response: ', response);
         let shortShareUrl = '';
         if (response.status < 400) {
           shortShareUrl = response.data.shortURL;
@@ -39,6 +38,9 @@ export const setShareModal = createThunkAction(
   }
 );
 
-export const setShareAoi = createThunkAction('shareModalSaveAoi', (params) => (dispatch) => {
-  dispatch(saveAreaOfInterest({ ...params }))
-});
+export const setShareAoi = createThunkAction(
+  'shareModalSaveAoi',
+  (params) => (dispatch) => {
+    dispatch(saveAreaOfInterest({ ...params }));
+  }
+);
