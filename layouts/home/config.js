@@ -180,5 +180,11 @@ export default {
         'Global maps on GFW provide spatially explicit data on net carbon fluxes from forests.',
       link: 'https://blog.globalforestwatch.org/data-and-research/forest-carbon-flux-data-explained/',
     },
+    {
+      name: 'GFW vs. GFW Pro: What’s the Difference?',
+      description:
+        'Explore our comparison table breaking down the features, audiences, and use cases for Global Forest Watch and GFW Pro. Find the right tool for your forest monitoring needs here:',
+      link: 'https://www.globalforestwatch.org/help/gfw-pro/additional-materials/gfw-and-gfw-pro-what-are-the-differences/',
+    },
   ],
 };
