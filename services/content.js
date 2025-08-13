@@ -32,14 +32,14 @@ const serializePosts = (posts) =>
       }),
       ...(p.help_tools && {
         tool_ids: p.help_tools,
-        tools: p._embedded?.['wp:term']?.[1]?.map((tool) => ({
+        tools: p?._embedded?.['wp:term']?.[1]?.map((tool) => ({
           ...tool,
           link: `/${tool.slug}`,
         })),
       }),
-      ...(p.categories && {
-        category_ids: p.categories,
-        categories: p._embedded?.['wp:term']?.[0],
+      ...(p?.categories && {
+        category_ids: p?.categories,
+        categories: p?._embedded?.['wp:term']?.[0],
       }),
     };
   });
