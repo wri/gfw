@@ -63,6 +63,8 @@ export default {
       'There were {total} {system} alerts reported within {indicator} in {location} between {startDate} and {endDate}, {totalArea} of which {highConfPerc} were {high confidence alerts}.',
     highConf:
       'There were {total} high or highest confidence {system} alerts reported in {location} between {startDate} and {endDate}, {totalArea}.',
+    peatlands:
+      'There were {total} high or highest confidence {system} alerts reported within {indicator} in {location} between {startDate} and {endDate}, {totalArea}.',
     noReportedAlerts:
       'There were {total} deforestation alerts reported in {location} between {startDate} and {endDate}.',
   },

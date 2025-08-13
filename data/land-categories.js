@@ -9,6 +9,7 @@ import {
   OIL_PALM_DATASET,
   WOOD_FIBER_DATASET,
   LOGGING_CONCESSIONS_DATASET,
+  GLOBAL_PEATLANDS_DATASET,
 } from 'data/datasets';
 import {
   MINING_CONCESSIONS,
@@ -21,6 +22,7 @@ import {
   OIL_PALM,
   WOOD_FIBER,
   LOGGING_CONCESSIONS,
+  GLOBAL_PEATLAND,
 } from 'data/layers';
 
 export default [
@@ -121,6 +123,21 @@ export default [
       },
     ],
     hidden: true, // FIXME: we are temporary hiding this option until further notice, see FLAG-827 for reference.
+  },
+  {
+    label: 'Global peatlands',
+    preserveString: true,
+    dataType: 'keyword',
+    value: 'gfw_peatlands',
+    metaKey: 'gfw_peatlands',
+    tableKey: 'is__gfw_peatlands',
+    global: true,
+    datasets: [
+      {
+        dataset: GLOBAL_PEATLANDS_DATASET,
+        layers: [GLOBAL_PEATLAND],
+      },
+    ],
   },
   {
     label: 'Indonesia forest moratorium areas',
