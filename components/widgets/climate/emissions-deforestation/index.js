@@ -94,6 +94,8 @@ export default {
   sentences: {
     initial:
       'Between {startYear} and {endYear}, an average of {annualAvg} per year was released into the atmosphere as a result of tree cover loss in {location}. In total, {value} was emitted in this period',
+    peatlands:
+      'Between {startYear} and {endYear}, an average of {annualAvg} per year was released into the atmosphere as a result of tree cover loss within {indicatorText} in {location}. In total, {value} was emitted in this period',
     co2Only: ', considering emissions from CO\u2082 only.',
     nonCo2Only: ', considering emissions from non-CO\u2082 gases only.',
   },

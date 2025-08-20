@@ -96,7 +96,7 @@ export const parseSentence = createSelector(
   [parseData, getSettings, getIndicator, getSentences, getLocationName],
   (data, settings, indicator, sentences, locationName) => {
     if (!data || isEmpty(data)) return null;
-    const { initial, co2Only, nonCo2Only } = sentences;
+    const { initial, co2Only, nonCo2Only, peatlands } = sentences;
     const { startYear, endYear, gasesIncluded } = settings;
     const totalBiomass = data
       .map((d) => d.emissions)
@@ -113,7 +113,10 @@ export const parseSentence = createSelector(
     if (gasesIncluded !== 'allGases') {
       emissionString = gasesIncluded === 'co2Only' ? co2Only : nonCo2Only;
     }
-    const sentence = initial + emissionString;
+
+    const sentence =
+      (indicator?.value === 'gfw_peatlands' ? peatlands : initial) +
+      emissionString;
 
     const params = {
       value: `${formatNumber({
