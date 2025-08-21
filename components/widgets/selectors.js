@@ -112,6 +112,22 @@ export const selectModalClosing = (state) =>
 export const selectNonGlobalDatasets = (state) =>
   state.widgets && state.widgets.data.nonGlobalDatasets;
 
+const applySettingsConfigGlobalRules = (config, params) => {
+  if (!config) return config;
+
+  const isCAR = params.adm0 === 'CAF';
+
+  return config.map((field) => {
+    if (field.key === 'landCategory' && isCAR) {
+      return {
+        ...field,
+        blacklist: ['mining'],
+      };
+    }
+    return field;
+  });
+};
+
 export const getLocationObj = createSelector(
   [getDataLocation, getGeodescriberTitleFull],
   (location, title) => ({
@@ -511,13 +527,18 @@ export const getWidgets = createSelector(
 
       const dataOptions = rawData && rawData.options;
 
-      const settingsConfig =
+      let settingsConfig =
         settingsConfigArr ||
         (settingsConfigFn &&
           settingsConfigFn({
             ...locationObj,
             ...settings,
           }));
+
+      settingsConfig = applySettingsConfigGlobalRules(settingsConfig, {
+        ...locationObj,
+        ...settings,
+      });
 
       const settingsConfigParsed = getSettingsConfig({
         settingsConfig,
