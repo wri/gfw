@@ -212,15 +212,15 @@ const HomePage = ({ summary, uses, apps, news }) => {
                       {news.map((item) => (
                         <a
                           key={item.name}
-                          href={item.link}
+                          href={item.acf.link}
                           target="_blank"
                           className="news-card"
                           rel="noopener noreferrer"
                         >
                           <Card
                             data={{
-                              title: item.name,
-                              summary: item.description,
+                              title: item.title,
+                              summary: item.acf.description,
                             }}
                           />
                         </a>
