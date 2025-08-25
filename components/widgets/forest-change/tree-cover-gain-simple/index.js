@@ -1,4 +1,10 @@
-import { getGain, getTreeCoverGainOTF } from 'services/analysis-cached';
+import { all } from 'axios';
+
+import {
+  getGain,
+  getTreeCoverGainOTF,
+  getExtent,
+} from 'services/analysis-cached';
 
 import { shouldQueryPrecomputedTables } from 'components/widgets/utils/helpers';
 
@@ -66,10 +72,9 @@ export default {
   ],
   getData: (params) => {
     if (shouldQueryPrecomputedTables(params)) {
-      return getGain(params).then((response) => {
-        const { data } = (response && response.data) || {};
-        const gain = (data[0] && data[0].gain) || 0;
-        const extent = (data[0] && data[0].extent) || 0;
+      return all([getGain(params), getExtent(params)]).then((response) => {
+        const gain = (response[0] && response[0].data.data[0].gain) || 0;
+        const extent = (response[1] && response[1].data.data[0].extent) || 0;
 
         return {
           gain,
