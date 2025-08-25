@@ -85,8 +85,9 @@ export default {
 
     return getTreeCoverGainOTF(params);
   },
-  getDataURL: (params) => {
-    return [getGain({ ...params, download: true })];
-  },
+  getDataURL: (params) => [
+    getGain({ ...params, download: true }),
+    getExtent({ ...params, download: true }),
+  ],
   getWidgetProps,
 };
