@@ -51,7 +51,7 @@ export default {
     forestChange: 7,
   },
   settings: {
-    threshold: 0,
+    threshold: 30,
     extentYear: 2000,
     startYear: MIN_YEAR,
     endYear: 2020, // reference to display the correct data on the map
@@ -59,7 +59,7 @@ export default {
   chartType: 'listLegend',
   colors: 'gain',
   sentence:
-    'From {baselineYear} to 2020, {location} gained {gain} of tree cover equal to {gainPercent} is its total extent in that time period.',
+    'From {baselineYear} to 2020, {location} gained {gain} of tree cover equal to {gainPercent} increase from baseline 2000 tree cover.',
   settingsConfig: [
     {
       key: 'baselineYear',
@@ -85,8 +85,9 @@ export default {
 
     return getTreeCoverGainOTF(params);
   },
-  getDataURL: (params) => {
-    return [getGain({ ...params, download: true })];
-  },
+  getDataURL: (params) => [
+    getGain({ ...params, download: true }),
+    getExtent({ ...params, download: true }),
+  ],
   getWidgetProps,
 };
