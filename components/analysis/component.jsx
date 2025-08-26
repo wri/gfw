@@ -115,7 +115,7 @@ class AnalysisComponent extends PureComponent {
               analysis
             />
           )}
-          {location.type === 'global' && !location.adm0 && (
+          {location.type === 'global' && !location.adm0 && !loading && (
             <ChoseAnalysis
               checkingShape={checkingShape}
               uploadingShape={uploadingShape}
