@@ -109,6 +109,7 @@ const MapLegend = ({
               moreInfo,
               timelineParams,
               statementConfig,
+              dataset,
             } = activeLayer || {};
             return (
               <LegendListItem
@@ -249,6 +250,7 @@ const MapLegend = ({
                   <LayerStatement
                     className="layer-statement"
                     {...statementConfig}
+                    dataset={dataset}
                   />
                 )}
                 {alerts &&
