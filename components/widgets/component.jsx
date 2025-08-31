@@ -8,6 +8,7 @@ import { trackEvent } from 'utils/analytics';
 import Loader from 'components/ui/loader';
 import NoContent from 'components/ui/no-content';
 import Widget from 'components/widget';
+import widgets from '.';
 
 class Widgets extends PureComponent {
   static propTypes = {
@@ -78,7 +79,7 @@ class Widgets extends PureComponent {
     const hasWidgets = !isEmpty(allWidgets) && !isEmpty(widgetGroups);
 
     return (
-      <div>
+      <div style={{ 'width': '100%' }}>
         {loadingData && <Loader className="widgets-loader large" />}
 
         {!loadingData && hasWidgets && (
