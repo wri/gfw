@@ -78,7 +78,7 @@ class Widgets extends PureComponent {
     const hasWidgets = !isEmpty(allWidgets) && !isEmpty(widgetGroups);
 
     return (
-      <div>
+      <div style={{ width: '100%' }}>
         {loadingData && <Loader className="widgets-loader large" />}
 
         {!loadingData && hasWidgets && (
