@@ -23,6 +23,11 @@
     overflow: initial;
     transition: margin-left 0.2s ease-in-out;
   }
+
+  &.disabled {
+    opacity: 0.5;
+    pointer-events: none;
+  }
 }
 
 .c-selector-item {
