@@ -5,8 +5,12 @@ export default async (req, res) => {
   if (req.method !== 'POST') {
     return res.status(405);
   }
-
-  const { longUrl } = req.body;
+  // path is an optional custom path for the short link
+  // e.g. { longUrl: 'https://gfw.global', path: 'custom-path' }
+  // will create the short link gfw.global/custom-path
+  // this is temporary since we need the same short link to exist in both short.io and bitly
+  // until we fully migrate to short.io
+  const { longUrl, path } = req.body;
 
   try {
     const monthFromNow = addMonths(new Date(), 1);
@@ -17,6 +21,7 @@ export default async (req, res) => {
         originalURL: longUrl,
         ttl: monthFromNow.toISOString(),
         domain: 'gfw.global',
+        ...(path && { path }),
       },
       {
         headers: {
