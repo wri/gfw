@@ -107,7 +107,16 @@ export default {
    * @returns
    */
   getData: async (params) => {
-    const { adm0, adm1, adm2, analysis, geostore, threshold, type } = params;
+    const {
+      adm0,
+      adm1,
+      adm2,
+      analysis,
+      geostore,
+      threshold,
+      type,
+      locationType,
+    } = params;
 
     let mappedType = '';
 
@@ -125,15 +134,28 @@ export default {
       if (adm0 !== undefined && adm0 !== null) {
         mappedType = 'admin';
       }
+
+      if (type === 'geostore') {
+        mappedType = 'geostore';
+      }
+    }
+
+    let check = false;
+    let geostoreId = geostore?.id;
+
+    if (mappedType === 'geostore' && shouldQueryPrecomputedTables(params)) {
+      check = true;
+
+      if (locationType === 'aoi' || locationType === 'geostore') {
+        check = false;
+        geostoreId = adm0;
+      }
     }
 
     const response = await fetchDataMart({
       dataset: DATASET,
-      geostoreId: geostore?.id,
-      type:
-        mappedType === 'geostore' && shouldQueryPrecomputedTables(params)
-          ? 'admin'
-          : mappedType, // checking to not send geostore_id when analyizing entire countries (only in map page, analysis: true)
+      geostoreId,
+      type: check ? 'admin' : mappedType, // checking to not send geostore_id when analyizing entire countries (only in map page, analysis: true)
       adm0,
       adm1,
       adm2,
