@@ -1,6 +1,7 @@
 import { createAction, createThunkAction } from 'redux/actions';
 
-import { getShortenUrl } from 'services/bitly';
+import { getShortenUrl } from 'services/shortio';
+import { getShortenUrl as getShortenUrlBitly } from 'services/bitly';
 
 import { saveAreaOfInterest } from 'components/forms/area-of-interest/actions';
 
@@ -13,7 +14,7 @@ export const setShareLoading = createAction('setShareLoading');
 
 export const setShareModal = createThunkAction(
   'setShareModal',
-  (params) => (dispatch) => {
+  (params) => async (dispatch) => {
     const { shareUrl } = params;
 
     dispatch(
@@ -22,22 +23,37 @@ export const setShareModal = createThunkAction(
       })
     );
 
-    getShortenUrl(shareUrl)
-      .then((response) => {
-        let shortShareUrl = '';
-        if (response.status < 400) {
-          shortShareUrl = response.data.link;
-          dispatch(setShareUrl(shortShareUrl));
-        } else {
-          dispatch(setShareLoading(false));
-        }
+    try {
+      const bitlyResponse = await getShortenUrlBitly(shareUrl);
+
+      getShortenUrl({
+        longUrl: shareUrl,
+        path: bitlyResponse.data.id.replace('gfw.global/', ''),
       })
-      .catch(() => {
-        dispatch(setShareLoading(false));
-      });
+        .then((response) => {
+          let shortShareUrl = '';
+          if (response.status < 400) {
+            shortShareUrl = response.data.shortURL;
+            dispatch(setShareUrl(shortShareUrl));
+          } else {
+            dispatch(setShareLoading(false));
+          }
+        })
+        .catch(() => {
+          dispatch(setShareLoading(false));
+        });
+    } catch (error) {
+      // TODO: remove this else statement and always use short.io
+      // this is only for local development since bitly will always return 400 for localhost:3000
+      dispatch(setShareUrl(shareUrl));
+      dispatch(setShareLoading(false));
+    }
   }
 );
 
-export const setShareAoi = createThunkAction('shareModalSaveAoi', (params) => (dispatch) => {
-  dispatch(saveAreaOfInterest({ ...params }))
-});
+export const setShareAoi = createThunkAction(
+  'shareModalSaveAoi',
+  (params) => (dispatch) => {
+    dispatch(saveAreaOfInterest({ ...params }));
+  }
+);
