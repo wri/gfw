@@ -55,7 +55,7 @@ export const parseConfig = createSelector(
       },
       {
         key: 'count',
-        labelKey: 'alert__date',
+        labelKey: 'date',
         labelFormat: (value) => moment(value).format('MMM DD YYYY'),
         unit: ' VIIRS alerts',
         color: colors.main,
