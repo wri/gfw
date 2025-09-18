@@ -112,7 +112,7 @@ export const parseSentence = createSelector(
     }
     const topCount = (percentileCount / totalCount) * 100;
     const countArea = sumBy(data, 'area') || 0;
-    const formatType = countArea < 1 ? '.3r' : '.3s';
+    const formatType = countArea < 1 ? '.2r' : '.2s';
     const timeFrame = optionsSelected.weeks;
 
     const params = {

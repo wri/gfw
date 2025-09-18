@@ -70,7 +70,7 @@ export const parseSentence = createSelector(
       currentLabel === 'global'
         ? globalDeforestation
         : countryDeforestation?.def_per_year;
-    const rateFormat = rate < 1 ? '.3r' : '.3s';
+    const rateFormat = rate < 1 ? '.2r' : '.2s';
 
     let sentence = initial;
 

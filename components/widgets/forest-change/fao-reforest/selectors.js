@@ -81,7 +81,7 @@ export const parseSentence = createSelector(
     });
 
     const rate = locationName === 'global' ? globalRate : countryData?.value;
-    const formatType = rate < 1 ? '.3r' : '.3s';
+    const formatType = rate < 1 ? '.2r' : '.2s';
 
     let sentence = globalInitial;
 
