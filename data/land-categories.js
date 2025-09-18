@@ -107,6 +107,7 @@ export default [
         layers: [INDIGENOUS_AND_COMMUNITY_LANDS],
       },
     ],
+    hidden: true, // FIXME: we are temporary hiding this option until further notice, see FLAG-1360 for reference.
   },
   {
     label: 'Indonesia & Malaysia peat lands',
