@@ -55,7 +55,7 @@ describe('formatNumber', () => {
         unit: 'ha',
         spaceUnit: true,
       });
-      const expected = '1.20 Mha';
+      const expected = '1.2 Mha';
 
       expect(formattedNumber).toBe(expected);
     });
@@ -67,7 +67,7 @@ describe('formatNumber', () => {
         unit: 'ha',
         spaceUnit: true,
       });
-      const expected = '1.20 kha';
+      const expected = '1.2 kha';
 
       expect(formattedNumber).toBe(expected);
     });
@@ -79,7 +79,7 @@ describe('formatNumber', () => {
         unit: 'ha',
         spaceUnit: true,
       });
-      const expected = '3.92 Gha';
+      const expected = '3.9 Gha';
 
       expect(formattedNumber).toBe(expected);
     });
@@ -119,7 +119,7 @@ describe('formatNumber', () => {
         unit: 'tCO2',
         spaceUnit: true,
       });
-      const expected = '1.23 GtCO\u2082e';
+      const expected = '1.2 GtCO\u2082e';
 
       expect(formattedNumber).toBe(expected);
     });
@@ -131,7 +131,7 @@ describe('formatNumber', () => {
         unit: 't',
         spaceUnit: true,
       });
-      const expected = '1.23 Gt';
+      const expected = '1.2 Gt';
 
       expect(formattedNumber).toBe(expected);
     });
@@ -143,7 +143,7 @@ describe('formatNumber', () => {
         unit: 'tCO2',
         spaceUnit: true,
       });
-      const expected = '1.23 MtCO\u2082e';
+      const expected = '1.2 MtCO\u2082e';
 
       expect(formattedNumber).toBe(expected);
     });
@@ -155,7 +155,7 @@ describe('formatNumber', () => {
         unit: 't',
         spaceUnit: true,
       });
-      const expected = '1.23 Mt';
+      const expected = '1.2 Mt';
 
       expect(formattedNumber).toBe(expected);
     });
@@ -169,7 +169,7 @@ describe('formatNumber', () => {
         unit: 'countsK',
         spaceUnit: false,
       });
-      const expected = '123k';
+      const expected = '120k';
 
       expect(formattedNumber).toBe(expected);
     });
@@ -214,13 +214,13 @@ describe('formatNumber', () => {
 
     it('should format using a specialSpecifier from d3-format', () => {
       const unformattedNumber = 1775000;
-      const specialSpecificer = unformattedNumber < 1 ? '.3r' : '.3s';
+      const specialSpecificer = unformattedNumber < 1 ? '.2r' : '.2s';
       const formattedNumber = formatNumber({
         num: unformattedNumber,
         specialSpecificer, // https://github.com/d3/d3-format#format
         spaceUnit: false,
       });
-      const expected = '1.78M';
+      const expected = '1.8M';
 
       expect(formattedNumber).toBe(expected);
     });

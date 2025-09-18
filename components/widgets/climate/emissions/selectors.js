@@ -121,7 +121,7 @@ export const parseSentence = createSelector(
         Math.abs(emissionFraction) < 0.1
           ? '< 0.1%'
           : `${format('.2r')(Math.abs(emissionFraction))}%`,
-      value: `${format('.3s')(
+      value: `${format('.2s')(
         Math.abs(emissionsCount / (endYear - startYear))
       )}tCO₂e`,
       startYear,

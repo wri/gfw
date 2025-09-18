@@ -8,7 +8,7 @@ export const formatUSD = (value, minimize = true) =>
 
 const setDefaultSpecifier = (unit, precision) => {
   let defaultSpecifier = '';
-  const numberOfDecimalDigits = unit === '%' ? '2' : '3';
+  const numberOfDecimalDigits = '2';
   const properPrecision = Number.isInteger(precision)
     ? Math.abs(precision)
     : numberOfDecimalDigits;
@@ -30,13 +30,13 @@ const formatWithProperSpecifier = ({
   const threshold = unit === '%' ? 0.1 : 1;
 
   // specialSpecifier is a different specifier passed through formatNumber parameter
-  // e.g formatNumber({ num: 12.345, specialSpecifier: value < 1 ? '.3r' : '.3s'; })
+  // e.g formatNumber({ num: 12.345, specialSpecifier: value < 1 ? '.2r' : '.2s'; })
   if (specialSpecifier) {
     return format(specialSpecifier)(num);
   }
 
   if (unit === 'tCO2') {
-    return format('.3s')(num);
+    return format('.2s')(num);
   }
 
   if (num < threshold && num > 0) {
@@ -44,7 +44,7 @@ const formatWithProperSpecifier = ({
   }
 
   if (unit !== '%' && num < threshold && num > 0.01) {
-    return format('.3r')(num);
+    return format('.2r')(num);
   }
 
   if (unit === 'ha' && num < 1000 && num > 0) {

@@ -62,7 +62,7 @@ class WidgetPieChart extends PureComponent {
             className="cover-legend"
             data={legendData || data}
             config={{
-              format: '.3s',
+              format: '.2s',
               unit: 'ha',
               key: 'value',
               ...settings,

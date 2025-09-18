@@ -260,7 +260,7 @@ export const parseConfig = createSelector(
         labelFormat: (value) => moment(value).format('MMM DD YYYY'),
         unit: ` MODIS burned area`,
         color: colors?.main,
-        unitFormat: (value) => `${format('.3s')(value)}ha`,
+        unitFormat: (value) => `${format('.2s')(value)}ha`,
       },
     ];
 
@@ -278,7 +278,7 @@ export const parseConfig = createSelector(
         unit: ` MODIS burned area`,
         color: '#49b5e3',
         nullValue: 'No data available',
-        unitFormat: (value) => `${format('.3s')(value)}ha`,
+        unitFormat: (value) => `${format('.2s')(value)}ha`,
       });
     }
 
