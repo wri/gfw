@@ -67,7 +67,7 @@ export const parseSentence = createSelector(
       location: locationName,
       year,
       category: label,
-      extent: `${format('.3s')(value)}ha`,
+      extent: `${format('.2s')(value)}ha`,
     };
     return {
       sentence,

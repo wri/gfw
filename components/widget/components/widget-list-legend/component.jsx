@@ -13,7 +13,7 @@ class WidgetListLegend extends PureComponent {
           className="cover-legend"
           data={data}
           config={{
-            format: '.3s',
+            format: '.2s',
             unit: 'ha',
             key: 'value',
             ...settings,
