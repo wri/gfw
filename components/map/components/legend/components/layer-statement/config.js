@@ -21,6 +21,10 @@ export default {
     statementPlain: 'This layer is only available for ',
     statementHighlight: 'certain countries.',
   },
+  landmarkLayer: {
+    statementPlain:
+      'Note that the absence of data does not indicate the absence of Indigenous or Community land.',
+  },
   kbaLayer: {
     statementPlain: 'non-commercial use only',
   },
