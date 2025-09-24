@@ -65,6 +65,7 @@ export const parseData = createSelector(
     let dataTrimmed = [];
     data.forEach((d) => {
       const locationMeta = meta && meta[d.id];
+
       if (locationMeta) {
         dataTrimmed.push({
           ...d,
@@ -73,25 +74,28 @@ export const parseData = createSelector(
         });
       }
     });
+
     dataTrimmed = dataTrimmed.map((d, i) => ({
       ...d,
       rank: i + 1,
     }));
+
     if (adm0) {
-      const locationIndex = findIndex(
-        dataTrimmed,
-        (d) => d.id === locationObject && locationObject.value
-      );
+      const locationIndex = findIndex(dataTrimmed, (d) => d.id === adm0);
+
       let trimStart = locationIndex - 2;
       let trimEnd = locationIndex + 3;
+
       if (locationIndex < 2) {
         trimStart = 0;
         trimEnd = 5;
       }
+
       if (locationIndex > dataTrimmed.length - 3) {
         trimStart = dataTrimmed.length - 5;
         trimEnd = dataTrimmed.length;
       }
+
       dataTrimmed = dataTrimmed.slice(trimStart, trimEnd);
     }
 
