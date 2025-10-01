@@ -625,6 +625,102 @@ const decodes = {
       alpha = 0.;
     }
   `,
+  treeLossDrivers: `
+    float driver = alpha * 255.;
+    float r_date = color.r * 255.;
+    float g_date = color.g * 255.;
+    float b_intensity = color.b * 255.;
+
+    float day = r_date * 255. + g_date;
+    float intensity = mod(b_intensity, 100.) * 150.;
+    // float intensity = 255.; //this is temporal above one does not work
+
+    color.r = 0. / 255.;
+    color.g = 255. / 255.;
+    color.b = 0. / 255.;
+
+    if (
+      day > 0. &&
+      day >= startDayIndex &&
+      day <= endDayIndex
+    )
+    {
+      if (intensity > 255.) {
+        intensity = 255.;
+      }
+      
+      float r = 255.;
+      float g = 255.;
+      float b = 255.;
+
+      if (driver == 1.) {
+        r = 255.;
+        g = 217.;
+        b = 102.;
+      } else if (driver == 2.) {
+        r = 255.;
+        g = 140.;
+        b = 66.;
+      } else if (driver == 3.) {
+        r = 244.;
+        g = 177.;
+        b = 131.;
+      } else if (driver == 4.) {
+        r = 206.;
+        g = 77.;
+        b = 30.;
+      } else if (driver == 5.) {
+        r = 255.;
+        g = 0.;
+        b = 0.;
+      } else if (driver == 6.) {
+        r = 0.;
+        g = 176.;
+        b = 240.;
+      } else if (driver == 7.) {
+        r = 188.;
+        g = 157.;
+        b = 217.;
+      } else if (driver == 8.) {
+        r = 70.;
+        g = 153.;
+        b = 44.;
+      } else if (driver == 9.) {
+        r = 58.;
+        g = 31.;
+        b = 154.;
+      } else if (driver == 10.) {
+        r = 137.;
+        g = 81.;
+        b = 40.;
+      } else if (driver == 11.) {
+        r = 237.;
+        g = 164.;
+        b = 195.;
+      }
+
+      color.r = r / 255.;
+      color.g = g / 255.;
+      color.b = b / 255.;
+      alpha = intensity / 255.;
+    } else {
+      alpha = 0.;
+    }
+  `,
+  treeLossDriversCoverage: `
+    float red = color.r;
+    float green = color.g;
+    float blue = color.b;
+
+    if (red == 0. && green == 0. && blue == 0.) {
+      alpha = 0.;
+    } else {
+      color.r = 253. / 255.;
+      color.g = 204. / 255.;
+      color.b = 220. / 255.;
+      alpha = 1.;
+    }
+  `,
   RADDsCoverage: `
     float red = color.r;
     float green = color.g;
