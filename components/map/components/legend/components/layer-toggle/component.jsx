@@ -13,6 +13,26 @@ import helpIcon from 'assets/icons/help.svg?sprite';
 import warningIcon from 'assets/icons/warning-nofill.svg?sprite';
 
 class LayerToggle extends PureComponent {
+  // keep track of which items we've toggled by default so we only do it once
+  static defaultToggled = new Set();
+
+  componentDidMount() {
+    const { data, onToggle, category } = this.props;
+    const { layer, dataset, iso, isToggledByDefault } = data;
+
+    if (isToggledByDefault) {
+      // build a stable key for this toggle so we only trigger it once
+      const key = `${dataset || ''}::${layer || ''}::${iso || ''}::${
+        category || ''
+      }`;
+      if (!LayerToggle.defaultToggled.has(key)) {
+        // mark as toggled before calling to avoid races if onToggle causes a remount
+        LayerToggle.defaultToggled.add(key);
+        onToggle({ dataset, layer, iso, category }, true);
+      }
+    }
+  }
+
   render() {
     const {
       className,
