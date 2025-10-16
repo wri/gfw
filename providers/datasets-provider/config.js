@@ -625,6 +625,8 @@ const decodes = {
       alpha = 0.;
     }
   `,
+  // TO-DO: treeLossDrivers isn't being used yet, since the tree loss by drivers layer is using true_color
+  // instead  of encoded tiles.  Once we need to filter by driver type, we'll need to switch to this with possible additional logic
   treeLossDrivers: `
     float driver = alpha * 255.;
     float r_date = color.r * 255.;
@@ -750,6 +752,7 @@ const decodes = {
     color.g = green;
     color.b = blue;
   `,
+  // staticRemapAlpha: a gimmick decoding to prevent blurry edges on the pixels when zooming in
   staticRemapAlpha: `
     float red = color.r;
     float green = color.g;
