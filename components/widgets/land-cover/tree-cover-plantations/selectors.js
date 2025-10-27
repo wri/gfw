@@ -15,12 +15,14 @@ export const parseData = createSelector(
   [getData, getColors],
   (data, colors) => {
     if (isEmpty(data)) return null;
-    const { plantations } = data;
+
+    const { plantations, totalArea } = data;
     const allColors = {
       ...colors.types,
       ...colors.species,
     };
     const totalPlantations = sumBy(plantations, 'intersection_area') || 0;
+
     return sortBy(
       plantations
         .filter((d) => d.intersection_area)
@@ -29,6 +31,7 @@ export const parseData = createSelector(
           value: d.intersection_area,
           color: allColors[d.plantations.toLowerCase()],
           percentage: (d.intersection_area / totalPlantations) * 100,
+          totalArea,
         })),
       'value'
     ).reverse();
@@ -42,8 +45,9 @@ export const parseSentence = createSelector(
 
     const { initial } = sentences;
     const top = data.slice(0, 1);
-    const areaPerc = sumBy(top, 'percentage');
     const topExtent = sumBy(top, 'value') || 0;
+    const areaPerc = (top[0].value / top[0].totalArea) * 100;
+
     const params = {
       location: locationName,
       extent: formatNumber({ num: topExtent, unit: 'ha', spaceUnit: true }),
