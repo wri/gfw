@@ -233,7 +233,7 @@ describe('formatNumber', () => {
         precision: 3,
       });
 
-      const expected = '175%';
+      const expected = '180%';
 
       expect(formattedNumber).toBe(expected);
     });

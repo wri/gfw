@@ -28,6 +28,7 @@ const formatWithProperSpecifier = ({
 }) => {
   const defaultSpecifier = setDefaultSpecifier(unit, precision);
   const threshold = unit === '%' ? 0.1 : 1;
+  const roundedNum = Math.round(num);
 
   // specialSpecifier is a different specifier passed through formatNumber parameter
   // e.g formatNumber({ num: 12.345, specialSpecifier: value < 1 ? '.2r' : '.2s'; })
@@ -36,19 +37,23 @@ const formatWithProperSpecifier = ({
   }
 
   if (unit === 'tCO2') {
-    return format('.2s')(num);
+    return format('.2s')(roundedNum);
   }
 
   if (num < threshold && num > 0) {
     return `< ${threshold}`;
   }
 
+  if (unit === '%' && num > 1) {
+    return format('.2r')(roundedNum);
+  }
+
   if (unit !== '%' && num < threshold && num > 0.01) {
-    return format('.2r')(num);
+    return format('.2r')(roundedNum);
   }
 
   if (unit === 'ha' && num < 1000 && num > 0) {
-    return Math.round(num);
+    return format('.2r')(roundedNum);
   }
 
   if (unit !== '%' && num > 0 && num < 0.01) {
