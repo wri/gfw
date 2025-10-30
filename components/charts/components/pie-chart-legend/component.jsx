@@ -160,7 +160,7 @@ PieChartLegend.defaultProps = {
   config: {
     unit: '',
     key: 'value',
-    format: '.3s',
+    format: '.2s',
   },
 };
 
