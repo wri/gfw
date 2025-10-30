@@ -233,7 +233,7 @@ export const parseSentence = createSelector(
       topRegion,
       topRegionCount: formatNumber({ num: topRegionCount, unit: 'counts' }),
       topRegionPerc: formatNumber({ num: topRegionPerc, unit: '%' }),
-      topRegionDensity: `${format('.3r')(topRegionDensity)} fires/Mha`,
+      topRegionDensity: `${format('.2r')(topRegionDensity)} fires/Mha`,
       location: locationName === 'global' ? 'globally' : locationName,
       indicator: `${indicator ? `${indicator.label}` : ''}`,
       component:

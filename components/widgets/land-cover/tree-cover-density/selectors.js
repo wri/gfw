@@ -80,7 +80,10 @@ const parseSentence = createSelector(
         unit: 'ha',
         spaceUnit: true,
       }),
-      areaInPercent: `${areasOverTenPercentByTotalArea}%`,
+      areaInPercent: formatNumber({
+        num: areasOverTenPercentByTotalArea,
+        unit: '%',
+      }),
     };
 
     return {

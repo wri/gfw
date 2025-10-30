@@ -86,8 +86,8 @@ export const parseSentence = createSelector(
       sentence = !indicator ? initial : withIndicator;
     }
 
-    const valueFormat = topRegion.gain < 1 ? '.3r' : '.3s';
-    const aveFormat = avgGain < 1 ? '.3r' : '.3s';
+    const valueFormat = topRegion.gain < 1 ? '.2r' : '.2s';
+    const aveFormat = avgGain < 1 ? '.2r' : '.2s';
 
     const params = {
       baselineYear: dateFromMapLayer || dateFromDashboard || 2000,

@@ -21,7 +21,7 @@ class WidgetLollipop extends PureComponent {
         config={config}
         settings={{
           ...settings,
-          format: settings.unit === '%' ? '.2r' : '.3s',
+          format: settings.unit === '%' ? '.2r' : '.2s',
         }}
         settingsConfig={settingsConfig}
         handlePageChange={(change) =>

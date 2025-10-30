@@ -20,7 +20,7 @@ class WidgetNumberedList extends PureComponent {
         data={data}
         settings={{
           ...settings,
-          format: settings.unit === '%' ? '.2r' : '.3s',
+          format: settings.unit === '%' ? '.2r' : '.2s',
         }}
         settingsConfig={settingsConfig}
         handlePageChange={(change) =>
