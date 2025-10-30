@@ -1,7 +1,6 @@
 import { createAction, createThunkAction } from 'redux/actions';
 
 import { getShortenUrl } from 'services/shortio';
-import { getShortenUrl as getShortenUrlBitly } from 'services/bitly';
 
 import { saveAreaOfInterest } from 'components/forms/area-of-interest/actions';
 
@@ -24,11 +23,8 @@ export const setShareModal = createThunkAction(
     );
 
     try {
-      const bitlyResponse = await getShortenUrlBitly(shareUrl);
-
       getShortenUrl({
         longUrl: shareUrl,
-        path: bitlyResponse.data.id.replace('gfw.global/', ''),
       })
         .then((response) => {
           let shortShareUrl = '';
