@@ -155,6 +155,7 @@ class Widgets extends PureComponent {
                     handleShowShare={() =>
                       setShareModal({
                         title: 'Share this widget',
+                        widgetTitle: w.title,
                         shareUrl: w.shareUrl,
                         embedUrl: w.embedUrl,
                         embedSettings: !w.large
