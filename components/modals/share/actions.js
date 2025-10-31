@@ -14,7 +14,7 @@ export const setShareLoading = createAction('setShareLoading');
 export const setShareModal = createThunkAction(
   'setShareModal',
   (params) => async (dispatch) => {
-    const { shareUrl } = params;
+    const { shareUrl, widgetTitle } = params;
 
     dispatch(
       setShareData({
@@ -25,6 +25,7 @@ export const setShareModal = createThunkAction(
     try {
       getShortenUrl({
         longUrl: shareUrl,
+        title: widgetTitle,
       })
         .then((response) => {
           let shortShareUrl = '';
