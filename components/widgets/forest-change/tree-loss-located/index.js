@@ -1,4 +1,4 @@
-import { getExtentGrouped, getLossGrouped } from 'services/analysis-cached';
+import { getExtent, getLossGrouped } from 'services/analysis-cached';
 import groupBy from 'lodash/groupBy';
 import { all, spread } from 'axios';
 
@@ -114,7 +114,7 @@ export default {
     noLoss: 'There was no tree cover loss identified in {location}.',
   },
   getData: (params) =>
-    all([getExtentGrouped(params), getLossGrouped(params)]).then(
+    all([getExtent(params), getLossGrouped(params)]).then(
       spread((extentGrouped, lossGrouped) => {
         const extentData = extentGrouped.data.data || [];
         const lossData = lossGrouped.data.data || [];
@@ -169,7 +169,7 @@ export default {
       })
     ),
   getDataURL: (params) => [
-    getExtentGrouped({ ...params, download: true }),
+    getExtent({ ...params, download: true }),
     getLossGrouped({ ...params, download: true }),
   ],
   getWidgetProps,
