@@ -31,20 +31,13 @@ export const parseData = createSelector(
 
     if (adm0) {
       const locationIndex = findIndex(data, (d) => d.iso === adm0);
-      let trimStart = locationIndex - 2;
-      let trimEnd = locationIndex + 3;
 
-      if (locationIndex < 2) {
-        trimStart = 0;
-        trimEnd = 5;
+      if (locationIndex !== -1) {
+        dataTrimmed = dataTrimmed.map((d, i) => ({
+          ...d,
+          isCurrent: i === locationIndex,
+        }));
       }
-
-      if (locationIndex > data?.length - 3) {
-        trimStart = data?.length - 5;
-        trimEnd = data?.length;
-      }
-
-      dataTrimmed = data?.slice(trimStart, trimEnd);
     }
 
     return dataTrimmed?.map((d) => ({
