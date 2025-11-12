@@ -83,20 +83,12 @@ export const parseData = createSelector(
     if (adm0) {
       const locationIndex = findIndex(dataTrimmed, (d) => d.id === adm0);
 
-      let trimStart = locationIndex - 2;
-      let trimEnd = locationIndex + 3;
-
-      if (locationIndex < 2) {
-        trimStart = 0;
-        trimEnd = 5;
+      if (locationIndex !== -1) {
+        dataTrimmed = dataTrimmed.map((d, i) => ({
+          ...d,
+          isCurrent: i === locationIndex,
+        }));
       }
-
-      if (locationIndex > dataTrimmed.length - 3) {
-        trimStart = dataTrimmed.length - 5;
-        trimEnd = dataTrimmed.length;
-      }
-
-      dataTrimmed = dataTrimmed.slice(trimStart, trimEnd);
     }
 
     return dataTrimmed.map((d) => ({
