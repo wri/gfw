@@ -6,7 +6,6 @@ import Icon from 'components/ui/icon';
 import mapboxLogo from 'assets/logos/mapbox.svg?sprite';
 import geeLogo from 'assets/logos/gee.png';
 import cartoLogo from 'assets/logos/carto.png';
-import planetLogo from 'assets/logos/planet.png';
 
 const AttributionsContent = ({ isDesktop = false, isModal = false }) => {
   const currentYear = useMemo(() => new Date().getFullYear());
@@ -35,18 +34,6 @@ const AttributionsContent = ({ isDesktop = false, isModal = false }) => {
         </a>
         <a href="https://carto.com/" rel="noopener noreferrer" target="_blank">
           <img className="carto-logo" src={cartoLogo} alt="carto" width="60" />
-        </a>
-        <a
-          href="https://www.planet.com"
-          rel="noopener noreferrer"
-          target="_blank"
-        >
-          <img
-            className="planet-logo"
-            src={planetLogo}
-            alt="planet"
-            width="80"
-          />
         </a>
       </div>
       <div className="links">
