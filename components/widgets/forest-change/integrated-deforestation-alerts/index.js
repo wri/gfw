@@ -129,6 +129,12 @@ export default {
       label: 'Forest Type',
       type: 'select',
       placeholder: 'All tree cover',
+      whitelist: [
+        'primary_forest',
+        'ifl',
+        'mangroves_2020',
+        'natural_forests_2020',
+      ],
       clearable: true,
     },
     {
@@ -136,7 +142,7 @@ export default {
       label: 'Land Category',
       type: 'select',
       placeholder: 'All categories',
-      blacklist: ['gfw_peatlands'],
+      whitelist: ['wdpa', 'landmark'],
       clearable: true,
       border: true,
     },
