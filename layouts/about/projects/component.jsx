@@ -10,7 +10,6 @@ import ModalVideo from 'components/modals/video';
 
 import arrowDownIcon from 'assets/icons/arrow-down.svg?sprite';
 import playIcon from 'assets/icons/play.svg?sprite';
-import growth from 'layouts/about/projects/images/growth.png';
 
 import { getProjectsProps } from 'layouts/grants-and-fellowships/projects/selectors';
 
@@ -124,10 +123,7 @@ const AboutProjectsSection = ({
           </Column>
         </Row>
         <Desktop>
-          <div
-            className="visitors"
-            style={{ backgroundImage: `url(${growth})` }}
-          >
+          <div className="visitors">
             <h4>
               Since its launch in 2014, over 8 million people have visited
               Global Forest Watch from every single country in the world.

@@ -12,7 +12,7 @@ const AboutContactSection = () => (
         <p>Global Forest Watch, 10 G Street NE Suite 800</p>
         <p>Washington, DC 20002, USA</p>
         <a
-          href="https://www.wri.org/our-work/project/global-forest-watch"
+          href="https://www.wri.org/project-experts/37654?page=1"
           target="_blank"
           rel="noopener noreferrer"
         >
