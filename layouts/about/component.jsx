@@ -60,7 +60,7 @@ const AboutPage = (props) => (
   <div className="l-about-page">
     <Cover
       title="About"
-      description="Global Forest Watch (GFW) is an online platform that provides data and tools for monitoring forests. By harnessing cutting-edge technology, GFW allows anyone to access near real-time information about where and how forests are changing around the world."
+      description="Global Forest Watch, or GFW, is an initiative from World Resources Institute (WRI) committed to providing the best publicly available data and tools for monitoring and protecting the world’s forests. By harnessing cutting-edge technology, GFW’s free and accessible platform allows anyone anywhere to access near-real-time information on forest change and mobilize action."
       bgImage={bgImage}
       webP={bgImageWebP}
     >
