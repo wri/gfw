@@ -19,7 +19,7 @@ const data = [
   },
   {
     title: 'Community',
-    text: 'GFW has built an extensive partnership of over 100 organizations, researchers, and companies that together drive forward a sustainable vision for forests. The GFW partnership unites those working on the forefront of forest monitoring technology with leaders in conservation and sustainability, and a community of over 1 million users.',
+    text: 'GFW has built an extensive partnership of over 100 organizations, researchers, and companies that together drive forward a sustainable vision for forests. The GFW partnership unites those working on the forefront of forest monitoring technology with leaders in conservation and sustainability, and a community of over 9 million users.',
     img: community,
     credits: 'Arend de Hass, ACF',
   },
