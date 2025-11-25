@@ -6,10 +6,8 @@ import { Row, Column, Button, Desktop } from '@worldresources/gfw-components';
 
 import Dropdown from 'components/ui/dropdown';
 import Icon from 'components/ui/icon';
-import ModalVideo from 'components/modals/video';
 
 import arrowDownIcon from 'assets/icons/arrow-down.svg?sprite';
-import playIcon from 'assets/icons/play.svg?sprite';
 import growth from 'layouts/about/projects/images/growth.png';
 
 import { getProjectsProps } from 'layouts/grants-and-fellowships/projects/selectors';
@@ -19,7 +17,6 @@ const AboutProjectsSection = ({
   countries: allCountries,
 }) => {
   const [country, setCountry] = useState(null);
-  const [videoModalOpen, setVideoModalOpen] = useState(false);
 
   const { countries } = useMemo(
     () =>
@@ -40,27 +37,6 @@ const AboutProjectsSection = ({
   return (
     <>
       <div className="l-section-projects">
-        <Row>
-          <Column width={[1]}>
-            <h3>WHAT IS GLOBAL FOREST WATCH?</h3>
-            <div
-              className="video-btn"
-              onClick={() => !videoModalOpen && setVideoModalOpen(true)}
-              role="button"
-              tabIndex={0}
-            >
-              <Button round size="medium" className="video-icon">
-                <Icon icon={playIcon} />
-              </Button>
-              <p className="video-msg">Watch this 2 minute video</p>
-              <ModalVideo
-                open={videoModalOpen}
-                src="//www.youtube.com/embed/lTG-0brb98I?rel=0&autoplay=1&showinfo=0&controls=0&modestbranding=1"
-                onRequestClose={() => setVideoModalOpen(false)}
-              />
-            </div>
-          </Column>
-        </Row>
         <Row>
           <Column width={[1, 17 / 36]}>
             <h3>WHO USES GLOBAL FOREST WATCH?</h3>
