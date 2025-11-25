@@ -1,9 +1,6 @@
 import { Carousel, Row, Column } from '@worldresources/gfw-components';
 
 import img1997 from 'layouts/about/history/images/1997.jpg';
-import img2002 from 'layouts/about/history/images/2002.jpg';
-import img2004 from 'layouts/about/history/images/2004.jpg';
-import img2005 from 'layouts/about/history/images/2005.jpg';
 import img2014 from 'layouts/about/history/images/2014.jpg';
 import img2015 from 'layouts/about/history/images/2015.jpg';
 import img2016 from 'layouts/about/history/images/2016.jpg';
@@ -18,27 +15,6 @@ const data = [
     title: '1997',
     paragraph:
       'The World Resources Institute (WRI) established Global Forest Watch in 1997 as part of the Forest Frontiers Initiative. It started as a network of NGOs producing up-to-date reports about the state of forests in four pilot countries: Cameroon, Canada, Gabon, and Indonesia.',
-  },
-  {
-    img: img2002,
-    imgPosition: 'center',
-    title: '2002',
-    paragraph:
-      'By 2002, GFW had expanded its work to Chile, Russia, Venezuela, Indonesia, the Democratic Republic of Congo, and the United States, publishing reports about forest cover and conditions as well as activities affecting forests, like concessions and infrastructure. GFW planned to have its forest monitoring network up and running in 21 countries by 2005.',
-  },
-  {
-    img: img2004,
-    imgPosition: 'center',
-    title: '2004',
-    paragraph:
-      "GFW began working with governments in Central Africa to create interactive, online maps of forests and land use called Forestry Atlases. The first map was created for Cameroon in collaboration with the Ministry of Environment and Forests of Cameroon (MINEF). The interactive maps, built on ESRI's ArcGIS Server, were soon expanded to all countries covered by GFW.",
-  },
-  {
-    img: img2005,
-    imgPosition: 'left',
-    title: '2005 - 2011',
-    paragraph:
-      'For the next six years, GFW continued producing global and regional maps and analyses of forests, while also expanding national mapping projects with governments. In 2006, GFW together with Greenpeace produced the first ever global map of remaining intact forest landscapes.',
   },
   {
     img: img2014,
