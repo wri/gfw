@@ -42,7 +42,7 @@ const SQL_QUERIES = {
   areaIntersection:
     'SELECT {select_location}, SUM(area__ha) AS area__ha {intersection} FROM data {WHERE} GROUP BY {location} {intersection} ORDER BY area__ha DESC',
   glad: 'SELECT {select_location}, alert__year, alert__week, SUM(alert__count) AS alert__count, SUM(alert_area__ha) AS alert_area__ha FROM data {WHERE} GROUP BY {location}, alert__year, alert__week',
-  integratedAlertsDaily: `SELECT {select_location}, SUM(alert__count) AS alert__count, SUM(alert_area__ha) AS alert_area__ha, {confidenceString} FROM data {WHERE} AND {dateString} >= '{startDate}' AND {dateString} <= '{endDate}' GROUP BY {location}, {confidenceString}`,
+  integratedAlertsDaily: `SELECT COUNT(*) AS alert__count, SUM(area__ha) AS alert_area__ha, {confidenceString} FROM data {WHERE} AND {dateString} >= '{startDate}' AND {dateString} <= '{endDate}' GROUP BY {confidenceString}`,
   integratedAlertsRanked: `SELECT {select_location}, {alertTypeColumn}, SUM(alert__count) AS alert__count, SUM(alert_area__ha) AS alert_area__ha FROM data {WHERE} AND {alertTypeColumn} >= '{startDate}' AND {alertTypeColumn} <= '{endDate}' GROUP BY {location}, {alertTypeColumn} ORDER BY {alertTypeColumn} DESC`,
   integratedAlertsDailyDownload: `SELECT latitude, longitude, gfw_integrated_alerts__date, umd_glad_landsat_alerts__confidence, umd_glad_sentinel2_alerts__confidence, wur_radd_alerts__confidence, gfw_integrated_alerts__confidence FROM data WHERE gfw_integrated_alerts__date >= '{startDate}' AND gfw_integrated_alerts__date <= '{endDate}'{AND_OPERATION}&geostore_origin={geostoreOrigin}&geostore_id={geostoreId}`,
   integratedAlertsDownloadGladL: `SELECT latitude, longitude, umd_glad_landsat_alerts__date, umd_glad_landsat_alerts__confidence FROM data WHERE umd_glad_landsat_alerts__date >= '{startDate}' AND umd_glad_landsat_alerts__date <= '{endDate}'{AND_OPERATION}&geostore_origin={geostoreOrigin}&geostore_id={geostoreId}`,
@@ -1781,7 +1781,6 @@ export const fetchIntegratedAlerts = (params) => {
     startDate,
     endDate,
     download,
-    geostoreId,
     alertSystem,
     forestType,
     landCategory,
@@ -1875,8 +1874,10 @@ export const fetchIntegratedAlerts = (params) => {
     }
   }
 
-  const url = encodeURI(
-    `${requestUrl}${query}`
+  console.log('Params System:', params);
+
+  const url1 = encodeURI(
+    `${requestUrl}${query}&geostore_id=${params.geostore.id}`
       .replace(
         /{select_location}/g,
         getLocationSelect({ ...params, cast: false })
@@ -1889,8 +1890,19 @@ export const fetchIntegratedAlerts = (params) => {
       .replace('{WHERE}', getWHEREQuery({ ...params, dataset: 'glad' }))
       .replace(/{AND_OPERATION}/, AND_OPERATION)
       .replace(/{geostoreOrigin}/g, 'gfw')
-      .replace(/{geostoreId}/g, geostoreId)
+      .replace(
+        `%20geostore__id%20%3D%20%27${params.geostore.id}%27%20%20AND%20`,
+        '%20'
+      )
+      .replace(
+        `%20geostore__id%20=%20'${params.geostore.id}'%20%20AND%20`,
+        '%20'
+      )
   );
+
+  const url = url1
+    .replace(`%20geostore__id%20=%20'${params.geostore.id}'%20%20AND%20`, '%20')
+    .replace(`%20geostore__id%20=%20'${params.geostore.id}'%20AND%20`, '%20');
 
   if (download) {
     const indicator = getIndicator(forestType, landCategory, ifl);
@@ -1922,7 +1934,7 @@ export const fetchIntegratedAlerts = (params) => {
       data: response?.data?.map((d) => ({
         ...d,
         confidence: d[confidenceString],
-        alerts: d.alert__count,
+        alerts: d.count,
       })),
     },
   }));

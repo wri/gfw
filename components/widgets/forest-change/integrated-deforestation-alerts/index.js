@@ -254,9 +254,9 @@ export default {
     // If area is saved, point OTF to different dataset
     if (isAoi && status === 'saved') {
       if (alertSystem === 'glad_l') {
-        dataset = 'geostore__glad__daily_alerts';
+        dataset = 'umd_glad_landsat_alerts'; // 'geostore__glad__daily_alerts';
       } else {
-        dataset = 'geostore__integrated_alerts__daily_alerts';
+        dataset = 'gfw_integrated_alerts'; // 'geostore__integrated_alerts__daily_alerts';
       }
     }
 
