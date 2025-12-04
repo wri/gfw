@@ -12,25 +12,16 @@ import Select from 'components/forms/components/select';
 import Submit from 'components/forms/components/submit';
 import SuccessMessage from 'components/success-message';
 import Error from 'components/forms/components/error';
-import { preferredLanguages, interests } from 'components/forms/profile/config';
+import {
+  preferredLanguages,
+  interests,
+  sectors,
+} from 'components/forms/profile/config';
 
 import { email as validateEmail } from 'components/forms/validations';
 import { ORTTO_REQUESTS_TYPES } from 'pages/api/ortto/constants';
 import Checkbox from '../components/checkbox/component';
 
-const sectors = [
-  'Government',
-  'Donor Institution/Agency',
-  'Local NGO (National or Subnational)',
-  'International NGO',
-  'UN or International Organization',
-  'Academic/Research Organization',
-  'Journalist/Media Organization',
-  'Indigenous or Community-Based Organization',
-  'Private Sector',
-  'No Affiliation',
-  'Other',
-];
 class NewsletterForm extends PureComponent {
   static propTypes = {
     countries: PropTypes.array,
@@ -95,10 +86,19 @@ class NewsletterForm extends PureComponent {
       label,
       value: label,
     }));
-    const sectorsOptions = sectors.map((sector) => ({
-      label: sector,
-      value: sector,
-    }));
+    const sectorsOptions = Object.keys(sectors).map((sector) => {
+      if (sector === 'Other (Write In)') {
+        return {
+          label: 'Other',
+          value: 'Other',
+        };
+      }
+
+      return {
+        label: sector,
+        value: sector,
+      };
+    });
     const interestsOptions = interests.map((interest) => ({
       label: interest,
       value: interest,
