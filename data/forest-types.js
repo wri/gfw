@@ -19,7 +19,7 @@ export default [
     value: 'plantations',
     dataType: 'keyword',
     tableKey: 'gfw_planted_forests__type',
-    metaKey: 'gfw_plantations',
+    metaKey: 'gfw_planted_forests',
     global: true,
     categories: [
       'Unknown',
