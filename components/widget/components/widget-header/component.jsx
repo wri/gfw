@@ -110,6 +110,7 @@ class WidgetHeader extends PureComponent {
           {showSettingsBtn && (
             <WidgetSettingsButton
               settingsConfig={settingsConfig}
+              settings={settings}
               loading={loading}
               title={title}
               embed={embed}
