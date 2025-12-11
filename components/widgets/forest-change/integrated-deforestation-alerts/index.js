@@ -51,12 +51,12 @@ const setStartDateByAlertSystem = (alertSystem, params, selectedDate) => {
 export default {
   widget: 'integratedDeforestationAlerts',
   published: true,
-  title: 'Integrated Deforestation alerts in {location}',
+  title: 'Integrated Disturbance alerts in {location}',
   sentence: {
     initial:
-      'There were {total} deforestation alerts reported in {location} between {startDate} and {endDate}, {totalArea} of which {highConfPerc} were high confidence alerts detected by a single system and {highestConfPerc} were alerts detected by multiple systems.',
+      'There were {total} disturbance alerts reported in {location} between {startDate} and {endDate}, {totalArea} of which {highConfPerc} were high confidence alerts detected by a single system and {highestConfPerc} were alerts detected by multiple systems.',
     withInd:
-      'There were {total} deforestation alerts reported within {indicator} in {location} between {startDate} and {endDate}, {totalArea} of which {highConfPerc} were high confidence alerts detected by a single system and {highestConfPerc} were alerts detected by multiple systems.',
+      'There were {total} disturbance alerts reported within {indicator} in {location} between {startDate} and {endDate}, {totalArea} of which {highConfPerc} were high confidence alerts detected by a single system and {highestConfPerc} were alerts detected by multiple systems.',
     singleSystem:
       'There were {total} {system} alerts reported in {location} between {startDate} and {endDate}, {totalArea} of which {highConfPerc} were {high confidence alerts}.',
     singleSystemWithInd:
@@ -66,7 +66,7 @@ export default {
     peatlands:
       'There were {total} high or highest confidence {system} alerts reported within {indicator} in {location} between {startDate} and {endDate}, {totalArea}.',
     noReportedAlerts:
-      'There were {total} deforestation alerts reported in {location} between {startDate} and {endDate}.',
+      'There were {total} disturbance alerts reported in {location} between {startDate} and {endDate}.',
   },
   metaKey: (params) => {
     const alertSystem = handleAlertSystem(params, 'deforestationAlertsDataset');
@@ -122,6 +122,7 @@ export default {
     'landCategory',
     'startDate',
     'endDate',
+    'distAlertOptions',
   ],
   settingsConfig: [
     {
@@ -158,6 +159,12 @@ export default {
       label: 'Alert type',
       type: 'select',
     },
+    {
+      key: 'distAlertOptions',
+      label: 'displaying alerts for',
+      type: 'select',
+      border: true,
+    },
   ],
   settingsBtnConfig: {
     text: '+ Select an intersection',
@@ -175,6 +182,7 @@ export default {
   settings: {
     deforestationAlertsDataset: 'all',
     canDownloadUnsaved: true,
+    distAlertOptions: 'vegetation',
   },
   getData: async (params) => {
     // Gets pre-fetched GLAD-related metadata from the state...
