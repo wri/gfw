@@ -51,6 +51,38 @@ class Radio extends PureComponent {
               {parsedOptions &&
                 parsedOptions.map((option) => {
                   const id = uniqueId(`radio-${option.value}-`);
+
+                  if (option.disabled) {
+                    return (
+                      <div
+                        key={option.value}
+                        className="radio-option"
+                        style={{ opacity: '0.5', pointerEvents: 'none' }}
+                      >
+                        <Field
+                          id={id}
+                          name={input.name}
+                          component="input"
+                          type="radio"
+                          value={option.value}
+                          disabled
+                        />
+                        <label className="radio-label" htmlFor={id}>
+                          <span />
+                          {option.label}
+                        </label>
+                        {selectedOption === option.value &&
+                          option.radioInput && (
+                            <Input
+                              name={`${input.name}_otherInput`}
+                              className="radio-input"
+                              required={required}
+                            />
+                          )}
+                      </div>
+                    );
+                  }
+
                   return (
                     <div key={option.value} className="radio-option">
                       <Field
