@@ -7,6 +7,10 @@ import img2016 from 'layouts/about/history/images/2016.jpg';
 import img2017 from 'layouts/about/history/images/2017.jpg';
 import img2018 from 'layouts/about/history/images/2018.png';
 import img2019 from 'layouts/about/history/images/2019.png';
+import img2020 from 'layouts/about/history/images/2020.png';
+import img2021 from 'layouts/about/history/images/2021.png';
+import img2021b from 'layouts/about/history/images/2021b.jpg';
+import img2024 from 'layouts/about/history/images/2024.png';
 
 const data = [
   {
@@ -58,6 +62,35 @@ const data = [
     paragraph:
       'Stemming from collaboration with leading financial and commodity companies, GFW Pro was launched in 2019 to aid businesses intent on managing deforestation risk in their supply chains. Meanwhile, the addition of high-resolution Planet basemaps, plantations data for 82 countries and pan-tropical primary forest data gave users a new way to understand forest change on the GFW map.',
   },
+  {
+    img: img2020,
+    imgPosition: 'center',
+    title: '2020',
+    paragraph:
+      'WRI launched the Global Forest Review, a living report powered by GFW. The Global Forest Review provides peer-reviewed analysis and insights generated from the best available geospatial data on the state of the world’s forests to support the global community working to protect and restore forests worldwide.',
+  },
+  {
+    img: img2021,
+    imgPosition: 'center',
+    title: '2021',
+    paragraph:
+      'GFW released new global maps that provide spatially explicit data on emissions, removals and net carbon fluxes from forests.',
+  },
+  {
+    img: img2021b,
+    imgPosition: 'center',
+    title: '2021',
+    subtitle: 'Photo by Beder Olortegui',
+    paragraph:
+      'GFW partnered on an impact evaluation study that revealed areas where Indigenous forest monitors were equipped with satellite data saw a 52% reduction in deforestation in one year.',
+  },
+  {
+    img: img2024,
+    imgPosition: 'center',
+    title: '2024',
+    paragraph:
+      'GFW released its 10<sup>th</sup> annual global tree cover loss data and analysis, a globally recognized data set that provides a regular and standardized assessment on the state of the world’s forests.',
+  },
 ];
 
 const AboutHistorySection = () => (
@@ -83,8 +116,12 @@ const AboutHistorySection = () => (
                   </Column>
                   <Column width={[1, 1 / 2]}>
                     <div className="description">
-                      <h4>{d.title}</h4>
-                      <p>{d.paragraph}</p>
+                      <div>
+                        <h4>{d.title}</h4>
+                        {d.subtitle && <span>{d.subtitle}</span>}
+                      </div>
+                      {/* eslint-disable-next-line react/no-danger */}
+                      <p dangerouslySetInnerHTML={{ __html: d.paragraph }} />
                     </div>
                   </Column>
                 </Row>
