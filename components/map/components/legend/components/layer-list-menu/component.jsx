@@ -33,6 +33,9 @@ class LayerListMenu extends PureComponent {
               l.id === 'glad-plus-deforestation-alerts-geographic-coverage'
             );
           }
+          if (activeLayer?.id === 'integrated-deforestation-alerts-8bit-dist') {
+            return l.id === 'dist-deforestation-alerts-geographic-coverage';
+          }
         }
         return true;
       });
