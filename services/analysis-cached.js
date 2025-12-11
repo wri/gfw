@@ -1959,7 +1959,7 @@ export const getIntegratedAlertsRanked = (params) => {
       dataset: 'integrated_alerts',
       datasetType: 'daily',
       // version override necessary here (no 'latest' defined)
-      version: 'latest',
+      version: 'v20251203',
     });
   }
 
@@ -1968,8 +1968,7 @@ export const getIntegratedAlertsRanked = (params) => {
       ...params,
       dataset: 'integrated_alerts',
       datasetType: 'daily',
-      // version override necessary here (no 'latest' defined)
-      version: 'latest',
+      version: 'v20251203',
     });
   }
 
@@ -2013,7 +2012,6 @@ export const getIntegratedAlertsRanked = (params) => {
       .replace(/{alertTypeColumn}/g, alertTypeColumn)
       .replace(/{startDate}/g, startDate)
       .replace(/{endDate}/g, endDate)
-      // TODO: verify with Dan if this "if" is correct based on his comment in FLAG-1415
       .replace(
         /{distAlert}/g,
         deforestationAlertsDataset === 'all' && distAlertOptions === 'treeCover'
