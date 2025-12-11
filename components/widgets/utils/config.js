@@ -442,7 +442,7 @@ export const getStatements = ({
       : null,
     dataType === 'integration_alerts'
       ? translateText(
-          'Note: area does not necessarily correspond to area of tree cover loss.'
+          'Note: area does not necessarily correspond to area of loss.'
         )
       : null,
     dataType === 'netChange'
