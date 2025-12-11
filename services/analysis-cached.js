@@ -1785,6 +1785,7 @@ export const fetchIntegratedAlerts = (params) => {
     alertSystem,
     forestType,
     landCategory,
+    distAlertOptions,
     ifl,
     confirmedOnly = 0,
   } = params || {};
@@ -1873,6 +1874,10 @@ export const fetchIntegratedAlerts = (params) => {
     if (alertSystem === 'radd') {
       AND_OPERATION = ' AND gfw_radd_alerts__confidence !== "nominal"';
     }
+  }
+
+  if (distAlertOptions === 'treeCover') {
+    AND_OPERATION = `${AND_OPERATION} AND is__tree_cover_2022 = true`;
   }
 
   const url = encodeURI(
@@ -2013,7 +2018,6 @@ export const getIntegratedAlertsRanked = (params) => {
       .replace(/{alertTypeColumn}/g, alertTypeColumn)
       .replace(/{startDate}/g, startDate)
       .replace(/{endDate}/g, endDate)
-      // TODO: verify with Dan if this "if" is correct based on his comment in FLAG-1415
       .replace(
         /{distAlert}/g,
         deforestationAlertsDataset === 'all' && distAlertOptions === 'treeCover'
