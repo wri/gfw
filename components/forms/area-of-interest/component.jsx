@@ -277,7 +277,8 @@ class AreaOfInterestForm extends PureComponent {
                           value: 'fireAlerts',
                         },
                         {
-                          label: 'As soon as forest change is detected',
+                          label:
+                            'As soon as forest disturbance alerts are detected (available for the tropics)',
                           value: 'deforestationAlerts',
                           multiInput: true,
                         },
@@ -293,7 +294,10 @@ class AreaOfInterestForm extends PureComponent {
                             <Radio
                               name="deforestationAlertsType"
                               options={[
-                                { label: 'All alerts', value: 'glad-all' },
+                                {
+                                  label: 'All alerts (includes DIST-ALERT)',
+                                  value: 'glad-all',
+                                },
                                 { label: 'GLAD-L alerts', value: 'glad-l' },
                                 { label: 'GLAD-S2 alerts', value: 'glad-s2' },
                                 { label: 'RADD alerts', value: 'glad-radd' },
