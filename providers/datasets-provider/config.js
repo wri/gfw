@@ -611,14 +611,14 @@ const decodes = {
         intensity = 255.;
       }
       if (confidence < 2.) {
-        color.r = 238. / 255.;
-        color.g = 177. / 255.;
-        color.b = 177. / 255.;
+        color.r = 220. / 255.;
+        color.g = 102. / 255.;
+        color.b = 153. / 255.;
         alpha = intensity / 255.;
       } else {
-        color.r = 137. / 255.;
-        color.g = 82. / 255.;
-        color.b = 119. / 255.;
+        color.r = 201. / 255.;
+        color.g = 43. / 255.;
+        color.b = 110. / 255.;
         alpha = intensity / 255.;
       }
     } else {
