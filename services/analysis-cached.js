@@ -1809,7 +1809,7 @@ export const fetchIntegratedAlerts = (params) => {
       dataset: alertSystem === 'glad_l' ? 'glad' : 'integrated_alerts',
       datasetType: 'daily',
       // version override necessary here (no 'latest' defined)
-      version: 'latest',
+      version: 'v202512',
     });
   }
 
@@ -1964,7 +1964,7 @@ export const getIntegratedAlertsRanked = (params) => {
       dataset: 'integrated_alerts',
       datasetType: 'daily',
       // version override necessary here (no 'latest' defined)
-      version: 'v20251203',
+      version: 'v202512',
     });
   }
 
@@ -1973,7 +1973,7 @@ export const getIntegratedAlertsRanked = (params) => {
       ...params,
       dataset: 'integrated_alerts',
       datasetType: 'daily',
-      version: 'v20251203',
+      version: 'v202512',
     });
   }
 
