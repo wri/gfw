@@ -42,7 +42,7 @@ const SQL_QUERIES = {
   areaIntersection:
     'SELECT {select_location}, SUM(area__ha) AS area__ha {intersection} FROM data {WHERE} GROUP BY {location} {intersection} ORDER BY area__ha DESC',
   glad: 'SELECT {select_location}, alert__year, alert__week, SUM(alert__count) AS alert__count, SUM(alert_area__ha) AS alert_area__ha FROM data {WHERE} GROUP BY {location}, alert__year, alert__week',
-  integratedAlertsDaily: `SELECT {select_location}, SUM(alert__count) AS alert__count, SUM(alert_area__ha) AS alert_area__ha, {confidenceString} FROM data {WHERE} AND {dateString} >= '{startDate}' AND {dateString} <= '{endDate}' GROUP BY {location}, {confidenceString}`,
+  integratedAlertsDaily: `SELECT {select_location}, SUM(alert__count) AS alert__count, SUM(alert_area__ha) AS alert_area__ha, {confidenceString} FROM data {WHERE} AND {dateString} >= '{startDate}' AND {dateString} <= '{endDate}' {AND_OPERATION} GROUP BY {location}, {confidenceString}`,
   integratedAlertsRanked: `SELECT {select_location}, {alertTypeColumn}, SUM(alert__count) AS alert__count, SUM(alert_area__ha) AS alert_area__ha FROM data {WHERE} AND {alertTypeColumn} >= '{startDate}' AND {alertTypeColumn} <= '{endDate}' {distAlert} GROUP BY {location}, {alertTypeColumn} ORDER BY {alertTypeColumn} DESC`,
   integratedAlertsDailyDownload: `SELECT latitude, longitude, gfw_integrated_alerts__date, umd_glad_landsat_alerts__confidence, umd_glad_sentinel2_alerts__confidence, wur_radd_alerts__confidence, gfw_integrated_alerts__confidence FROM data WHERE gfw_integrated_alerts__date >= '{startDate}' AND gfw_integrated_alerts__date <= '{endDate}'{AND_OPERATION}&geostore_origin={geostoreOrigin}&geostore_id={geostoreId}`,
   integratedAlertsDownloadGladL: `SELECT latitude, longitude, umd_glad_landsat_alerts__date, umd_glad_landsat_alerts__confidence FROM data WHERE umd_glad_landsat_alerts__date >= '{startDate}' AND umd_glad_landsat_alerts__date <= '{endDate}'{AND_OPERATION}&geostore_origin={geostoreOrigin}&geostore_id={geostoreId}`,
@@ -1820,7 +1820,7 @@ export const fetchIntegratedAlerts = (params) => {
       dataset: 'integrated_alerts',
       datasetType: 'daily',
       // version override necessary here (no 'latest' defined)
-      version: 'latest',
+      version: 'v202512',
     });
   }
 
