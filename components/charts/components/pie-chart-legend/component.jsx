@@ -105,8 +105,7 @@ class PieChartLegend extends PureComponent {
       >
         <ul className={cx({ simple, sizeClass })}>
           {data.map((item, index) => {
-            const PLACEHOLDER = new RegExp(`\\bPLACEHOLDER\\b`, 'g');
-            const label = item.label.replace(PLACEHOLDER, `and`);
+            const label = item.label.replace(/\bPLACEHOLDER\b/g, 'and');
             const value = `${formatNumber({
               num: item[config.key],
               unit: item.unit ? item.unit : config.unit,
