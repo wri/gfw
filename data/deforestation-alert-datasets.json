@@ -4,7 +4,7 @@
     "value": "all",
     "unit": "alerts",
     "metaKey": null,
-    "infoText": "Integrated alerts combine GLAD-Landsat, GLAD-S2, and RADD deforestation alerts",
+    "infoText": "Monitor forest and other vegetation disturbances with four satellite-based alert systems in near-real time",
     "enableDistAlertOption": true
   },
   {
@@ -12,7 +12,7 @@
     "value": "glad_l",
     "unit": "alerts",
     "metaKey": null,
-    "infoText": "Identifies areas of likely tree cover loss in near-real time",
+    "infoText": "Identifies areas of likely tree cover loss in near-real time using Landsat imagery",
     "enableDistAlertOption": false
   },
   {
@@ -20,7 +20,7 @@
     "value": "glad_s2",
     "unit": "alerts",
     "metaKey": null,
-    "infoText": "Identifies areas of primary forest loss in near real time using Sentinel-2 imagery",
+    "infoText": "Identifies areas of primary forest loss in near-real time using Sentinel-2 imagery",
     "enableDistAlertOption": false
   },
   {
@@ -28,7 +28,7 @@
     "value": "radd",
     "unit": "alerts",
     "metaKey": null,
-    "infoText": "Near real-time forest disturbance alerts in primary humid tropical forests using Sentinel-1’s cloud-penetrating radar sensors",
+    "infoText": "Identifies areas of primary forest loss in near-real time using Sentinel-1's cloud-penetrating radar sensors",
     "enableDistAlertOption": false
   },
   {
@@ -36,7 +36,7 @@
     "value": "dist",
     "unit": "alerts",
     "metaKey": null,
-    "infoText": "Near real-time forest disturbance alerts in primary humid tropical forests using Sentinel-1’s cloud-penetrating radar sensors",
+    "infoText": "Identifies areas of likely vegetation loss in near-real time using Harmonized Landsat Sentinel-2 imagery",
     "disabled": true,
     "tooltipText": "Analysis currently unavailable",
     "enableDistAlertOption": false
