@@ -2070,9 +2070,13 @@ export const fetchGladAlertsDaily = (params) => {
     glad_l: 'umd_glad_landsat_alerts',
   };
 
-  const dateString = `alert`.concat('__date');
+  const dateString = `umd_glad_landsat_alerts`.concat('__date');
   const confidenceString =
     datasetMapping[deforestationAlertsDataset].concat('__confidence');
+
+  // this method does not need extra operation values, however the same query is used by
+  // fetchIntegratedAlerts, which implements AND_OPERATION.
+  const AND_OPERATION = '';
 
   // Replace base url params and encode
   const url = encodeURI(
@@ -2084,6 +2088,7 @@ export const fetchGladAlertsDaily = (params) => {
       .replace(/{location}/g, getLocationSelect(params))
       .replace(/{dateString}/g, dateString)
       .replace(/{confidenceString}/g, confidenceString)
+      .replace(/{AND_OPERATION}/, AND_OPERATION)
       .replace('{startDate}', startDate)
       .replace('{endDate}', endDate)
       .replace('{WHERE}', getWHEREQuery({ ...params, dataset: 'glad' }))
