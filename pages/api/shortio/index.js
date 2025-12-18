@@ -1,5 +1,4 @@
 import axios from 'axios';
-import { addMonths } from 'date-fns';
 
 export default async (req, res) => {
   if (req.method !== 'POST') {
@@ -13,13 +12,11 @@ export default async (req, res) => {
   const { longUrl, path, title } = req.body;
 
   try {
-    const monthFromNow = addMonths(new Date(), 1);
     const response = await axios.post(
       'https://api.short.io/links',
       {
         allowDuplicates: false,
         originalURL: longUrl,
-        ttl: monthFromNow.toISOString(),
         domain: 'gfw.global',
         ...(path && { path }),
         ...(title && { title }),
