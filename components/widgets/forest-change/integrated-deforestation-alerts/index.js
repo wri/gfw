@@ -249,7 +249,7 @@ export default {
     if (geostoreId.length <= 0) return null;
 
     // Default all integrated alerts
-    let dataset = 'gfw_integrated_alerts';
+    let dataset = 'gfw_integrated_dist_alerts';
 
     if (alertSystem === 'glad_l') {
       dataset = 'umd_glad_landsat_alerts';
