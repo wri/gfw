@@ -1876,7 +1876,7 @@ export const fetchIntegratedAlerts = (params) => {
     }
   }
 
-  if (distAlertOptions === 'treeCover') {
+  if (distAlertOptions.includes('tree_cover')) {
     AND_OPERATION = `${AND_OPERATION} AND is__tree_cover_2022 = true`;
   }
 
@@ -2019,7 +2019,8 @@ export const getIntegratedAlertsRanked = (params) => {
       .replace(/{endDate}/g, endDate)
       .replace(
         /{distAlert}/g,
-        deforestationAlertsDataset === 'all' && distAlertOptions === 'treeCover'
+        deforestationAlertsDataset === 'all' &&
+          distAlertOptions.includes('tree_cover')
           ? 'AND is__tree_cover_2022 = true'
           : ''
       )
