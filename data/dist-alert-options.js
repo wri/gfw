@@ -5,6 +5,6 @@ export default [
   },
   {
     label: 'Tree cover',
-    value: 'treeCover',
+    value: 'tree_cover',
   },
 ];
