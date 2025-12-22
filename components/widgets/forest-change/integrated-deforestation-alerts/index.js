@@ -492,7 +492,7 @@ export default {
       selectedDate
     );
 
-    let table = 'gfw_integrated_alerts';
+    let table = 'gfw_integrated_dist_alerts';
     if (alertSystem === 'glad_l') {
       table = 'umd_glad_landsat_alerts';
     }
