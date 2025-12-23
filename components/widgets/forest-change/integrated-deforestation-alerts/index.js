@@ -336,6 +336,10 @@ export default {
       OtfAnalysis.where([
         { [`${dataset}__date`]: gte`${startDate}` },
         { [`${dataset}__date`]: lte`${endDate}` },
+        {
+          'umd_tree_cover_density_2010__tree_cover_2022 =':
+            params.distAlertOptions.includes('tree_cover'),
+        },
       ]);
     }
 
