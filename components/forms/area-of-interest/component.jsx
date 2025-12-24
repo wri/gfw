@@ -302,7 +302,7 @@ class AreaOfInterestForm extends PureComponent {
                                 { label: 'GLAD-S2 alerts', value: 'glad-s2' },
                                 { label: 'RADD alerts', value: 'glad-radd' },
                                 {
-                                  label: 'DIST-ALERT (Currently unavailable)',
+                                  label: 'DIST-ALERT (currently unavailable)',
                                   value: 'dist-alert',
                                   disabled: true,
                                 },
