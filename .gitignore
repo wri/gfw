@@ -41,8 +41,9 @@ yarn-error.log*
 # vercel
 .vercel
 
-# vscode
+# IDEs
 .vscode
+.idea
 
 # new relic agent
 newrelic_agent.log
