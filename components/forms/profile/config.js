@@ -1,5 +1,5 @@
 export const sectors = {
-  'Government/Public Sector': [
+  Government: [
     'Forest Management/Park Management',
     'Law Enforcement',
     'Legislature/Parliament',
@@ -7,7 +7,7 @@ export const sectors = {
     'Subnational Agency',
     'Other:',
   ],
-  'Philantropic Organization': [
+  'Donor Institution / Agency': [
     'Director/Executive',
     'Project/Program Manager',
     'Researcher',
@@ -15,7 +15,7 @@ export const sectors = {
     'Field/Country Staff',
     'Other:',
   ],
-  'NGO - National or Local': [
+  'Local NGO (national or subnational)': [
     'Director/Executive',
     'Project/Program Manager',
     'Monitoring/Evaluation Specialist',
@@ -26,7 +26,7 @@ export const sectors = {
     'Park/Forest Ranger',
     'Other:',
   ],
-  'NGO - International': [
+  'International NGO': [
     'Director/Executive',
     'Project/Program Manager',
     'Monitoring/Evaluation Specialist',
@@ -36,7 +36,7 @@ export const sectors = {
     'Researcher',
     'Other:',
   ],
-  'Intergovernmental/Multilateral Organization': [
+  'UN or International Organization': [
     'Director/Executive',
     'Project/Program Manager',
     'Researcher',
@@ -46,7 +46,7 @@ export const sectors = {
     'Communications Specialist',
     'Other:',
   ],
-  'Academic/Research Organization': [
+  'Academic / Research Organization': [
     'Faculty (Primary/Secondary)',
     'Faculty (University)',
     'Student (Primary/Secondary)',
@@ -54,7 +54,7 @@ export const sectors = {
     'Researcher (Post-Doc, Fellow, etc.)',
     'Other:',
   ],
-  'Journalist/Media Organization': ['Reporter', 'Editor', 'Other:'],
+  'Journalist / Media Organization': ['Reporter', 'Editor', 'Other:'],
   'Indigenous or Community-Based Organization': [
     'Community Leader',
     'Forest Manager/Monitor',
@@ -62,7 +62,7 @@ export const sectors = {
     'Communications Specialist',
     'Other:',
   ],
-  'Business/Private sector': [
+  'Private sector': [
     'Supply Chain Manager',
     'Supply Chain Analyst',
     'Procurement Staff',
@@ -70,8 +70,8 @@ export const sectors = {
     'Land or Concession Owner',
     'Other:',
   ],
-  'No Affiliation': ['Other:'],
-  'Other (Write In)': ['Other:'],
+  'Individual / No Affiliation': ['Other:'],
+  Other: ['Other:'],
 };
 
 export const interests = [
