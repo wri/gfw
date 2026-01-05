@@ -64,8 +64,7 @@ export default async (req, res) => {
       formData.append('organization', organization);
       formData.append('job_title', job_title);
       formData.append('job_function', job_function);
-      // as requested in FLAG-1392, in My GFW profile form we only need to send "Other" instead of "Other (Write In)" to Ortto
-      formData.append('sector', sector.replace(' (Write In)', ''));
+      formData.append('sector', sector);
       formData.append('city', city);
       formData.append('country', country);
       formData.append('preferred_language', preferred_language);
