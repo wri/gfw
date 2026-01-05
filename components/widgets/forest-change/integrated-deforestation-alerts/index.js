@@ -332,14 +332,15 @@ export default {
       ]);
     }
 
+    const treeCoverFilter = params.distAlertOptions.includes('tree_cover') && {
+      'umd_tree_cover_density_2010__tree_cover_2022 =': true,
+    };
+
     if (!isAnalysis || (isAoi && status !== 'saved')) {
       OtfAnalysis.where([
         { [`${dataset}__date`]: gte`${startDate}` },
         { [`${dataset}__date`]: lte`${endDate}` },
-        {
-          'umd_tree_cover_density_2010__tree_cover_2022 =':
-            params.distAlertOptions.includes('tree_cover'),
-        },
+        ...(treeCoverFilter ? [treeCoverFilter] : []),
       ]);
     }
 
