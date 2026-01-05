@@ -1004,7 +1004,7 @@ export const getTropicalExtent = (params) => {
     ...params,
     dataset: 'annual',
     datasetType: 'summary',
-    version: 'v20230502',
+    version: 'v20251209',
   });
 
   if (!requestUrl) {
@@ -1053,7 +1053,7 @@ export const getTropicalExtentGrouped = (params) => {
     ...params,
     dataset: 'annual',
     datasetType: 'summary',
-    version: 'v20230502',
+    version: 'v20251209',
     grouped: true,
   });
 
@@ -1134,7 +1134,7 @@ export const getTreeCoverByLandCoverClass = (params) => {
     ...params,
     dataset: 'annual',
     datasetType: 'summary',
-    version: 'v20230502',
+    version: 'v20251209',
   });
 
   if (!requestUrl) return new Promise(() => {});
@@ -2228,7 +2228,7 @@ export const getTreeCoverDensity = (params) => {
     ...params,
     dataset: 'annual',
     datasetType: 'summary',
-    version: 'v20230502',
+    version: 'v20251209',
   });
 
   if (!requestUrl) {
