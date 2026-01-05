@@ -392,7 +392,7 @@ export const getLossNaturalForest = (params) => {
   });
 
   if (!requestUrl) {
-    return new Promise(() => {});
+    return Promise.resolve(() => {});
   }
 
   const url = encodeURI(
