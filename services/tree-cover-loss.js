@@ -6,5 +6,9 @@ export const getLossNaturalForest = (params) => {
     return originalGetLossNaturalForest(params);
   }
   // TODO: destructure params to pass only necessary ones to the new service
-  return getTreeCoverLossAnalytics(params);
+  const { adm0, adm1, adm2 } = params;
+  const aoi = { adm0, adm1, adm2 };
+  const timespan = { startYear: 2001, endYear: 2024 };
+  const canopyCoverThreshold = 0;
+  return getTreeCoverLossAnalytics(aoi, timespan, canopyCoverThreshold);
 };

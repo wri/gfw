@@ -83,6 +83,14 @@ describe('getLossNaturalForest', () => {
       download: false,
     });
 
-    expect(getTreeCoverLossAnalytics).toHaveBeenCalled();
+    expect(getTreeCoverLossAnalytics).toHaveBeenCalledWith(
+      expect.objectContaining({
+        adm0: 'BRA',
+        adm1: undefined,
+        adm2: undefined,
+      }),
+      { startYear: 2001, endYear: 2024 },
+      0
+    );
   });
 });
