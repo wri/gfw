@@ -107,8 +107,8 @@ export default [
         layers: [INDIGENOUS_AND_COMMUNITY_LANDS],
       },
     ],
-    disabled: true, // FIXME: we are temporary disabling this option until further notice, see FLAG-1360 for reference.
-    tooltipText: 'This category is temporarily unavailable',
+    disabled: false, // FIXME: we are temporary disabling this option until further notice, see FLAG-1360 for reference.
+    // tooltipText: 'This category is temporarily unavailable',
   },
   {
     label: 'Indonesia & Malaysia peat lands',
