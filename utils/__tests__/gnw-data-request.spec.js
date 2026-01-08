@@ -52,7 +52,7 @@ describe('gnw-data-request utils', () => {
           },
           canopy_cover: 10,
           end_year: '2024',
-          forest_filter: 'primary_forest',
+          forest_filter: 'natural_forest',
           intersections: [],
           start_year: '2001',
         },

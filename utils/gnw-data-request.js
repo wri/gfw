@@ -60,7 +60,7 @@ const createHttpClient = () => {
       baseURL: 'https://analytics.globalnaturewatch.org',
     }),
     ...(!isServer() && {
-      baseURL: 'api/gnw-analytics',
+      baseURL: '/api/gnw-analytics',
     }),
     transformResponse: [(data) => JSON.parse(data)?.data],
   });

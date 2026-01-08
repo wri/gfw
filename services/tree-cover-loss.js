@@ -1,7 +1,7 @@
 import { getLossNaturalForest as originalGetLossNaturalForest } from './analysis-cached';
 import { getTreeCoverLossAnalytics } from '../utils/gnw-data-request';
 
-export const getLossNaturalForest = (params) => {
+export const getLossNaturalForest = async (params) => {
   if (!!params.download === true || params.type !== 'country') {
     return originalGetLossNaturalForest(params);
   }
