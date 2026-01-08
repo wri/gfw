@@ -21,6 +21,7 @@ import ifl from 'data/ifl.json';
 import source from 'data/sources.json';
 import faoYear from 'data/fao-cover-years.json';
 import yearRange from 'data/year-range.json';
+import distAlertOptions from 'data/dist-alert-options';
 
 export default {
   forestType: forestType.filter((f) => !f.hidden),
@@ -46,4 +47,5 @@ export default {
   variable,
   source,
   ifl,
+  distAlertOptions,
 };

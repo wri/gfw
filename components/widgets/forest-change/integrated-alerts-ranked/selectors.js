@@ -7,7 +7,6 @@ import sumBy from 'lodash/sumBy';
 
 // get list data
 const getData = (state) => state.data && state.data.alerts;
-const getLatestDates = (state) => state.data && state.data.latest;
 const getExtent = (state) => state.data && state.data.extent;
 const getSettings = (state) => state.settings;
 const getOptionsSelected = (state) => state.optionsSelected;
@@ -19,37 +18,11 @@ const getColors = (state) => state.colors;
 const getSentences = (state) => state.sentences;
 
 export const parseList = createSelector(
-  [
-    getData,
-    getLatestDates,
-    getExtent,
-    getSettings,
-    getAdm1,
-    getLocationsMeta,
-    getColors,
-  ],
-  (data, latest, extent, settings, adm1, meta, colors) => {
+  [getData, getExtent, getSettings, getAdm1, getLocationsMeta, getColors],
+  (data, extent, settings, adm1, meta, colors) => {
     if (!data || isEmpty(data) || !meta || isEmpty(meta)) return null;
 
-    // XXX: We dont have week + year in data?
-    // const latestWeek = moment(latest).isoWeek();
-    // const latestYear = moment(latest).year();
-    // const alertsByDate = latest && settings?.weeks ? data.filter(
-    //   (d) =>
-    //     d.year &&
-    //     d.week &&
-    //     moment()
-    //       .year(d.year)
-    //       .isoWeek(d.week)
-    //       .isAfter(
-    //         moment()
-    //           .isoWeek(latestWeek)
-    //           .year(latestYear)
-    //           .subtract(settings.weeks, 'weeks')
-    //       )
-    // ) : data;
     const alertsByDate = data;
-
     const groupKey = adm1 ? 'adm2' : 'adm1';
     const groupedAlerts = groupBy(alertsByDate, groupKey);
     const totalCounts = sumBy(alertsByDate, 'alerts');
@@ -61,7 +34,7 @@ export const parseList = createSelector(
           (a) => parseInt(a[groupKey], 10) === parseInt(k, 10)
         );
         const regionData = groupedAlerts[k];
-        const countsArea = sumBy(regionData, 'area_ha') || 0;
+        const countsArea = sumBy(regionData, 'alert_area__ha') || 0;
         const counts = sumBy(regionData, 'alerts') || 0;
         const countsAreaPerc =
           counts && totalCounts ? (counts / totalCounts) * 100 : 0;

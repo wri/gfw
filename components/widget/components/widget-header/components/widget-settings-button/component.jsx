@@ -25,6 +25,7 @@ class WidgetSettingsButton extends PureComponent {
     handleShowInfo: PropTypes.func.isRequired,
     shouldSettingsOpen: PropTypes.bool,
     toggleSettingsMenu: PropTypes.func,
+    settings: PropTypes.object,
   };
 
   state = {
@@ -55,6 +56,7 @@ class WidgetSettingsButton extends PureComponent {
       embed,
       active,
       toggleSettingsMenu,
+      settings,
     } = this.props;
     const { tooltipOpen } = this.state;
 
@@ -98,6 +100,7 @@ class WidgetSettingsButton extends PureComponent {
             }}
             embed={embed}
             settingsConfig={settingsConfig}
+            settings={settings}
             loading={loading}
             toggleWidgetSettings={this.toggleWidgetSettings}
             proxy={proxy}
