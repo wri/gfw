@@ -23,13 +23,15 @@ export const formatLegacyResponse = (data) => {
   const { result } = data;
   const years = result.tree_cover_loss_year || [];
   const area = result.area_ha || [];
-  const iso = result.aoi_id || [];
+  const aoi = result.aoi_id || [];
   const emissions = result.carbon_emissions_MgCO2e || [];
   const status = data.status === 'saved' ? 'success' : data.status;
 
   const formatted = years
     .map((year, i) => ({
-      iso: iso[i] || null,
+      iso: aoi[i].split('.')[0] || null,
+      adm1: parseInt(aoi[i].split('.')[1], 10) || null,
+      adm2: parseInt(aoi[1].split('.')[2], 10) || null,
       sbtn_natural_forests__class: 'Natural Forest',
       umd_tree_cover_loss__year: year,
       umd_tree_cover_loss__ha: area[i] || null,
