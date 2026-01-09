@@ -5,7 +5,7 @@ export const getLossNaturalForest = async (params) => {
   if (!!params.download === true || params.type !== 'country') {
     return originalGetLossNaturalForest(params);
   }
-  // TODO: destructure params to pass only necessary ones to the new service
+
   const { adm0, adm1, adm2 } = params;
   const aoi = { adm0, adm1, adm2 };
   const timespan = { startYear: 2001, endYear: 2024 };
