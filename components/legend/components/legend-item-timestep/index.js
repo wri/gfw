@@ -77,10 +77,30 @@ export class TimestepContainer extends PureComponent {
     return trackStyle;
   };
 
+  // handleOnAfterChange = (range) => {
+  //   const { activeLayer, handleChange } = this.props;
+  //   const formattedRange = this.formatRange([range[0], range[1], range[2]]);
+
+  //   handleChange(formattedRange, activeLayer);
+  // };
+
   handleOnAfterChange = (range) => {
     const { activeLayer, handleChange } = this.props;
-    const formattedRange = this.formatRange([range[0], range[1], range[2]]);
+    const { timelineSegments } = this.timelineParams;
 
+    if (timelineSegments?.length > 0) {
+      const mappedRange = range.map((index) => {
+        const segment = timelineSegments[index];
+        if (!segment) return null;
+
+        return Number(segment.apiValue);
+      });
+
+      handleChange(mappedRange, activeLayer);
+      return;
+    }
+
+    const formattedRange = this.formatRange([range[0], range[1], range[2]]);
     handleChange(formattedRange, activeLayer);
   };
 
@@ -94,16 +114,46 @@ export class TimestepContainer extends PureComponent {
     });
   };
 
+  indexToYearRange = (index) => {
+    const { timelineSegments } = this.timelineParams;
+    const item = timelineSegments[index];
+
+    if (!item) return null;
+
+    if (item.start !== undefined && item.end !== undefined) {
+      return [item.start, item.end];
+    }
+
+    return [item.value, item.value];
+  };
+
   formatValue = (value) => {
-    const { minDate, dateFormat, interval } = this.timelineParams;
+    const { minDate, dateFormat, interval, timelineSegments } =
+      this.timelineParams;
+
+    if (timelineSegments?.length > 0) {
+      const [start, end] = this.indexToYearRange(value);
+      return start === end ? `${start}` : `${start} - ${end}`;
+    }
+
     return formatDatePretty(addToDate(minDate, value, interval), dateFormat);
+  };
+
+  setMarks = ({ marks, timelineSegments }) => {
+    if (timelineSegments?.length > 0) {
+      return timelineSegments.reduce((acc, item, index) => {
+        acc[index] = item.label;
+        return acc;
+      }, {});
+    }
+
+    return marks || getTicks(this.timelineParams);
   };
 
   render() {
     if (!this.timelineParams) return null;
     const { defaultStyles } = this.props;
     const {
-      marks,
       maxDate,
       maxAbsoluteDate,
       minDate,
@@ -114,6 +164,9 @@ export class TimestepContainer extends PureComponent {
       trimEndDate,
       canPlay,
     } = this.timelineParams;
+
+    const { timelineSegments } = this.timelineParams;
+    const isNonLinearRange = timelineSegments?.length > 0;
 
     return (
       <div
@@ -128,18 +181,37 @@ export class TimestepContainer extends PureComponent {
           {...this.timelineParams}
           trackStyle={this.getTrackStyle()}
           min={0}
-          minAbs={dateDiff(
-            minAbsoluteDate || minDate,
-            minDate,
-            interval,
-            false
-          )}
-          max={dateDiff(maxDate, minDate, interval)}
-          maxAbs={dateDiff(maxAbsoluteDate || maxDate, minDate, interval)}
-          start={dateDiff(startDate, minDate, interval)}
-          end={dateDiff(endDate, minDate, interval)}
-          trim={dateDiff(trimEndDate, minDate, interval)}
-          marks={marks || getTicks(this.timelineParams)}
+          minAbs={
+            isNonLinearRange
+              ? 0
+              : dateDiff(minAbsoluteDate || minDate, minDate, interval, false)
+          }
+          max={
+            isNonLinearRange
+              ? timelineSegments.length - 1
+              : dateDiff(maxDate, minDate, interval)
+          }
+          maxAbs={
+            isNonLinearRange
+              ? timelineSegments.length - 1
+              : dateDiff(maxAbsoluteDate || maxDate, minDate, interval)
+          }
+          start={
+            isNonLinearRange
+              ? timelineSegments.findIndex((s) => s.apiValue === startDate)
+              : dateDiff(startDate, minDate, interval)
+          }
+          end={
+            isNonLinearRange
+              ? timelineSegments.findIndex((s) => s.apiValue === endDate)
+              : dateDiff(endDate, minDate, interval)
+          }
+          trim={
+            isNonLinearRange
+              ? timelineSegments.findIndex((s) => s.apiValue === trimEndDate)
+              : dateDiff(trimEndDate, minDate, interval)
+          }
+          marks={this.setMarks(this.timelineParams)}
           formatValue={this.formatValue}
           handleOnAfterChange={this.handleOnAfterChange}
         />

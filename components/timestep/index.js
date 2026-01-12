@@ -20,6 +20,14 @@ class Timestep extends PureComponent {
     end: PropTypes.number.isRequired,
     trim: PropTypes.number,
     marks: PropTypes.shape({}).isRequired,
+    timelineSegments: PropTypes.arrayOf(
+      PropTypes.shape({
+        label: PropTypes.string.isRequired,
+        start: PropTypes.number,
+        end: PropTypes.number,
+        value: PropTypes.number,
+      })
+    ),
     step: PropTypes.number,
     speed: PropTypes.number,
     loop: PropTypes.bool,
@@ -57,6 +65,7 @@ class Timestep extends PureComponent {
     step: 1,
     speed: 100,
     loop: false,
+    timelineSegments: [],
 
     trackStyle: {
       backgroundColor: '#c32d7b',
@@ -87,9 +96,9 @@ class Timestep extends PureComponent {
 
     this.state = {
       playing,
-      start: start <= minAbs ? minAbs : start,
-      end: end >= maxAbs ? maxAbs : end,
-      trim: trim >= maxAbs ? maxAbs : trim,
+      start: this.yearToIndex(start <= minAbs ? minAbs : start),
+      end: this.yearToIndex(end >= maxAbs ? maxAbs : end),
+      trim: this.yearToIndex(trim >= maxAbs ? maxAbs : trim),
     };
   }
 
@@ -171,12 +180,35 @@ class Timestep extends PureComponent {
     if (this.interval) this.stopTimeline();
   }
 
+  indexToYearRange = (index) => {
+    const item = this.props.timelineSegments[index];
+
+    if (!item) return null;
+
+    if (item.start !== undefined && item.end !== undefined) {
+      return [item.start, item.end];
+    }
+
+    return [item.value, item.value];
+  };
+
+  yearToIndex = (year) =>
+    this.props.timelineSegments.findIndex((item) => {
+      if (item.start !== undefined && item.end !== undefined) {
+        return year >= item.start && year <= item.end;
+      }
+      return item.value === year;
+    });
+
+  mapRangeToDomain = (range) =>
+    range.map((index) => this.indexToYearRange(index));
+
   getValue() {
     const { start, end, trim } = this.state;
     const { range } = this.props;
 
     if (range) {
-      return [start, end, trim];
+      return [Number(start), Number(end), Number(trim)];
     }
 
     return end;
@@ -408,15 +440,18 @@ class Timestep extends PureComponent {
       trim: newRange[2],
     });
 
-    if (handleOnChange) handleOnChange(newRange);
+    if (handleOnChange) {
+      handleOnChange(this.mapRangeToDomain(newRange));
+    }
   };
 
-  /* eslint-disable-next-line */
   handleOnAfterChange = (range) => {
     const { handleOnAfterChange } = this.props;
     const newRange = this.checkRange(range);
 
-    if (handleOnAfterChange) handleOnAfterChange(newRange);
+    if (handleOnAfterChange) {
+      handleOnAfterChange(this.mapRangeToDomain(newRange));
+    }
   };
 
   handleTogglePlay = () => {
@@ -468,6 +503,7 @@ class Timestep extends PureComponent {
       PlayButton,
       disableStartHandle,
       disableEndHandle,
+      timelineSegments,
     } = this.props;
 
     const { playing } = this.state;
@@ -483,7 +519,9 @@ class Timestep extends PureComponent {
             marks={marks}
             disabled={playing}
             min={min}
-            max={max}
+            max={
+              timelineSegments.length > 0 ? timelineSegments.length - 1 : max
+            }
             value={this.getValue()}
             step={step}
             formatValue={formatValue}
