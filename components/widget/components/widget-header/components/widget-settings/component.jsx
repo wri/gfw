@@ -6,6 +6,8 @@ import Dropdown from 'components/ui/dropdown';
 import Switch from 'components/ui/switch';
 import Datepicker from 'components/ui/datepicker';
 import withTooltipEvt from 'components/ui/with-tooltip-evt';
+import deforestationAlertsDataset from 'data/deforestation-alert-datasets.json';
+import { filterSettingsConfigDynamically } from './util';
 
 class WidgetSettings extends PureComponent {
   static propTypes = {
@@ -18,6 +20,7 @@ class WidgetSettings extends PureComponent {
     proxyOn: PropTypes.array,
     getTooltipContentProps: PropTypes.func.isRequired,
     toggleWidgetSettings: PropTypes.func,
+    settings: PropTypes.object,
   };
 
   renderOption = (option) => {
@@ -42,7 +45,6 @@ class WidgetSettings extends PureComponent {
       minDate,
       maxDate,
     } = option;
-
     const { embed, proxy, proxyOn, toggleWidgetSettings } = this.props;
 
     const popperSettings = {
@@ -213,12 +215,19 @@ class WidgetSettings extends PureComponent {
       handleChangeSettings,
       handleShowInfo,
       getTooltipContentProps,
+      settings,
     } = this.props;
+    // check and render dist alerts options dynamically based on deforestationAlertsDataset value
+    const filteredSettingsConfig = filterSettingsConfigDynamically(
+      settings,
+      settingsConfig,
+      deforestationAlertsDataset
+    );
 
     return (
       <div className="c-widget-settings" {...getTooltipContentProps()}>
-        {settingsConfig &&
-          settingsConfig.map(
+        {filteredSettingsConfig &&
+          filteredSettingsConfig.map(
             (option) =>
               ((option.options && !!option.options.length) ||
                 option.type === 'datepicker') && (

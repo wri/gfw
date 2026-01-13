@@ -14,6 +14,16 @@ class LayerListMenu extends PureComponent {
     return layers
       .filter((l) => !l.default && !l.isSelector)
       .filter((l) => {
+        if (l.id.includes('confirmedOnly')) {
+          // DIST only shows high and highest confidence, so we don't need the comfirmedOnly toggle for this layer
+          if (activeLayer?.id === 'integrated-deforestation-alerts-8bit-dist') {
+            return false;
+          }
+        }
+
+        return true;
+      })
+      .filter((l) => {
         if (l.id.includes('geographic-coverage')) {
           if (activeLayer?.id === 'integrated-deforestation-alerts-8bit') {
             return l.id === 'glad-deforestation-alerts-geographic-coverage';
@@ -32,6 +42,9 @@ class LayerListMenu extends PureComponent {
             return (
               l.id === 'glad-plus-deforestation-alerts-geographic-coverage'
             );
+          }
+          if (activeLayer?.id === 'integrated-deforestation-alerts-8bit-dist') {
+            return l.id === 'dist-deforestation-alerts-geographic-coverage';
           }
         }
         return true;

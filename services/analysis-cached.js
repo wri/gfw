@@ -42,9 +42,9 @@ const SQL_QUERIES = {
   areaIntersection:
     'SELECT {select_location}, SUM(area__ha) AS area__ha {intersection} FROM data {WHERE} GROUP BY {location} {intersection} ORDER BY area__ha DESC',
   glad: 'SELECT {select_location}, alert__year, alert__week, SUM(alert__count) AS alert__count, SUM(alert_area__ha) AS alert_area__ha FROM data {WHERE} GROUP BY {location}, alert__year, alert__week',
-  integratedAlertsDaily: `SELECT {select_location}, SUM(alert__count) AS alert__count, SUM(alert_area__ha) AS alert_area__ha, {confidenceString} FROM data {WHERE} AND {dateString} >= '{startDate}' AND {dateString} <= '{endDate}' GROUP BY {location}, {confidenceString}`,
-  integratedAlertsRanked: `SELECT {select_location}, {alertTypeColumn}, SUM(alert__count) AS alert__count, SUM(alert_area__ha) AS alert_area__ha FROM data {WHERE} AND {alertTypeColumn} >= '{startDate}' AND {alertTypeColumn} <= '{endDate}' GROUP BY {location}, {alertTypeColumn} ORDER BY {alertTypeColumn} DESC`,
-  integratedAlertsDailyDownload: `SELECT latitude, longitude, gfw_integrated_alerts__date, umd_glad_landsat_alerts__confidence, umd_glad_sentinel2_alerts__confidence, wur_radd_alerts__confidence, gfw_integrated_alerts__confidence FROM data WHERE gfw_integrated_alerts__date >= '{startDate}' AND gfw_integrated_alerts__date <= '{endDate}'{AND_OPERATION}&geostore_origin={geostoreOrigin}&geostore_id={geostoreId}`,
+  integratedAlertsDaily: `SELECT {select_location}, SUM(alert__count) AS alert__count, SUM(alert_area__ha) AS alert_area__ha, {confidenceString} FROM data {WHERE} AND {dateString} >= '{startDate}' AND {dateString} <= '{endDate}' {AND_OPERATION} GROUP BY {location}, {confidenceString}`,
+  integratedAlertsRanked: `SELECT {select_location}, {alertTypeColumn}, SUM(alert__count) AS alert__count, SUM(alert_area__ha) AS alert_area__ha FROM data {WHERE} AND {alertTypeColumn} >= '{startDate}' AND {alertTypeColumn} <= '{endDate}' {distAlert} GROUP BY {location}, {alertTypeColumn} ORDER BY {alertTypeColumn} DESC`,
+  integratedAlertsDailyDownload: `SELECT latitude, longitude, gfw_integrated_dist_alerts__date, umd_glad_landsat_alerts__confidence, umd_glad_sentinel2_alerts__confidence, wur_radd_alerts__confidence, gfw_integrated_dist_alerts__confidence FROM data WHERE gfw_integrated_dist_alerts__date >= '{startDate}' AND gfw_integrated_dist_alerts__date <= '{endDate}'{AND_OPERATION}&geostore_origin={geostoreOrigin}&geostore_id={geostoreId}`,
   integratedAlertsDownloadGladL: `SELECT latitude, longitude, umd_glad_landsat_alerts__date, umd_glad_landsat_alerts__confidence FROM data WHERE umd_glad_landsat_alerts__date >= '{startDate}' AND umd_glad_landsat_alerts__date <= '{endDate}'{AND_OPERATION}&geostore_origin={geostoreOrigin}&geostore_id={geostoreId}`,
   integratedAlertsDownloadGladS: `SELECT latitude, longitude, umd_glad_sentinel2_alerts__date, umd_glad_sentinel2_alerts__confidence FROM data WHERE umd_glad_sentinel2_alerts__date >= '{startDate}' AND umd_glad_sentinel2_alerts__date <= '{endDate}'{AND_OPERATION}&geostore_origin={geostoreOrigin}&geostore_id={geostoreId}`,
   integratedAlertsDownloadRadd: `SELECT latitude, longitude, wur_radd_alerts__date, wur_radd_alerts__confidence FROM data WHERE wur_radd_alerts__date >= '{startDate}' AND wur_radd_alerts__date <= '{endDate}'{AND_OPERATION}&geostore_origin={geostoreOrigin}&geostore_id={geostoreId}`,
@@ -1004,7 +1004,7 @@ export const getTropicalExtent = (params) => {
     ...params,
     dataset: 'annual',
     datasetType: 'summary',
-    version: 'v20230502',
+    version: 'v20251209',
   });
 
   if (!requestUrl) {
@@ -1053,7 +1053,7 @@ export const getTropicalExtentGrouped = (params) => {
     ...params,
     dataset: 'annual',
     datasetType: 'summary',
-    version: 'v20230502',
+    version: 'v20251209',
     grouped: true,
   });
 
@@ -1134,7 +1134,7 @@ export const getTreeCoverByLandCoverClass = (params) => {
     ...params,
     dataset: 'annual',
     datasetType: 'summary',
-    version: 'v20230502',
+    version: 'v20251209',
   });
 
   if (!requestUrl) return new Promise(() => {});
@@ -1785,6 +1785,7 @@ export const fetchIntegratedAlerts = (params) => {
     alertSystem,
     forestType,
     landCategory,
+    distAlertOptions,
     ifl,
     confirmedOnly = 0,
   } = params || {};
@@ -1875,6 +1876,14 @@ export const fetchIntegratedAlerts = (params) => {
     }
   }
 
+  if (!download && distAlertOptions.includes('tree_cover')) {
+    AND_OPERATION = `${AND_OPERATION} AND is__tree_cover_2022 = true`;
+  }
+
+  if (download && distAlertOptions.includes('tree_cover')) {
+    AND_OPERATION = `${AND_OPERATION} AND umd_tree_cover_density_2010__tree_cover_2022 = true`;
+  }
+
   const url = encodeURI(
     `${requestUrl}${query}`
       .replace(
@@ -1938,6 +1947,7 @@ export const getIntegratedAlertsRanked = (params) => {
     forestType,
     landCategory,
     ifl,
+    distAlertOptions,
   } = params || {};
   let requestUrl;
   const query = SQL_QUERIES.integratedAlertsRanked;
@@ -1967,7 +1977,6 @@ export const getIntegratedAlertsRanked = (params) => {
       ...params,
       dataset: 'integrated_alerts',
       datasetType: 'daily',
-      // version override necessary here (no 'latest' defined)
       version: 'latest',
     });
   }
@@ -2012,6 +2021,13 @@ export const getIntegratedAlertsRanked = (params) => {
       .replace(/{alertTypeColumn}/g, alertTypeColumn)
       .replace(/{startDate}/g, startDate)
       .replace(/{endDate}/g, endDate)
+      .replace(
+        /{distAlert}/g,
+        deforestationAlertsDataset === 'all' &&
+          distAlertOptions.includes('tree_cover')
+          ? 'AND is__tree_cover_2022 = true'
+          : ''
+      )
       .replace('{WHERE}', getWHEREQuery({ ...params, dataset: 'glad' }))
   );
 
@@ -2059,9 +2075,13 @@ export const fetchGladAlertsDaily = (params) => {
     glad_l: 'umd_glad_landsat_alerts',
   };
 
-  const dateString = `alert`.concat('__date');
+  const dateString = `umd_glad_landsat_alerts`.concat('__date');
   const confidenceString =
     datasetMapping[deforestationAlertsDataset].concat('__confidence');
+
+  // this method does not need extra operation values, however the same query is used by
+  // fetchIntegratedAlerts, which implements AND_OPERATION.
+  const AND_OPERATION = '';
 
   // Replace base url params and encode
   const url = encodeURI(
@@ -2073,6 +2093,7 @@ export const fetchGladAlertsDaily = (params) => {
       .replace(/{location}/g, getLocationSelect(params))
       .replace(/{dateString}/g, dateString)
       .replace(/{confidenceString}/g, confidenceString)
+      .replace(/{AND_OPERATION}/, AND_OPERATION)
       .replace('{startDate}', startDate)
       .replace('{endDate}', endDate)
       .replace('{WHERE}', getWHEREQuery({ ...params, dataset: 'glad' }))
@@ -2228,7 +2249,7 @@ export const getTreeCoverDensity = (params) => {
     ...params,
     dataset: 'annual',
     datasetType: 'summary',
-    version: 'v20230502',
+    version: 'v20251209',
   });
 
   if (!requestUrl) {

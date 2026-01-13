@@ -7,7 +7,10 @@ import { getDataLocation, buildFullLocationName } from 'utils/location';
 import { getActiveArea } from 'providers/areas-provider/selectors';
 
 import { parseSentence } from 'services/sentences';
-import { isGeodescriberLocation, dynamicGeodescriberSentence } from 'utils/geodescriber';
+import {
+  isGeodescriberLocation,
+  dynamicGeodescriberSentence,
+} from 'utils/geodescriber';
 
 export const selectGeojson = (state) =>
   state.geostore && state.geostore.data && state.geostore.data.geojson;
@@ -80,9 +83,9 @@ export const getGeodescriberTitle = createSelector(
     getActiveArea,
   ],
   (geodescriber, wdpaLocation, location, adminTitle, activeArea) => {
-    const { title, title_params } = geodescriber;
-
     if (isEmpty(geodescriber)) return null;
+
+    const { title, title_params } = geodescriber;
 
     if (
       (location.type === 'aoi' || location.areaId) &&
@@ -163,7 +166,7 @@ export const getGeodescriberDescription = createSelector(
 
     // if not an admin we'll parse the geodescriber information
     if (isGeodescriberLocation(location)) {
-      return dynamicGeodescriberSentence(description, description_params)
+      return dynamicGeodescriberSentence(description, description_params);
     }
 
     // if an admin we needs to calculate the params
