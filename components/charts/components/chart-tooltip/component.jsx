@@ -10,14 +10,26 @@ class ChartTooltip extends PureComponent {
     const data = parseData ? parseData({ settings, values }) : settings;
     const filteredData = data?.filter((item) => item !== undefined) || [];
 
+    // normalize label to replace the word PLACEHOLDER by the word 'and'.
+    // This solution was created to connect multiple intersections and
+    // set the correct style in the label
+    const normalizeLabel = (label) =>
+      typeof label === 'string'
+        ? label.replace(/\bPLACEHOLDER\b/g, 'and')
+        : label;
+
     return (
       <div>
         {data && data.length && (
           <div className={cx('c-chart-tooltip', { simple })}>
             {filteredData.map((item) => {
-              const label = item.labelFormat
-                ? item.labelFormat(item.label || values[item.labelKey])
-                : item.label || values[item.labelKey];
+              const labelWithPlaceholder = item.label || values[item.labelKey];
+
+              const label = normalizeLabel(
+                item.labelFormat
+                  ? item.labelFormat(labelWithPlaceholder)
+                  : labelWithPlaceholder
+              );
 
               const value = item.unitFormat
                 ? item.unitFormat(values[item.key])

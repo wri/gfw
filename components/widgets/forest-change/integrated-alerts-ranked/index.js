@@ -3,12 +3,15 @@ import tropicalIsos from 'data/tropical-isos.json';
 
 import {
   POLITICAL_BOUNDARIES_DATASET,
-  GLAD_DEFORESTATION_ALERTS_DATASET,
+  INTEGRATED_DEFORESTATION_ALERTS,
 } from 'data/datasets';
 import {
   DISPUTED_POLITICAL_BOUNDARIES,
   POLITICAL_BOUNDARIES,
-  GLAD_ALERTS,
+  INTEGRATED_ALERTS,
+  INTEGRATED_ALERTS_GLADS,
+  INTEGRATED_ALERTS_RADD,
+  INTEGRATED_ALERTS_GLAD,
 } from 'data/layers';
 
 import {
@@ -26,7 +29,7 @@ import getWidgetProps from './selectors';
 export default {
   widget: 'integratedAlertsRanked',
   published: true,
-  title: 'Location of integrated deforestation Alerts in {location}',
+  title: 'Location of integrated disturbance alerts in {location}',
   categories: ['forest-change'],
   subcategories: ['forest-loss'],
   types: ['country'],
@@ -59,6 +62,12 @@ export default {
       whitelist: ['%', 'ha'],
       border: true,
     },
+    {
+      key: 'distAlertOptions',
+      label: 'displaying alerts for',
+      type: 'select',
+      border: true,
+    },
   ],
   pendingKeys: ['extentYear', 'threshold'],
   refetchKeys: [
@@ -68,6 +77,7 @@ export default {
     'deforestationAlertsDataset',
     'extentYear',
     'threshold',
+    'distAlertOptions',
   ],
   chartType: 'rankedList',
   metaKey: 'widget_deforestation_alert_location',
@@ -78,10 +88,15 @@ export default {
       layers: [DISPUTED_POLITICAL_BOUNDARIES, POLITICAL_BOUNDARIES],
       boundary: true,
     },
-    // Replace with 8bits integrated deforestation layer when ready
+    // all alert systems
     {
-      dataset: GLAD_DEFORESTATION_ALERTS_DATASET,
-      layers: [GLAD_ALERTS],
+      dataset: INTEGRATED_DEFORESTATION_ALERTS,
+      layers: [
+        INTEGRATED_ALERTS,
+        INTEGRATED_ALERTS_GLADS,
+        INTEGRATED_ALERTS_RADD,
+        INTEGRATED_ALERTS_GLAD,
+      ],
     },
   ],
   noStatements: true,
@@ -91,9 +106,9 @@ export default {
   },
   sentences: {
     initial:
-      'In the last {timeframe} in {location}, {count} deforestation alerts were detected, which affected an area of approximately {area}. The top {topRegions} accounted for {topPercent} of integrated deforestation alerts.',
+      'In the last {timeframe} in {location}, {count} disturbance alerts were detected, which affected an area of approximately {area}. The top {topRegions} accounted for {topPercent} of integrated disturbance alerts.',
     withInd:
-      'In the last {timeframe} in {location}, {count} deforestation alerts were detected within {indicator}, which affected an area of approximately {area}. The top {topRegions} accounted for {topPercent} of integrated deforestation alerts.',
+      'In the last {timeframe} in {location}, {count} disturbance alerts were detected within {indicator}, which affected an area of approximately {area}. The top {topRegions} accounted for {topPercent} of integrated disturbance alerts.',
     singleSystem:
       'In the last {timefrane} in {location}, {count} {system} alerts were detected, which affected an area of approximately {area}. The top {topRegions} accounted for {topPercent} of all {system} alerts.',
     singleSystemWithInd:
@@ -109,6 +124,7 @@ export default {
     ifl: 2016,
     dataset: 'glad',
     deforestationAlertsDataset: 'all',
+    distAlertOptions: 'vegetation',
   },
   whitelists: {
     adm0: tropicalIsos,
@@ -151,6 +167,7 @@ export default {
           })
         );
       }
+
       return all([
         getIntegratedAlertsRanked({
           ...params,
