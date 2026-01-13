@@ -2,6 +2,7 @@
   "umd_glad_dist_alerts",
   "umd_glad_landsat_alerts",
   "gfw_integrated_alerts",
+  "gfw_integrated_dist_alerts",
   "umd_glad_sentinel2_alerts",
   "wur_radd_alerts",
   "nasa_viirs_fire_alerts",
