@@ -166,11 +166,11 @@ export class TimestepContainer extends PureComponent {
     const { timelineSegments } = this.timelineParams;
     const isNonLinearRange = timelineSegments?.length > 0;
 
-    const resolveIndex = (value, fallback) => {
-      if (value == null) return fallback;
+    const resolveIndex = (date, fallback) => {
+      if (date == null) return fallback;
 
       const index = timelineSegments.findIndex(
-        (s) => s.apiValue === Number(value)
+        (s) => s.datasetDate === Number(date)
       );
 
       return index >= 0 ? index : fallback;
