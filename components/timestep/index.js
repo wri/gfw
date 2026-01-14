@@ -408,15 +408,18 @@ class Timestep extends PureComponent {
       trim: newRange[2],
     });
 
-    if (handleOnChange) handleOnChange(newRange);
+    if (handleOnChange) {
+      handleOnChange(newRange);
+    }
   };
 
-  /* eslint-disable-next-line */
   handleOnAfterChange = (range) => {
     const { handleOnAfterChange } = this.props;
     const newRange = this.checkRange(range);
 
-    if (handleOnAfterChange) handleOnAfterChange(newRange);
+    if (handleOnAfterChange) {
+      handleOnAfterChange(newRange);
+    }
   };
 
   handleTogglePlay = () => {
