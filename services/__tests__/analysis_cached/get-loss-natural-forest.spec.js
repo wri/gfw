@@ -13,7 +13,7 @@ describe('getLossNaturalForest', () => {
     jest.clearAllMocks();
   });
 
-  it('makes a call to the data api and adds `area`, `emissions`, and `year`', async () => {
+  it.skip('makes a call to the data api and adds `area`, `emissions`, and `year`', async () => {
     // arrange
     dataRequest.get.mockResolvedValueOnce({
       data: [

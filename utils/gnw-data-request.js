@@ -17,21 +17,19 @@ const defaultRequestConfig = {
 /**
  * Formats the analytics response to match legacy expectations.
  * @param {object} data - The raw analytics response data.
+ * @param {object} aoi - The AOI with the geostore and geojson.
  * @returns {object} The formatted response data.
  */
-export const formatLegacyResponse = (data) => {
+export const formatLegacyResponse = (data, aoi) => {
   const { result } = data;
   const years = result.tree_cover_loss_year || [];
   const area = result.area_ha || [];
-  const aoi = result.aoi_id || [];
   const emissions = result.carbon_emissions_MgCO2e || [];
   const status = data.status === 'saved' ? 'success' : data.status;
 
   const formatted = years
     .map((year, i) => ({
-      iso: aoi[i].split('.')[0] || null,
-      adm1: parseInt(aoi[i].split('.')[1], 10) || null,
-      adm2: parseInt(aoi[1].split('.')[2], 10) || null,
+      geostore__id: aoi.id,
       sbtn_natural_forests__class: 'Natural Forest',
       umd_tree_cover_loss__year: year,
       umd_tree_cover_loss__ha: area[i] || null,
@@ -71,25 +69,16 @@ const createHttpClient = () => {
 
 /**
  * Builds the payload for the analytics job request.
- * @param {object} aoi - Area of interest, with adm0, adm1, adm2 properties.
+ * @param {object} aoi - Area of interest, with geostore properties.
  * @param {object} timespan - Object with startYear and endYear properties.
  * @param {number} canopyCoverThreshold - Minimum canopy cover threshold.
  * @returns {object} The payload for the analytics API.
  */
 export const buildPayload = (aoi, timespan, canopyCoverThreshold) => {
-  const admin = [aoi.adm0, aoi.adm1, aoi.adm2];
   const payload = {
     aoi: {
-      type: 'admin',
-      ids: [
-        admin
-          .map((id) => (id ? id.toString() : null))
-          .filter((id) => id !== null)
-          .join('.')
-          .trim(),
-      ],
-      provider: 'gadm',
-      version: '4.1',
+      type: 'geostore',
+      feature_collection: aoi.geojson,
     },
     start_year: timespan.startYear.toString(),
     end_year: timespan.endYear.toString(),
@@ -176,5 +165,5 @@ export const getTreeCoverLossAnalytics = async (
   const payload = buildPayload(aoi, timespan, canopyCoverThreshold);
   const resourceId = await initiateAnalyticsJob(dataMartRequest, payload);
   const analyticsData = await getAnalyticsResource(dataMartRequest, resourceId);
-  return formatLegacyResponse(analyticsData);
+  return formatLegacyResponse(analyticsData, aoi);
 };

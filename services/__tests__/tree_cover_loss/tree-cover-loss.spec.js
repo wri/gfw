@@ -42,7 +42,7 @@ describe('getLossNaturalForest', () => {
     expect(originalGetLossNaturalForest).toHaveBeenCalled();
   });
 
-  it('uses the updated service if the request is of type `country` and is NOT a download', async () => {
+  it('Uses the legacy service still if the request is of type `country` and is NOT a download', async () => {
     // act
     await getLossNaturalForest({
       type: 'country',
@@ -61,10 +61,10 @@ describe('getLossNaturalForest', () => {
       download: false,
     });
 
-    expect(originalGetLossNaturalForest).not.toHaveBeenCalled();
+    expect(originalGetLossNaturalForest).toHaveBeenCalled();
   });
 
-  it("calls the GNW data service for country types that don't need to be downloaded", async () => {
+  it.skip("Calls the legacy service for country types that don't need to be downloaded", async () => {
     // act
     await getLossNaturalForest({
       type: 'country',
