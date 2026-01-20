@@ -79,24 +79,6 @@ export class TimestepContainer extends PureComponent {
 
   handleOnAfterChange = (range) => {
     const { activeLayer, handleChange } = this.props;
-    const { timelineSegments } = this.timelineParams;
-
-    // non-linear range
-    if (timelineSegments?.length > 0) {
-      const startSegment = timelineSegments[range[0]];
-      const endSegment = timelineSegments[range[1]];
-
-      if (!startSegment || !endSegment) return;
-
-      const formattedRange = [
-        `${startSegment.start || startSegment.value}-01-01`,
-        `${endSegment.end || endSegment.value}-12-31`,
-        `${endSegment.end || endSegment.value}-12-31`,
-      ];
-
-      handleChange(formattedRange, activeLayer);
-      return;
-    }
 
     const formattedRange = this.formatRange([range[0], range[1], range[2]]);
     handleChange(formattedRange, activeLayer);
@@ -112,35 +94,16 @@ export class TimestepContainer extends PureComponent {
     });
   };
 
-  indexToYearRange = (index) => {
-    const { timelineSegments } = this.timelineParams;
-    const item = timelineSegments[index];
-
-    if (!item) return null;
-
-    if (item.start !== undefined && item.end !== undefined) {
-      return [item.start, item.end];
-    }
-
-    return [item.value, item.value];
-  };
-
   formatValue = (value) => {
-    const { minDate, dateFormat, interval, timelineSegments } =
-      this.timelineParams;
-
-    if (timelineSegments?.length > 0) {
-      const [start, end] = this.indexToYearRange(value);
-      return start === end ? `${start}` : `${start} - ${end}`;
-    }
+    const { minDate, dateFormat, interval } = this.timelineParams;
 
     return formatDatePretty(addToDate(minDate, value, interval), dateFormat);
   };
 
-  setMarks = ({ marks, timelineSegments }) => {
-    if (timelineSegments?.length > 0) {
-      return timelineSegments.reduce((acc, item, index) => {
-        acc[index] = item.label;
+  setMarks = ({ marks, customTimelineMarks }) => {
+    if (customTimelineMarks?.length > 0) {
+      return customTimelineMarks.reduce((acc, item) => {
+        acc[item.datasetDate] = item.label;
         return acc;
       }, {});
     }
@@ -163,30 +126,9 @@ export class TimestepContainer extends PureComponent {
       canPlay,
     } = this.timelineParams;
 
-    const { timelineSegments } = this.timelineParams;
-    const isNonLinearRange = timelineSegments?.length > 0;
-
-    const resolveIndex = (date, fallback) => {
-      if (date == null) return fallback;
-
-      const index = timelineSegments.findIndex(
-        (s) => s.datasetDate === Number(date)
-      );
-
-      return index >= 0 ? index : fallback;
-    };
-
-    const startIndex = isNonLinearRange
-      ? resolveIndex(startDate, 0)
-      : dateDiff(startDate, minDate, interval);
-
-    const endIndex = isNonLinearRange
-      ? resolveIndex(endDate, timelineSegments.length - 1)
-      : dateDiff(endDate, minDate, interval);
-
-    const trimIndex = isNonLinearRange
-      ? resolveIndex(trimEndDate, endIndex)
-      : dateDiff(trimEndDate, minDate, interval);
+    const startIndex = dateDiff(startDate, minDate, interval);
+    const endIndex = dateDiff(endDate, minDate, interval);
+    const trimIndex = dateDiff(trimEndDate, minDate, interval);
 
     return (
       <div
@@ -201,21 +143,14 @@ export class TimestepContainer extends PureComponent {
           {...this.timelineParams}
           trackStyle={this.getTrackStyle()}
           min={0}
-          minAbs={
-            isNonLinearRange
-              ? 0
-              : dateDiff(minAbsoluteDate || minDate, minDate, interval, false)
-          }
-          max={
-            isNonLinearRange
-              ? timelineSegments.length - 1
-              : dateDiff(maxDate, minDate, interval)
-          }
-          maxAbs={
-            isNonLinearRange
-              ? timelineSegments.length - 1
-              : dateDiff(maxAbsoluteDate || maxDate, minDate, interval)
-          }
+          minAbs={dateDiff(
+            minAbsoluteDate || minDate,
+            minDate,
+            interval,
+            false
+          )}
+          max={dateDiff(maxDate, minDate, interval)}
+          maxAbs={dateDiff(maxAbsoluteDate || maxDate, minDate, interval)}
           start={startIndex}
           end={endIndex}
           trim={trimIndex}
