@@ -1,45 +1,52 @@
 import { buildPayload, formatLegacyResponse } from '../gnw-data-request';
 
 describe('gnw-data-request Utils', () => {
+  const geostore = {
+    id: '351cfa10a38f86eeacad8a86ab7ce845',
+    geojson: {
+      features: [
+        {
+          type: 'Feature',
+          geometry: {
+            type: 'Polygon',
+            coordinates: [
+              [
+                [112.371093750044, -1.71406936894705],
+                [112.54687500004, -2.35087223984772],
+                [113.475219726588, -2.08739834101191],
+                [112.371093750044, -1.71406936894705],
+              ],
+            ],
+          },
+        },
+      ],
+      type: 'FeatureCollection',
+    },
+  };
+
   describe('#buildPayload', () => {
-    describe('Concatenation of admin levels', () => {
-      it.skip('builds the payload correctly with adm0 only', async () => {
+    describe('Geostore', () => {
+      it('builds the payload correctly with geostore', async () => {
         const result = buildPayload(
-          { adm0: 'BRA' },
+          geostore,
           { startYear: 2001, endYear: 2024 },
           30
         );
-        expect(result.aoi.ids).toEqual(['BRA']);
-      });
-      it.skip('builds the payload correctly with adm0 and adm1', async () => {
-        const result = buildPayload(
-          { adm0: 'BRA', adm1: 1 },
-          { startYear: 2001, endYear: 2024 },
-          30
-        );
-        expect(result.aoi.ids).toEqual(['BRA.1']);
-      });
-      it.skip('builds the payload correctly with adm0, adm1 and adm2', async () => {
-        const result = buildPayload(
-          { adm0: 'BRA', adm1: 1, adm2: 2 },
-          { startYear: 2001, endYear: 2024 },
-          30
-        );
-        expect(result.aoi.ids).toEqual(['BRA.1.2']);
+        expect(result.aoi.feature_collection).toEqual(geostore.geojson);
       });
     });
     describe('Canopy cover threshold', () => {
-      it.skip('builds the payload correctly with 0 threshold', async () => {
+      it('builds the payload correctly with 0 threshold', async () => {
         const result = buildPayload(
-          { adm0: 'BRA' },
+          geostore,
           { startYear: 2001, endYear: 2024 },
           0
         );
         expect(result.canopy_cover).toEqual(0);
       });
-      it.skip('builds the payload correctly with 10 threshold', async () => {
+      it('builds the payload correctly with 10 threshold', async () => {
         const result = buildPayload(
-          { adm0: 'BRA' },
+          geostore,
           { startYear: 2001, endYear: 2024 },
           10
         );
@@ -47,9 +54,9 @@ describe('gnw-data-request Utils', () => {
       });
     });
     describe('Start and end years', () => {
-      it.skip('includes start and end years in the payload', async () => {
+      it('includes start and end years in the payload', async () => {
         const result = buildPayload(
-          { adm0: 'BRA' },
+          geostore,
           { startYear: 2005, endYear: 2015 },
           30
         );
@@ -62,18 +69,16 @@ describe('gnw-data-request Utils', () => {
       });
     });
     describe('General payload structure', () => {
-      it.skip('builds the payload correctly', async () => {
+      it('builds the payload correctly', async () => {
         const result = buildPayload(
-          { adm0: 'BRA', adm1: 1 },
+          geostore,
           { startYear: 2001, endYear: 2024 },
           30
         );
         expect(result).toEqual({
           aoi: {
-            ids: ['BRA.1'],
-            provider: 'gadm',
-            type: 'admin',
-            version: '4.1',
+            feature_collection: geostore.geojson,
+            type: 'feature_collection',
           },
           canopy_cover: 30,
           start_year: '2001',
@@ -92,10 +97,8 @@ describe('gnw-data-request Utils', () => {
         _analytics_name: 'tree_cover_loss',
         _version: '20250912',
         aoi: {
-          ids: ['NZL.1'],
-          provider: 'gadm',
-          type: 'admin',
-          version: '4.1',
+          feature_collection: geostore.geojson,
+          type: 'feature_collection',
         },
         canopy_cover: 10,
         start_year: '2023',
@@ -104,34 +107,32 @@ describe('gnw-data-request Utils', () => {
         intersections: [],
       },
       result: {
-        aoi_id: ['NZL.1', 'NZL.1'],
-        aoi_type: ['admin', 'admin'],
+        // aoi_id: ['NZL.1', 'NZL.1'], TODO what is this?
+        aoi_type: ['geostore', 'geostore'],
         area_ha: [2556.634636171162, 1158.7797555327415],
         tree_cover_loss_year: [2024, 2023],
       },
       status: 'saved',
     };
-    describe('Parsing Admin Levels from AOI IDs', () => {
-      it.skip('parses adm0, adm1, and adm2 correctly', async () => {
-        const result = formatLegacyResponse(analyticsDataApiResponse);
+    describe('Appending geostore ID legacy output', () => {
+      it('Appends geostore ID correctly', async () => {
+        const result = formatLegacyResponse(analyticsDataApiResponse, geostore);
         expect(result.data.data[0]).toEqual(
           expect.objectContaining({
-            iso: 'NZL',
-            adm1: 1,
-            adm2: null,
+            geostore__id: geostore.id,
           })
         );
       });
     });
     describe('Sorting by Year', () => {
-      it.skip('sorts the data by year in ascending order', async () => {
-        const result = formatLegacyResponse(analyticsDataApiResponse);
+      it('sorts the data by year in ascending order', async () => {
+        const result = formatLegacyResponse(analyticsDataApiResponse, geostore);
         expect(result.data.data.map((d) => d.year)).toEqual([2023, 2024]);
       });
     });
     describe('Natural Forest Class Assignment', () => {
-      it.skip('assigns the correct natural forest class', async () => {
-        const result = formatLegacyResponse(analyticsDataApiResponse);
+      it('assigns the correct natural forest class', async () => {
+        const result = formatLegacyResponse(analyticsDataApiResponse, geostore);
         const classes = result.data.data.map(
           (d) => d.sbtn_natural_forests__class
         );
@@ -139,8 +140,8 @@ describe('gnw-data-request Utils', () => {
       });
     });
     describe('Year Field Mapping', () => {
-      it.skip('maps the tree cover loss year to the year field', async () => {
-        const result = formatLegacyResponse(analyticsDataApiResponse);
+      it('maps the tree cover loss year to the year field', async () => {
+        const result = formatLegacyResponse(analyticsDataApiResponse, geostore);
         expect(result.data.data).toEqual([
           expect.objectContaining({
             year: 2023,
@@ -154,8 +155,8 @@ describe('gnw-data-request Utils', () => {
       });
     });
     describe('Area Field Mapping', () => {
-      it.skip('maps the tree cover loss area to the area field', async () => {
-        const result = formatLegacyResponse(analyticsDataApiResponse);
+      it('maps the tree cover loss area to the area field', async () => {
+        const result = formatLegacyResponse(analyticsDataApiResponse, geostore);
 
         expect(result.data.data).toEqual([
           expect.objectContaining({
@@ -169,15 +170,13 @@ describe('gnw-data-request Utils', () => {
         ]);
       });
     });
-    it.skip('transform analytics data', async () => {
-      const result = formatLegacyResponse(analyticsDataApiResponse);
+    it('transform analytics data', async () => {
+      const result = formatLegacyResponse(analyticsDataApiResponse, geostore);
       expect(result).toEqual({
         data: {
           data: [
             {
-              iso: 'NZL',
-              adm1: 1,
-              adm2: null,
+              geostore__id: geostore.id,
               sbtn_natural_forests__class: 'Natural Forest',
               umd_tree_cover_loss__ha: 1158.7797555327415,
               area: 1158.7797555327415,
@@ -187,9 +186,7 @@ describe('gnw-data-request Utils', () => {
               emissions: undefined,
             },
             {
-              iso: 'NZL',
-              adm1: 1,
-              adm2: null,
+              geostore__id: geostore.id,
               sbtn_natural_forests__class: 'Natural Forest',
               umd_tree_cover_loss__ha: 2556.634636171162,
               area: 2556.634636171162,

@@ -77,7 +77,7 @@ const createHttpClient = () => {
 export const buildPayload = (aoi, timespan, canopyCoverThreshold) => {
   const payload = {
     aoi: {
-      type: 'geostore',
+      type: 'feature_collection',
       feature_collection: aoi.geojson,
     },
     start_year: timespan.startYear.toString(),
