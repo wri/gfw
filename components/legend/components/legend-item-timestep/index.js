@@ -79,8 +79,8 @@ export class TimestepContainer extends PureComponent {
 
   handleOnAfterChange = (range) => {
     const { activeLayer, handleChange } = this.props;
-    const formattedRange = this.formatRange([range[0], range[1], range[2]]);
 
+    const formattedRange = this.formatRange([range[0], range[1], range[2]]);
     handleChange(formattedRange, activeLayer);
   };
 
@@ -96,14 +96,25 @@ export class TimestepContainer extends PureComponent {
 
   formatValue = (value) => {
     const { minDate, dateFormat, interval } = this.timelineParams;
+
     return formatDatePretty(addToDate(minDate, value, interval), dateFormat);
+  };
+
+  setMarks = ({ marks, customTimelineMarks }) => {
+    if (customTimelineMarks?.length > 0) {
+      return customTimelineMarks.reduce((acc, item) => {
+        acc[item.datasetDate] = item.label;
+        return acc;
+      }, {});
+    }
+
+    return marks || getTicks(this.timelineParams);
   };
 
   render() {
     if (!this.timelineParams) return null;
     const { defaultStyles } = this.props;
     const {
-      marks,
       maxDate,
       maxAbsoluteDate,
       minDate,
@@ -114,6 +125,10 @@ export class TimestepContainer extends PureComponent {
       trimEndDate,
       canPlay,
     } = this.timelineParams;
+
+    const startIndex = dateDiff(startDate, minDate, interval);
+    const endIndex = dateDiff(endDate, minDate, interval);
+    const trimIndex = dateDiff(trimEndDate, minDate, interval);
 
     return (
       <div
@@ -136,10 +151,10 @@ export class TimestepContainer extends PureComponent {
           )}
           max={dateDiff(maxDate, minDate, interval)}
           maxAbs={dateDiff(maxAbsoluteDate || maxDate, minDate, interval)}
-          start={dateDiff(startDate, minDate, interval)}
-          end={dateDiff(endDate, minDate, interval)}
-          trim={dateDiff(trimEndDate, minDate, interval)}
-          marks={marks || getTicks(this.timelineParams)}
+          start={startIndex}
+          end={endIndex}
+          trim={trimIndex}
+          marks={this.setMarks(this.timelineParams)}
           formatValue={this.formatValue}
           handleOnAfterChange={this.handleOnAfterChange}
         />
