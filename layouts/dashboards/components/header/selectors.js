@@ -86,12 +86,14 @@ export const getAdm0Data = createSelector(
   [getAdminMetadata],
   (data) =>
     data &&
-    data.adm0.sort((a, b) =>
-      a.label.localeCompare(b.label, 'en', {
+    data.adm0.sort((a, b) => {
+      const labelA = a.label || '';
+      const labelB = b.label || '';
+      return labelA.localeCompare(labelB, 'en', {
         sensitivity: 'base',
         ignorePunctuation: true,
-      })
-    )
+      });
+    })
 );
 
 export const getAdm1Data = createSelector(
