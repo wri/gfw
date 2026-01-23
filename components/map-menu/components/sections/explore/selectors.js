@@ -22,15 +22,15 @@ import { descriptions, topics, stories } from './sections';
 
 const types = {
   mongabay: {
-    label: 'mongabay reporting',
+    label: 'Article',
     color: '#D53369',
   },
   soy: {
-    label: 'soy',
+    label: 'Soy',
     color: '#1b6e03',
   },
   palm: {
-    label: 'Oil palm',
+    label: 'Oil_palm',
     color: '#ff4a00',
   },
 };
