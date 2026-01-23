@@ -21,16 +21,16 @@ import {
 import { descriptions, topics, stories } from './sections';
 
 const types = {
-  mongabay: {
-    label: 'Article',
+  Article: {
+    label: 'mongabay reporting',
     color: '#D53369',
   },
-  soy: {
-    label: 'Soy',
+  Soy: {
+    label: 'soy',
     color: '#1b6e03',
   },
-  palm: {
-    label: 'Oil_palm',
+  Oil_palm: {
+    label: 'Oil palm',
     color: '#ff4a00',
   },
 };
