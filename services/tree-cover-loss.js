@@ -8,7 +8,7 @@ export const getLossNaturalForest = async (params) => {
 
   const { geostore } = params;
   const aoi = { geostore };
-  const timespan = { startYear: 2001, endYear: 2024 };
+  const timespan = { startYear: 2021, endYear: 2024 };
   const canopyCoverThreshold = 0;
   return getTreeCoverLossAnalytics(aoi, timespan, canopyCoverThreshold);
 };

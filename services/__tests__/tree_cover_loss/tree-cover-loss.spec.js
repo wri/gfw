@@ -129,7 +129,7 @@ describe('getLossNaturalForest', () => {
 
     expect(getTreeCoverLossAnalytics).toHaveBeenCalledWith(
       expect.objectContaining({ geostore }),
-      { startYear: 2001, endYear: 2024 },
+      { startYear: 2021, endYear: 2024 },
       0
     );
   });

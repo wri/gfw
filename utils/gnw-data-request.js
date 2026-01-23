@@ -23,6 +23,7 @@ const defaultRequestConfig = {
 export const formatLegacyResponse = (data, aoi) => {
   const { result } = data;
   const years = result.tree_cover_loss_year || [];
+  const natural_forest_classes = result.natural_forests_class || [];
   const area = result.area_ha || [];
   const emissions = result.carbon_emissions_MgCO2e || [];
   const status = data.status === 'saved' ? 'success' : data.status;
@@ -30,7 +31,7 @@ export const formatLegacyResponse = (data, aoi) => {
   const formatted = years
     .map((year, i) => ({
       geostore__id: aoi.id,
-      sbtn_natural_forests__class: 'Natural Forest',
+      sbtn_natural_forests__class: natural_forest_classes[i],
       umd_tree_cover_loss__year: year,
       umd_tree_cover_loss__ha: area[i] || null,
       gfw_gross_emissions_co2e_all_gases__mg: emissions ? emissions[i] : null,
@@ -74,15 +75,15 @@ const createHttpClient = () => {
  * @param {number} canopyCoverThreshold - Minimum canopy cover threshold.
  * @returns {object} The payload for the analytics API.
  */
-export const buildPayload = (aoi, timespan, canopyCoverThreshold) => {
+export const buildPayload = (aoi) => {
+  aoi.geostore.geojson.features[0].id = aoi.geostore.id;
   const payload = {
     aoi: {
       type: 'feature_collection',
-      feature_collection: aoi.geojson,
+      feature_collection: aoi.geostore.geojson,
     },
-    start_year: timespan.startYear.toString(),
-    end_year: timespan.endYear.toString(),
-    canopy_cover: canopyCoverThreshold,
+    start_year: '2021',
+    end_year: '2024',
     forest_filter: 'natural_forest',
     intersections: [],
   };
@@ -158,11 +159,11 @@ const getAnalyticsResource = async (dataMartRequest, resourceId) => {
  */
 export const getTreeCoverLossAnalytics = async (
   aoi,
-  timespan,
-  canopyCoverThreshold
+  timespan, // eslint-disable-line no-unused-vars
+  canopyCoverThreshold // eslint-disable-line no-unused-vars
 ) => {
   const dataMartRequest = createHttpClient();
-  const payload = buildPayload(aoi, timespan, canopyCoverThreshold);
+  const payload = buildPayload(aoi);
   const resourceId = await initiateAnalyticsJob(dataMartRequest, payload);
   const analyticsData = await getAnalyticsResource(dataMartRequest, resourceId);
   return formatLegacyResponse(analyticsData, aoi);

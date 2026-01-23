@@ -13,47 +13,47 @@ describe('getLossNaturalForest', () => {
     jest.clearAllMocks();
   });
 
-  it.skip('makes a call to the data api and adds `area`, `emissions`, and `year`', async () => {
+  it('makes a call to the data api and adds `area`, `emissions`, and `year`', async () => {
     // arrange
     dataRequest.get.mockResolvedValueOnce({
       data: [
         {
-          iso: 'BRA',
+          aoi_id: '351cfa10a38f86eeacad8a86ab7ce845',
           sbtn_natural_forests__class: 'Natural Forest',
           umd_tree_cover_loss__year: 2023,
           umd_tree_cover_loss__ha: 3070627.944982473,
           gfw_gross_emissions_co2e_all_gases__mg: 1398785973.642741,
         },
         {
-          iso: 'BRA',
+          aoi_id: '351cfa10a38f86eeacad8a86ab7ce845',
           sbtn_natural_forests__class: 'Natural Forest',
           umd_tree_cover_loss__year: 2024,
           umd_tree_cover_loss__ha: 4435574.324661254,
           gfw_gross_emissions_co2e_all_gases__mg: 1817314276.7246742,
         },
         {
-          iso: 'BRA',
+          aoi_id: '351cfa10a38f86eeacad8a86ab7ce845',
           sbtn_natural_forests__class: 'Non-Natural Forest',
           umd_tree_cover_loss__year: 2023,
           umd_tree_cover_loss__ha: 327571.28996749374,
           gfw_gross_emissions_co2e_all_gases__mg: 195078365.88840708,
         },
         {
-          iso: 'BRA',
+          aoi_id: '351cfa10a38f86eeacad8a86ab7ce845',
           sbtn_natural_forests__class: 'Non-Natural Forest',
           umd_tree_cover_loss__year: 2024,
           umd_tree_cover_loss__ha: 282973.44824593404,
           gfw_gross_emissions_co2e_all_gases__mg: 170193888.0742313,
         },
         {
-          iso: 'BRA',
+          aoi_id: '351cfa10a38f86eeacad8a86ab7ce845',
           sbtn_natural_forests__class: 'Unknown',
           umd_tree_cover_loss__year: 2023,
           umd_tree_cover_loss__ha: 703371.8651278677,
           gfw_gross_emissions_co2e_all_gases__mg: 209519602.75126565,
         },
         {
-          iso: 'BRA',
+          aoi_id: '351cfa10a38f86eeacad8a86ab7ce845',
           sbtn_natural_forests__class: 'Unknown',
           umd_tree_cover_loss__year: 2024,
           umd_tree_cover_loss__ha: 661069.121257232,
@@ -88,7 +88,7 @@ describe('getLossNaturalForest', () => {
       data: {
         data: [
           {
-            iso: 'BRA',
+            aoi_id: '351cfa10a38f86eeacad8a86ab7ce845',
             sbtn_natural_forests__class: 'Natural Forest',
             umd_tree_cover_loss__year: 2023,
             umd_tree_cover_loss__ha: 3070627.944982473,
@@ -98,7 +98,7 @@ describe('getLossNaturalForest', () => {
             year: 2023,
           },
           {
-            iso: 'BRA',
+            aoi_id: '351cfa10a38f86eeacad8a86ab7ce845',
             sbtn_natural_forests__class: 'Natural Forest',
             umd_tree_cover_loss__year: 2024,
             umd_tree_cover_loss__ha: 4435574.324661254,
@@ -108,7 +108,7 @@ describe('getLossNaturalForest', () => {
             year: 2024,
           },
           {
-            iso: 'BRA',
+            aoi_id: '351cfa10a38f86eeacad8a86ab7ce845',
             sbtn_natural_forests__class: 'Non-Natural Forest',
             umd_tree_cover_loss__year: 2023,
             umd_tree_cover_loss__ha: 327571.28996749374,
@@ -118,7 +118,7 @@ describe('getLossNaturalForest', () => {
             year: 2023,
           },
           {
-            iso: 'BRA',
+            aoi_id: '351cfa10a38f86eeacad8a86ab7ce845',
             sbtn_natural_forests__class: 'Non-Natural Forest',
             umd_tree_cover_loss__year: 2024,
             umd_tree_cover_loss__ha: 282973.44824593404,
@@ -128,7 +128,7 @@ describe('getLossNaturalForest', () => {
             year: 2024,
           },
           {
-            iso: 'BRA',
+            aoi_id: '351cfa10a38f86eeacad8a86ab7ce845',
             sbtn_natural_forests__class: 'Unknown',
             umd_tree_cover_loss__year: 2023,
             umd_tree_cover_loss__ha: 703371.8651278677,
@@ -138,7 +138,7 @@ describe('getLossNaturalForest', () => {
             year: 2023,
           },
           {
-            iso: 'BRA',
+            aoi_id: '351cfa10a38f86eeacad8a86ab7ce845',
             sbtn_natural_forests__class: 'Unknown',
             umd_tree_cover_loss__year: 2024,
             umd_tree_cover_loss__ha: 661069.121257232,

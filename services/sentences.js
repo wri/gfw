@@ -10,10 +10,11 @@ import isEmpty from 'lodash/isEmpty';
 
 import {
   getExtentNaturalForest,
-  getLossNaturalForest,
   getExtent,
   getLoss,
 } from 'services/analysis-cached';
+
+import { getLossNaturalForest } from 'services/tree-cover-loss';
 
 const ADMINS = {
   adm0: null,

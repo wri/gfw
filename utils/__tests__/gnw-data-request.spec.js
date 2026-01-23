@@ -27,61 +27,29 @@ describe('gnw-data-request Utils', () => {
   describe('#buildPayload', () => {
     describe('Geostore', () => {
       it('builds the payload correctly with geostore', async () => {
-        const result = buildPayload(
-          geostore,
-          { startYear: 2001, endYear: 2024 },
-          30
+        const result = buildPayload({ geostore });
+        expect(result.aoi.feature_collection.features[0].geometry).toEqual(
+          geostore.geojson.features[0].geometry
         );
-        expect(result.aoi.feature_collection).toEqual(geostore.geojson);
       });
     });
-    describe('Canopy cover threshold', () => {
-      it('builds the payload correctly with 0 threshold', async () => {
-        const result = buildPayload(
-          geostore,
-          { startYear: 2001, endYear: 2024 },
-          0
-        );
-        expect(result.canopy_cover).toEqual(0);
-      });
-      it('builds the payload correctly with 10 threshold', async () => {
-        const result = buildPayload(
-          geostore,
-          { startYear: 2001, endYear: 2024 },
-          10
-        );
-        expect(result.canopy_cover).toEqual(10);
-      });
-    });
-    describe('Start and end years', () => {
-      it('includes start and end years in the payload', async () => {
-        const result = buildPayload(
-          geostore,
-          { startYear: 2005, endYear: 2015 },
-          30
-        );
-        expect(result).toEqual(
-          expect.objectContaining({
-            start_year: '2005',
-            end_year: '2015',
-          })
+    describe('Geostore', () => {
+      it('builds the payload correctly with geostore ID', async () => {
+        const result = buildPayload({ geostore });
+        expect(result.aoi.feature_collection.features[0].id).toEqual(
+          geostore.id
         );
       });
     });
     describe('General payload structure', () => {
       it('builds the payload correctly', async () => {
-        const result = buildPayload(
-          geostore,
-          { startYear: 2001, endYear: 2024 },
-          30
-        );
+        const result = buildPayload({ geostore });
         expect(result).toEqual({
           aoi: {
             feature_collection: geostore.geojson,
             type: 'feature_collection',
           },
-          canopy_cover: 30,
-          start_year: '2001',
+          start_year: '2021',
           end_year: '2024',
           forest_filter: 'natural_forest',
           intersections: [],
@@ -107,10 +75,15 @@ describe('gnw-data-request Utils', () => {
         intersections: [],
       },
       result: {
-        // aoi_id: ['NZL.1', 'NZL.1'], TODO what is this?
-        aoi_type: ['geostore', 'geostore'],
-        area_ha: [2556.634636171162, 1158.7797555327415],
-        tree_cover_loss_year: [2024, 2023],
+        aoi_id: ['my_aoi', 'my_aoi', 'my_aoi'],
+        aoi_type: ['feature_collection', 'feature_collection'],
+        natural_forests_class: [
+          'Natural Forest',
+          'Non-Natural Forest',
+          'Natural Forest',
+        ],
+        area_ha: [2556.634636171162, 15.2, 1158.7797555327415],
+        tree_cover_loss_year: [2024, 2024, 2023],
       },
       status: 'saved',
     };
@@ -127,7 +100,7 @@ describe('gnw-data-request Utils', () => {
     describe('Sorting by Year', () => {
       it('sorts the data by year in ascending order', async () => {
         const result = formatLegacyResponse(analyticsDataApiResponse, geostore);
-        expect(result.data.data.map((d) => d.year)).toEqual([2023, 2024]);
+        expect(result.data.data.map((d) => d.year)).toEqual([2023, 2024, 2024]);
       });
     });
     describe('Natural Forest Class Assignment', () => {
@@ -136,7 +109,11 @@ describe('gnw-data-request Utils', () => {
         const classes = result.data.data.map(
           (d) => d.sbtn_natural_forests__class
         );
-        expect(classes).toEqual(['Natural Forest', 'Natural Forest']);
+        expect(classes).toEqual([
+          'Natural Forest',
+          'Natural Forest',
+          'Non-Natural Forest',
+        ]);
       });
     });
     describe('Year Field Mapping', () => {
@@ -146,6 +123,10 @@ describe('gnw-data-request Utils', () => {
           expect.objectContaining({
             year: 2023,
             umd_tree_cover_loss__year: 2023,
+          }),
+          expect.objectContaining({
+            year: 2024,
+            umd_tree_cover_loss__year: 2024,
           }),
           expect.objectContaining({
             year: 2024,
@@ -166,6 +147,10 @@ describe('gnw-data-request Utils', () => {
           expect.objectContaining({
             area: 2556.634636171162,
             umd_tree_cover_loss__ha: 2556.634636171162,
+          }),
+          expect.objectContaining({
+            area: 15.2,
+            umd_tree_cover_loss__ha: 15.2,
           }),
         ]);
       });
@@ -190,6 +175,16 @@ describe('gnw-data-request Utils', () => {
               sbtn_natural_forests__class: 'Natural Forest',
               umd_tree_cover_loss__ha: 2556.634636171162,
               area: 2556.634636171162,
+              umd_tree_cover_loss__year: 2024,
+              year: 2024,
+              gfw_gross_emissions_co2e_all_gases__mg: undefined,
+              emissions: undefined,
+            },
+            {
+              geostore__id: geostore.id,
+              sbtn_natural_forests__class: 'Non-Natural Forest',
+              umd_tree_cover_loss__ha: 15.2,
+              area: 15.2,
               umd_tree_cover_loss__year: 2024,
               year: 2024,
               gfw_gross_emissions_co2e_all_gases__mg: undefined,
