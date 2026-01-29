@@ -107,37 +107,27 @@ export default {
    * @returns
    */
   getData: async (params) => {
-    const {
-      adm0,
-      adm1,
-      adm2,
-      analysis,
-      geostore,
-      threshold,
-      type,
-      locationType,
-    } = params;
+    const { adm0, adm1, adm2, geostore, threshold, type, locationType } =
+      params;
 
     let mappedType = '';
 
-    if (analysis) {
+    mappedType = 'geostore';
+
+    if (type === 'wdpa') {
+      mappedType = 'protected_area';
+    }
+
+    if (type === 'global') {
+      mappedType = 'global';
+    }
+
+    if (adm0 !== undefined && adm0 !== null && type === 'admin') {
+      mappedType = 'admin';
+    }
+
+    if (type === 'geostore') {
       mappedType = 'geostore';
-
-      if (type === 'wdpa') {
-        mappedType = 'protected_area';
-      }
-    } else {
-      if (type === 'global') {
-        mappedType = 'global';
-      }
-
-      if (adm0 !== undefined && adm0 !== null) {
-        mappedType = 'admin';
-      }
-
-      if (type === 'geostore') {
-        mappedType = 'geostore';
-      }
     }
 
     let check = false;
