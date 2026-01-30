@@ -177,41 +177,36 @@ export default {
           forestType: '',
           landCategory: '',
         }),
-        extentFn({
-          ...filteredParams,
-          ...decileThreshold,
-          forestType: 'plantations',
-        }),
       ]).then(
-        spread((response) => {
+        spread((response, adminResponse) => {
           const extent = response.data && response.data.data;
-          const adminExtent = extent;
-          const plantationsExtent = extent;
+          const adminExtent = adminResponse.data && adminResponse.data.data;
+          const hasIntersection = filteredParams?.landCategory != null;
 
           let totalArea = 0;
-          let totalCover = 0;
-          let cover = 0;
-          let plantations = 0;
+          let totalExtent = 0;
+          let treeCover = 0;
           let data = {};
+
           if (extent && extent.length) {
             // Sum values
             totalArea = adminExtent.reduce(
               (total, d) => total + d.total_area,
               0
             );
-            cover = extent.reduce((total, d) => total + d.extent, 0);
-            totalCover = adminExtent.reduce((total, d) => total + d.extent, 0);
-            plantations = plantationsExtent.reduce(
-              (total, d) => total + d.extent,
-              0
-            );
+            treeCover = extent.reduce((total, d) => total + d.extent, 0);
+            totalExtent =
+              hasIntersection > 0
+                ? extent.reduce((total, d) => total + d.area__ha, 0)
+                : adminExtent.reduce((total, d) => total + d.extent, 0);
+
             data = {
               totalArea,
-              totalCover,
-              cover,
-              plantations,
+              totalExtent,
+              treeCover,
             };
           }
+
           return data;
         })
       );
