@@ -86,9 +86,9 @@ export const parseSentence = createSelector(
     const sentence =
       sentences[sentenceKey][sentenceSubkey][sentenceTreeCoverType];
 
-    const { cover, totalCover, totalArea } = data;
+    const { cover, totalArea } = data;
     const top = cover;
-    const bottom = indicator ? totalCover : totalArea;
+    const bottom = totalArea;
     const percentCover = (100 * top) / bottom;
 
     const formattedPercentage = formatNumber({ num: percentCover, unit: '%' });

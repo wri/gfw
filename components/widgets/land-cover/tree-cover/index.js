@@ -183,11 +183,10 @@ export default {
           forestType: 'plantations',
         }),
       ]).then(
-        spread((response, adminResponse, plantationsResponse) => {
+        spread((response) => {
           const extent = response.data && response.data.data;
-          const adminExtent = adminResponse.data && adminResponse.data.data;
-          const plantationsExtent =
-            plantationsResponse.data && plantationsResponse.data.data;
+          const adminExtent = extent;
+          const plantationsExtent = extent;
 
           let totalArea = 0;
           let totalCover = 0;
