@@ -90,6 +90,24 @@ describe('tree-loss-drivers widget', () => {
         );
       });
 
+      it('calls fetchDataMart with type geostore when type is admin but adm0 is falsy', async () => {
+        await widgetConfig.getData({
+          type: 'admin',
+          adm0: undefined,
+          geostore: { id: 'geo-from-geostore' },
+          threshold: 30,
+        });
+
+        expect(fetchDataMart).toHaveBeenCalledWith(
+          expect.objectContaining({
+            dataset: DATASET,
+            type: 'geostore',
+            geostoreId: 'geo-from-geostore',
+            isDownload: false,
+          })
+        );
+      });
+
       it('calls fetchDataMart with type geostore and geostoreId when type is geostore', async () => {
         const geostoreId = 'abc123';
         await widgetConfig.getData({
@@ -310,6 +328,24 @@ describe('tree-loss-drivers widget', () => {
             adm1: '25',
             adm2: '123',
             threshold: 30,
+            isDownload: true,
+          })
+        );
+      });
+
+      it('calls fetchDataMart with type geostore when type is admin but adm0 is falsy', async () => {
+        await widgetConfig.getDataURL({
+          type: 'admin',
+          adm0: null,
+          geostore: { id: 'geo-id' },
+          threshold: 30,
+        });
+
+        expect(fetchDataMart).toHaveBeenCalledWith(
+          expect.objectContaining({
+            dataset: DATASET,
+            type: 'geostore',
+            geostoreId: 'geo-id',
             isDownload: true,
           })
         );

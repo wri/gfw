@@ -110,42 +110,29 @@ export default {
     const { adm0, adm1, adm2, geostore, threshold, type, locationType } =
       params;
 
-    let mappedType = '';
+    const typeMapping = {
+      wdpa: 'protected_area',
+      global: 'global',
+      admin: adm0 ? 'admin' : 'geostore',
+    };
 
-    mappedType = 'geostore';
+    const mappedType = typeMapping[type] || 'geostore';
 
-    if (type === 'wdpa') {
-      mappedType = 'protected_area';
-    }
-
-    if (type === 'global') {
-      mappedType = 'global';
-    }
-
-    if (adm0 !== undefined && adm0 !== null && type === 'admin') {
-      mappedType = 'admin';
-    }
-
-    if (type === 'geostore') {
-      mappedType = 'geostore';
-    }
-
-    let check = false;
-    let geostoreId = geostore?.id;
-
-    if (mappedType === 'geostore' && shouldQueryPrecomputedTables(params)) {
-      check = true;
-
-      if (locationType === 'aoi' || locationType === 'geostore') {
-        check = false;
-        geostoreId = adm0;
-      }
-    }
+    const shouldCheck =
+      mappedType === 'geostore' && shouldQueryPrecomputedTables(params);
+    const finalType =
+      shouldCheck && locationType !== 'aoi' && locationType !== 'geostore'
+        ? 'admin'
+        : mappedType;
+    const geostoreId =
+      shouldCheck && (locationType === 'aoi' || locationType === 'geostore')
+        ? adm0
+        : geostore?.id;
 
     const response = await fetchDataMart({
       dataset: DATASET,
       geostoreId,
-      type: check ? 'admin' : mappedType, // checking to not send geostore_id when analyizing entire countries (only in map page, analysis: true)
+      type: finalType,
       adm0,
       adm1,
       adm2,
@@ -165,45 +152,30 @@ export default {
   getDataURL: async (params) => {
     const { adm0, adm1, adm2, geostore, threshold, type, locationType } =
       params;
-    let mappedType = '';
 
-    mappedType = 'geostore';
+    const typeMapping = {
+      wdpa: 'protected_area',
+      global: 'global',
+      admin: adm0 ? 'admin' : 'geostore',
+    };
 
-    if (type === 'wdpa') {
-      mappedType = 'protected_area';
-    }
-    if (type === 'global') {
-      mappedType = 'global';
-    }
+    const mappedType = typeMapping[type] || 'geostore';
 
-    if (adm0 !== undefined && adm0 !== null && type === 'admin') {
-      mappedType = 'admin';
-    }
-
-    if (type === 'wdpa') {
-      mappedType = 'protected_area';
-    }
-
-    if (type === 'geostore') {
-      mappedType = 'geostore';
-    }
-
-    let check = false;
-    let geostoreId = geostore?.id;
-
-    if (mappedType === 'geostore' && shouldQueryPrecomputedTables(params)) {
-      check = true;
-
-      if (locationType === 'aoi' || locationType === 'geostore') {
-        check = false;
-        geostoreId = adm0;
-      }
-    }
+    const shouldCheck =
+      mappedType === 'geostore' && shouldQueryPrecomputedTables(params);
+    const finalType =
+      shouldCheck && locationType !== 'aoi' && locationType !== 'geostore'
+        ? 'admin'
+        : mappedType;
+    const geostoreId =
+      shouldCheck && (locationType === 'aoi' || locationType === 'geostore')
+        ? adm0
+        : geostore?.id;
 
     const res = await fetchDataMart({
       dataset: DATASET,
       geostoreId,
-      type: check ? 'admin' : mappedType, // checking to not send geostore_id when analyizing entire countries (only in map page, analysis: true)
+      type: finalType,
       adm0,
       adm1,
       adm2,
