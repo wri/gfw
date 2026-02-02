@@ -1,14 +1,9 @@
 import { jest } from '@jest/globals';
 import { fetchDataMart } from 'services/datamart';
 import widgetConfig from './index';
-import { shouldQueryPrecomputedTables } from '../../utils/helpers';
 
 jest.mock('services/datamart', () => ({
   fetchDataMart: jest.fn(),
-}));
-
-jest.mock('../../utils/helpers', () => ({
-  shouldQueryPrecomputedTables: jest.fn(),
 }));
 
 const DATASET = 'tree_cover_loss_by_driver';
@@ -21,7 +16,6 @@ describe('tree-loss-drivers widget', () => {
   describe('getData', () => {
     describe('type mapping', () => {
       beforeEach(() => {
-        shouldQueryPrecomputedTables.mockReturnValue(false);
         fetchDataMart.mockResolvedValue({
           data: {
             status: 'ok',
@@ -165,9 +159,9 @@ describe('tree-loss-drivers widget', () => {
       });
 
       it('calls fetchDataMart with type admin when shouldQueryPrecomputedTables is true and locationType is not aoi or geostore', async () => {
-        shouldQueryPrecomputedTables.mockReturnValue(true);
         await widgetConfig.getData({
           type: 'geostore',
+          status: 'saved',
           geostore: { id: 'geo1' },
           adm0: 'BRA',
           locationType: 'country',
@@ -184,9 +178,9 @@ describe('tree-loss-drivers widget', () => {
       });
 
       it('keeps type geostore and sets geostoreId to adm0 when shouldQueryPrecomputedTables is true and locationType is aoi', async () => {
-        shouldQueryPrecomputedTables.mockReturnValue(true);
         await widgetConfig.getData({
           type: 'geostore',
+          status: 'saved',
           geostore: { id: 'geo1' },
           adm0: 'BRA',
           locationType: 'aoi',
@@ -204,9 +198,9 @@ describe('tree-loss-drivers widget', () => {
       });
 
       it('keeps type geostore and sets geostoreId to adm0 when shouldQueryPrecomputedTables is true and locationType is geostore', async () => {
-        shouldQueryPrecomputedTables.mockReturnValue(true);
         await widgetConfig.getData({
           type: 'geostore',
+          status: 'saved',
           geostore: { id: 'geo1' },
           adm0: 'IDN',
           locationType: 'geostore',
@@ -226,7 +220,6 @@ describe('tree-loss-drivers widget', () => {
 
     describe('success response', () => {
       it('returns mapped array with driver_type and loss_area_ha', async () => {
-        shouldQueryPrecomputedTables.mockReturnValue(false);
         fetchDataMart.mockResolvedValue({
           data: {
             status: 'ok',
@@ -254,7 +247,6 @@ describe('tree-loss-drivers widget', () => {
 
     describe('error handling', () => {
       it('throws Error with response message when response.data.status is failed', async () => {
-        shouldQueryPrecomputedTables.mockReturnValue(false);
         fetchDataMart.mockResolvedValue({
           data: { status: 'failed', message: 'Server error' },
         });
@@ -273,7 +265,6 @@ describe('tree-loss-drivers widget', () => {
   describe('getDataURL', () => {
     describe('type mapping', () => {
       beforeEach(() => {
-        shouldQueryPrecomputedTables.mockReturnValue(false);
         fetchDataMart.mockResolvedValue('https://example.com/file.csv');
       });
 
@@ -377,9 +368,9 @@ describe('tree-loss-drivers widget', () => {
       });
 
       it('calls fetchDataMart with type admin when shouldQueryPrecomputedTables is true and locationType is country', async () => {
-        shouldQueryPrecomputedTables.mockReturnValue(true);
         await widgetConfig.getDataURL({
           type: 'geostore',
+          status: 'saved',
           geostore: { id: 'geo1' },
           adm0: 'BRA',
           locationType: 'country',
@@ -396,9 +387,9 @@ describe('tree-loss-drivers widget', () => {
       });
 
       it('uses type geostore and geostoreId adm0 when shouldQueryPrecomputedTables is true and locationType is aoi', async () => {
-        shouldQueryPrecomputedTables.mockReturnValue(true);
         await widgetConfig.getDataURL({
           type: 'geostore',
+          status: 'saved',
           geostore: { id: 'geo1' },
           adm0: 'IDN',
           locationType: 'aoi',
@@ -417,7 +408,6 @@ describe('tree-loss-drivers widget', () => {
 
     describe('success response', () => {
       it('returns array with name and url from fetchDataMart result', async () => {
-        shouldQueryPrecomputedTables.mockReturnValue(false);
         const url = 'https://example.com/tree_cover_loss_by_driver.csv';
         fetchDataMart.mockResolvedValue(url);
 
@@ -433,7 +423,6 @@ describe('tree-loss-drivers widget', () => {
 
     describe('fetchDataMart arguments', () => {
       it('calls fetchDataMart with isDownload true', async () => {
-        shouldQueryPrecomputedTables.mockReturnValue(false);
         fetchDataMart.mockResolvedValue('https://example.com/file.csv');
 
         await widgetConfig.getDataURL({
