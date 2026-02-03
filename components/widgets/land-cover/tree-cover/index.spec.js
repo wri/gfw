@@ -4,7 +4,6 @@ import {
   getTropicalExtent,
   getTreeCoverOTF,
 } from 'services/analysis-cached';
-import { shouldQueryPrecomputedTables } from 'components/widgets/utils/helpers';
 import { all } from 'axios';
 import widgetConfig from './index';
 
@@ -12,10 +11,6 @@ jest.mock('services/analysis-cached', () => ({
   getExtent: jest.fn(),
   getTropicalExtent: jest.fn(),
   getTreeCoverOTF: jest.fn(),
-}));
-
-jest.mock('components/widgets/utils/helpers', () => ({
-  shouldQueryPrecomputedTables: jest.fn(),
 }));
 
 jest.mock('axios', () => ({
@@ -31,7 +26,6 @@ describe('tree-cover widget', () => {
   describe('getData', () => {
     describe('when shouldQueryPrecomputedTables is true (precomputed path)', () => {
       it('calls getExtent twice with correct params when extentYear is 2000', async () => {
-        shouldQueryPrecomputedTables.mockReturnValue(true);
         const extentFn = getExtent;
         extentFn
           .mockResolvedValueOnce({
@@ -50,6 +44,7 @@ describe('tree-cover widget', () => {
           threshold: 30,
           adm0: 'BRA',
           landCategory: null,
+          status: 'saved',
         };
 
         const result = await widgetConfig.getData(params);
@@ -60,6 +55,7 @@ describe('tree-cover widget', () => {
           adm0: 'BRA',
           landCategory: null,
           threshold: 30,
+          status: 'saved',
         });
         expect(extentFn).toHaveBeenNthCalledWith(2, {
           extentYear: 2000,
@@ -67,6 +63,7 @@ describe('tree-cover widget', () => {
           forestType: '',
           landCategory: '',
           threshold: 30,
+          status: 'saved',
         });
         expect(result).toEqual({
           totalArea: 600,
@@ -76,7 +73,6 @@ describe('tree-cover widget', () => {
       });
 
       it('calls getTropicalExtent twice when extentYear is 2020', async () => {
-        shouldQueryPrecomputedTables.mockReturnValue(true);
         const extentFn = getTropicalExtent;
         extentFn
           .mockResolvedValueOnce({
@@ -94,6 +90,7 @@ describe('tree-cover widget', () => {
           extentYear: 2020,
           decile: 30,
           adm0: 'IDN',
+          status: 'saved',
         };
 
         const result = await widgetConfig.getData(params);
@@ -103,6 +100,7 @@ describe('tree-cover widget', () => {
           extentYear: 2020,
           adm0: 'IDN',
           decile: 30,
+          status: 'saved',
         });
         expect(extentFn).toHaveBeenNthCalledWith(2, {
           extentYear: 2020,
@@ -110,6 +108,7 @@ describe('tree-cover widget', () => {
           forestType: '',
           landCategory: '',
           decile: 30,
+          status: 'saved',
         });
         expect(result).toEqual({
           totalArea: 500,
@@ -119,7 +118,6 @@ describe('tree-cover widget', () => {
       });
 
       it('uses area__ha for totalExtent when landCategory is set (hasIntersection)', async () => {
-        shouldQueryPrecomputedTables.mockReturnValue(true);
         const extentFn = getExtent;
         extentFn
           .mockResolvedValueOnce({
@@ -143,6 +141,7 @@ describe('tree-cover widget', () => {
           threshold: 30,
           adm0: 'BRA',
           landCategory: 'forest',
+          status: 'saved',
         });
 
         expect(result).toEqual({
@@ -153,7 +152,6 @@ describe('tree-cover widget', () => {
       });
 
       it('returns empty data when extent has no length', async () => {
-        shouldQueryPrecomputedTables.mockReturnValue(true);
         getExtent
           .mockResolvedValueOnce({ data: { data: [] } })
           .mockResolvedValueOnce({ data: { data: [] } });
@@ -164,6 +162,7 @@ describe('tree-cover widget', () => {
           extentYear: 2000,
           threshold: 30,
           adm0: 'BRA',
+          status: 'saved',
         });
 
         expect(result).toEqual({});
@@ -172,7 +171,6 @@ describe('tree-cover widget', () => {
 
     describe('when shouldQueryPrecomputedTables is false (OTF path)', () => {
       it('calls getTreeCoverOTF with params', async () => {
-        shouldQueryPrecomputedTables.mockReturnValue(false);
         getTreeCoverOTF.mockResolvedValue({ totalArea: 1000, treeCover: 300 });
 
         const params = {
