@@ -14,38 +14,42 @@ const getMetaKey = (state) => state.metaKey;
 const getAdminLevel = (state) => state.adminLevel;
 
 export const parseData = createSelector(
-  [getData, getColors, getIndicator],
-  (data, colors, indicator) => {
+  [getData, getColors, getIndicator, getSettings],
+  (data, colors, indicator, settings) => {
     if (isEmpty(data)) return null;
-    const { totalArea, totalCover, cover, plantations } = data;
-    const otherCover = indicator ? totalCover - cover : 0;
-    const plantationsCover = plantations || 0;
+
+    const { landCategory } = settings;
+    const { totalArea, totalExtent, treeCover } = data;
+
+    const hasIntersection = !!landCategory;
+    const otherCover = indicator ? totalExtent - treeCover : 0;
     const label = indicator ? ` in ${indicator.label}` : '';
     const indicators = indicator?.value?.split('__') || [];
     const hasPlantations = indicators.includes('plantations');
-
     const parsedData = [
       {
         label: 'Tree Cover'.concat(label),
-        value: hasPlantations ? plantationsCover : cover,
+        value: treeCover,
         color: colors.naturalForest,
-        percentage:
-          ((hasPlantations ? plantationsCover : cover) / totalArea) * 100,
+        percentage: (treeCover / totalArea) * 100,
       },
       {
         label: 'Other Land Cover',
-        value: totalArea - cover - otherCover,
+        value:
+          hasIntersection && !hasPlantations // solution for multiple intersections. E.g. Landmark and Plantations
+            ? otherCover
+            : totalArea - treeCover - otherCover,
         color: colors.nonForest,
-        percentage: ((totalArea - cover - otherCover) / totalArea) * 100,
+        percentage: ((totalArea - treeCover - otherCover) / totalArea) * 100,
       },
     ];
 
     if (hasPlantations) {
       parsedData.splice(1, 0, {
         label: 'Other tree cover',
-        value: totalCover - plantationsCover,
+        value: totalExtent - treeCover,
         color: colors.otherCover,
-        percentage: ((totalCover - plantationsCover) / totalArea) * 100,
+        percentage: ((totalExtent - treeCover) / totalArea) * 100,
       });
     }
 
@@ -72,8 +76,10 @@ export const parseSentence = createSelector(
   (data, settings, locationName, indicator, sentences, admLevel) => {
     if (!data || !sentences) return null;
 
-    const { extentYear, threshold, decile } = settings;
+    const { extentYear, threshold, decile, landCategory, forestType } =
+      settings;
 
+    const hasIntersection = !!landCategory || !!forestType;
     const isTropicalTreeCover = extentYear === 2020;
     const withIndicator = !!indicator;
     const decileThreshold = isTropicalTreeCover ? decile : threshold;
@@ -86,9 +92,9 @@ export const parseSentence = createSelector(
     const sentence =
       sentences[sentenceKey][sentenceSubkey][sentenceTreeCoverType];
 
-    const { cover, totalCover, totalArea } = data;
-    const top = cover;
-    const bottom = indicator ? totalCover : totalArea;
+    const { treeCover, totalArea, totalExtent } = data;
+    const top = treeCover;
+    const bottom = hasIntersection ? totalExtent : totalArea;
     const percentCover = (100 * top) / bottom;
 
     const formattedPercentage = formatNumber({ num: percentCover, unit: '%' });
