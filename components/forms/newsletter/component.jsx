@@ -12,40 +12,15 @@ import Select from 'components/forms/components/select';
 import Submit from 'components/forms/components/submit';
 import SuccessMessage from 'components/success-message';
 import Error from 'components/forms/components/error';
-import { preferredLanguages, interests } from 'components/forms/profile/config';
+import {
+  preferredLanguages,
+  interests,
+  newsLetterSectors as sectorsOptions,
+} from 'components/forms/profile/config';
 
 import { email as validateEmail } from 'components/forms/validations';
 import { ORTTO_REQUESTS_TYPES } from 'pages/api/ortto/constants';
 import Checkbox from '../components/checkbox/component';
-
-const sectors = [
-  { value: 'Government', label: 'Government/Public Sector' },
-  { value: 'Donor Institution / Agency', label: 'Philantropic Organization' },
-  {
-    value: 'Local NGO (national or subnational)',
-    label: 'NGO - National or Local',
-  },
-  { value: 'International NGO', label: 'International NGO' },
-  {
-    value: 'Intergovernmental/Multilateral Organization',
-    label: 'UN or International Organization',
-  },
-  {
-    value: 'Academic / Research Organization',
-    label: 'Academic/Research Organization',
-  },
-  {
-    value: 'Journalist / Media Organization',
-    label: 'Journalist/Media Organization',
-  },
-  {
-    value: 'Indigenous or Community-Based Organization',
-    label: 'Indigenous or Community-Based Organization',
-  },
-  { value: 'Private Sector', label: 'Business/Private sector' },
-  { value: 'Individual / No Affiliation', label: 'No Affiliation' },
-  { value: 'Other', label: 'Other (Write In)' },
-];
 
 class NewsletterForm extends PureComponent {
   static propTypes = {
@@ -110,11 +85,6 @@ class NewsletterForm extends PureComponent {
     const countriesOptions = countries.map(({ label }) => ({
       label,
       value: label,
-    }));
-
-    const sectorsOptions = sectors.map(({ label, value }) => ({
-      label,
-      value,
     }));
 
     const interestsOptions = interests.map((interest) => ({
