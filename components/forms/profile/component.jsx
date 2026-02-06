@@ -21,7 +21,11 @@ import {
   hasValidOption,
 } from 'components/forms/validations';
 
-import { sectors, howDoYouUse, interests } from './config';
+import {
+  profileSectors as sectorsOptions,
+  howDoYouUse,
+  interests,
+} from './config';
 
 class ProfileForm extends PureComponent {
   static propTypes = {
@@ -33,10 +37,6 @@ class ProfileForm extends PureComponent {
 
   render() {
     const { initialValues, countries, saveProfile, source } = this.props;
-    const sectorsOptions = Object.keys(sectors).map((s) => ({
-      label: s,
-      value: s,
-    }));
 
     return (
       <Fragment>
@@ -116,11 +116,11 @@ class ProfileForm extends PureComponent {
                         ]}
                         required
                       />
-                      {values.sector && sectors[values.sector] && (
+                      {values.sector && sectorsOptions[values.sector] && (
                         <Radio
                           name="subsector"
                           label="Role"
-                          options={sectors[values.sector].map((s) => ({
+                          options={sectorsOptions[values.sector].map((s) => ({
                             label: s,
                             value: s.replace(/( )+|(\/)+/g, '_'),
                             radioInput: s === 'Other:',

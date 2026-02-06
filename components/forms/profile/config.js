@@ -1,78 +1,58 @@
-export const sectors = {
-  Government: [
-    'Forest Management/Park Management',
-    'Law Enforcement',
-    'Legislature/Parliament',
-    'Ministry/National Agency',
-    'Subnational Agency',
-    'Other:',
-  ],
-  'Donor Institution / Agency': [
-    'Director/Executive',
-    'Project/Program Manager',
-    'Researcher',
-    'Monitoring/Evaluation',
-    'Field/Country Staff',
-    'Other:',
-  ],
-  'Local NGO (national or subnational)': [
-    'Director/Executive',
-    'Project/Program Manager',
-    'Monitoring/Evaluation Specialist',
-    'GIS/Technical Specialist',
-    'Researcher',
-    'Field Staff',
-    'Communications Specialist',
-    'Park/Forest Ranger',
-    'Other:',
-  ],
-  'International NGO': [
-    'Director/Executive',
-    'Project/Program Manager',
-    'Monitoring/Evaluation Specialist',
-    'GIS/Technical Specialist',
-    'Field/Country Staff',
-    'Communications Specialist',
-    'Researcher',
-    'Other:',
-  ],
-  'UN or International Organization': [
-    'Director/Executive',
-    'Project/Program Manager',
-    'Researcher',
-    'Field/Country Staff',
-    'Monitoring/Evaluation Specialist',
-    'GIS/Technical Specialist',
-    'Communications Specialist',
-    'Other:',
-  ],
-  'Academic / Research Organization': [
-    'Faculty (Primary/Secondary)',
-    'Faculty (University)',
-    'Student (Primary/Secondary)',
-    'Student (University/Graduate)',
-    'Researcher (Post-Doc, Fellow, etc.)',
-    'Other:',
-  ],
-  'Journalist / Media Organization': ['Reporter', 'Editor', 'Other:'],
-  'Indigenous or Community-Based Organization': [
-    'Community Leader',
-    'Forest Manager/Monitor',
-    'GIS/Technical Specialist',
-    'Communications Specialist',
-    'Other:',
-  ],
-  'Private sector': [
-    'Supply Chain Manager',
-    'Supply Chain Analyst',
-    'Procurement Staff',
-    'Retailer/Trader',
-    'Land or Concession Owner',
-    'Other:',
-  ],
-  'Individual / No Affiliation': ['Other:'],
-  Other: ['Other:'],
-};
+export const profileSectors = [
+  {
+    value: 'Government',
+    label: 'Government/Public Sector',
+  },
+  {
+    value: 'Donor Institution / Agency',
+    label: 'Philantropic Organization',
+  },
+  {
+    value: 'Local NGO (national or subnational)',
+    label: 'NGO - National or Local',
+  },
+  {
+    value: 'International NGO',
+    label: 'NGO - International',
+  },
+  {
+    value: 'UN or International Organization',
+    label: 'Intergovernmental/Multilateral Organization',
+  },
+  {
+    value: 'Academic / Research Organization',
+    label: 'Academic/Research Organization',
+  },
+  {
+    value: 'Journalist / Media Organization',
+    label: 'Journalist/Media Organization',
+  },
+  {
+    value: 'Indigenous or Community-Based Organization',
+    label: 'Indigenous or Community-Based Organization',
+  },
+  {
+    value: 'Private sector',
+    label: 'Business/Private sector',
+  },
+  {
+    value: 'Individual / No Affiliation',
+    label: 'No Affiliation',
+  },
+  {
+    value: 'Other',
+    label: 'Other (Write In)',
+  },
+];
+
+export const newsLetterSectors = profileSectors.map((sector) =>
+  sector.value === 'Other'
+    ? {
+        label: 'Other',
+        value: sector.value,
+      }
+    : sector
+);
 
 export const interests = [
   'Innovations in Monitoring',
