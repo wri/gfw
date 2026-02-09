@@ -15,7 +15,7 @@ import Error from 'components/forms/components/error';
 import {
   preferredLanguages,
   interests,
-  newsLetterSectors as sectorsOptions,
+  newsletterSectors as sectorsOptions,
 } from 'components/forms/profile/config';
 
 import { email as validateEmail } from 'components/forms/validations';

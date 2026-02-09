@@ -45,7 +45,7 @@ export const profileSectors = [
   },
 ];
 
-export const newsLetterSectors = profileSectors.map((sector) =>
+export const newsletterSectors = profileSectors.map((sector) =>
   sector.value === 'Other'
     ? {
         label: 'Other',
