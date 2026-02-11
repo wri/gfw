@@ -1,5 +1,5 @@
 import { all, spread } from 'axios';
-import { getLossNaturalForest } from 'services/tree-cover-loss';
+import { getLossNaturalForest } from 'services/analysis-cached';
 import { getYearsRangeFromMinMax } from 'components/widgets/utils/data';
 
 import {
