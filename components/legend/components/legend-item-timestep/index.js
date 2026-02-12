@@ -13,6 +13,12 @@ import {
   formatDate,
   getTicks,
 } from './utils';
+import {
+  buildSegments,
+  mapIndexToSegment,
+  getSegmentByCenterIndex,
+  yearToIndex,
+} from './segments';
 
 export class TimestepContainer extends PureComponent {
   timelineParams = null;
@@ -31,6 +37,7 @@ export class TimestepContainer extends PureComponent {
     const { timelineParams } = activeLayer;
 
     this.timelineParams = timelineParams;
+    this.segments = buildSegments(timelineParams);
   }
 
   componentDidUpdate(prevProps) {
@@ -43,6 +50,7 @@ export class TimestepContainer extends PureComponent {
     // Should we use timelineParams directly from params instead of doing this? I think so
     if (!isEqual(timelineParams, prevTimelineParams)) {
       this.timelineParams = timelineParams;
+      this.segments = buildSegments(timelineParams);
       this.forceUpdate();
     }
   }
@@ -79,33 +87,109 @@ export class TimestepContainer extends PureComponent {
 
   handleOnAfterChange = (range) => {
     const { activeLayer, handleChange } = this.props;
+    const [startOriginal, endOriginal, trimOriginal] = range;
+    let end = endOriginal;
+    let trim = trimOriginal;
 
-    const formattedRange = this.formatRange([range[0], range[1], range[2]]);
+    // For segmented timelines, snap the selection to the nearest segment center
+    if (this.segments && this.segments.length) {
+      const hit = mapIndexToSegment(this.segments, end);
+      if (hit && hit.snappedIndex != null) {
+        end = hit.snappedIndex;
+        trim = hit.snappedIndex;
+      }
+    }
+
+    const formattedRange = this.formatRange([startOriginal, end, trim]);
     handleChange(formattedRange, activeLayer);
   };
 
   formatRange = (range) => {
-    const { minDate, interval } = this.timelineParams;
+    const { interval } = this.timelineParams;
+    const minDateBase = this.getMinDateBase();
+
     return range.map((r, i) => {
-      // if date is not the start date we should select the end of the interval
       const toEnd = i !== 0;
 
-      return formatDate(addToDate(minDate, r, interval, toEnd));
+      // When this position is a segment center, use the segment's datasetDate
+      // so the map fetches the correct dataset reference (e.g. 1976-2002 -> 2003)
+      if (this.segments && this.segments.length) {
+        const segment = getSegmentByCenterIndex(this.segments, r);
+        if (segment?.datasetDate != null) {
+          const dataIndex = yearToIndex(
+            segment.datasetDate,
+            minDateBase,
+            interval
+          );
+          if (dataIndex != null) {
+            return formatDate(
+              addToDate(minDateBase, dataIndex, interval, toEnd)
+            );
+          }
+        }
+      }
+
+      return formatDate(addToDate(minDateBase, r, interval, toEnd));
     });
   };
 
-  formatValue = (value) => {
-    const { minDate, dateFormat, interval } = this.timelineParams;
-
-    return formatDatePretty(addToDate(minDate, value, interval), dateFormat);
+  // Same minDate base used for marks (yearToIndex) so tooltip year matches mark position
+  getMinDateBase = () => {
+    const { minDate } = this.timelineParams || {};
+    if (typeof minDate === 'number' && minDate >= 1000) {
+      return `${minDate}-01-01`;
+    }
+    return minDate;
   };
 
-  setMarks = ({ marks, customTimelineMarks }) => {
+  formatValue = (value) => {
+    const { dateFormat, interval } = this.timelineParams;
+    const minDateBase = this.getMinDateBase();
+    const rawIndex =
+      typeof value === 'number' && !Number.isNaN(value) ? value : Number(value);
+    const index = Number.isNaN(rawIndex) ? 0 : Math.round(rawIndex);
+
+    // Only use segment label when the index is inside a grouped range
+    if (this.segments && this.segments.length) {
+      const hit = mapIndexToSegment(this.segments, index);
+      if (hit && hit.segment) {
+        return hit.segment.label;
+      }
+    }
+
+    // Linear zone: show year/date for this index so it matches the mark at this position
+    return formatDatePretty(
+      addToDate(minDateBase, index, interval),
+      dateFormat
+    );
+  };
+
+  setMarks = ({ marks, customTimelineMarks, minDate, interval }) => {
+    // customTimelineMarks is used only to set the marks (labels) on the slider
     if (customTimelineMarks?.length > 0) {
+      let minDateBase = minDate;
+      if (minDate != null && typeof minDate === 'number' && minDate >= 1000) {
+        minDateBase = `${minDate}-01-01`;
+      }
       return customTimelineMarks.reduce((acc, item) => {
-        acc[item.datasetDate] = item.label;
+        // datasetDate as calendar year -> same scale as formatValue (index from minDateBase)
+        const key =
+          typeof item.datasetDate === 'number' &&
+          item.datasetDate >= 1000 &&
+          minDateBase != null
+            ? yearToIndex(item.datasetDate, minDateBase, interval)
+            : item.datasetDate;
+        if (key != null) acc[key] = item.label;
         return acc;
       }, {});
+    }
+
+    if (
+      customTimelineMarks &&
+      typeof customTimelineMarks === 'object' &&
+      !Array.isArray(customTimelineMarks)
+    ) {
+      return customTimelineMarks;
     }
 
     return marks || getTicks(this.timelineParams);
