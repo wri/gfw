@@ -40,24 +40,24 @@ export const yearToIndex = (year, minDate, interval = 'years') => {
   return dateDiff(yearDate, minDate, interval);
 };
 
-// Build segments from customTimelineMarks and the base timeline dates
+// Build segments from customTimelineRange and the base timeline dates
 export const buildSegments = (timelineParams) => {
   const {
-    customTimelineMarks,
+    customTimelineRange,
     minDate,
     maxDate,
     interval = 'years',
   } = timelineParams || {};
 
-  if (!customTimelineMarks || !customTimelineMarks.length) return null;
+  if (!customTimelineRange || !customTimelineRange.length) return null;
 
   const minYear = moment.utc(minDate).year();
   const maxYear = moment.utc(maxDate).year();
 
   // First, normalize each mark into a segment definition
-  const rawSegments = customTimelineMarks
+  const rawSegments = customTimelineRange
     .map((item, index) => {
-      const { label } = item || {};
+      const { label, datasetDate } = item || {};
       if (!label) return null;
 
       const parsed = parseLabelYears(label);
@@ -79,19 +79,29 @@ export const buildSegments = (timelineParams) => {
         return null;
       }
 
-      // Center of the segment in index space:
-      // - For single years, it's the exact year index
-      // - For ranges, it's the midpoint of [startIndex, endIndex]
-      const centerIndex =
-        clampedStartYear === clampedEndYear
-          ? startIndex
-          : Math.round((startIndex + endIndex) / 2);
+      // Center of the segment: use datasetDate when provided so the slider thumb
+      // aligns with the mark (same position as customTimelineMarks), and the
+      // map receives the correct dataset reference. Otherwise use midpoint.
+      let centerIndex;
+      if (datasetDate != null) {
+        const dataIndex = yearToIndex(datasetDate, minDate, interval);
+        centerIndex =
+          dataIndex != null
+            ? dataIndex
+            : Math.round((startIndex + endIndex) / 2);
+      } else {
+        centerIndex =
+          clampedStartYear === clampedEndYear
+            ? startIndex
+            : Math.round((startIndex + endIndex) / 2);
+      }
 
       const yearCount = clampedEndYear - clampedStartYear + 1;
 
       return {
         id: index,
         label,
+        datasetDate,
         startYear: clampedStartYear,
         endYear: clampedEndYear,
         startIndex,
@@ -141,6 +151,12 @@ export const mapIndexToSegment = (segments, index) => {
     segment: closest,
     snappedIndex: closest.centerIndex,
   };
+};
+
+// Get segment whose centerIndex equals the given index (for output date lookup)
+export const getSegmentByCenterIndex = (segments, index) => {
+  if (!segments || !segments.length) return null;
+  return segments.find((s) => s.centerIndex === index) || null;
 };
 
 // Map a segment id or explicit year to a slider index
