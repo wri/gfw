@@ -23,7 +23,9 @@ module.exports = {
 
     // Handle image imports
     // https://jestjs.io/docs/webpack#handling-static-assets
-    '^.+\\.(png|jpg|jpeg|gif|webp|avif|ico|bmp|svg)$/i': `<rootDir>/__mocks__/fileMock.js`,
+    '^.+\\.(png|jpg|jpeg|gif|webp|avif|ico|bmp|svg)$': '<rootDir>/__mocks__/fileMock.js',
+    '^.+\\.(png|jpg|jpeg|gif|webp|avif|ico|bmp|svg)\\?sprite$': '<rootDir>/__mocks__/fileMock.js',
+    '^assets/.*\\.(png|jpg|jpeg|gif|webp|avif|ico|bmp|svg)$': '<rootDir>/__mocks__/fileMock.js',
 
     // Handle module aliases
     '^@/components/(.*)$': '<rootDir>/components/$1',
@@ -34,6 +36,8 @@ module.exports = {
     '<rootDir>/node_modules/',
     '<rootDir>/.next/',
     '<rootDir>/cypress/',
+    '<rootDir>/components/__tests__/mocks/',
+    '<rootDir>/components/__tests__/test-utils.js',
   ],
   testEnvironment: 'jsdom',
   transform: {
@@ -44,5 +48,6 @@ module.exports = {
   transformIgnorePatterns: [
     '/node_modules/',
     '^.+\\.module\\.(css|sass|scss)$',
+    '\\.(png|jpg|jpeg|gif|webp|avif|ico|bmp|svg)$',
   ],
 };

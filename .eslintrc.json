@@ -52,6 +52,7 @@
     "no-param-reassign": "off",
     "no-underscore-dangle": "off",
     "no-restricted-globals": "off",
+    "no-undef": "off",
     "camelcase": "off",
     "security/detect-object-injection": "off",
     "react/jsx-one-expression-per-line": "off",
