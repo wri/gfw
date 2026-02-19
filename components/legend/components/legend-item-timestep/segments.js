@@ -3,11 +3,11 @@ import moment from 'moment';
 // Utils shared with existing timeline helpers
 import { dateDiff } from './utils';
 
-// Parse label like "1976–2002" or "1976-2002" or "2020"
+// Parse label like "1976–2002" or "2003-2018" or "2020"
 export const parseLabelYears = (label) => {
   if (!label) return null;
 
-  const normalized = String(label).replace('–', '-');
+  const normalized = String(label).replace('\u2013', '-');
   const parts = normalized.split('-').map((p) => p.trim());
 
   if (parts.length === 1) {
