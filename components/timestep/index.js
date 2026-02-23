@@ -6,6 +6,12 @@ import classnames from 'classnames';
 import Icon from 'components/ui/icon';
 import Slider from 'components/slider';
 
+// NOTE:
+// This component operates on a linear numeric axis (indices between min and max).
+// For segmented timelines (with grouped ranges), snapping and segment awareness
+// are implemented one level up in the legend timestep container, which keeps
+// this slider fully backward compatible for linear use cases.
+
 class Timestep extends PureComponent {
   static propTypes = {
     customClass: PropTypes.string,
