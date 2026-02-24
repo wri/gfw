@@ -12,9 +12,11 @@
       align-items: flex-start;
       width: 100%;
       margin-bottom: 10px;
+      gap: 16px;
 
       .value {
         display: flex;
+        flex: 1;
         flex-direction: column;
         justify-content: center;
         align-items: flex-start;
@@ -26,10 +28,8 @@
       }
 
       .label {
-        width: 40%;
-        min-width: 40%;
+        flex: 0 0 120px;
         font-weight: 500;
-        margin-right: 15px;
         text-transform: uppercase;
         word-break: break-all;
       }
