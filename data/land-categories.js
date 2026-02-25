@@ -39,6 +39,8 @@ export default [
         layers: [MINING_CONCESSIONS],
       },
     ],
+    disabled: true,
+    hidden: true,
   },
   {
     label: 'Protected Areas',
@@ -92,6 +94,8 @@ export default [
         layers: [ALLIANCE_FOR_ZERO_EXSTINCTION],
       },
     ],
+    disabled: true,
+    hidden: true,
   },
   {
     label: 'Indigenous and Community Lands',
@@ -169,6 +173,8 @@ export default [
         layers: [OIL_PALM],
       },
     ],
+    disabled: true,
+    hidden: true,
   },
   {
     label: 'Wood fiber concessions',
@@ -183,6 +189,8 @@ export default [
         layers: [WOOD_FIBER],
       },
     ],
+    disabled: true,
+    hidden: true,
   },
   {
     label: 'Logging concessions',
@@ -197,5 +205,7 @@ export default [
         layers: [LOGGING_CONCESSIONS],
       },
     ],
+    disabled: true,
+    hidden: true,
   },
 ];
