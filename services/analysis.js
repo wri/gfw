@@ -71,16 +71,13 @@ const getUrlTemplate = (type) => {
 };
 
 const reduceAnalysisResponse = (response) => {
-  const { data } = response.data;
-  const { attributes } = data || {};
-  if (attributes) {
-    const fetchType = data && data.type;
-    const fetchKey = fetchType.toLowerCase();
-    return {
-      [fetchKey]: attributes,
-    };
-  }
-  return {};
+  const data = response?.data?.data;
+
+  if (!data?.attributes || !data?.type) return {};
+
+  return {
+    [data.type.toLowerCase()]: data.attributes,
+  };
 };
 
 export const fetchAnalysisEndpoint = ({ type, ...rest }) =>
@@ -117,10 +114,7 @@ export const fetchUmdLossGain = ({
       );
     });
 
-  return all(endpointUrls, {
-    cancelToken: token,
-    timeout: 1800,
-  }).then(
+  return all(endpointUrls, { cancelToken: token, timeout: 1800 }).then(
     spread(
       (...responses) =>
         responses &&

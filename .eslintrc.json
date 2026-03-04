@@ -52,9 +52,23 @@
     "no-param-reassign": "off",
     "no-underscore-dangle": "off",
     "no-restricted-globals": "off",
+    "no-undef": "off",
     "camelcase": "off",
     "security/detect-object-injection": "off",
     "react/jsx-one-expression-per-line": "off",
     "import/no-extraneous-dependencies": "off"
-  }
+  },
+  "overrides": [
+    {
+      "files": ["**/__tests__/**/*.js", "**/__tests__/**/*.jsx", "**/*.spec.js", "jest.setup.js"],
+      "rules": {
+        "react/prop-types": "off",
+        "class-methods-use-this": "off",
+        "max-classes-per-file": "off",
+        "no-useless-constructor": "off",
+        "global-require": "off",
+        "no-unused-vars": "off"
+      }
+    }
+  ]
 }
