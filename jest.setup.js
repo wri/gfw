@@ -1,4 +1,18 @@
+/* eslint-disable class-methods-use-this */
+/* eslint-disable react/prop-types */
+/* eslint-disable global-require */
+/* eslint-disable max-classes-per-file */
 import '@testing-library/jest-dom';
+
+// Provide TextEncoder/TextDecoder in the Jest environment (Node/jsdom)
+if (typeof global.TextEncoder === 'undefined') {
+  const { TextEncoder } = require('util');
+  global.TextEncoder = TextEncoder;
+}
+if (typeof global.TextDecoder === 'undefined') {
+  const { TextDecoder } = require('util');
+  global.TextDecoder = TextDecoder;
+}
 
 // Mock Next.js Link component
 jest.mock('next/link', () => {
@@ -59,20 +73,33 @@ jest.mock('utils/analytics', () => ({
 
 // Mock IntersectionObserver for components that use it
 global.IntersectionObserver = class IntersectionObserver {
-  constructor() {}
+  // eslint-disable-next-line no-useless-constructor
+  constructor() {
+    this.entries = [];
+  }
+
   disconnect() {}
+
   observe() {}
+
   takeRecords() {
     return [];
   }
+
   unobserve() {}
 };
 
 // Mock ResizeObserver for components that use it
 global.ResizeObserver = class ResizeObserver {
-  constructor() {}
+  // eslint-disable-next-line no-useless-constructor
+  constructor() {
+    this.entries = [];
+  }
+
   disconnect() {}
+
   observe() {}
+
   unobserve() {}
 };
 
