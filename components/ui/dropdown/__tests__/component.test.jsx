@@ -1,23 +1,31 @@
 import React from 'react';
-import { render, screen, fireEvent } from '@testing-library/react';
+import { fireEvent } from '@testing-library/react';
 import { renderWithRedux } from '../../../__tests__/test-utils';
 import DropdownContainer from '../index';
 
 // Mock the component since it uses Downshift
 jest.mock('../component', () => {
-  return function MockDropdown({ options, onChange, activeLabel, placeholder }) {
+  return function MockDropdown({
+    options,
+    onChange,
+    activeLabel,
+    placeholder,
+  }) {
     return (
       <div data-testid="dropdown">
-        <button data-testid="dropdown-selector">{activeLabel || placeholder}</button>
-        {options && options.map((option, index) => (
-          <button
-            key={index}
-            data-testid={`option-${option.value}`}
-            onClick={() => onChange && onChange(option)}
-          >
-            {option.label}
-          </button>
-        ))}
+        <button data-testid="dropdown-selector">
+          {activeLabel || placeholder}
+        </button>
+        {options &&
+          options.map((option, index) => (
+            <button
+              key={index}
+              data-testid={`option-${option.value}`}
+              onClick={() => onChange && onChange(option)}
+            >
+              {option.label}
+            </button>
+          ))}
       </div>
     );
   };
@@ -50,10 +58,7 @@ describe('DropdownContainer', () => {
 
   it('displays active label from Redux state', () => {
     const { getByTestId } = renderWithRedux(
-      <DropdownContainer
-        options={mockOptions}
-        value="opt1"
-      />,
+      <DropdownContainer options={mockOptions} value="opt1" />,
       { initialState }
     );
 
@@ -93,10 +98,7 @@ describe('DropdownContainer', () => {
   it('calls onChange when option is selected', () => {
     const handleChange = jest.fn();
     const { getByTestId } = renderWithRedux(
-      <DropdownContainer
-        options={mockOptions}
-        onChange={handleChange}
-      />,
+      <DropdownContainer options={mockOptions} onChange={handleChange} />,
       { initialState }
     );
 
@@ -108,10 +110,7 @@ describe('DropdownContainer', () => {
 
   it('handles value as string', () => {
     const { getByTestId } = renderWithRedux(
-      <DropdownContainer
-        options={mockOptions}
-        value="opt2"
-      />,
+      <DropdownContainer options={mockOptions} value="opt2" />,
       { initialState }
     );
 
@@ -126,10 +125,7 @@ describe('DropdownContainer', () => {
     ];
 
     const { getByTestId } = renderWithRedux(
-      <DropdownContainer
-        options={numericOptions}
-        value={1}
-      />,
+      <DropdownContainer options={numericOptions} value={1} />,
       { initialState }
     );
 

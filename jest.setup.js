@@ -1,7 +1,3 @@
-/* eslint-disable class-methods-use-this */
-/* eslint-disable react/prop-types */
-/* eslint-disable global-require */
-/* eslint-disable max-classes-per-file */
 import '@testing-library/jest-dom';
 
 // Provide TextEncoder/TextDecoder in the Jest environment (Node/jsdom)
