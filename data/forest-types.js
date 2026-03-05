@@ -98,7 +98,8 @@ export default [
         layers: [MANGROVE_FORESTS],
       },
     ],
-    hidden: false,
+    disabled: true,
+    hidden: true,
   },
   {
     label: 'SBTN natural forest 2020',
