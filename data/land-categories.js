@@ -1,7 +1,6 @@
 import {
   MINING_CONCESSIONS_DATASET,
   PROTECTED_AREAS_DATASET,
-  // TIGER_CONSERVATION_LANDSCAPES_DATASET,
   ALLIANCE_FOR_ZERO_EXSTINCTION_DATASET,
   INDIGENOUS_AND_COMMUNITY_LANDS_DATASET,
   IND_PEAT_LANDS_DATASET,
@@ -14,7 +13,6 @@ import {
 import {
   MINING_CONCESSIONS,
   PROTECTED_AREAS_LAYER,
-  // TIGER_CONSERVATION_LANDSCAPES,
   ALLIANCE_FOR_ZERO_EXSTINCTION,
   INDIGENOUS_AND_COMMUNITY_LANDS,
   IND_PEAT_LANDS,
@@ -66,20 +64,6 @@ export default [
     tableKey: 'is__birdlife_key_biodiversity_areas',
     global: true,
   },
-  // {
-  //   label: 'Tiger Conservation Landscapes',
-  //   value: 'tiger_cl',
-  //   dataType: 'keyword',
-  //   metaKey: 'tiger_conservation_landscapes',
-  //   tableKey: 'is__gfw_tiger_landscape',
-  //   global: true,
-  //   datasets: [
-  //     {
-  //       dataset: TIGER_CONSERVATION_LANDSCAPES_DATASET,
-  //       layers: [TIGER_CONSERVATION_LANDSCAPES],
-  //     },
-  //   ]
-  // },
   {
     label: 'Alliance for Zero Extinction sites',
     value: 'aze',

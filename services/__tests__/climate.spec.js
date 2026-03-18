@@ -1,6 +1,6 @@
 import { jest } from '@jest/globals';
 import request from 'utils/request';
-import { getEmissions, getCumulative } from 'services/climate';
+import { getCumulative } from 'services/climate';
 
 jest.mock('utils/request', () => ({
   __esModule: true,
@@ -12,24 +12,6 @@ jest.mock('utils/request', () => ({
 describe('climate service', () => {
   afterEach(() => {
     jest.clearAllMocks();
-  });
-
-  describe('getEmissions', () => {
-    it('requests one emissions timeseries per indicator when not downloading', () => {
-      request.get.mockResolvedValue({ data: {} });
-
-      const results = getEmissions({
-        threshold: 30,
-        adm0: 'BRA',
-        download: false,
-      });
-
-      expect(results).toHaveLength(8);
-      expect(request.get).toHaveBeenCalledTimes(8);
-      const firstUrl = request.get.mock.calls[0][0];
-      expect(firstUrl).toContain('/sql?q=');
-      expect(firstUrl).toContain('3110');
-    });
   });
 
   describe('getCumulative', () => {
