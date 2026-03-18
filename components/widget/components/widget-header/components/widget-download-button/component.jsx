@@ -16,6 +16,7 @@ import downloadIcon from 'assets/icons/download.svg?sprite';
 import { GFW_API } from 'utils/apis';
 
 const GLAD_ALERTS_WIDGET = 'gladAlerts';
+const DEFORESTATION_ALERTS_WIDGET = 'integratedDeforestationAlerts';
 
 const isServer = typeof window === 'undefined';
 
@@ -234,6 +235,11 @@ class WidgetDownloadButton extends PureComponent {
     return widget === GLAD_ALERTS_WIDGET;
   };
 
+  isDeforestationAlertsWidget = () => {
+    const { widget } = this.props;
+    return widget === DEFORESTATION_ALERTS_WIDGET;
+  };
+
   isCustomShape = () => {
     const { location, status } = this.props;
     return location && location.type === 'geostore' && status !== 'saved';
@@ -268,10 +274,17 @@ class WidgetDownloadButton extends PureComponent {
     const { areaTooLarge, disabled, disabledMessage, widget } = this.props;
     const { disabled: localDisabled } = this.state;
 
-    let tooltipText =
-      this.isGladAlertsWidget() && this.isCustomShape()
-        ? 'Download data. Please add .csv to the filename if extension is missing.'
-        : 'Download data.';
+    let tooltipText = 'Download data.';
+
+    if (this.isGladAlertsWidget() && this.isCustomShape()) {
+      tooltipText =
+        'Download data. Please add .csv to the filename if extension is missing.';
+    }
+
+    if (this.isDeforestationAlertsWidget()) {
+      tooltipText =
+        'Download may fail due to system limits. If this happens, please try after a minute.';
+    }
 
     if (areaTooLarge) {
       tooltipText =
