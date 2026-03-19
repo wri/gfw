@@ -1,10 +1,15 @@
 import { GFW_DATA_API, GFW_METADATA_API } from 'utils/apis';
 import axios from 'axios';
 
+import { requireGfwDataApiAdmin } from 'utils/auth/require-gfw-data-admin';
 import METADATA_LIST from '../../../data/metadata.json';
 import METADATA_EXCEPTION_LIST from '../../../data/metadata-exception.json'; // a list of metadata that isn't on Data API
 
 export default async (req, res) => {
+  if (!requireGfwDataApiAdmin(req, res)) {
+    return undefined;
+  }
+
   try {
     const userPath = req.query.params[0];
     const isExternalMetadata = METADATA_EXCEPTION_LIST.includes(userPath);
@@ -13,7 +18,8 @@ export default async (req, res) => {
     );
 
     if (safePaths.length === 0) {
-      return res.status(400).end('Invalid path');
+      res.status(400).end('Invalid path');
+      return undefined;
     }
 
     if (isExternalMetadata) {
@@ -23,7 +29,8 @@ export default async (req, res) => {
         metadata: response.data,
       };
 
-      return res.status(200).json(transformedResponse);
+      res.status(200).json(transformedResponse);
+      return undefined;
     }
 
     const url = `${GFW_DATA_API}/dataset/${safePaths[0]}`;
@@ -57,8 +64,10 @@ export default async (req, res) => {
       });
     }
 
-    return res.status(200).json(response);
+    res.status(200).json(response);
+    return undefined;
   } catch (error) {
-    return res.status(400).end(error.message);
+    res.status(400).end(error.message);
+    return undefined;
   }
 };

@@ -1,17 +1,24 @@
 import { GFW_METADATA_API, GFW_STAGING_METADATA_API } from 'utils/apis';
 
+import { requireGfwDataApiAdmin } from 'utils/auth/require-gfw-data-admin';
+
 const ENVIRONMENT = process.env.NEXT_PUBLIC_FEATURE_ENV;
 const GFW_METADATA_API_URL =
   ENVIRONMENT === 'staging' ? GFW_STAGING_METADATA_API : GFW_METADATA_API;
 
 export default async (req, res) => {
+  if (!requireGfwDataApiAdmin(req, res)) {
+    return undefined;
+  }
+
   try {
     const path = req.query.params.join('/');
 
     // Validate the path to prevent SSRF and path traversal attacks
     const isValidPath = /^[a-zA-Z0-9/_-]+$/.test(path); // Allow only alphanumeric, '/', '_', and '-'
     if (!isValidPath) {
-      return res.status(400).json({ error: 'Invalid path parameter' });
+      res.status(400).json({ error: 'Invalid path parameter' });
+      return undefined;
     }
     const url = `${GFW_METADATA_API_URL}/${path}/?_=${Date.now()}`;
 
@@ -31,8 +38,10 @@ export default async (req, res) => {
 
     const data = await response.json();
 
-    return res.status(200).json(data);
+    res.status(200).json(data);
+    return undefined;
   } catch (error) {
-    return res.status(400).end(error.message);
+    res.status(400).end(error.message);
+    return undefined;
   }
 };
