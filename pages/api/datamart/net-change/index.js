@@ -3,7 +3,8 @@ import { requireGfwDataApiAdmin } from 'utils/auth/require-gfw-data-admin';
 
 // this PoC is only meant for net change widget (we chose net change for its simplicity)
 export default async (req, res) => {
-  if (!requireGfwDataApiAdmin(req, res)) return res.end();
+  const allowed = await requireGfwDataApiAdmin(req, res);
+  if (!allowed) return res.end();
 
   // example request:
   // localhost:3000/api/datamart/net-change/?type=global&adm0=MEX&adm1=9&adm2=3&download=true

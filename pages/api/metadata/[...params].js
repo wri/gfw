@@ -6,8 +6,9 @@ import METADATA_LIST from '../../../data/metadata.json';
 import METADATA_EXCEPTION_LIST from '../../../data/metadata-exception.json'; // a list of metadata that isn't on Data API
 
 export default async (req, res) => {
-  if (!requireGfwDataApiAdmin(req, res)) {
-    return undefined;
+  const allowed = await requireGfwDataApiAdmin(req, res);
+  if (!allowed) {
+    res.end();
   }
 
   try {
@@ -19,7 +20,6 @@ export default async (req, res) => {
 
     if (safePaths.length === 0) {
       res.status(400).end('Invalid path');
-      return undefined;
     }
 
     if (isExternalMetadata) {
@@ -30,7 +30,6 @@ export default async (req, res) => {
       };
 
       res.status(200).json(transformedResponse);
-      return undefined;
     }
 
     const url = `${GFW_DATA_API}/dataset/${safePaths[0]}`;
@@ -65,9 +64,7 @@ export default async (req, res) => {
     }
 
     res.status(200).json(response);
-    return undefined;
   } catch (error) {
     res.status(400).end(error.message);
-    return undefined;
   }
 };

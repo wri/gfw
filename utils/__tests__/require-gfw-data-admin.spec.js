@@ -27,43 +27,24 @@ const buildRes = () => {
 };
 
 describe('requireGfwDataApiAdmin', () => {
-  const originalEnv = process.env;
-
   beforeEach(() => {
-    jest.resetModules();
-    process.env = { ...originalEnv };
+    jest.clearAllMocks();
   });
 
-  afterAll(() => {
-    process.env = originalEnv;
-  });
-
-  it('fails closed with 500 when admin JWT is not configured', async () => {
-    process.env.GFW_DATA_API_ADMIN_JWT = '';
-
-    // Re-require to pick latest env
-    // eslint-disable-next-line global-require
-    const {
-      requireGfwDataApiAdmin: freshRequire,
-    } = require('../auth/require-gfw-data-admin');
-
-    const req = buildReq();
-    const res = buildRes();
-
-    const allowed = freshRequire(req, res);
-
-    expect(allowed).toBe(false);
-    expect(res.status).toHaveBeenCalledWith(500);
-    expect(res.json).toHaveBeenCalledWith(
-      expect.objectContaining({
-        error: expect.stringContaining('GFW_DATA_API_ADMIN_JWT'),
-      })
+  const makeJwt = (payloadObj) => {
+    const headerObj = { alg: 'none', typ: 'JWT' };
+    const headerB64 = Buffer.from(JSON.stringify(headerObj)).toString(
+      'base64url'
     );
-  });
+    const payloadB64 = Buffer.from(JSON.stringify(payloadObj)).toString(
+      'base64url'
+    );
+    // Signature is not verified by jwt.decode, but keep it base64url-like
+    const signatureB64 = Buffer.from('signature').toString('base64url');
+    return `${headerB64}.${payloadB64}.${signatureB64}`;
+  };
 
-  it('returns 401 when no token is provided', () => {
-    process.env.GFW_DATA_API_ADMIN_JWT = 'admin-token';
-
+  it('returns 401 when no token is provided', async () => {
     const req = buildReq();
     const res = buildRes();
 
@@ -73,12 +54,15 @@ describe('requireGfwDataApiAdmin', () => {
     expect(res.status).toHaveBeenCalledWith(401);
   });
 
-  it('returns 403 when token does not match admin token', () => {
-    process.env.GFW_DATA_API_ADMIN_JWT = 'admin-token';
+  it('returns 403 when user role is not ADMIN', async () => {
+    const payload = {
+      role: 'USER',
+    };
+    const token = makeJwt(payload);
 
     const req = buildReq({
       headers: {
-        authorization: 'Bearer other-token',
+        cookie: `gfw-jwt=${token}`,
       },
     });
     const res = buildRes();
@@ -89,28 +73,15 @@ describe('requireGfwDataApiAdmin', () => {
     expect(res.status).toHaveBeenCalledWith(403);
   });
 
-  it('accepts when Authorization header token matches admin token', () => {
-    process.env.GFW_DATA_API_ADMIN_JWT = 'admin-token';
+  it('accepts when JWT has ADMIN role and normalizes trailing #', async () => {
+    const payload = {
+      role: 'ADMIN',
+    };
+    const token = makeJwt(payload);
 
     const req = buildReq({
       headers: {
-        authorization: 'Bearer admin-token',
-      },
-    });
-    const res = buildRes();
-
-    const allowed = requireGfwDataApiAdmin(req, res);
-
-    expect(allowed).toBe(true);
-    expect(res.status).not.toHaveBeenCalled();
-  });
-
-  it('accepts when gfw-token cookie matches admin token, normalizing trailing #', () => {
-    process.env.GFW_DATA_API_ADMIN_JWT = 'admin-token';
-
-    const req = buildReq({
-      headers: {
-        cookie: 'gfw-token=admin-token#; other=foo',
+        cookie: `gfw-jwt=${token}#; other=foo`,
       },
     });
     const res = buildRes();

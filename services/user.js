@@ -5,7 +5,10 @@ const isServer = typeof window === 'undefined';
 const CALLBACK_URL = 'https://www.globalforestwatch.org/my-gfw/';
 
 export function setServerCookie(token) {
-  fetch('/api/set-cookie', { method: 'POST', body: JSON.stringify({ token }) });
+  fetch('/api/set-cookie', {
+    method: 'POST',
+    body: JSON.stringify({ token, jwt: token }),
+  });
 }
 
 export function removeServerCookie() {

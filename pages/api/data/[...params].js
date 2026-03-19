@@ -17,8 +17,9 @@ export const config = {
   },
 };
 
-export default (req, res) => {
-  if (!requireGfwDataApiAdmin(req, res)) return res.end();
+export default async (req, res) => {
+  const allowed = await requireGfwDataApiAdmin(req, res);
+  if (!allowed) return res.end();
 
   let isDataMartDownload = false;
 

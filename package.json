@@ -197,7 +197,8 @@
     "viewport-mercator-project": "6.1.1",
     "webp-loader": "^0.6.0",
     "webpack-filter-warnings-plugin": "^1.2.1",
-    "wri-json-api-serializer": "^1.0.1"
+    "wri-json-api-serializer": "^1.0.1",
+    "jsonwebtoken": "^9.0.2"
   },
   "resolutions": {
     "cypress": "^13.1.0",

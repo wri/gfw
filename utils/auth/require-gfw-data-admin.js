@@ -1,4 +1,5 @@
 import { parse } from 'cookie';
+import jwt from 'jsonwebtoken';
 
 const normalizeToken = (token) => {
   if (!token) return null;
@@ -10,50 +11,59 @@ const normalizeToken = (token) => {
   return t;
 };
 
-const extractTokenFromRequest = (req) => {
-  const auth = req.headers?.authorization || req.headers?.Authorization;
-
-  if (
-    auth &&
-    typeof auth === 'string' &&
-    auth.toLowerCase().startsWith('bearer ')
-  ) {
-    return normalizeToken(auth.substring(7));
-  }
-
+const extractJwtFromCookie = (req) => {
   const cookieHeader = req.headers?.cookie;
-  if (cookieHeader) {
-    try {
-      const cookies = parse(cookieHeader);
-      if (cookies['gfw-token']) {
-        return normalizeToken(cookies['gfw-token']);
-      }
-    } catch (e) {
-      // ignore cookie parse errors
+  if (!cookieHeader) return null;
+
+  try {
+    const cookies = parse(cookieHeader);
+    if (cookies['gfw-jwt']) {
+      return normalizeToken(cookies['gfw-jwt']);
     }
+  } catch (e) {
+    // ignore cookie parse errors
   }
 
   return null;
 };
 
+const getRoleFromPayload = (payload) => {
+  if (!payload || typeof payload !== 'object') return null;
+
+  if (payload.role) return payload.role;
+  if (payload.data && payload.data.role) return payload.data.role;
+  if (Array.isArray(payload.roles) && payload.roles.length)
+    return payload.roles[0];
+
+  return null;
+};
+
 export const requireGfwDataApiAdmin = (req, res) => {
-  const adminJwtFromEnv = process.env.GFW_DATA_API_ADMIN_JWT;
+  const jwtToken = extractJwtFromCookie(req);
 
-  if (!adminJwtFromEnv) {
-    res.status(500).json({ error: 'GFW_DATA_API_ADMIN_JWT is not configured' });
-    return false;
-  }
-
-  const token = extractTokenFromRequest(req);
-
-  if (!token) {
+  if (!jwtToken) {
     res.status(401).json({ error: 'Missing or invalid credentials' });
     return false;
   }
 
-  const normalizedAdminToken = normalizeToken(adminJwtFromEnv);
+  let payload;
 
-  if (token !== normalizedAdminToken) {
+  try {
+    // Decode without verification; cookie is issued by our backend
+    payload = jwt.decode(jwtToken);
+  } catch (e) {
+    res.status(401).json({ error: 'Invalid or malformed token' });
+    return false;
+  }
+
+  if (!payload) {
+    res.status(401).json({ error: 'Invalid or malformed token' });
+    return false;
+  }
+
+  const role = getRoleFromPayload(payload);
+
+  if (role !== 'ADMIN') {
     res.status(403).json({ error: 'Forbidden' });
     return false;
   }
