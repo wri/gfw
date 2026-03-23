@@ -17,9 +17,6 @@ export const RESOURCE_WATCH_API = 'https://api.resourcewatch.org/v1';
 export const RESOURCE_WATCH_STAGING_API =
   'https://staging-api.resourcewatch.org/v1';
 
-// CARTO API
-export const CARTO_API = 'https://wri-01.carto.com/api/v2';
-
 // MAPBOX API
 export const MAPBOX_API = 'https://api.mapbox.com/';
 

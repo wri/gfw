@@ -53,7 +53,6 @@ import emissionsDeforestationDrivers from 'components/widgets/climate/emissions-
 import carbonStock from 'components/widgets/climate/carbon-stock';
 
 // Land Use
-import economicImpact from 'components/widgets/land-use/economic-impact';
 import forestryEmployment from 'components/widgets/land-use/forestry-employment';
 import traseCommodities from 'components/widgets/land-use/trase-commodities';
 import netChange from 'components/widgets/forest-change/net-change';
@@ -116,7 +115,6 @@ export default {
   carbonStock,
 
   // land use
-  economicImpact,
   forestryEmployment,
   traseCommodities,
 };

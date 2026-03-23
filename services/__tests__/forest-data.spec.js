@@ -1,12 +1,9 @@
 import { jest } from '@jest/globals';
-import { dataRequest, cartoRequest } from 'utils/request';
-import { getFAOExtent, getFAOEcoLive } from 'services/forest-data';
+import { dataRequest } from 'utils/request';
+import { getFAOExtent } from 'services/forest-data';
 
 jest.mock('utils/request', () => ({
   dataRequest: {
-    get: jest.fn(),
-  },
-  cartoRequest: {
     get: jest.fn(),
   },
 }));
@@ -53,41 +50,6 @@ describe('forest-data service', () => {
             },
           ],
         },
-      });
-    });
-  });
-
-  describe('getFAOEcoLive', () => {
-    it('maps economic and livelihood rows to expected field names', async () => {
-      cartoRequest.get.mockResolvedValueOnce({
-        data: {
-          rows: [
-            {
-              iso: 'BRA',
-              revenue__usd: 10,
-              expenditure__usd: 20,
-              gdp_2012__usd: 30,
-              total_forest_employees: 40,
-              female_forest_employees: 50,
-            },
-          ],
-        },
-      });
-
-      const result = await getFAOEcoLive({});
-
-      expect(cartoRequest.get).toHaveBeenCalledTimes(1);
-      expect(cartoRequest.get).toHaveBeenCalledWith(
-        expect.stringContaining('/sql?q=')
-      );
-
-      expect(result.data.rows[0]).toMatchObject({
-        country: 'BRA',
-        usdrev: 10,
-        usdexp: 20,
-        gdpusd2012: 30,
-        forempl: 40,
-        femempl: 50,
       });
     });
   });
