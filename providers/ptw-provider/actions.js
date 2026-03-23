@@ -15,9 +15,8 @@ export const getPTW = createThunkAction(
       dispatch(setPTWLoading(true));
       getPlacesToWatch()
         .then((response) => {
-          const { rows } = response.data;
-          if (rows && !!rows.length) {
-            const ptwResponse = uniqBy(rows, 'cartodb_id')
+          if (response && !!response.length) {
+            const ptwResponse = uniqBy(response, 'ptw_id')
               .filter((d) => d.bbox)
               .map((p) => {
                 const bbox = JSON.parse(p.bbox);
@@ -27,7 +26,7 @@ export const getPTW = createThunkAction(
                   bbox: reverseLatLng(bbox.coordinates[0]),
                 };
               });
-            dispatch(setPTW(uniqBy(ptwResponse, 'cartodb_id')));
+            dispatch(setPTW(uniqBy(ptwResponse, 'ptw_id')));
           }
           dispatch(setPTWLoading(false));
         })

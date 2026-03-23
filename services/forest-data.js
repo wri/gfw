@@ -1,7 +1,5 @@
-import { cartoRequest, dataRequest } from 'utils/request';
+import { dataRequest } from 'utils/request';
 import { PROXIES } from 'utils/proxies';
-
-import { CARTO_API } from 'utils/apis';
 
 const NEW_SQL_QUERIES = {
   faoExtent:
@@ -189,34 +187,4 @@ export const getFAOEmployment = (params) => {
   }
 
   return dataRequest.get(url).then((response) => response?.data);
-};
-
-export const getFAOEcoLive = (params) => {
-  const { download } = params || {};
-  const url = `/sql?q=${NEW_SQL_QUERIES.faoEcoLive}`;
-
-  if (download) {
-    return {
-      name: 'fao_treecover_economic_live',
-      url: `${CARTO_API}${url}&format=csv`,
-    };
-  }
-
-  return cartoRequest.get(url).then((response) => ({
-    ...response,
-    data: {
-      rows: response.data.rows.map((o) => {
-        delete Object.assign(o, { country: o.iso }).iso;
-        delete Object.assign(o, { usdrev: o.revenue__usd }).revenue__usd;
-        delete Object.assign(o, { usdexp: o.expenditure__usd })
-          .expenditure__usd;
-        delete Object.assign(o, { gdpusd2012: o.gdp_2012__usd }).gdp_2012__usd;
-        delete Object.assign(o, { forempl: o.total_forest_employees })
-          .total_forest_employees;
-        delete Object.assign(o, { femempl: o.female_forest_employees })
-          .female_forest_employees;
-        return o;
-      }),
-    },
-  }));
 };

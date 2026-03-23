@@ -1,10 +1,50 @@
-import { cartoRequest } from 'utils/request';
+import axios from 'axios';
 
-const QUERY =
-  "with s AS (SELECT * FROM ptw_soy_grid), stt AS (SELECT * FROM soy_ptw_top_10), p AS (SELECT * FROM ptw_palm_grid), ptt AS (SELECT * FROM palm_ptw_top_10), pc AS (SELECT * FROM ptw_config_table WHERE published = TRUE), pg AS ( SELECT grid_id, the_geom FROM ptw_grid_may2018_score_gt_0 WHERE grid_id IN (SELECT grid_id FROM pc)), ptw AS ( SELECT pc.cartodb_id, pc.grid_id, pc.description, pc.glad_count, pc.name, pc.LINK, pc.image, pc.image_source, 'ptw_grid_may2018_score_gt_0' :: text AS tablename FROM ptw_config_table pc WHERE pc.published = TRUE), mb AS (SELECT ptw.*, St_centroid(pg.the_geom) AS the_geom, St_centroid(pg.the_geom) AS point, St_asgeojson(St_transform(St_envelope(pg.the_geom), 4326) ) bbox, 'mongabay' :: text AS TYPE FROM ptw inner join pg ON ptw.grid_id = pg.grid_id), soy AS (SELECT s.cartodb_id, s.grid_id, stt.description, stt.glad_count, stt.name, NULL AS LINK, NULL AS image, NULL AS image_source, 'soy_ptw_top_10' :: text AS tablename,        St_centroid(s.the_geom) AS the_geom, St_centroid(s.the_geom) AS point,  St_asgeojson(St_transform(St_envelope(s.the_geom), 4326)) AS bbox, 'soy' :: text AS TYPE FROM s inner join stt ON s.grid_id = stt.grid_id), palm AS (SELECT p.cartodb_id, p.grid_id, ptt.description, ptt.glad_count, ptt.name, NULL AS LINK, NULL AS image, NULL AS image_source, 'palm_ptw_top_10' :: text AS tablename, St_centroid(p.the_geom) AS the_geom, St_centroid(p.the_geom) AS point, St_asgeojson(St_transform(St_envelope(p.the_geom), 4326)) AS bbox, 'palm' :: text AS TYPE FROM p inner join ptt ON p.grid_id = ptt.grid_id) SELECT * FROM mb UNION ALL SELECT * FROM soy UNION ALL SELECT * FROM palm";
-const REQUEST_URL = `/sql?q=${QUERY}`;
+const PTW_GEOJSON_URL =
+  'https://wri-users.s3.us-east-1.amazonaws.com/aberger/places_to_watch/places_to_watch.geojson';
 
-export const getPlacesToWatch = () => cartoRequest.get(REQUEST_URL);
+export const getPlacesToWatch = async () => {
+  try {
+    const { data } = await axios.get(PTW_GEOJSON_URL);
+
+    const transformedData = data.features.map((feature) => {
+      const TYPE_MAP = {
+        Article: 'mongabay',
+        Soy: 'soy',
+        Oil_palm: 'palm',
+      };
+
+      const {
+        ID,
+        type,
+        bbox,
+        title,
+        description,
+        image_link,
+        image_credit,
+        article_link: link,
+        geometry,
+      } = feature.properties;
+
+      return {
+        ptw_id: ID,
+        type: TYPE_MAP[type],
+        bbox: JSON.stringify(bbox),
+        name: title,
+        description,
+        image: image_link,
+        image_source: image_credit,
+        link,
+        geometry,
+      };
+    });
+
+    return transformedData;
+  } catch (error) {
+    console.error('Error fetching GeoJSON:', error);
+    return null;
+  }
+};
 
 export default {
   getPlacesToWatch,
