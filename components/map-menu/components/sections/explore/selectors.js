@@ -59,7 +59,7 @@ const selectPTWData = (state) => {
         tag: meta.label,
         type: d.type,
         tagColor: meta.color,
-        id: d.cartodb_id,
+        id: d.ptw_id,
         image: d.image,
         imageCredit: d.image_source,
         title: d.name || `Place to Watch: ${meta.label}`,

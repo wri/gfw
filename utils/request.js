@@ -2,7 +2,6 @@ import axios, { CancelToken } from 'axios';
 import wriAPISerializer from 'wri-json-api-serializer';
 
 import {
-  CARTO_API,
   MAPBOX_API,
   RESOURCE_WATCH_API,
   GFW_DATA_API,
@@ -151,11 +150,6 @@ export const apiAuthRequest = axios.create({
       }),
     },
   }),
-});
-
-export const cartoRequest = axios.create({
-  ...defaultRequestConfig,
-  baseURL: CARTO_API,
 });
 
 export const mapboxRequest = axios.create({
