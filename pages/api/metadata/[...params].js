@@ -1,16 +1,10 @@
 import { GFW_DATA_API, GFW_METADATA_API } from 'utils/apis';
 import axios from 'axios';
 
-import { requireGfwDataApiAdmin } from 'utils/auth/require-gfw-data-admin';
 import METADATA_LIST from '../../../data/metadata.json';
 import METADATA_EXCEPTION_LIST from '../../../data/metadata-exception.json'; // a list of metadata that isn't on Data API
 
 export default async (req, res) => {
-  const allowed = await requireGfwDataApiAdmin(req, res);
-  if (!allowed) {
-    res.end();
-  }
-
   try {
     const userPath = req.query.params[0];
     const isExternalMetadata = METADATA_EXCEPTION_LIST.includes(userPath);

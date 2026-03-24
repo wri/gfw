@@ -1,17 +1,10 @@
 import { GFW_METADATA_API, GFW_STAGING_METADATA_API } from 'utils/apis';
 
-import { requireGfwDataApiAdmin } from 'utils/auth/require-gfw-data-admin';
-
 const ENVIRONMENT = process.env.NEXT_PUBLIC_FEATURE_ENV;
 const GFW_METADATA_API_URL =
   ENVIRONMENT === 'staging' ? GFW_STAGING_METADATA_API : GFW_METADATA_API;
 
 export default async (req, res) => {
-  const allowed = await requireGfwDataApiAdmin(req, res);
-  if (!allowed) {
-    res.end();
-  }
-
   try {
     const path = req.query.params.join('/');
 

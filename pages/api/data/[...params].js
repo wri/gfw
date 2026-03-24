@@ -2,10 +2,11 @@ import httpProxyMiddleware from 'next-http-proxy-middleware';
 
 import { GFW_DATA_API, GFW_STAGING_DATA_API } from 'utils/apis';
 import { PROXIES } from 'utils/proxies';
-import { requireGfwDataApiAdmin } from 'utils/auth/require-gfw-data-admin';
 
 const ENVIRONMENT = process.env.NEXT_PUBLIC_FEATURE_ENV;
 const GFW_API_KEY = process.env.NEXT_PUBLIC_GFW_API_KEY;
+const GFW_API_TOKEN = process.env.GFW_DATA_API_TOKEN;
+const GFW_DATA_API_TOKEN = ENVIRONMENT === 'production' ? GFW_API_TOKEN : null;
 const DATA_API_URL =
   ENVIRONMENT === 'staging' ? GFW_STAGING_DATA_API : GFW_DATA_API;
 
@@ -18,9 +19,6 @@ export const config = {
 };
 
 export default async (req, res) => {
-  const allowed = await requireGfwDataApiAdmin(req, res);
-  if (!allowed) return res.end();
-
   let isDataMartDownload = false;
 
   if (req.query['datamart-csv']) {
@@ -38,6 +36,9 @@ export default async (req, res) => {
     ],
     headers: {
       'x-api-key': GFW_API_KEY,
+      ...(GFW_DATA_API_TOKEN && {
+        Authorization: `Bearer ${GFW_DATA_API_TOKEN}`,
+      }),
       ...(isDataMartDownload && {
         Accept: 'text/csv',
       }),
