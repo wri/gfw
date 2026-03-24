@@ -13,6 +13,8 @@ import {
 import { PROXIES } from './proxies';
 
 const ENVIRONMENT = process.env.NEXT_PUBLIC_FEATURE_ENV;
+const GFW_API_TOKEN = process.env.GFW_DATA_API_TOKEN;
+const GFW_DATA_API_TOKEN = ENVIRONMENT === 'production' ? GFW_API_TOKEN : null;
 
 // We never use the staging api
 const GFW_API_URL = GFW_API;
@@ -52,6 +54,9 @@ export const dataRequest = axios.create({
     baseURL: DATA_API_URL,
     headers: {
       'x-api-key': DATA_API_KEY,
+      ...(GFW_DATA_API_TOKEN && {
+        Authorization: `Bearer ${GFW_DATA_API_TOKEN}`,
+      }),
     },
   }),
   ...(!isServer && {
@@ -66,6 +71,9 @@ export const dataMartRequest = axios.create({
     baseURL: DATA_API_URL,
     headers: {
       'x-api-key': DATA_API_KEY,
+      ...(GFW_DATA_API_TOKEN && {
+        Authorization: `Bearer ${GFW_DATA_API_TOKEN}`,
+      }),
     },
   }),
   ...(!isServer && {
