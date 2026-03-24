@@ -14,7 +14,7 @@ import { PROXIES } from './proxies';
 
 const ENVIRONMENT = process.env.NEXT_PUBLIC_FEATURE_ENV;
 const GFW_API_TOKEN = process.env.GFW_DATA_API_TOKEN;
-const GFW_DATA_API_TOKEN = ENVIRONMENT === 'production' ? GFW_API_TOKEN : null;
+const GFW_DATA_API_TOKEN = ENVIRONMENT !== 'production' ? GFW_API_TOKEN : null;
 
 // We never use the staging api
 const GFW_API_URL = GFW_API;
