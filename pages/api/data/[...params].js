@@ -6,7 +6,8 @@ import { PROXIES } from 'utils/proxies';
 const ENVIRONMENT = process.env.NEXT_PUBLIC_FEATURE_ENV;
 const GFW_API_KEY = process.env.NEXT_PUBLIC_GFW_API_KEY;
 const GFW_API_TOKEN = process.env.GFW_DATA_API_TOKEN;
-const GFW_DATA_API_TOKEN = ENVIRONMENT !== 'production' ? GFW_API_TOKEN : null;
+const TCL_FEATURE_FLAG = process.env.GFW_TCL_FEATURE_FLAG;
+const GFW_DATA_API_TOKEN = TCL_FEATURE_FLAG === 'true' ? GFW_API_TOKEN : null;
 const DATA_API_URL =
   ENVIRONMENT === 'staging' ? GFW_STAGING_DATA_API : GFW_DATA_API;
 
