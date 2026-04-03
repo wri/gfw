@@ -63,7 +63,7 @@ export default {
   settings: {
     threshold: 30,
     startYear: 2001,
-    endYear: 2024,
+    endYear: 2025,
     chartHeight: 230,
     extentYear: 2000,
   },

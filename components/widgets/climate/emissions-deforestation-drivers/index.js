@@ -20,7 +20,7 @@ import getWidgetProps from './selectors';
 import { shouldQueryPrecomputedTables } from '../../utils/helpers';
 
 const MIN_YEAR = 2001;
-const MAX_YEAR = 2024;
+const MAX_YEAR = 2025;
 
 const DATASET = 'tree_cover_loss_by_driver';
 
