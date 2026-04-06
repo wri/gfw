@@ -14,6 +14,8 @@ import { getWHEREQuery } from './get-where-query';
 
 const VIIRS_START_YEAR = 2012;
 
+const PINNED_GAIN_VERSION = 'v20251209';
+
 const SQL_QUERIES = {
   // This Query is used by the treeLossTsc (pie chart version) widget (_tree-loss-drivers), which had its rollout paused.
   treeCoverLossByDriver:
@@ -956,6 +958,7 @@ export const getTreeCoverGainByPlantationType = (params) => {
     ...params,
     dataset: 'annual',
     datasetType: 'summary',
+    version: PINNED_GAIN_VERSION,
   });
 
   if (!requestUrl) return new Promise(() => {});
@@ -1377,6 +1380,7 @@ export const getGain = (params) => {
     ...params,
     dataset: 'annual',
     datasetType: 'summary',
+    version: PINNED_GAIN_VERSION,
   });
 
   if (!requestUrl) {
@@ -1440,6 +1444,7 @@ export const getGainGrouped = (params) => {
     dataset: 'annual',
     datasetType: 'summary',
     grouped: true,
+    version: PINNED_GAIN_VERSION,
   });
 
   if (!requestUrl) {
