@@ -20,6 +20,7 @@ const SQL_QUERIES = {
   // This Query is used by the treeLossTsc (pie chart version) widget (_tree-loss-drivers), which had its rollout paused.
   treeCoverLossByDriver:
     'SELECT tsc_tree_cover_loss_drivers__type as driver_type, SUM(umd_tree_cover_loss__ha) AS loss_area_ha FROM data {WHERE} AND tsc_tree_cover_loss_drivers__type IS NOT NULL GROUP BY tsc_tree_cover_loss_drivers__type',
+  // query used by the tree cover loss by dominant driver widget without datamart
   lossTsc:
     'SELECT tsc_tree_cover_loss_drivers__driver, umd_tree_cover_loss__year, SUM(umd_tree_cover_loss__ha) AS umd_tree_cover_loss__ha, SUM("gfw_gross_emissions_co2e_all_gases__Mg") AS "gfw_gross_emissions_co2e_all_gases__Mg" FROM data {WHERE} GROUP BY tsc_tree_cover_loss_drivers__driver, umd_tree_cover_loss__year',
   loss: 'SELECT {select_location}, umd_tree_cover_loss__year, SUM(umd_tree_cover_loss__ha) AS umd_tree_cover_loss__ha, SUM("gfw_gross_emissions_co2e_all_gases__Mg") AS "gfw_gross_emissions_co2e_all_gases__Mg" FROM data {WHERE} GROUP BY umd_tree_cover_loss__year, {location} ORDER BY umd_tree_cover_loss__year, {location}',
@@ -435,6 +436,7 @@ export const getLossNaturalForest = (params) => {
 
 // summed loss for single location
 export const getLoss = (params) => {
+  // function used by the tree cover loss by dominant driver widget with datamart
   const { forestType, landCategory, ifl, download } = params || {};
   const { loss, lossTsc } = SQL_QUERIES;
   const query = params.lossTsc ? lossTsc : loss;

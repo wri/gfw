@@ -13,7 +13,6 @@ import {
 import treeLoss from 'components/widgets/forest-change/tree-loss';
 import { getLoss } from 'services/analysis-cached';
 
-// import { fetchDataMart } from 'services/datamart';
 import getWidgetProps from './selectors';
 
 const MIN_YEAR = 2001;
