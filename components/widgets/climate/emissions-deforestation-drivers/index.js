@@ -15,14 +15,10 @@ import {
 
 import emissionsDeforestation from 'components/widgets/climate/emissions-deforestation';
 
-import { fetchDataMart } from 'services/datamart';
 import getWidgetProps from './selectors';
-import { shouldQueryPrecomputedTables } from '../../utils/helpers';
 
 const MIN_YEAR = 2001;
 const MAX_YEAR = 2025;
-
-const DATASET = 'tree_cover_loss_by_driver';
 
 export default {
   ...emissionsDeforestation,
@@ -109,108 +105,41 @@ export default {
       groupedLegends: true,
     };
   },
-  /**
-   *
-   * @param {Object} params
-   * @param {String} params.adm0
-   * @param {String} params.adm1
-   * @param {String} params.adm2
-   * @param {boolean} params.analysis true if widget is rendered in map, otherwise false
-   * @param {boolean} params.dashboard true if widget is rendered in dashboard, false otherwise
-   * @param {Object} params.geostore
-   * @param {string} params.geostore.id gesotore id
-   * @param {string} params.threshold threshold value
-   * @param {string} params.type country, global
-   * @returns
-   */
-  getData: async (params) => {
-    const { adm0, adm1, adm2, analysis, geostore, threshold, type } = params;
-
-    let mappedType = '';
-
-    if (analysis) {
-      mappedType = 'geostore';
-    } else {
-      if (type === 'global') {
-        mappedType = 'global';
+  getData: (params) =>
+    getEmissions({ ...params, landCategory: 'tsc', byDriver: true }).then(
+      (emissions) => {
+        let data = {};
+        if (emissions && emissions.data) {
+          data = {
+            emissions: emissions.data.data.filter(
+              (d) => d.tsc_tree_cover_loss_drivers__driver !== 'Unknown'
+            ),
+          };
+        }
+        const { startYear, endYear, range } = getYearsRangeFromMinMax(
+          MIN_YEAR,
+          MAX_YEAR
+        );
+        return {
+          ...data,
+          settings: {
+            startYear,
+            endYear,
+            yearsRange: range,
+          },
+          options: {
+            years: range,
+          },
+        };
       }
-
-      if (adm0 !== undefined && adm0 !== null) {
-        mappedType = 'admin';
-      }
-    }
-
-    const response = await fetchDataMart({
-      dataset: DATASET,
-      geostoreId: geostore?.id,
-      type:
-        analysis && shouldQueryPrecomputedTables(params) ? 'admin' : mappedType, // checking to not send geostore_id when analyizing entire countries (only in map page, analysis: true)
-      adm0,
-      adm1,
-      adm2,
-      threshold,
-      isDownload: false,
-    });
-
-    if (response.data?.status === 'failed') {
-      throw new Error(response.data.message);
-    }
-
-    const { startYear, endYear, range } = getYearsRangeFromMinMax(
-      MIN_YEAR,
-      MAX_YEAR
-    );
-
-    return {
-      emissions: response.data?.result.tree_cover_loss_by_driver.map(
-        (item) => ({
-          driver_type: item.drivers_type,
-          gross_carbon_emissions_Mg: item.gross_carbon_emissions_Mg,
-        })
-      ),
-      settings: {
-        startYear,
-        endYear,
-        yearsRange: range,
-      },
-      options: {
-        years: range,
-      },
-    };
-  },
-  getDataURL: async (params) => {
-    const { adm0, adm1, adm2, analysis, geostore, threshold, type } = params;
-    let mappedType = '';
-
-    if (analysis) {
-      mappedType = 'geostore';
-    } else {
-      if (type === 'global') {
-        mappedType = 'global';
-      }
-
-      if (adm0 !== undefined && adm0 !== null) {
-        mappedType = 'admin';
-      }
-    }
-
-    const res = await fetchDataMart({
-      dataset: DATASET,
-      geostoreId: geostore?.id,
-      type: mappedType,
-      adm0,
-      adm1,
-      adm2,
-      threshold,
-      isDownload: true,
-    });
-
-    return [
-      {
-        name: DATASET,
-        url: res,
-      },
-    ];
-  },
+    ),
+  getDataURL: (params) => [
+    getEmissions({
+      ...params,
+      landCategory: 'tsc',
+      byDriver: true,
+      download: true,
+    }),
+  ],
   getWidgetProps,
 };
