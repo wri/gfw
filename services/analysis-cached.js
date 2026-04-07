@@ -1,5 +1,4 @@
-import qs from 'qs';
-import { dataMartRequest, dataRequest } from 'utils/request';
+import { dataRequest } from 'utils/request';
 import { PROXIES } from 'utils/proxies';
 
 import forestTypes from 'data/forest-types';
@@ -17,9 +16,6 @@ const VIIRS_START_YEAR = 2012;
 const PINNED_GAIN_VERSION = 'v20251209';
 
 const SQL_QUERIES = {
-  // This Query is used by the treeLossTsc (pie chart version) widget (_tree-loss-drivers), which had its rollout paused.
-  treeCoverLossByDriver:
-    'SELECT tsc_tree_cover_loss_drivers__type as driver_type, SUM(umd_tree_cover_loss__ha) AS loss_area_ha FROM data {WHERE} AND tsc_tree_cover_loss_drivers__type IS NOT NULL GROUP BY tsc_tree_cover_loss_drivers__type',
   // query used by the tree cover loss by dominant driver widget without datamart
   lossTsc:
     'SELECT tsc_tree_cover_loss_drivers__driver, umd_tree_cover_loss__year, SUM(umd_tree_cover_loss__ha) AS umd_tree_cover_loss__ha, SUM("gfw_gross_emissions_co2e_all_gases__Mg") AS "gfw_gross_emissions_co2e_all_gases__Mg" FROM data {WHERE} GROUP BY tsc_tree_cover_loss_drivers__driver, umd_tree_cover_loss__year',
@@ -346,45 +342,6 @@ export const getWeeksFilter = ({ weeks, latest, isFirst }) => {
   return `${isFirst ? '' : 'AND'} (${weeksFilterString})`;
 };
 
-//
-// data fetches
-//
-
-// This is used by the treeLossTsc (pie chart version) widget (_tree-loss-drivers), which had its rollout paused.
-export const getTreeCoverLossByDriverType = (params) => {
-  const { download } = params;
-
-  const requestUrl = getRequestUrl({
-    ...params,
-    dataset: 'annual',
-    datasetType: 'summary',
-  });
-
-  if (!requestUrl) return new Promise(() => {});
-
-  const sqlQuery = SQL_QUERIES.treeCoverLossByDriver;
-
-  const url = encodeURI(
-    `${requestUrl}${sqlQuery}`.replace('{WHERE}', getWHEREQuery({ ...params }))
-  );
-
-  if (download) {
-    return {
-      name: 'tree_cover_loss_by_driver_type__ha',
-      url: getDownloadUrl(url),
-    };
-  }
-
-  return dataRequest.get(url).then((response) => ({
-    ...response,
-    data: {
-      data: response?.data?.map((d) => ({
-        ...d,
-      })),
-    },
-  }));
-};
-
 export const getLossNaturalForest = (params) => {
   const { forestType, landCategory, ifl, download } = params || {};
 
@@ -436,7 +393,7 @@ export const getLossNaturalForest = (params) => {
 
 // summed loss for single location
 export const getLoss = (params) => {
-  // function used by the tree cover loss by dominant driver widget with datamart
+  // function used by the tree cover loss by dominant driver widget without datamart
   const { forestType, landCategory, ifl, download } = params || {};
   const { loss, lossTsc } = SQL_QUERIES;
   const query = params.lossTsc ? lossTsc : loss;
@@ -1171,32 +1128,28 @@ export const getTreeCoverByLandCoverClass = (params) => {
 };
 
 // Net Change
-export const getNetChange = async (params) => {
-  const { forestType, landCategory, ifl, type, adm0, adm1, adm2, download } =
-    params || {};
+export const getNetChange = (params) => {
+  const { forestType, landCategory, ifl, download, adm1 } = params || {};
+  const requestUrl = getRequestUrl({
+    ...params,
+    dataset: 'net_change',
+    datasetType: 'umd',
+    version: 'v202209',
+  });
 
-  const requestParams = qs.stringify(
-    {
-      type,
-      adm0,
-      adm1,
-      adm2,
-      download,
-    },
-    { arrayFormat: 'comma' }
+  if (!requestUrl) {
+    return new Promise(() => {});
+  }
+
+  const sqlQuery = adm1 ? SQL_QUERIES.netChange : SQL_QUERIES.netChangeIso;
+  const url = encodeURI(
+    `${requestUrl}${sqlQuery}`
+      .replace(
+        /{select_location}/g,
+        getLocationSelect({ ...params, dataset: 'net_change', cast: false })
+      )
+      .replace('{WHERE}', getWHEREQuery({ ...params, dataset: 'net_change' }))
   );
-
-  const url = `/net-change/?${requestParams}`;
-
-  /**
-   * localhost:3000/api/datamart/net-change/?
-   * &iso=MEX
-   * &adm1=9
-   * &adm2=3
-   * &download=true
-   */
-
-  const response = await dataMartRequest.get(url);
 
   if (download) {
     const indicator = getIndicator(forestType, landCategory, ifl);
@@ -1204,15 +1157,18 @@ export const getNetChange = async (params) => {
       name: `net_tree_cover_change_from_height${
         indicator ? `_in_${snakeCase(indicator.label)}` : ''
       }__ha`,
-      url: `${window.location.origin}${PROXIES.DATA_API}${response.data?.url}`,
+      url: getDownloadUrl(url),
     };
   }
 
-  return {
+  return dataRequest.get(url).then((response) => ({
+    ...response,
     data: {
-      data: response.data,
+      data: response?.data?.map((d) => ({
+        ...d,
+      })),
     },
-  };
+  }));
 };
 
 export const getExtentNaturalForest = (params) => {
