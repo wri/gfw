@@ -20,13 +20,18 @@ export const getPermCats = createSelector([], () =>
 );
 
 const groupedLegends = {
-  'Hard commodities': 'Drivers of deforestation',
-  Logging: 'Drivers of temporary disturbances',
-  'Other natural disturbances': 'Drivers of temporary disturbances',
-  'Permanent agriculture': 'Drivers of deforestation',
-  'Settlements & Infrastructure': 'Drivers of deforestation',
-  'Shifting cultivation': 'Drivers of temporary disturbances',
-  Wildfire: 'Drivers of temporary disturbances',
+  'class_Commodity driven deforestation': 'Drivers of deforestation',
+  class_Forestry: 'Drivers of temporary disturbances',
+  'forest management': 'Drivers of temporary disturbances',
+  'shifting cultivation': 'Drivers of temporary disturbances',
+  'class_Shifting agriculture': 'Drivers of temporary disturbances',
+  class_Wildfire: 'Drivers of temporary disturbances',
+  'other natural disasters': 'Drivers of temporary disturbances',
+  'hard commodities': 'Drivers of deforestation',
+  'Drivers of deforestation agriculture': 'Drivers of deforestation',
+  'settlements and infrastructure': 'Drivers of deforestation',
+  class_Urbanization: 'Drivers of deforestation',
+  unknown: 'Drivers of deforestation',
 };
 
 export const mergeDataWithCetagories = createSelector(
@@ -102,16 +107,168 @@ export const getDrivers = createSelector(
 
 // get lists selected
 export const parseData = createSelector(
-  [getFilteredData, getColors, getSettings],
-  (data, colors, settings) => {
-    if (isEmpty(data)) {
-      return null;
+  [getFilteredData, getColors],
+  (data, colors) => {
+    if (isEmpty(data)) return null;
+    const groupedData = groupBy(data, 'year');
+    const x = Object.keys(groupedData).map((y) => {
+      const groupedByBound = groupBy(groupedData[y], 'bound1');
+      const datakeys = entries(groupedByBound).reduce((acc, [key, value]) => {
+        const areaSum = sumBy(value, 'selectedEmissions');
+        return {
+          ...acc,
+          [`class_${key}`]: areaSum < 1000 ? Math.round(areaSum) : areaSum,
+        };
+      }, {});
+      return {
+        year: y,
+        total: sum(Object.values(datakeys)),
+        ...datakeys,
+      };
+    });
+
+    const categoryColors = colors.lossDrivers;
+    /**
+     * [
+     *   {
+     *     year: string;
+     *     total: number;
+     *     'class_Commodity driven deforestation': number;
+     *     'class_Forestry': number;
+     *     'class_Shifting agriculture': number;
+     *     'class_Urbanization': number;
+     *     'class_Wildfire': number;
+     *   },
+     * ]
+     */
+    const dataList = Object.values(x);
+    const totalsEntry = dataList.reduce(
+      (acc, entry) => ({
+        total: acc.total + entry.total,
+        'class_Commodity driven deforestation':
+          acc['class_Commodity driven deforestation'] +
+          (entry['class_Commodity driven deforestation'] || 0),
+        class_Forestry: acc.class_Forestry + (entry.class_Forestry || 0),
+        'class_Shifting agriculture':
+          acc['class_Shifting agriculture'] +
+          (entry['class_Shifting agriculture'] || 0),
+        class_Urbanization:
+          acc.class_Urbanization + (entry.class_Urbanization || 0),
+        class_Wildfire: acc.class_Wildfire + (entry.class_Wildfire || 0),
+      }),
+      {
+        total: 0,
+        'class_Commodity driven deforestation': 0,
+        class_Forestry: 0,
+        'class_Shifting agriculture': 0,
+        class_Urbanization: 0,
+        class_Wildfire: 0,
+      }
+    );
+
+    const formattedResult = Object.entries(totalsEntry)
+      .filter(([key]) => key !== 'total')
+      .map(([key, value]) => {
+        return {
+          label: key.replace('class_', ''),
+          value,
+          category: groupedLegends[key],
+          color: categoryColors[key.replace('class_', '')],
+          percentage: (value * 100) / totalsEntry.total,
+        };
+      });
+
+    return formattedResult;
+  }
+);
+
+export const parseConfig = createSelector(
+  [getColors, getFilteredData, getDrivers, getSettings],
+  (colors, data, drivers, settings) => {
+    if (isEmpty(data)) return null;
+    const { highlighted } = settings || {};
+    const yKeys = {};
+    const categoryColors = colors.lossDrivers;
+    sortBy(drivers, 'position').forEach((k) => {
+      yKeys[`class_${k.driver}`] = {
+        fill: categoryColors[k.driver],
+        stackId: 1,
+        opacity: !highlighted || (highlighted && k.permanent) ? 1 : 0.3,
+      };
+    });
+    let tooltip = [
+      {
+        key: 'year',
+      },
+      {
+        key: 'total',
+        label: 'Total',
+        unitFormat: (value) =>
+          formatNumber({ num: value, unit: 'tCO2', spaceUnit: true }),
+      },
+    ];
+    tooltip = tooltip.concat(
+      sortBy(drivers, 'position')
+        .map((d) => {
+          const tscCat = tscLossCategories.find((c) => c.value === d.driver);
+          const label = tscCat && tscCat.label;
+          return {
+            key: `class_${d.driver}`,
+            label,
+            color: categoryColors[d.driver],
+            unitFormat: (value) =>
+              formatNumber({ num: value, unit: 'tCO2', spaceUnit: true }),
+          };
+        })
+        .reverse()
+    );
+
+    const forestryIndex = tooltip.findIndex(
+      (element) => element.key === 'class_Forestry'
+    );
+    const agricultureIndex = tooltip.findIndex(
+      (element) => element.key === 'class_Shifting agriculture'
+    );
+
+    const rearrengedTooltips = [...tooltip];
+
+    delete rearrengedTooltips[forestryIndex];
+    delete rearrengedTooltips[agricultureIndex];
+
+    rearrengedTooltips.splice(2, 0, tooltip[forestryIndex]);
+    rearrengedTooltips.splice(3, 0, tooltip[agricultureIndex]);
+
+    // Example on how to add columns & titles to the Chart Legend
+    // See: https://gfw.atlassian.net/browse/FLAG-1145
+    // const chartLegend = {
+    //   columns: [
+    //     {
+    //       items: ['Wildfire', 'Forestry', 'Shifting agriculture']?.map(
+    //         (name) => ({ label: name, color: categoryColors[name] })
+    //       ),
+    //     },
+    //     {
+    //       title: 'Drivers of permanent deforestation',
+    //       items: ['Commodity driven deforestation', 'Urbanization']?.map(
+    //         (name) => ({ label: name, color: categoryColors[name] })
+    //       ),
+    //     },
+    //   ],
+    // };
+
+    const insertIndex = findIndex(rearrengedTooltips, {
+      key: 'class_Urbanization',
+    });
+    if (insertIndex > -1) {
+      rearrengedTooltips.splice(insertIndex, 0, {
+        key: 'break',
+        label: 'Drivers of permanent deforestation:',
+      });
     }
 
     const { startYear, endYear } = settings;
     const yearRange = endYear - (startYear - 1);
 
-    const categoryColors = colors.lossDrivers;
     const totalsEntry = {
       total: data.reduce(
         (acc, entry) => acc + (entry.gross_carbon_emissions_Mg || 0),
