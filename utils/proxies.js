@@ -1,7 +1,6 @@
 export const PROXIES = {
   GFW_API: '/api/gfw',
   DATA_API: '/api/data',
-  DATAMART_API: '/api/datamart',
   METADATA_API: '/api/metadata',
   WIDGET_METADATA_API: '/api/widget-metadata',
   RESOURCE_WATCH_API: '/api/gfw/v1',
