@@ -1,4 +1,5 @@
 import { getYearsRangeFromMinMax } from 'components/widgets/utils/data';
+import { getEmissions } from 'services/analysis-cached';
 import biomassLossIsos from 'data/biomass-isos.json';
 
 import {
@@ -80,7 +81,7 @@ export default {
     noLoss:
       'In {location} from {startYear} to {endYear}, <b>no emissions</b> in areas where the dominant drivers of tree cover loss resulted in deforestation',
     globalInitial:
-      'Globally from 2001 to 2024, an average of {totalEmissions} per year occurred in areas where the dominant drivers of loss resulted in deforestation.',
+      'Globally from 2001 to 2024, an average of {totalEmissions} per year occurred in areas where the dominant drivers of loss resulted in deforestation',
     co2Only: ', considering emissions from CO\u2082 only.',
     nonCo2Only: ', considering only emissions from non-CO\u2082 gases only.',
   },
@@ -107,21 +108,31 @@ export default {
   },
   getData: (params) =>
     getEmissions({ ...params, landCategory: 'tsc', byDriver: true }).then(
-      (emissions) => {
-        let data = {};
-        if (emissions && emissions.data) {
-          data = {
-            emissions: emissions.data.data.filter(
-              (d) => d.wri_google_tree_cover_loss_drivers__driver !== 'Unknown'
-            ),
-          };
-        }
+      (response) => {
         const { startYear, endYear, range } = getYearsRangeFromMinMax(
           MIN_YEAR,
           MAX_YEAR
         );
+
+        const groupedEmissions = response.data.data.reduce((acc, item) => {
+          const driver =
+            item.wri_google_tree_cover_loss_drivers__driver || item.driver_type;
+          if (!driver || driver === 'Unknown') {
+            return acc;
+          }
+          if (!acc[driver]) {
+            acc[driver] = {
+              driver_type: driver,
+              gross_carbon_emissions_Mg: 0,
+            };
+          }
+          acc[driver].gross_carbon_emissions_Mg +=
+            item.gfw_gross_emissions_co2e_all_gases__Mg;
+          return acc;
+        }, {});
+
         return {
-          ...data,
+          emissions: Object.values(groupedEmissions),
           settings: {
             startYear,
             endYear,
