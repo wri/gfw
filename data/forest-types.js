@@ -119,7 +119,7 @@ export default [
     label: 'Tree cover loss driver category',
     value: 'tsc',
     dataType: 'keyword',
-    tableKey: 'tsc_tree_cover_loss_drivers__driver',
+    tableKey: 'wri_google_tree_cover_loss_drivers__driver',
     hidden: true,
   },
 ];

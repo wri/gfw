@@ -1,9 +1,6 @@
 import { createSelector, createStructuredSelector } from 'reselect';
 import isEmpty from 'lodash/isEmpty';
-import sumBy from 'lodash/sumBy';
-import groupBy from 'lodash/groupBy';
 import { formatNumber } from 'utils/format';
-import sortBy from 'lodash/sortBy';
 
 import tscLossCategories from 'data/tsc-loss-categories.json';
 
@@ -14,10 +11,8 @@ const getLocationName = (state) => state.locationLabel;
 const getColors = (state) => state.colors;
 const getSentences = (state) => state.sentences;
 const getTitle = (state) => state.title;
-
-export const getPermCats = createSelector([], () =>
-  tscLossCategories.filter((x) => x.permanent).map((el) => el.value.toString())
-);
+const getSortedCategories = () =>
+  tscLossCategories.sort((a, b) => (a.position > b.position ? 1 : -1));
 
 const groupedLegends = {
   'Hard commodities': 'Drivers of deforestation',
@@ -30,19 +25,19 @@ const groupedLegends = {
 };
 
 export const mergeDataWithCetagories = createSelector(
-  [getEmissions, getPermCats],
-  (data, permCats) => {
+  [getEmissions, getSortedCategories],
+  (data, sortedCategories) => {
     if (isEmpty(data)) return null;
     return data.map((d) => ({
       ...d,
-      permanent: permCats.includes(d.driver_type),
+      permanent: sortedCategories.includes(d.driver_type),
     }));
   }
 );
 
 export const getFilteredData = createSelector(
-  [mergeDataWithCetagories, getSettings, getPermCats],
-  (data, settings, permCats) => {
+  [mergeDataWithCetagories, getSettings, getSortedCategories],
+  (data, settings, sortedCategories) => {
     if (isEmpty(data)) return null;
     const { gasesIncluded } = settings;
     const emissionsData = data.map((d) => ({
@@ -50,53 +45,11 @@ export const getFilteredData = createSelector(
       selectedEmissions: d[gasesIncluded],
     }));
     const permanentData = emissionsData.filter((d) =>
-      permCats.includes(d.driver_type)
+      sortedCategories.includes(d.driver_type)
     );
     return settings.tscDriverGroup === 'permanent'
       ? permanentData
       : emissionsData;
-  }
-);
-
-export const getDrivers = createSelector(
-  [getFilteredData, getSettings, getPermCats],
-  (data, settings, permCats) => {
-    if (isEmpty(data)) return null;
-
-    const groupedData = groupBy(
-      sortBy(data, 'selectedEmissions').reverse(),
-      'driver_type'
-    );
-    const filteredData = Object.keys(groupedData)
-      .filter((key) => permCats.includes(key))
-      .reduce(
-        (obj, key) => ({
-          ...obj,
-          [key]: groupedData[key],
-        }),
-        {}
-      );
-
-    const groupedLoss =
-      settings.tscDriverGroup === 'permanent' ? filteredData : groupedData;
-    const sortedLoss = !isEmpty(groupedLoss)
-      ? sortBy(
-          Object.keys(groupedLoss).map((k) => {
-            const cat = tscLossCategories.find((c) => c.value.toString() === k);
-            return {
-              driver: k,
-              position: cat && cat.position,
-              area: sumBy(groupedLoss[k], 'selectedEmissions'),
-              permanent: permCats.includes(k),
-            };
-          }),
-          'area'
-        )
-      : permCats.map((x) => ({
-          driver: x.toString(),
-          area: 0.0,
-        }));
-    return sortedLoss;
   }
 );
 
