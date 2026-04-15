@@ -150,7 +150,7 @@ const getNaturalForestSentenceData = async (params = GLOBAL_LOCATION) => {
     const extentNaturalForestResponse = await getExtentNaturalForest(params);
     const lossNaturalForestResponse = await getLossNaturalForest({
       ...params,
-      umd_tree_cover_loss__year: 2024,
+      umd_tree_cover_loss__year: 2025,
       isNaturalForest: true,
     });
 
@@ -181,7 +181,7 @@ const getNaturalForestSentenceData = async (params = GLOBAL_LOCATION) => {
       primaryExtent: 0,
       totalLoss: {
         area: lossArea,
-        year: 2024,
+        year: 2025,
         emissions,
       },
       plantationsLoss: {
