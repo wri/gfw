@@ -23,9 +23,21 @@ class WidgetFooter extends PureComponent {
     const locationType = location?.locationType;
     return alerts.map((alert, index) => {
       const whitelist = alert?.whitelist;
-      const shouldDisplayAlert = Array.isArray(whitelist)
-        ? whitelist.includes(location?.adm0)
-        : alert?.system === 'all' || alert?.system === alertSystem;
+      const blacklist = alert?.blacklist;
+      const adm0 = location?.adm0;
+      const hasWhitelist = Array.isArray(whitelist);
+      const hasBlacklist = Array.isArray(blacklist);
+
+      const systemMatches =
+        alert?.system === 'all' || alert?.system === alertSystem;
+
+      let shouldDisplayAlert = hasWhitelist
+        ? whitelist.includes(adm0)
+        : systemMatches;
+
+      if (hasBlacklist && blacklist.includes(adm0)) {
+        shouldDisplayAlert = false;
+      }
 
       if (shouldDisplayAlert) {
         return (

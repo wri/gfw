@@ -42,6 +42,12 @@ export default {
     {
       text: 'The methods behind this data have changed over time. Be cautious comparing old and new data, especially before/after 2015. [Read more here](https://www.globalforestwatch.org/blog/data-and-research/tree-cover-loss-satellite-data-trend-analysis/).',
       visible: ['global', 'country', 'geostore', 'aoi', 'wdpa', 'use'],
+      blacklist: ['IND'],
+    },
+    {
+      text: 'The methods behind this data have changed over time. Be cautious comparing old and new data, especially before/after 2015. [Read more here](https://www.globalforestwatch.org/blog/data-and-research/tree-cover-loss-satellite-data-trend-analysis/). The figures and data may differ from official and other national or regional statistics, which may use diverse and varied methods, definitions, and assumptions.',
+      visible: ['global', 'country', 'geostore', 'aoi', 'wdpa', 'use'],
+      whitelist: ['IND'],
     },
   ],
   large: true,
