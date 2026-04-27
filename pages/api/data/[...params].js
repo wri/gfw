@@ -28,12 +28,9 @@ export default async (req, res) => {
     ],
     headers: {
       'x-api-key': GFW_API_KEY,
-      ...(GFW_DATA_API_TOKEN && {
-        Authorization: `Bearer ${GFW_DATA_API_TOKEN}`,
-      }),
     },
     followRedirects: true,
   }).catch(async (error) => {
     res.end(error.message);
   });
-}
+};
