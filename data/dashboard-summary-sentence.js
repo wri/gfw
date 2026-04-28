@@ -1,5 +1,5 @@
 const DOWNLOAD_GLOBAL_STATS =
-  '<a href="https://gfw2-data.s3.amazonaws.com/country-pages/country_stats/download/2024/global_05212025.xlsx" download>Download global statistics by country here.</a>';
+  '<a href="https://gfw2-data.s3.amazonaws.com/country-pages/country_stats/download/2025/global.xlsx" download>Download global statistics by country here.</a>';
 
 export default {
   global: {
