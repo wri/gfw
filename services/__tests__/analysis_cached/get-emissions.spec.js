@@ -21,7 +21,7 @@ describe('getEmissions', () => {
           gfw_gross_emissions_co2e_all_gases__Mg: 100,
           gfw_gross_emissions_co2e_co2_only__Mg: 60,
           gfw_gross_emissions_co2e_non_co2__Mg: 40,
-          tsc_tree_cover_loss_drivers__driver: 'Forestry',
+          wri_google_tree_cover_loss_drivers__driver: 'Forestry',
         },
       ],
       status: 'success',

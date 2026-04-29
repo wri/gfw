@@ -20,7 +20,7 @@ describe('getLoss', () => {
           umd_tree_cover_loss__year: 2020,
           umd_tree_cover_loss__ha: 10,
           gfw_gross_emissions_co2e_all_gases__Mg: 20,
-          tsc_tree_cover_loss_drivers__driver: 'Agriculture',
+          wri_google_tree_cover_loss_drivers__driver: 'Agriculture',
         },
       ],
       status: 'success',

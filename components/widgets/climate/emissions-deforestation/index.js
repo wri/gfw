@@ -21,7 +21,7 @@ import treeLoss from 'components/widgets/forest-change/tree-loss';
 import getWidgetProps from './selectors';
 
 const MIN_YEAR = 2001;
-const MAX_YEAR = 2024;
+const MAX_YEAR = 2025;
 
 export default {
   ...treeLoss,

@@ -11,17 +11,35 @@ class WidgetFooter extends PureComponent {
     simple: PropTypes.bool,
     alerts: PropTypes.array,
     statements: PropTypes.array,
-    locationType: PropTypes.string,
+    location: PropTypes.string,
     showAttributionLink: PropTypes.bool,
     alertSystem: PropTypes.string,
     decorationMessage: PropTypes.string,
   };
 
-  renderAlert = (alerts, alertSystem, type, locationType) => {
+  renderAlert = (alerts, alertSystem, type, location) => {
     if (!alerts) return null;
 
+    const locationType = location?.locationType;
     return alerts.map((alert, index) => {
-      if (alert.system === alertSystem || alertSystem === 'all') {
+      const whitelist = alert?.whitelist;
+      const blacklist = alert?.blacklist;
+      const adm0 = location?.adm0;
+      const hasWhitelist = Array.isArray(whitelist);
+      const hasBlacklist = Array.isArray(blacklist);
+
+      const systemMatches =
+        alert?.system === 'all' || alert?.system === alertSystem;
+
+      let shouldDisplayAlert = hasWhitelist
+        ? whitelist.includes(adm0)
+        : systemMatches;
+
+      if (hasBlacklist && blacklist.includes(adm0)) {
+        shouldDisplayAlert = false;
+      }
+
+      if (shouldDisplayAlert) {
         return (
           <WidgetAlert
             key={`alert-${index}`}
@@ -31,6 +49,7 @@ class WidgetFooter extends PureComponent {
           />
         );
       }
+
       return null;
     });
   };
@@ -41,7 +60,7 @@ class WidgetFooter extends PureComponent {
       alerts,
       type,
       simple,
-      locationType,
+      location,
       showAttributionLink,
       alertSystem,
       decorationMessage,
@@ -59,7 +78,7 @@ class WidgetFooter extends PureComponent {
             dangerouslySetInnerHTML={{ __html: decorationMessage }}
           />
         )}
-        {this.renderAlert(alerts, alertSystem, type, locationType)}
+        {this.renderAlert(alerts, alertSystem, type, location)}
         {statementsMapped && !!statementsMapped.length && (
           <div className="notranslate">{ReactHtmlParser(statementsMapped)}</div>
         )}

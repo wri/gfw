@@ -16,13 +16,7 @@ export const config = {
   },
 };
 
-export default (req, res) => {
-  let isDataMartDownload = false;
-
-  if (req.query['datamart-csv']) {
-    isDataMartDownload = true;
-  }
-
+export default async (req, res) => {
   return httpProxyMiddleware(req, res, {
     // You can use the `http-proxy` option
     target: DATA_API_URL,
@@ -34,12 +28,9 @@ export default (req, res) => {
     ],
     headers: {
       'x-api-key': GFW_API_KEY,
-      ...(isDataMartDownload && {
-        'Accept': 'text/csv',
-      }),
     },
     followRedirects: true,
   }).catch(async (error) => {
     res.end(error.message);
   });
-}
+};
