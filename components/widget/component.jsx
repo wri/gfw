@@ -248,7 +248,7 @@ class Widget extends PureComponent {
                 showAttributionLink={showAttributionLink}
                 statements={statements}
                 type={type}
-                locationType={location?.locationType}
+                location={location}
                 alerts={alerts}
                 decorationMessage={
                   chartDecorationConfig?.locations.includes(locationLabel)
