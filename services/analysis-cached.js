@@ -784,8 +784,8 @@ export const getTreeCoverOTF = async (params) => {
 
   return {
     totalArea: extent.data[0]?.area__ha,
-    totalCover: treeCover.data[0]?.area__ha,
-    cover: treeCover.data[0]?.area__ha,
+    totalExtent: treeCover.data[0]?.area__ha,
+    treeCover: treeCover.data[0]?.area__ha,
     plantations: 0,
   };
 };
