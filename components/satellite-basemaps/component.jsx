@@ -23,12 +23,20 @@ function handleTitle(basemap) {
         <span className="label">{basemap?.label || ''}</span>
         {basemap?.caveat && <span className="caveat">{basemap.caveat}</span>}
       </span>
+      {basemap?.value === 'planet' &&
+        basemap?.active &&
+        basemap?.planetPeriod?.period && (
+          <span className="title-active-value">
+            {basemap.planetPeriod.period}
+          </span>
+        )}
     </>
   );
 }
 
 const SatelliteBasemaps = ({
   className,
+  planetPeriods,
   landsatYear,
   basemaps,
   activeBasemap,
@@ -69,6 +77,11 @@ const SatelliteBasemaps = ({
     setOpen(!activeBasemap?.active);
     setMapBasemap({
       value: activeBasemap?.active ? 'default' : activeBasemap?.value,
+      ...(activeBasemap?.value === 'planet' && {
+        color: '',
+        name: planetPeriods[planetPeriods.length - 1].value,
+        imageType: planetPeriods[planetPeriods.length - 1].imageType,
+      }),
       ...(activeBasemap?.value === 'landsat' && {
         year: landsatYear,
       }),
@@ -89,6 +102,11 @@ const SatelliteBasemaps = ({
     e.stopPropagation();
     setMapBasemap({
       value,
+      ...(value === 'planet' && {
+        color: '',
+        name: planetPeriods[planetPeriods.length - 1].value,
+        imageType: planetPeriods[planetPeriods.length - 1].imageType,
+      }),
       ...(value === 'landsat' && {
         year: landsatYear,
       }),
@@ -240,6 +258,7 @@ const SatelliteBasemaps = ({
 SatelliteBasemaps.propTypes = {
   className: PropTypes.string,
   isTropics: PropTypes.bool,
+  planetPeriods: PropTypes.arrayOf(PropTypes.object),
   landsatYear: PropTypes.number.isRequired,
   setMainMapSettings: PropTypes.func.isRequired,
   setMapBasemap: PropTypes.func.isRequired,
