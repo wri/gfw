@@ -13,7 +13,6 @@ import infoIcon from 'assets/icons/info.svg?sprite';
 
 import Checkbox from 'components/ui/checkbox';
 
-import satelliteImage from 'components/map/images/satellite.png';
 import BasemapSettings from './basemap-settings';
 
 function handleTitle(basemap) {
@@ -77,11 +76,12 @@ const SatelliteBasemaps = ({
     setOpen(!activeBasemap?.active);
     setMapBasemap({
       value: activeBasemap?.active ? 'default' : activeBasemap?.value,
-      ...(activeBasemap?.value === 'planet' && {
-        color: '',
-        name: planetPeriods[planetPeriods.length - 1].value,
-        imageType: planetPeriods[planetPeriods.length - 1].imageType,
-      }),
+      ...(activeBasemap?.value === 'planet' &&
+        planetPeriods?.length && {
+          color: '',
+          name: planetPeriods[planetPeriods.length - 1].value,
+          imageType: planetPeriods[planetPeriods.length - 1].imageType,
+        }),
       ...(activeBasemap?.value === 'landsat' && {
         year: landsatYear,
       }),
@@ -102,11 +102,12 @@ const SatelliteBasemaps = ({
     e.stopPropagation();
     setMapBasemap({
       value,
-      ...(value === 'planet' && {
-        color: '',
-        name: planetPeriods[planetPeriods.length - 1].value,
-        imageType: planetPeriods[planetPeriods.length - 1].imageType,
-      }),
+      ...(value === 'planet' &&
+        planetPeriods?.length && {
+          color: '',
+          name: planetPeriods[planetPeriods.length - 1].value,
+          imageType: planetPeriods[planetPeriods.length - 1].imageType,
+        }),
       ...(value === 'landsat' && {
         year: landsatYear,
       }),
@@ -215,39 +216,6 @@ const SatelliteBasemaps = ({
                 </li>
               );
             })}
-            <li className="satellite-dummy">
-              <img
-                src={satelliteImage}
-                alt="Planet Satellite Imagery"
-                className="satellite-basemap--thumbnail"
-              />
-              <div className="satellite-basemap--content">
-                <span className="satellite-basemap--title-info">
-                  <span className="satellite-basemap--title">
-                    Planet Satellite Imagery
-                  </span>
-                </span>
-                <p className="satellite-basemap--description">
-                  Not currently available.{' '}
-                  <a
-                    href="https://www.globalforestwatch.org/blog/data-and-tools/planet-imagery-changes-gfw/"
-                    target="_blank"
-                    rel="noreferrer"
-                  >
-                    Read our blog
-                  </a>{' '}
-                  and{' '}
-                  <a
-                    href="https://survey.alchemer.com/s3/8260607/Planet-Imagery?utm_campaign=planetupdate2025&utm_medium=bitly&utm_source=GFWNoticeBoard"
-                    target="_blank"
-                    rel="noreferrer"
-                  >
-                    let us know if this impacts your work
-                  </a>
-                  .
-                </p>
-              </div>
-            </li>
           </ul>
         </section>
       )}
