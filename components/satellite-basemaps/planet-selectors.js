@@ -57,7 +57,7 @@ export const getPlanetBasemaps = createSelector(
           year,
           proc,
           imageType,
-          sortOrder: Date(startDate),
+          sortOrder: new Date(startDate),
         };
       }),
       'sortOrder'
