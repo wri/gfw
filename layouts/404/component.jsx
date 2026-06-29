@@ -1,10 +1,10 @@
 import ErrorMessage from 'components/error-message';
-import Header from 'components/header';
+import SiteHeader from 'components/site-header';
 import ContactUsModal from 'components/modals/contact-us';
 
 const NotFoundPage = () => (
   <>
-    <Header />
+    <SiteHeader />
     <div className="l-404-page">
       <ErrorMessage
         title="Page Not Found"

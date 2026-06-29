@@ -1,0 +1,104 @@
+@import '~styles/settings.scss';
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@600&display=swap');
+
+$banner-text-color: #131619;
+$banner-link-color: #0049aa;
+
+.c-gnw-announcement-banner {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: rem(16px);
+  width: 100%;
+  padding: rem(8px) rem(16px);
+  background-color: #f7fbd9;
+  border: 1px solid #c3d16f;
+
+  .banner-content {
+    display: flex;
+    align-items: flex-start;
+    gap: rem(6px);
+    flex: 1;
+    min-width: 0;
+  }
+
+  .tree-icon {
+    flex-shrink: 0;
+    width: rem(18px);
+    height: rem(18px);
+    margin-top: rem(2px);
+  }
+
+  .banner-text {
+    flex: 1;
+    min-width: 0;
+  }
+
+  .banner-title {
+    margin: 0 0 rem(4px);
+    font-family: 'IBM Plex Sans', sans-serif;
+    font-size: rem(14px);
+    font-weight: 600;
+    line-height: rem(20px);
+    letter-spacing: 0;
+    color: $banner-text-color;
+  }
+
+  .banner-description {
+    margin: 0;
+    font-family: $font-family-1;
+    font-size: $font-size-xs;
+    font-weight: 400;
+    line-height: 1.5;
+    letter-spacing: normal;
+    color: $banner-text-color;
+  }
+
+  .banner-link {
+    display: inline-flex;
+    align-items: center;
+    gap: rem(4px);
+    margin-top: rem(4px);
+    font-family: $font-family-1;
+    font-size: rem(12px);
+    font-weight: 400;
+    line-height: rem(16px);
+    letter-spacing: 0;
+    color: $banner-link-color;
+    text-decoration: underline;
+    text-decoration-style: solid;
+
+    &:hover {
+      color: darken($banner-link-color, 10%);
+    }
+
+    .union-icon {
+      width: rem(13px);
+      height: rem(13px);
+      fill: currentColor;
+    }
+  }
+
+  .banner-dismiss {
+    display: flex;
+    flex-shrink: 0;
+    align-items: center;
+    justify-content: center;
+    width: rem(32px);
+    height: rem(32px);
+    padding: 0;
+    border: 0;
+    background: transparent;
+    cursor: pointer;
+
+    .close-icon {
+      width: rem(14px);
+      height: rem(14px);
+      fill: $slate;
+    }
+
+    &:hover .close-icon {
+      fill: $slate-light;
+    }
+  }
+}
