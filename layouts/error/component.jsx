@@ -1,12 +1,12 @@
 import PropTypes from 'prop-types';
 
-import Header from 'components/header';
+import SiteHeader from 'components/site-header';
 import ContactUsModal from 'components/modals/contact-us';
 import ErrorMessage from 'components/error-message';
 
 const ErrorPage = ({ title, description }) => (
   <>
-    <Header />
+    <SiteHeader />
     <div className="l-error-page">
       <ErrorMessage title={title} description={description} error />
     </div>

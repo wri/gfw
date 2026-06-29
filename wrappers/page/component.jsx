@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { useRouter } from 'next/router';
-import dynamic from 'next/dynamic';
 import { Loader, MediaContextProvider } from '@worldresources/gfw-components';
 import cx from 'classnames';
 
@@ -13,8 +12,7 @@ import Head from 'wrappers/head';
 import Footer from 'components/footer';
 import ContactUsModal from 'components/modals/contact-us';
 import ErrorMessage from 'components/error-message';
-
-const Header = dynamic(() => import('components/header'), { ssr: false });
+import SiteHeader from 'components/site-header';
 
 const PageWrapper = ({
   children,
@@ -45,7 +43,7 @@ const PageWrapper = ({
         metaTags={metaTags}
       />
       <div className="l-page">
-        <Header notifications={notifications} />
+        <SiteHeader notifications={notifications} />
         <div className={cx('content-wrapper', { '-error': error })}>
           {isFallback && <Loader />}
           {!isFallback && error && (

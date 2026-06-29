@@ -3,6 +3,14 @@
 .l-fullscreen-page {
   position: relative;
 
+  .c-site-header {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1001;
+  }
+
   .content-wrapper {
     position: fixed;
     height: 100%;

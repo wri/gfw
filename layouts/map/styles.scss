@@ -2,7 +2,7 @@
 
 .c-map-main {
   height: 100%;
-  padding-top: 43px;
+  padding-top: var(--site-header-height, 43px);
 
   .main-map-container {
     width: 100%;

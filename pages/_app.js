@@ -72,6 +72,8 @@ import '../components/forms/profile/styles.scss';
 
 // header
 import '../components/header/styles.scss';
+import '../components/gnw-announcement-banner/styles.scss';
+import '../components/site-header/styles.scss';
 
 // legends
 import '../components/legend/styles.scss';
