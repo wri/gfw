@@ -8,11 +8,18 @@ const Header = dynamic(() => import('components/header'), { ssr: false });
 
 const isServer = typeof window === 'undefined';
 
-const updateSiteHeaderHeight = (height) => {
+const HEADER_LOGO_SIZE = 76;
+const HEADER_NAV_HEIGHT = { default: 56, slim: 43 };
+
+const updateSiteHeaderCssVars = (height, logoOverhang) => {
   if (!isServer) {
     document.documentElement.style.setProperty(
       '--site-header-height',
       `${height}px`
+    );
+    document.documentElement.style.setProperty(
+      '--header-logo-overhang',
+      `${logoOverhang}px`
     );
   }
 };
@@ -27,8 +34,11 @@ const SiteHeader = ({ notifications, slim }) => {
       return undefined;
     }
 
+    const navHeight = slim ? HEADER_NAV_HEIGHT.slim : HEADER_NAV_HEIGHT.default;
+    const logoOverhang = Math.max(0, HEADER_LOGO_SIZE - navHeight);
+
     const measureHeight = () => {
-      updateSiteHeaderHeight(element.offsetHeight);
+      updateSiteHeaderCssVars(element.offsetHeight, logoOverhang);
     };
 
     measureHeight();
@@ -39,7 +49,7 @@ const SiteHeader = ({ notifications, slim }) => {
     return () => {
       resizeObserver.disconnect();
     };
-  }, []);
+  }, [slim]);
 
   return (
     <div className="c-site-header" ref={siteHeaderRef}>

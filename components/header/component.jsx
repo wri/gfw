@@ -4,6 +4,7 @@ import useRouter from 'utils/router';
 import { Header as HeaderComponent } from '@worldresources/gfw-components';
 
 import NavLink from 'components/nav-link';
+import gnwBadge from 'assets/logos/gfw.png';
 
 import config from './config';
 
@@ -14,6 +15,7 @@ const Header = ({ setModalContactUsOpen, fullScreen, slim, notifications }) => {
     <HeaderComponent
       className="c-header"
       slim={slim}
+      customLogo={gnwBadge}
       navMain={config.navMain}
       NavLinkComponent={({ children: headerChildren, className, ...props }) =>
         props.href ? (
