@@ -4173,10 +4173,10 @@
     lodash "^4.17.19"
     react-native-url-polyfill "^1.1.2"
 
-"@worldresources/gfw-components@^3.5.15":
-  version "3.5.15"
-  resolved "https://registry.yarnpkg.com/@worldresources/gfw-components/-/gfw-components-3.5.15.tgz#9f7860b692d5a7351bbd3dfac9b8bc0da94ef405"
-  integrity sha512-6dMCJyA1oQfaSjFkU/zVOLeRrcKBmVhBSJQV+N1rw0qYXc66OcOVLG0iAKA8jyqyhemMPzdn8TNMH8Jeq3Yogg==
+"@worldresources/gfw-components@^3.5.16":
+  version "3.5.16"
+  resolved "https://registry.yarnpkg.com/@worldresources/gfw-components/-/gfw-components-3.5.16.tgz#b831680ec84f82f71b7c07851021065d2c090b85"
+  integrity sha512-vbnheoulvCyj+Q8M4RPmaywxJiH5bZTaJ7JNL+L/RivjpKJ81ttJrtWPRmDK/0EVt+hHRlpDXR8jQ3zeHlYrbw==
   dependencies:
     "@artsy/fresnel" "^1.1.0"
     "@tippyjs/react" "^4.0.2"
