@@ -3,7 +3,7 @@
 .c-data-analysis-menu {
   display: flex;
   flex-flow: column;
-  max-height: calc(100vh - 70px);
+  max-height: calc(100vh - var(--site-header-height, 74px) - rem(15px));
   width: rem(290px);
   box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.25);
   background: $white;
@@ -33,11 +33,11 @@
     -webkit-overflow-scrolling: touch;
     display: flex;
     flex: 1;
-    max-height: calc(100vh - 70px);
+    max-height: calc(100vh - var(--site-header-height, 74px) - rem(15px));
     z-index: 1;
 
     @media screen and (min-width: $screen-m) and (max-width: 1090px) {
-      max-height: calc(100vh - 110px);
+      max-height: calc(100vh - var(--site-header-height, 74px) - rem(55px));
     }
   }
 
