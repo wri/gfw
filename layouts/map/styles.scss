@@ -62,7 +62,7 @@
   .data-analysis-menu {
     position: absolute;
     left: rem(91px);
-    top: rem(60px);
+    top: calc(var(--site-header-height, 74px) + rem(15px));
     z-index: 6;
 
     &.embed {
