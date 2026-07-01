@@ -3,4 +3,17 @@
 .c-footer {
   position: relative;
   z-index: 2;
+
+  .footer-partnership-logos a {
+    display: inline-block;
+    width: 76px;
+    height: 73px;
+    background: url('~assets/logos/gfw.png') center / contain no-repeat;
+  }
+
+  .footer-partnership-logos .gfw-logo {
+    opacity: 0;
+    width: 76px;
+    height: 73px;
+  }
 }

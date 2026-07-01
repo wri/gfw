@@ -30,9 +30,9 @@ const SearchBoxSeo = ({ description }) => {
         telephone: '+12027297600',
         sameAs: [
           'https://twitter.com/globalforests',
-          'https://www.facebook.com/globalforests/',
+          'https://www.facebook.com/globalnaturewatch',
           'https://www.youtube.com/channel/UCAsamYre1KLulf4FD-xJfLA',
-          'https://www.instagram.com/globalforests/',
+          'https://www.instagram.com/globalnaturewatch/',
           'https://en.wikipedia.org/wiki/Global_Forest_Watch',
           'https://www.wikidata.org/wiki/Q22677558',
           'https://www.crunchbase.com/organization/global-forest-watch',

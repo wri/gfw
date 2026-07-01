@@ -21,7 +21,10 @@
     @media screen and (min-width: $screen-m) {
       width: rem(76px);
       top: 0;
-      padding-top: rem(74px);
+      padding-top:
+        calc(
+          var(--site-header-height, 74px) + var(--header-logo-overhang, 0px)
+        );
     }
   }
 
