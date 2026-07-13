@@ -791,18 +791,31 @@ export const getTreeCoverOTF = async (params) => {
 };
 
 export const getTreeCoverGainOTF = async (params) => {
-  const { adm0, geostore } = params || {};
+  const { adm0, geostore, threshold } = params || {};
   const geostoreId = geostore.id || adm0;
-  const urlBase = '/dataset/umd_tree_cover_gain/latest/query';
-  const sql = `?sql=${SQL_QUERIES.treeCoverGainSimpleOTF}`;
 
-  const url = encodeURI(`${urlBase + sql}`.replace('{geostoreId}', geostoreId));
+  const urlBaseGain = '/dataset/umd_tree_cover_gain/latest/query';
+  const urlBaseExtent = '/dataset/umd_tree_cover_density_2000/latest/query';
+  const sqlGain = `?sql=${SQL_QUERIES.treeCoverGainSimpleOTF}`;
+  const sqlExtent = `?sql=${SQL_QUERIES.treeCoverOTF}`;
 
-  const response = await dataRequest.get(url);
+  const urlGain = encodeURI(
+    `${urlBaseGain + sqlGain}`.replace('{geostoreId}', geostoreId)
+  );
+  const urlExtent = encodeURI(
+    `${urlBaseExtent + sqlExtent}`
+      .replace('{threshold}', threshold)
+      .replace('{geostoreId}', geostoreId)
+  );
+
+  const [gainResponse, extentResponse] = await Promise.all([
+    dataRequest.get(urlGain),
+    dataRequest.get(urlExtent),
+  ]);
 
   return {
-    gain: response.data[0]?.area__ha,
-    extent: params?.geostore?.areaHa || 0,
+    gain: gainResponse.data[0]?.area__ha || 0,
+    extent: extentResponse.data[0]?.area__ha || 0,
   };
 };
 
