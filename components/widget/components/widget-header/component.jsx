@@ -81,7 +81,7 @@ class WidgetHeader extends PureComponent {
 
     let disabledMessageString =
       status === 'unsaved'
-        ? 'Save area in My GFW to access downloads.'
+        ? 'Save area in My GNW to access downloads.'
         : 'Download unavailable.';
 
     if (showDownloadBtn && status === 'pending' && authenticated) {

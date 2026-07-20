@@ -4,30 +4,30 @@ import Topics from 'layouts/topics';
 const TOPICS = {
   biodiversity: {
     title:
-      'Effects of Forests on Biodiversity | Deforestation & Biodiversity Loss | GFW',
+      'Effects of Forests on Biodiversity | Deforestation & Biodiversity Loss | GNW',
     description:
       'Explore the relationship between forests and biodiversity, why biodiversity is important, and what the effects of deforestation and climate change are on the ecosystem and wildlife. Learn how forest protection offers a solution to biodiversity loss.',
   },
   climate: {
     title:
-      'How Forests Affect the Climate | Deforestation & Climate Change | GFW',
+      'How Forests Affect the Climate | Deforestation & Climate Change | GNW',
     description:
       'Explore the relationship between forests and climate and how deforestation contributes to global warming. Learn how forests can be a natural solution for climate change.',
   },
   commodities: {
     title:
-      'Impact of Supply Chains on Forest Resources | Deforestation & Commodities | GFW',
+      'Impact of Supply Chains on Forest Resources | Deforestation & Commodities | GNW',
     description:
       'Explore the relationship between forests and commodities, and ways companies can achieve deforestation-free commodity production in their supply chains.',
   },
   water: {
-    title: 'Watershed Health | Effects of Deforestation & Climate Change | GFW',
+    title: 'Watershed Health | Effects of Deforestation & Climate Change | GNW',
     description:
       'Explore the relationship between forests and water, why deforestation compromises watershed health and the effects of climate change on water resources. Learn about sustainable watershed management and ways forests can help protect against natural disasters.',
   },
   fires: {
     title:
-      'Forest Fires & Climate Change | Effects of Deforestation on Wildfires | GFW',
+      'Forest Fires & Climate Change | Effects of Deforestation on Wildfires | GNW',
     description:
       'Explore the relationship between forests and fires, the effect of climate change on wildfires and how protection against deforestation can help prevent forest fires.',
   },

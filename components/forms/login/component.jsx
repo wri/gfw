@@ -136,7 +136,7 @@ class LoginForm extends PureComponent {
                 <Fragment>
                   {!simple && (
                     <Column>
-                      <h1>Login to My GFW</h1>
+                      <h1>Login to My GNW</h1>
                       <h3>
                         Log in is required so you can view, manage, and delete
                         your areas of interest.

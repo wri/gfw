@@ -96,7 +96,7 @@ class ContactForm extends PureComponent {
               {submitSucceeded ? (
                 <div className="feedback-message">
                   <h3>
-                    Thank you for contacting Global Forest Watch! Check your
+                    Thank you for contacting Global Nature Watch! Check your
                     inbox for a confirmation email.
                   </h3>
                   <p>Interested in getting news and updates from us?</p>
@@ -166,7 +166,7 @@ class ContactForm extends PureComponent {
                     />
                     <Checkbox
                       name="receive_updates"
-                      label="I WOULD LIKE TO RECEIVE UPDATES ON NEWS AND EVENTS FROM GLOBAL FOREST WATCH"
+                      label="I WOULD LIKE TO RECEIVE UPDATES ON NEWS AND EVENTS FROM GLOBAL NATURE WATCH"
                       options={[{ label: 'Yes', value: 'true' }]}
                     />
                     <Error

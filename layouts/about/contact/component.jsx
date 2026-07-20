@@ -7,9 +7,9 @@ const AboutContactSection = () => (
         <h3>Contact us</h3>
         <p className="intro">
           Question, comment, request, feedback? We want to hear from you! Help
-          us improve Global Forest Watch by completing the form on the right.
+          us improve Global Nature Watch by completing the form on the right.
         </p>
-        <p>Global Forest Watch, 10 G Street NE Suite 800</p>
+        <p>Global Nature Watch, 10 G Street NE Suite 800</p>
         <p>Washington, DC 20002, USA</p>
         <a
           href="https://www.wri.org/project-experts/37654?page=1"

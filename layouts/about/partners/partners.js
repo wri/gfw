@@ -39,7 +39,7 @@ export const foundingPartners = [
   {
     img: images('./globalforestwatchcanadahover.png'),
     link: 'http://globalforestwatch.ca/',
-    title: 'Global Forest Watch Canada',
+    title: 'Global Nature Watch Canada',
   },
   {
     img: images('./googlehover.png'),

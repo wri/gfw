@@ -119,7 +119,7 @@ class ModalWelcome extends PureComponent {
             label: 'Close',
           });
         }}
-        title="Welcome to the Global Forest Watch map!"
+        title="Welcome to the Global Nature Watch map!"
         className="c-modal-welcome"
       >
         {this.getContent()}

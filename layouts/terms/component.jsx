@@ -8,7 +8,7 @@ const TermsPage = () => (
       <Column width={[1, 1 / 12]} />
       <Column width={[1, 5 / 6]}>
         <h1>
-          <span>Global Forest Watch</span>
+          <span>Global Nature Watch</span>
           <span>Terms of Service</span>
         </h1>
         <h2>
@@ -22,7 +22,7 @@ const TermsPage = () => (
           get when you use our websites, and what We expect in return.
         </p>
         <p>
-          The Services available through Resource Watch, Global Forest Watch,
+          The Services available through Resource Watch, Global Nature Watch,
           Forest Watcher, and The Partnership for Resilience and Preparedness,
           and their associated websites, resourcewatch.org,
           globalforestwatch.org, and prepdata.org, (collectively referred to as
@@ -71,7 +71,7 @@ const TermsPage = () => (
                 registration request, in its sole discretion.{' '}
               </li>
               <li>
-                When You request to open an account in the Global Forest Watch
+                When You request to open an account in the Global Nature Watch
                 Pro application (pro.globalforestwatch.org), the following
                 conditions must be met: (1) You are applying on behalf of an
                 organization or entity that works with and is actively involved
@@ -139,7 +139,7 @@ const TermsPage = () => (
             <ol className="alpha-list">
               <li>
                 Most of Our Services are designed to help You share or publish
-                Your content. In using Resource Watch, Global Forest Watch, and
+                Your content. In using Resource Watch, Global Nature Watch, and
                 The Partnership for Resilience and Preparedness, and their
                 associated websites, resourcewatch.org, globalforestwatch.org,
                 and prepdata.org, You may submit data, information, or other
@@ -159,14 +159,14 @@ const TermsPage = () => (
           </li>
           <li>
             <h3>
-              FOREST WATCHER CONTENT AND GLOBAL FOREST WATCH PRO ACCOUNTS AND
+              FOREST WATCHER CONTENT AND GLOBAL NATURE WATCH PRO ACCOUNTS AND
               CONTENT
             </h3>
             <ol className="alpha-list">
               <li>
                 When You submit Your Content to the Forest Watcher mobile
                 application or Forest Watcher website,
-                (forestwatcher.globalforestwatch.org), or Global Forest Watch
+                (forestwatcher.globalforestwatch.org), or Global Nature Watch
                 Pro application (pro.globalforestwatch.org) (“Watcher/Pro
                 Content“), the Watcher/Pro Content is considered confidential
                 information. We will not access, use or disclose the Watcher/Pro

@@ -118,7 +118,7 @@ class NewsletterForm extends PureComponent {
                 <Fragment>
                   <h1>Stay Updated on the World&apos;s Forests</h1>
                   <h3>
-                    Subscribe to monthly GFW newsletters and updates based on
+                    Subscribe to monthly GNW newsletters and updates based on
                     your interests.
                   </h3>
                   <Input

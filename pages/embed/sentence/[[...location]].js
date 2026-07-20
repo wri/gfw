@@ -24,7 +24,7 @@ import DynamicSentence from 'components/ui/dynamic-sentence';
 
 const notFoundProps = {
   error: 404,
-  title: 'Dashboard Not Found | Global Forest Watch',
+  title: 'Dashboard Not Found | Global Nature Watch',
   errorTitle: 'Dashboard Not Found',
 };
 
@@ -47,7 +47,7 @@ export const getServerSideProps = async ({ params }) => {
     const parsedSentence = parseSentence(data);
     return {
       props: {
-        title: 'Global Deforestation Rates & Statistics by Country | GFW',
+        title: 'Global Deforestation Rates & Statistics by Country | GNW',
         location: params?.location,
         locationNames: null,
         locationObj: null,
@@ -70,7 +70,7 @@ export const getServerSideProps = async ({ params }) => {
       };
     }
 
-    const title = `${locationName} Deforestation Rates & Statistics | GFW`;
+    const title = `${locationName} Deforestation Rates & Statistics | GNW`;
     const description = `Explore interactive tree cover loss data charts and analyze ${locationName} forest trends, including land use change, deforestation rates and forest fires.`;
     const noIndex = !['country'].includes(type);
     const [locationType, adm0, lvl1, lvl2] = params?.location;
@@ -139,7 +139,7 @@ export const getServerSideProps = async ({ params }) => {
       return {
         props: {
           error: 401,
-          title: 'Area is private | Global Forest Watch',
+          title: 'Area is private | Global Nature Watch',
           errorTitle: 'Area is private',
         },
       };

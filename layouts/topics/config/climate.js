@@ -42,8 +42,7 @@ export default {
   intro: {
     title:
       'Forests can provide 30% of the solution to keeping global warming below 2°C.',
-    text:
-      'Forests remove and store carbon from the atmosphere, representing a cost-effective solution for mitigating climate change. The loss or degradation of forests compromises their ability to remove emissions.',
+    text: 'Forests remove and store carbon from the atmosphere, representing a cost-effective solution for mitigating climate change. The loss or degradation of forests compromises their ability to remove emissions.',
     img1x: intro1x,
     img2x: intro2x,
   },
@@ -51,8 +50,7 @@ export default {
     {
       title: 'Climate',
       subtitle: 'Natural state',
-      text:
-        'Forests provide a natural solution for removing carbon from the atmosphere. Forests absorb and store carbon emissions caused by human activity, like burning fossil fuels, which include coal, natural gas and oil.',
+      text: 'Forests provide a natural solution for removing carbon from the atmosphere. Forests absorb and store carbon emissions caused by human activity, like burning fossil fuels, which include coal, natural gas and oil.',
       img1x: climate1,
       img2x: climate1Large,
       prompts: [
@@ -60,14 +58,13 @@ export default {
           id: 'climate-learn',
           content: 'Read how forests remove carbon from the atmosphere.',
           btnText: 'Read the blog',
-          link:
-            'https://blog.globalforestwatch.org/climate/conserving-forests-could-cut-carbon-emissions-as-much-as-getting-rid-of-every-car-on-earth',
+          link: 'https://blog.globalforestwatch.org/climate/conserving-forests-could-cut-carbon-emissions-as-much-as-getting-rid-of-every-car-on-earth',
           position: [40, 30],
         },
         {
           id: 'climate-explore',
           content:
-            'GFW maps areas helping remove carbon from the atmosphere through tree cover gain.',
+            'GNW maps areas helping remove carbon from the atmosphere through tree cover gain.',
           btnText: 'Explore the data',
           link: `/map?map=eyJjZW50ZXIiOnsibGF0IjoyNywibG5nIjoxMn0sInpvb20iOjIsImRhdGFzZXRzIjpbeyJkYXRhc2V0IjoiNzBlMjU0OWMtZDcyMi00NGE2LWE4ZDctNGEzODVkNzg1NjVlIiwib3BhY2l0eSI6MSwidmlzaWJpbGl0eSI6dHJ1ZSwibGF5ZXJzIjpbIjNiMjJhNTc0LTI1MDctNGI0YS1hMjQ3LTgwMDU3YzFhMWFkNCJdfSx7ImRhdGFzZXQiOiJmZGM4ZGMxYi0yNzI4LTRhNzktYjIzZi1iMDk0ODUwNTJiOGQiLCJsYXllcnMiOlsiNmY2Nzk4ZTYtMzllYy00MTYzLTk3OWUtMTgyYTc0Y2E2NWVlIiwiYzVkMWUwMTAtMzgzYS00NzEzLTlhYWEtNDRmNzI4YzA1NzFjIl0sIm9wYWNpdHkiOjEsInZpc2liaWxpdHkiOnRydWV9XSwiYmFzZW1hcCI6eyJ2YWx1ZSI6ImRlZmF1bHQifSwibGFiZWwiOiJkZWZhdWx0IiwiY2FuQm91bmQiOnRydWV9&menu=eyJtZW51U2VjdGlvbiI6IiIsImRhdGFzZXRDYXRlZ29yeSI6IiJ9`,
           position: [65, 55],
@@ -105,18 +102,16 @@ export default {
     {
       title: 'Climate',
       subtitle: 'Drivers of change',
-      text:
-        "Forests' ability to absorb carbon from the atmosphere can be compromised by conversion into agricultural lands, commodity production, urbanization, disease and fires that cause forest loss. When a tree burns or decays, the carbon stored is released into the atmosphere further exacerbating climate change.",
+      text: "Forests' ability to absorb carbon from the atmosphere can be compromised by conversion into agricultural lands, commodity production, urbanization, disease and fires that cause forest loss. When a tree burns or decays, the carbon stored is released into the atmosphere further exacerbating climate change.",
       img1x: climate2,
       img2x: climate2Large,
       prompts: [
         {
           id: 'climate-learn',
           content:
-            "Read about GFW's research to identify dominant drivers of tree cover loss globally.",
+            "Read about GNW's research to identify dominant drivers of tree cover loss globally.",
           btnText: 'Read the blog',
-          link:
-            'https://blog.globalforestwatch.org/data/when-a-tree-falls-is-it-deforestation',
+          link: 'https://blog.globalforestwatch.org/data/when-a-tree-falls-is-it-deforestation',
           position: [52, 58],
         },
         {
@@ -124,8 +119,7 @@ export default {
           content:
             'Read how extreme fires are becoming more common as global temperatures increase.',
           btnText: 'Read the blog',
-          link:
-            'https://blog.globalforestwatch.org/fires/weather-patterns-that-fueled-great-smoky-mountain-forest-fire-could-increase-with-climate-change',
+          link: 'https://blog.globalforestwatch.org/fires/weather-patterns-that-fueled-great-smoky-mountain-forest-fire-could-increase-with-climate-change',
           position: [45, 40],
         },
       ],
@@ -172,15 +166,14 @@ export default {
     {
       title: 'Climate',
       subtitle: 'Compromised state',
-      text:
-        "With fewer trees to help absorb and regulate carbon in the atmopshere, the Earth's temperature rises and the effects of climate change increase.",
+      text: "With fewer trees to help absorb and regulate carbon in the atmopshere, the Earth's temperature rises and the effects of climate change increase.",
       img1x: climate3,
       img2x: climate3Large,
       prompts: [
         {
           id: 'climate-explore',
           content:
-            'GFW data show carbon emissions from tropical tree cover loss.',
+            'GNW data show carbon emissions from tropical tree cover loss.',
           btnText: 'Explore the data',
           link: `/map?map=eyJjZW50ZXIiOnsibGF0IjoyNywibG5nIjoxMn0sInpvb20iOjIsImRhdGFzZXRzIjpbeyJkYXRhc2V0IjoiZmRjOGRjMWItMjcyOC00YTc5LWIyM2YtYjA5NDg1MDUyYjhkIiwibGF5ZXJzIjpbIjZmNjc5OGU2LTM5ZWMtNDE2My05NzllLTE4MmE3NGNhNjVlZSIsImM1ZDFlMDEwLTM4M2EtNDcxMy05YWFhLTQ0ZjcyOGMwNTcxYyJdLCJvcGFjaXR5IjoxLCJ2aXNpYmlsaXR5Ijp0cnVlfSx7ImRhdGFzZXQiOiJhOWNjNmVjMC01YzFjLTRlMzYtOWIyNi1iNGVlMGI1MDU4N2IiLCJsYXllcnMiOlsiYjMyYTJmMTUtMjVlOC00ZWNjLTk4ZTAtNjg3ODJhYjFjMGZlIl0sIm9wYWNpdHkiOjEsInZpc2liaWxpdHkiOnRydWV9XSwiYmFzZW1hcCI6eyJ2YWx1ZSI6ImRhcmsifSwibGFiZWwiOiJsaWdodExhYmVscyIsImNhbkJvdW5kIjpmYWxzZSwiYmJveCI6bnVsbH0%3D&menu=eyJtZW51U2VjdGlvbiI6IiIsImRhdGFzZXRDYXRlZ29yeSI6IiJ9`,
           position: [65, 50],
@@ -220,8 +213,7 @@ export default {
     {
       title: 'Climate',
       subtitle: 'Recovery state',
-      text:
-        'Sustainable forest management, improved land tenure, conservation and restoration are all valuable strategies for preserving forests as a natural climate solution. These solutions can have positive economic, biodiversity and societal impacts. Improvements in forest monitoring data and technology faciliate implementation of these solutions.',
+      text: 'Sustainable forest management, improved land tenure, conservation and restoration are all valuable strategies for preserving forests as a natural climate solution. These solutions can have positive economic, biodiversity and societal impacts. Improvements in forest monitoring data and technology faciliate implementation of these solutions.',
       img1x: climate4,
       img2x: climate4Large,
       prompts: [
@@ -229,17 +221,15 @@ export default {
           id: 'climate-learn',
           content: 'Learn how forest restoration can help meet climate goals.',
           btnText: 'Read the blog',
-          link:
-            'https://www.wri.org/blog/2018/09/aligning-ambitions-case-including-restoration-targets-climate-goals',
+          link: 'https://www.wri.org/blog/2018/09/aligning-ambitions-case-including-restoration-targets-climate-goals',
           position: [60, 55],
         },
         {
           id: 'climate-blog',
           content:
-            'Read how GFW monitoring data support implementation of forest conservation goals.',
+            'Read how GNW monitoring data support implementation of forest conservation goals.',
           btnText: 'Read the blog',
-          link:
-            'https://blog.globalforestwatch.org/climate/3-new-features-on-gfw-climate-measure-progress-on-forest-conservation-goals',
+          link: 'https://blog.globalforestwatch.org/climate/3-new-features-on-gfw-climate-measure-progress-on-forest-conservation-goals',
           position: [50, 30],
         },
       ],
@@ -300,8 +290,7 @@ export default {
       img2x: monitorLarge,
       selector: {
         whitelist: nycWidgetIsos,
-        path:
-          '/dashboards/country/{iso}?widget=cumulativeGlad&category=climate#cumulativeGlad',
+        path: '/dashboards/country/{iso}?widget=cumulativeGlad&category=climate#cumulativeGlad',
       },
     },
     {
@@ -315,8 +304,8 @@ export default {
     },
     {
       id: 'research',
-      title: 'The latest research and insights from GFW',
-      summary: 'Read about forests and climate on the GFW blog.',
+      title: 'The latest research and insights from GNW',
+      summary: 'Read about forests and climate on the GNW blog.',
       extLink: 'https://blog.globalforestwatch.org/climate',
       img1x: research,
       img2x: researchLarge,
@@ -335,7 +324,7 @@ export default {
     {
       id: 'feedback',
       title:
-        'What other climate data and analysis would you like to see on GFW?',
+        'What other climate data and analysis would you like to see on GNW?',
       summary: 'Tell us!',
       extLink: '',
       theme: 'theme-card-dark',

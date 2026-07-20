@@ -35,7 +35,7 @@ import WebhookModal from './webhook-modal';
 const confirmations = {
   saved: {
     title: 'Your area has been saved',
-    description: 'You can view all your areas in My GFW',
+    description: 'You can view all your areas in My GNW',
   },
   savedWithSub: {
     title: 'Your area has been saved',
@@ -43,7 +43,7 @@ const confirmations = {
       "<b>Check your email and click on the link to confirm your subscription.</b> If you don't see an email, check your junk or spam email folder.",
   },
   deleted: {
-    title: 'This area has been deleted from your My GFW.',
+    title: 'This area has been deleted from your My GNW.',
     error: true,
   },
 };

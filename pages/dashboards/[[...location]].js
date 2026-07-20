@@ -45,22 +45,22 @@ import {
 const serverErrors = {
   401: {
     error: 401,
-    title: 'Area is private | Global Forest Watch',
+    title: 'Area is private | Global Nature Watch',
     errorTitle: 'Area is private',
   },
   404: {
     error: 404,
-    title: 'Area Not Found | Global Forest Watch',
+    title: 'Area Not Found | Global Nature Watch',
     errorTitle: 'Area Not Found',
   },
   500: {
     error: 500,
-    title: 'Internal Server Error | Global Forest Watch',
+    title: 'Internal Server Error | Global Nature Watch',
     errorTitle: 'There was an error retrieving the data',
   },
   504: {
     error: 504,
-    title: 'Network error | Global Forest Watch',
+    title: 'Network error | Global Nature Watch',
     errorTitle: 'There was an error retrieving the data',
   },
 };
@@ -136,7 +136,7 @@ export const getServerSideProps = async ({ params, query, req }) => {
     );
     return {
       props: {
-        title: 'Global Deforestation Rates & Statistics by Country | GFW',
+        title: 'Global Deforestation Rates & Statistics by Country | GNW',
         category: query?.category || null,
         basePath,
         location: params?.location,
@@ -162,7 +162,7 @@ export const getServerSideProps = async ({ params, query, req }) => {
       };
     }
 
-    const title = `${locationName} Deforestation Rates & Statistics | GFW`;
+    const title = `${locationName} Deforestation Rates & Statistics | GNW`;
     const noIndex = !['country'].includes(type);
     const [locationType, adm0, lvl1, lvl2] = params?.location;
     const adm1 = lvl1 ? parseInt(lvl1, 10) : null;
