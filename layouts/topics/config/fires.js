@@ -175,9 +175,9 @@ export default {
     },
     {
       id: 'blog-research',
-      title: 'The latest research and insights on fires from GFW',
+      title: 'The latest research and insights on fires from GNW',
       summary:
-        'Learn about the complex relationship between forests and fires on the GFW blog.',
+        'Learn about the complex relationship between forests and fires on the GNW blog.',
       link: 'https://www.globalforestwatch.org/blog/category-and-topics/?topic=fires ',
       image: forestFire,
       btnText: 'read the blog',
@@ -193,7 +193,7 @@ export default {
     },
     {
       id: 'feedback',
-      title: 'What other fires data and analysis would you like to see on GFW?',
+      title: 'What other fires data and analysis would you like to see on GNW?',
       summary: 'Tell us!',
       theme: 'theme-card-dark',
       btnText: 'feedback',

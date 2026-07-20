@@ -6,7 +6,7 @@ import ErrorPage from 'layouts/error';
 const Error = ({ statusCode }) => {
   const title =
     `An error ${statusCode ? `${statusCode} ` : ''}occurred` ||
-    "We're sorry, something went wrong | Global Forest Watch";
+    "We're sorry, something went wrong | Global Nature Watch";
   const description = 'Try refreshing the page or check your connection.';
 
   return (

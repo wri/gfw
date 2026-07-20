@@ -2,7 +2,7 @@ import Head from 'next/head';
 import PropTypes from 'prop-types';
 
 const SearchBoxSeo = ({ description }) => {
-  const NAME = 'Global Forest Watch';
+  const NAME = 'Global Nature Watch';
   const IMAGE = 'https://www.globalforestwatch.org/assets/card-2.png';
   const LOGO = 'https://www.globalforestwatch.org/assets/gfw.png';
   const URL = 'https://www.globalforestwatch.org/';

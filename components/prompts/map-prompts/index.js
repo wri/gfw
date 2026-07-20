@@ -60,11 +60,8 @@ class MapPromptsContainer extends PureComponent {
 
   getStepsData = () => {
     const { stepsKey } = this.props;
-    const {
-      setMapPromptsSettings,
-      setAnalysisView,
-      clearAnalysisView,
-    } = this.props;
+    const { setMapPromptsSettings, setAnalysisView, clearAnalysisView } =
+      this.props;
 
     const allSteps = {
       mapTour: {
@@ -460,7 +457,7 @@ class MapPromptsContainer extends PureComponent {
             target: '.analysis-actions',
             delay: 600,
             content:
-              'After you perform an analysis on any area, click on the Save in My GFW button to save the area for future reference.',
+              'After you perform an analysis on any area, click on the Save in My GNW button to save the area for future reference.',
             disableBeacon: true,
             placement: 'right',
             prev: () => {

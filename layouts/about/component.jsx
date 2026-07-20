@@ -22,7 +22,7 @@ import bgImageWebP from './background.webp';
 
 const sections = {
   how: {
-    label: 'GFW in Action',
+    label: 'GNW in Action',
     anchor: 'gfw-in-action',
     component: 'how',
   },
@@ -60,7 +60,7 @@ const AboutPage = (props) => (
   <div className="l-about-page">
     <Cover
       title="About"
-      description="Global Forest Watch, or GFW, is an initiative from the World Resources Institute (WRI) committed to providing the best publicly available data and tools for monitoring and protecting the world’s forests. By harnessing cutting-edge technology, GFW’s free and accessible platform allows anyone anywhere to access near-real-time information on forest change and mobilize action."
+      description="Global Nature Watch, or GNW, is an initiative from the World Resources Institute (WRI) committed to providing the best publicly available data and tools for monitoring and protecting the world’s forests. By harnessing cutting-edge technology, GNW’s free and accessible platform allows anyone anywhere to access near-real-time information on forest change and mobilize action."
       bgImage={bgImage}
       webP={bgImageWebP}
     >
@@ -69,7 +69,7 @@ const AboutPage = (props) => (
           <Button round className="subscribe-icon">
             <Icon icon={mailIcon} />
           </Button>
-          <p className="subscribe-msg">SUBSCRIBE TO THE GFW NEWSLETTER</p>
+          <p className="subscribe-msg">SUBSCRIBE TO THE GNW NEWSLETTER</p>
         </a>
       </Link>
     </Cover>

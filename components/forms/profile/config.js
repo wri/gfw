@@ -63,7 +63,7 @@ export const interests = [
   'Agricultural Supply Chains',
   'Small Grants Fund and Tech Fellowship',
   'Landscape Restoration',
-  'GFW Users in Action',
+  'GNW Users in Action',
   'Places to Watch alerts',
   'Deforestation',
 ];
@@ -82,7 +82,7 @@ export const howDoYouUse = [
   'Learn about forests/my country',
   'Inform purchasing/procurement/investment decisions',
   'Educational support materials',
-  'Not sure; new to GFW',
+  'Not sure; new to GNW',
 ];
 
 export const topics = [

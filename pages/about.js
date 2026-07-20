@@ -11,8 +11,8 @@ import { getPublishedNotifications } from 'services/notifications';
 
 const AboutPage = (props) => (
   <PageWrapper
-    title="About GFW | Global Forest Watch"
-    description="Global Forest Watch is an online platform that provides data and tools for monitoring forests."
+    title="About GNW | Global Nature Watch"
+    description="Global Nature Watch is an online platform that provides data and tools for monitoring forests."
     notifications={props.notifications}
   >
     <About {...props} />

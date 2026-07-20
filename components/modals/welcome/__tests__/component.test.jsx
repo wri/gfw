@@ -28,7 +28,7 @@ describe('ModalWelcome', () => {
     setMainMapSettings: mockSetMainMapSettings,
     setMapPromptsSettings: mockSetMapPromptsSettings,
     setShowMapPrompts: mockSetShowMapPrompts,
-    description: 'Welcome to Global Forest Watch',
+    description: 'Welcome to Global Nature Watch',
     welcomeCards: [],
     showPrompts: false,
   };
@@ -49,7 +49,9 @@ describe('ModalWelcome', () => {
 
   it('renders description when provided', () => {
     render(<ModalWelcome {...defaultProps} />);
-    expect(screen.getByText('Welcome to Global Forest Watch')).toBeInTheDocument();
+    expect(
+      screen.getByText('Welcome to Global Nature Watch')
+    ).toBeInTheDocument();
   });
 
   it('renders welcome cards when provided', () => {
@@ -98,7 +100,10 @@ describe('ModalWelcome', () => {
     const cardButton = screen.getByText('Card 1');
     fireEvent.click(cardButton);
 
-    expect(mockSetMapSettings).toHaveBeenCalledWith({ center: [0, 0], zoom: 5 });
+    expect(mockSetMapSettings).toHaveBeenCalledWith({
+      center: [0, 0],
+      zoom: 5,
+    });
   });
 
   it('calls setMapPromptsSettings when card has promptKey', () => {

@@ -7,8 +7,8 @@ import { getPublishedNotifications } from 'services/notifications';
 
 const MyGfwPage = (props) => (
   <PageLayout
-    title="My GFW | Global Forest Watch"
-    description="Create an account or log into My GFW. Explore the status of forests in custom areas by layering data to create custom maps of forest change, cover and use."
+    title="My GNW | Global Nature Watch"
+    description="Create an account or log into My GNW. Explore the status of forests in custom areas by layering data to create custom maps of forest change, cover and use."
     noIndex
     notifications={props.notifications}
   >

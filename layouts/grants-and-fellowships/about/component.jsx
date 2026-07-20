@@ -19,7 +19,7 @@ const GrantsAboutSection = ({ about }) => {
                 <Column width={[1, 1 / 4]} className="logo">
                   <img
                     src={section.image.url}
-                    alt="Logo Global Forest Watch Small Grant Funds"
+                    alt="Logo Global Nature Watch Small Grant Funds"
                   />
                 </Column>
               )}

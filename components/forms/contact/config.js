@@ -3,48 +3,48 @@ export const topics = [
     value: 'report-a-bug-or-error',
     label: 'Report a bug or error',
     placeholder:
-      "Please tell us what browser and operating system you're using, including version numbers."
+      "Please tell us what browser and operating system you're using, including version numbers.",
   },
   {
     value: 'provide-feedback',
     label: 'Provide feedback',
-    placeholder: ''
+    placeholder: '',
   },
   {
     value: 'data-related-inquiry',
     label: 'Data-related inquiry or suggestion',
-    placeholder: ''
+    placeholder: '',
   },
   {
     value: 'general-inquiry',
     label: 'General inquiry',
-    placeholder: ''
-  }
+    placeholder: '',
+  },
 ];
 
 export const tools = [
   {
     value: 'gfw',
-    label: 'Global Forest Watch'
+    label: 'Global Nature Watch',
   },
   {
     value: 'gfw-pro',
-    label: 'GFW Pro'
+    label: 'GNW Pro',
   },
   {
     value: 'fw',
-    label: 'Forest Watcher'
+    label: 'Forest Watcher',
   },
   {
     value: 'blog',
-    label: 'GFW Blog'
+    label: 'GNW Blog',
   },
   {
     value: 'map-builder',
-    label: 'GFW MapBuilder'
+    label: 'GNW MapBuilder',
   },
   {
     value: 'not-applicable',
-    label: 'Not applicable'
-  }
+    label: 'Not applicable',
+  },
 ];

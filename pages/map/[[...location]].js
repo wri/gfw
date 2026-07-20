@@ -23,7 +23,7 @@ import { setMapPrompts } from 'components/prompts/map-prompts/actions';
 
 const notFoundProps = {
   error: 404,
-  title: 'Location Not Found | Global Forest Watch',
+  title: 'Location Not Found | Global Nature Watch',
   errorTitle: 'Location Not Found',
 };
 
@@ -56,9 +56,9 @@ export const getServerSideProps = async ({ req, params }) => {
   if (!type || type === 'global') {
     return {
       props: {
-        title: 'Interactive World Forest Map & Tree Cover Change Data | GFW',
+        title: 'Interactive World Forest Map & Tree Cover Change Data | GNW',
         description:
-          'Explore the state of forests worldwide by analyzing tree cover change on GFW’s interactive global forest map using satellite data. Learn about deforestation rates and other land use practices, forest fires, forest communities, biodiversity and much more.',
+          'Explore the state of forests worldwide by analyzing tree cover change on GNW’s interactive global forest map using satellite data. Learn about deforestation rates and other land use practices, forest fires, forest communities, biodiversity and much more.',
         notifications: notifications || [],
       },
     };
@@ -79,8 +79,8 @@ export const getServerSideProps = async ({ req, params }) => {
 
     const title = `${locationName} Interactive Forest Map ${
       params?.location?.[2] ? '' : '& Tree Cover Change Data '
-    }| GFW`;
-    const description = `Explore the state of forests in ${locationName} by analyzing tree cover change on GFW’s interactive global forest map using satellite data. Learn about deforestation rates and other land use practices, forest fires, forest communities, biodiversity and much more.`;
+    }| GNW`;
+    const description = `Explore the state of forests in ${locationName} by analyzing tree cover change on GNW’s interactive global forest map using satellite data. Learn about deforestation rates and other land use practices, forest fires, forest communities, biodiversity and much more.`;
     const noIndex = !['country', 'wdpa'].includes(type);
 
     return {
@@ -95,7 +95,7 @@ export const getServerSideProps = async ({ req, params }) => {
     if (type === 'geostore') {
       return {
         props: {
-          title: 'Interactive Forest Map for custom area | GFW',
+          title: 'Interactive Forest Map for custom area | GNW',
         },
       };
     }
@@ -104,7 +104,7 @@ export const getServerSideProps = async ({ req, params }) => {
       return {
         props: {
           error: 401,
-          title: 'Area is private | Global Forest Watch',
+          title: 'Area is private | Global Nature Watch',
           errorTitle: 'Area is private',
           notifications: notifications || [],
         },

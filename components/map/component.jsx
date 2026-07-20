@@ -381,7 +381,7 @@ class MapComponent extends Component {
       >
         <Tooltip
           theme="tip"
-          title="GFW Interactive Map"
+          title="GNW Interactive Map"
           hideOnClick={false}
           html={<Tip text={tipText} className="tooltip-dark" />}
           position="top"

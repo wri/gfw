@@ -201,7 +201,7 @@ class ChoseAnalysis extends PureComponent {
               target="_blank"
               rel="noopenner noreferrer"
             >
-              GFW Terms of Service
+              GNW Terms of Service
             </a>
           </p>
         </div>

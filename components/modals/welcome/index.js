@@ -179,7 +179,7 @@ const mapStateToProps = (state) => {
     showPrompts: selectShowMapPrompts(state),
     title: hideModal
       ? 'Map How-To Guide'
-      : 'Welcome to new Global Forest Watch map!',
+      : 'Welcome to new Global Nature Watch map!',
     description: 'What would you like to do?',
   };
 };

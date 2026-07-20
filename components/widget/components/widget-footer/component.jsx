@@ -90,7 +90,7 @@ class WidgetFooter extends PureComponent {
               rel="noopener noreferrer"
               href="https://www.globalforestwatch.org"
             >
-              Global Forest Watch
+              Global Nature Watch
             </a>
           </span>
         )}

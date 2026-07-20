@@ -7,7 +7,7 @@ const AboutJoinSection = () => (
     <Row>
       <Column className="content">
         <h4>
-          <i>We welcome others to join the growing GFW partnership.</i>
+          <i>We welcome others to join the growing GNW partnership.</i>
         </h4>
         <AnchorLink to="contact" spy smooth duration={500}>
           <Button light className="anchor">
