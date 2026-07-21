@@ -33,7 +33,7 @@ const OutdatedAreaModal = ({ isOpen, handleCloseModal }) => {
           blog outlining these changes
         </a>{' '}
         and let us know if you have any questions at{' '}
-        <a href="mailto:gfw@wri.org">gfw@wri.org</a>.
+        <a href="mailto:gnw@wri.org">gnw@wri.org</a>.
       </p>
     </Modal>
   );

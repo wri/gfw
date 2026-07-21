@@ -118,7 +118,7 @@ const HomePage = ({ page, apps: allApps, tutorials }) => {
               <Row nested>
                 <Column width={[1 / 12]} />
                 <Column width={[5 / 6]}>
-                  <a href="mailto:gfw@wri.org">
+                  <a href="mailto:gnw@wri.org">
                     <Button className="column-btn" light>
                       submit your map
                     </Button>
@@ -144,7 +144,7 @@ const HomePage = ({ page, apps: allApps, tutorials }) => {
               <Row nested>
                 <Column width={[showViewAllButton ? 1 / 4 : 1 / 3]} />
                 <Column width={[showViewAllButton ? 1 / 4 : 1 / 3]}>
-                  <a href="mailto:gfw@wri.org">
+                  <a href="mailto:gnw@wri.org">
                     <Button className="column-btn" light>
                       submit your map
                     </Button>
