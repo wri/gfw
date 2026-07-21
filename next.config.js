@@ -5,6 +5,7 @@ const withBundleAnalyzer = require('@next/bundle-analyzer')({
 
 const redirects = require('./data/redirects.json');
 const rewrites =
+  process.env.NEXT_PUBLIC_REWRITES_ENV === 'staging' ||
   process.env.NEXT_PUBLIC_FEATURE_ENV === 'staging'
     ? require('./data/rewrites-staging.json')
     : require('./data/rewrites.json');
