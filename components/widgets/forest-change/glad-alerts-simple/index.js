@@ -103,7 +103,7 @@ export default {
   alerts: [
     {
       id: 'glad-alerts-simple-alert-1',
-      text: 'GLAD-L alert updates have been paused due to maintenance. Stay updated via the [discussion forum](https://groups.google.com/g/globalforestwatch/c/v4WhGxbKG1I) or email [gfw@wri.org](mailto:gfw@wri.org) with any questions.',
+      text: 'GLAD-L alert updates have been paused due to maintenance. Stay updated via the [discussion forum](https://groups.google.com/g/globalforestwatch/c/v4WhGxbKG1I) or email [gnw@wri.org](mailto:gnw@wri.org) with any questions.',
       visible: ['wdpa', 'country', 'aoi', 'geostore', 'dashboard'],
     },
   ],
