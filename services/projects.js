@@ -22,7 +22,7 @@ const formatProjects = (projectsData) => {
   const projects = projectsData?.[0]?.data;
 
   if (!projects) {
-    return {};
+    return [];
   }
 
   return projects.map((project) => {
@@ -64,9 +64,44 @@ export async function getSGFProjects({
   params,
   allLanguages,
 } = {}) {
-  const projectsData = await Promise.all([
-    apiFetch({
-      url: `${process.env.NEXT_PUBLIC_WORDPRESS_URL}/wp/v2/gaf_projects`,
+  try {
+    const projectsData = await Promise.all([
+      apiFetch({
+        url: `${process.env.NEXT_PUBLIC_WORDPRESS_URL}/wp/v2/gaf_projects`,
+        params: {
+          ...params,
+          _embed: true,
+          ...(!allLanguages && {
+            lang: 'en',
+          }),
+        },
+        cancelToken,
+      }),
+      getCountriesProvider(),
+    ]);
+
+    const formattedProjects = formatProjects(projectsData);
+    const totalPages = parseInt(
+      projectsData[0].headers['x-wp-totalpages'],
+      10
+    );
+
+    return { sgfProjects: formattedProjects, totalPages };
+  } catch (e) {
+    // eslint-disable-next-line no-console
+    console.error('getSGFProjects failed, falling back to empty list:', e);
+    return { sgfProjects: [], totalPages: 0 };
+  }
+}
+
+export async function getSGFCountries({
+  cancelToken,
+  params,
+  allLanguages,
+} = {}) {
+  try {
+    const countries = await apiFetch({
+      url: `${process.env.NEXT_PUBLIC_WORDPRESS_URL}/wp/v2/gaf_projects?&_fields[]=acf.country&per_page=100`,
       params: {
         ...params,
         _embed: true,
@@ -75,32 +110,12 @@ export async function getSGFProjects({
         }),
       },
       cancelToken,
-    }),
-    getCountriesProvider(),
-  ]);
+    });
 
-  const formattedProjects = formatProjects(projectsData);
-  const totalPages = parseInt(projectsData[0].headers['x-wp-totalpages'], 10);
-
-  return { sgfProjects: formattedProjects, totalPages };
-}
-
-export async function getSGFCountries({
-  cancelToken,
-  params,
-  allLanguages,
-} = {}) {
-  const countries = await apiFetch({
-    url: `${process.env.NEXT_PUBLIC_WORDPRESS_URL}/wp/v2/gaf_projects?&_fields[]=acf.country&per_page=100`,
-    params: {
-      ...params,
-      _embed: true,
-      ...(!allLanguages && {
-        lang: 'en',
-      }),
-    },
-    cancelToken,
-  });
-
-  return countries;
+    return countries;
+  } catch (e) {
+    // eslint-disable-next-line no-console
+    console.error('getSGFCountries failed, falling back to empty list:', e);
+    return { data: [] };
+  }
 }
