@@ -3,7 +3,7 @@ import { apiRequest, apiAuthRequest } from 'utils/request';
 const isServer = typeof window === 'undefined';
 
 const getCallbackUrl = () =>
-  encodeURIComponent(`${window.location.origin}/my-gfw/`);
+  encodeURIComponent(`${window.location.origin}/my-gnw/`);
 
 export function setServerCookie(token) {
   fetch('/api/set-cookie', { method: 'POST', body: JSON.stringify({ token }) });

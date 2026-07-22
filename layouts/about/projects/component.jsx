@@ -38,25 +38,25 @@ const AboutProjectsSection = ({
       <div className="l-section-projects">
         <Row>
           <Column width={[1, 17 / 36]}>
-            <h3>WHO USES GLOBAL NATURE WATCH?</h3>
+            <h3>WHO HAS USED GLOBAL FOREST WATCH?</h3>
             <p>
-              Thousands of people around the world use GNW every day to monitor
-              and manage forests, stop illegal deforestation and fires, call out
-              unsustainable activities, defend their land and resources,
-              sustainably source commodities, and conduct research at the
-              forefront of conservation.
+              Thousands of people around the world have used GFW every day to
+              monitor and manage forests, stop illegal deforestation and fires,
+              call out unsustainable activities, defend their land and
+              resources, sustainably source commodities, and conduct research at
+              the forefront of conservation.
             </p>
             <a
               href="https://www.globalforestwatch.org/help/"
               target="_blank"
               rel="noopener noreferrer"
             >
-              <Button className="help-btn">LEARN HOW TO USE GNW</Button>
+              <Button className="help-btn">Visit our Help Center</Button>
             </a>
           </Column>
           <Column width={[1, 2 / 36]} />
           <Column width={[1, 17 / 36]}>
-            <h3>HOW DO PEOPLE USE GLOBAL NATURE WATCH?</h3>
+            <h3>HOW HAVE PEOPLE USED GLOBAL FOREST WATCH?</h3>
             <p>
               Click{' '}
               <Link href="/grants-and-fellowships">

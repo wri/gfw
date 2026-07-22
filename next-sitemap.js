@@ -9,7 +9,7 @@ module.exports = {
     '/search',
     '/thank-you',
     '/terms',
-    '/my-gfw',
+    '/my-gnw',
     '/privacy-policy',
     '/subscribe',
   ],

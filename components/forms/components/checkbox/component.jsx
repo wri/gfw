@@ -76,6 +76,11 @@ class Checkbox extends PureComponent {
                           {option.label}
                         </label>
                       </span>
+                      {option.description && (
+                        <p className="checkbox-description">
+                          {option.description}
+                        </p>
+                      )}
                       {option?.multiInput &&
                         children &&
                         formState.indexOf(option.value) > -1 &&

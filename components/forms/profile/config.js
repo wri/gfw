@@ -64,8 +64,13 @@ export const interests = [
   'Small Grants Fund and Tech Fellowship',
   'Landscape Restoration',
   'GNW Users in Action',
-  'Places to Watch alerts',
   'Deforestation',
+  {
+    label: 'Places to Watch alerts',
+    value: 'Places to Watch alerts',
+    description:
+      'By selecting this interest, you subscribe to receive Places to Watch and understand Places to Watch locations should be interpreted as early indicators of potentially concerning forest disturbances that warrant further investigation. These locations are identified through an automated system based on satellite data. There may be errors in the underlying data and locations always require on-the-ground investigation or additional field intelligence to validate the nature of the disturbance.',
+  },
 ];
 
 export const howDoYouUse = [

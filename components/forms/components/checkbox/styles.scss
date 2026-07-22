@@ -4,7 +4,8 @@
   .checkbox-option {
     position: relative;
     display: flex;
-    align-items: center;
+    flex-direction: column;
+    align-items: flex-start;
     margin: rem(20px) 0 rem(20px);
 
     > span {
@@ -15,6 +16,14 @@
     label {
       cursor: pointer;
       padding-left: rem(10px);
+    }
+
+    .checkbox-description {
+      margin: rem(8px) 0 0 rem(35px);
+      font-size: rem(12px);
+      line-height: 1.4;
+      color: $slate;
+      max-width: rem(480px);
     }
 
     &.sub-options {

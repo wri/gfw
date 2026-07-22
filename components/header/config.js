@@ -42,7 +42,7 @@ export default {
       isVisibleOnMobile: false,
       submenu: [
         {
-          label: 'About GNW',
+          label: 'About us',
           href: '/about/',
         },
         {

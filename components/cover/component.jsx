@@ -59,7 +59,11 @@ class Cover extends PureComponent {
 Cover.propTypes = {
   className: PropTypes.string,
   title: PropTypes.string.isRequired,
-  description: PropTypes.oneOfType([PropTypes.string, PropTypes.array]),
+  description: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.array,
+    PropTypes.node,
+  ]),
   large: PropTypes.bool,
   bgImage: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
   webP: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),

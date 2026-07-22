@@ -30,7 +30,7 @@
     "basePath": false
   },
   {
-    "source": "/my-gfw/:path*/",
-    "destination": "/my-gfw/"
+    "source": "/my-gnw/:path*/",
+    "destination": "/my-gnw/"
   }
 ]
