@@ -36,8 +36,8 @@ const HomePage = ({ summary, uses, apps, news }) => {
     <div className="l-home-page">
       <Cover
         className="home-cover"
-        title="Forest Monitoring Designed for Action"
-        description="Global Nature Watch offers the latest data, technology and tools that empower people everywhere to better protect forests."
+        title="Nature Monitoring Designed for Action"
+        description="Global Nature Watch offers the latest data, technology and tools that empower people everywhere to better protect forests and natural ecosystems."
         bgImage={bgImage}
         webP={bgImageWebP}
         large
@@ -256,7 +256,7 @@ const HomePage = ({ summary, uses, apps, news }) => {
                 <NoContent className="no-news" message="No news available" />
               )}
             </div>
-            <Link href="/my-gfw">
+            <Link href="/my-gnw">
               <a>
                 <Button className="my-gfw-btn" light>
                   My GNW

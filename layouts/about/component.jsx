@@ -20,6 +20,9 @@ import mailIcon from 'assets/icons/mail.svg?sprite';
 import bgImage from './background.jpg';
 import bgImageWebP from './background.webp';
 
+const LEARN_MORE_URL =
+  'https://www.globalforestwatch.org/blog/data-and-tools/gfw-now-global-nature-watch/?utm_medium=notification&utm_source=homepage&utm_campaign=gnwannoucement';
+
 const sections = {
   how: {
     label: 'GNW in Action',
@@ -59,8 +62,20 @@ const sectionComponents = {
 const AboutPage = (props) => (
   <div className="l-about-page">
     <Cover
-      title="About"
-      description="Global Nature Watch, or GNW, is an initiative from the World Resources Institute (WRI) committed to providing the best publicly available data and tools for monitoring and protecting the world’s forests. By harnessing cutting-edge technology, GNW’s free and accessible platform allows anyone anywhere to access near-real-time information on forest change and mobilize action."
+      title="Our History"
+      description={[
+        <p key="history">
+          Global Forest Watch has recently become Global Nature Watch. A new
+          name for the next chapter of our work — continuing to advance forest
+          monitoring while expanding monitoring coverage and capabilities. Read
+          below for more about the history of Global Forest Watch.
+        </p>,
+        <p key="learn-more">
+          <a href={LEARN_MORE_URL} target="_blank" rel="noopener noreferrer">
+            Learn more about our new name
+          </a>
+        </p>,
+      ]}
       bgImage={bgImage}
       webP={bgImageWebP}
     >

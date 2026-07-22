@@ -87,10 +87,14 @@ class NewsletterForm extends PureComponent {
       value: label,
     }));
 
-    const interestsOptions = interests.map((interest) => ({
-      label: interest,
-      value: interest,
-    }));
+    const interestsOptions = interests.map((interest) =>
+      typeof interest === 'string'
+        ? {
+            label: interest,
+            value: interest,
+          }
+        : interest
+    );
     const preferredLanguageOptions = preferredLanguages.map(
       ({ label, value }) => ({ label, value })
     );

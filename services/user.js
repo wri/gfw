@@ -2,7 +2,7 @@ import { apiRequest, apiAuthRequest } from 'utils/request';
 
 const isServer = typeof window === 'undefined';
 
-const CALLBACK_URL = 'https://www.globalforestwatch.org/my-gfw/';
+const CALLBACK_URL = 'https://www.globalforestwatch.org/my-gnw/';
 
 export function setServerCookie(token) {
   fetch('/api/set-cookie', { method: 'POST', body: JSON.stringify({ token }) });

@@ -166,10 +166,15 @@ class ProfileForm extends PureComponent {
                         label="What topics are you interested in?"
                         multiple
                         required
-                        options={interests.map((r) => ({
-                          label: r,
-                          value: r.replace(/( )+|(\/)+/g, '_').toLowerCase(),
-                        }))}
+                        options={interests.map((r) => {
+                          const label = typeof r === 'string' ? r : r.label;
+                          return {
+                            label,
+                            value: label
+                              .replace(/( )+|(\/)+/g, '_')
+                              .toLowerCase(),
+                          };
+                        })}
                       />
                       <Select
                         name="preferred_language"

@@ -51,12 +51,12 @@ const GnwAnnouncementBanner = ({ className }) => {
         <Icon icon={treeFillIcon} className="tree-icon" />
         <div className="banner-text">
           <p className="banner-title">
-            Global Forest Watch is becoming Global Nature Watch
+            Global Forest Watch is now Global Nature Watch
           </p>
           <p className="banner-description">
             A new name for the next chapter of our work — continuing to advance
             forest monitoring while expanding monitoring coverage and
-            capabilities. The name is changing, but our commitment remains the
+            capabilities. Our name has changed, but our commitment remains the
             same and your workflows will continue to be supported.
           </p>
           <a

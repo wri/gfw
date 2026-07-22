@@ -683,5 +683,20 @@
     "source": "/mapbuilder/",
     "destination": "https://mapbuilder.wri.org/",
     "permanent": true
+  },
+  {
+    "source": "/my-gfw",
+    "destination": "/my-gnw",
+    "permanent": true
+  },
+  {
+    "source": "/my-gfw/",
+    "destination": "/my-gnw/",
+    "permanent": true
+  },
+  {
+    "source": "/my-gfw/:path*",
+    "destination": "/my-gnw/",
+    "permanent": true
   }
 ]

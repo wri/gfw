@@ -339,7 +339,7 @@ class MapMenuMyGFW extends PureComponent {
             : this.renderNoAreas()}
         </div>
         <div className="my-gfw-footer">
-          <Link href="/my-gfw">
+          <Link href="/my-gnw">
             <a className="edit-button">
               {fullName && <span className="name">{fullName}</span>}
               {email && (
