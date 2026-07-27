@@ -15,13 +15,12 @@ import Contact from 'layouts/about/contact';
 import Partners from 'layouts/about/partners';
 import Join from 'layouts/about/join';
 
+import { GNW_ANNOUNCEMENT_URL } from 'utils/external-links';
+
 import mailIcon from 'assets/icons/mail.svg?sprite';
 
 import bgImage from './background.jpg';
 import bgImageWebP from './background.webp';
-
-const LEARN_MORE_URL =
-  'https://www.globalforestwatch.org/blog/data-and-tools/gfw-now-global-nature-watch/?utm_medium=notification&utm_source=homepage&utm_campaign=gnwannoucement';
 
 const sections = {
   how: {
@@ -71,7 +70,11 @@ const AboutPage = (props) => (
           below for more about the history of Global Forest Watch.
         </p>,
         <p key="learn-more">
-          <a href={LEARN_MORE_URL} target="_blank" rel="noopener noreferrer">
+          <a
+            href={GNW_ANNOUNCEMENT_URL}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
             Learn more about our new name
           </a>
         </p>,
