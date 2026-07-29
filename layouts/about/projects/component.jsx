@@ -6,6 +6,7 @@ import { Row, Column, Button, Desktop } from '@worldresources/gfw-components';
 
 import Dropdown from 'components/ui/dropdown';
 import Icon from 'components/ui/icon';
+import { GFW_DOMAIN } from 'utils/external-links';
 
 import arrowDownIcon from 'assets/icons/arrow-down.svg?sprite';
 
@@ -47,7 +48,7 @@ const AboutProjectsSection = ({
               the forefront of conservation.
             </p>
             <a
-              href="https://www.globalforestwatch.org/help/"
+              href={`${GFW_DOMAIN}/help/`}
               target="_blank"
               rel="noopener noreferrer"
             >

@@ -1,7 +1,10 @@
+import { GFW_DOMAIN } from './domain';
+
 // Blog content still lives on the legacy globalforestwatch.org domain — the
 // globalnaturewatch.org equivalents 404 today (blocked on PZB-1140). Once that
-// domain is serving the app, GFW_DOMAIN is the only line that needs to change.
-export const GFW_DOMAIN = 'https://www.globalforestwatch.org';
+// domain is serving the app, GFW_DOMAIN in utils/domain.js is the only line
+// that needs to change.
+export { GFW_DOMAIN };
 
 export const BLOG_URL = `${GFW_DOMAIN}/blog`;
 

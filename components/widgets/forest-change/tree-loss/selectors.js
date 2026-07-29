@@ -6,6 +6,7 @@ import {
   yearTicksFormatter,
   zeroFillYears,
 } from 'components/widgets/utils/data';
+import { BLOG_URL } from 'utils/external-links';
 
 // get list data
 const getLoss = (state) => state.data && state.data.loss;
@@ -185,7 +186,7 @@ export const parseAlerts = createSelector(
     if (countriesWithNewWarningText.includes(adm0)) {
       return [
         {
-          text: `The methods behind this data have changed over time, resulting in an underreporting of tree cover loss in ${locationLabel} prior to 2015. We advise against comparing the data before/after 2015 in ${locationLabel}. [Read more here](https://www.globalforestwatch.org/blog/data-and-research/tree-cover-loss-satellite-data-trend-analysis/).`,
+          text: `The methods behind this data have changed over time, resulting in an underreporting of tree cover loss in ${locationLabel} prior to 2015. We advise against comparing the data before/after 2015 in ${locationLabel}. [Read more here](${BLOG_URL}/data-and-research/tree-cover-loss-satellite-data-trend-analysis/).`,
           visible: ['global', 'country', 'geostore', 'aoi', 'wdpa', 'use'],
         },
       ];

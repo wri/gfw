@@ -9,6 +9,7 @@ import useRouter from 'utils/router';
 import { decodeQueryParams } from 'utils/url';
 import { parseGadmId } from 'utils/gadm';
 import { parseStringWithVars } from 'utils/strings';
+import { GFW_DOMAIN } from 'utils/external-links';
 
 import { getLocationData } from 'services/location';
 import { getPublishedNotifications } from 'services/notifications';
@@ -274,7 +275,7 @@ export const getServerSideProps = async ({ params, query, req }) => {
 function getCanonical(props, query) {
   const category = isServer ? props.category : query.category;
   const shouldShowCat = category !== 'summary';
-  const path = `https://www.globalforestwatch.org${
+  const path = `${GFW_DOMAIN}${
     isServer ? props?.basePath : window.location.pathname.slice(0, -1)
   }`;
   return `${path}${shouldShowCat ? `?category=${category}` : ''}`;

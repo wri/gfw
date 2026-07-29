@@ -3,6 +3,8 @@ import PropTypes from 'prop-types';
 import cx from 'classnames';
 import ReactHtmlParser from 'react-html-parser';
 
+import { GFW_DOMAIN } from 'utils/external-links';
+
 import WidgetAlert from 'components/widget/components/widget-alert';
 
 class WidgetFooter extends PureComponent {
@@ -85,11 +87,7 @@ class WidgetFooter extends PureComponent {
         {showAttributionLink && (
           <span>
             Source:{' '}
-            <a
-              target="_blank"
-              rel="noopener noreferrer"
-              href="https://www.globalforestwatch.org"
-            >
+            <a target="_blank" rel="noopener noreferrer" href={GFW_DOMAIN}>
               Global Nature Watch
             </a>
           </span>

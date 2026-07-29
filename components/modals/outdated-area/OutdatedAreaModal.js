@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Modal from 'components/modal';
+import { GFW_DOMAIN, BLOG_URL } from 'utils/external-links';
 
 const OutdatedAreaModal = ({ isOpen, handleCloseModal }) => {
   return (
@@ -18,7 +19,7 @@ const OutdatedAreaModal = ({ isOpen, handleCloseModal }) => {
         re-save the area. Instructions on how to save an area and subscribe to
         alerts are available via in{' '}
         <a
-          href="https://www.globalforestwatch.org/help/map/guides/save-area-subscribe-forest-change-notifications/"
+          href={`${GFW_DOMAIN}/help/map/guides/save-area-subscribe-forest-change-notifications/`}
           target="_blank"
           rel="noreferrer"
         >
@@ -26,7 +27,7 @@ const OutdatedAreaModal = ({ isOpen, handleCloseModal }) => {
         </a>
         . Please read through our{' '}
         <a
-          href="https://www.globalforestwatch.org/blog/data-and-tools/updated-political-boundaries-gadm?utm_medium=email&utm_source=email1&utm_campaign=gadmupdate"
+          href={`${BLOG_URL}/data-and-tools/updated-political-boundaries-gadm?utm_medium=email&utm_source=email1&utm_campaign=gadmupdate`}
           target="_blank"
           rel="noreferrer"
         >

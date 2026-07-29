@@ -19,6 +19,7 @@ import {
   POLITICAL_BOUNDARIES,
   FOREST_LOSS,
 } from 'data/layers';
+import { BLOG_URL } from 'utils/external-links';
 
 import getWidgetProps from './selectors';
 
@@ -39,7 +40,7 @@ export default {
   types: ['country', 'geostore', 'aoi', 'wdpa', 'use'],
   alerts: [
     {
-      text: 'The methods behind this data have changed over time. Be cautious comparing old and new data, especially before/after 2015. [Read more here](https://www.globalforestwatch.org/blog/data-and-research/tree-cover-loss-satellite-data-trend-analysis/).',
+      text: `The methods behind this data have changed over time. Be cautious comparing old and new data, especially before/after 2015. [Read more here](${BLOG_URL}/data-and-research/tree-cover-loss-satellite-data-trend-analysis/).`,
       visible: ['country', 'geostore', 'aoi', 'wdpa', 'use'],
     },
   ],
