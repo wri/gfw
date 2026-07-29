@@ -4,6 +4,7 @@ import { formatNumber } from 'utils/format';
 import isEmpty from 'lodash/isEmpty';
 import moment from 'moment';
 import { trackEvent } from 'utils/analytics';
+import { GFW_DOMAIN } from 'utils/external-links';
 import Link from 'next/link';
 
 import Modal from 'components/modal';
@@ -294,11 +295,11 @@ class ShowAnalysis extends PureComponent {
                           Area.” University of Maryland, Google, USGS, and NASA.
                           Accessed through Global Nature Watch on [date].{' '}
                           <a
-                            href="https://www.globalforestwatch.org"
+                            href={GFW_DOMAIN}
                             target="_blank"
                             rel="noopener noreferrer"
                           >
-                            www.globalforestwatch.org
+                            {GFW_DOMAIN.replace(/^https?:\/\//, '')}
                           </a>
                           .
                         </p>

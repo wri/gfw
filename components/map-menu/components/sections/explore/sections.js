@@ -41,10 +41,11 @@ import {
   FIRES_ALERTS_VIIRS,
 } from 'data/layers';
 
+import { GFW_DOMAIN } from 'utils/external-links';
+
 export const descriptions = {
   topics: 'Explore data related to the drivers and impacts of forest change.',
-  placesToWatch:
-    'Explore areas of recent forest loss that pose the biggest threat to the world’s remaining forests. Updated monthly. <a href="https://www.globalforestwatch.org/subscribe" target="_blank" rel="noopener nofollower">Sign up here</a> to receive an email when new Places to Watch are identified.',
+  placesToWatch: `Explore areas of recent forest loss that pose the biggest threat to the world’s remaining forests. Updated monthly. <a href="${GFW_DOMAIN}/subscribe" target="_blank" rel="noopener nofollower">Sign up here</a> to receive an email when new Places to Watch are identified.`,
 };
 
 export const stories = {

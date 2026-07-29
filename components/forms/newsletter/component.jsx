@@ -20,6 +20,7 @@ import {
 
 import { email as validateEmail } from 'components/forms/validations';
 import { ORTTO_REQUESTS_TYPES } from 'pages/api/ortto/constants';
+import { GFW_DOMAIN } from 'utils/external-links';
 import Checkbox from '../components/checkbox/component';
 
 class NewsletterForm extends PureComponent {
@@ -57,7 +58,7 @@ class NewsletterForm extends PureComponent {
       sector,
       preferred_language: language,
       interest: (interest || []).join(),
-      person_source_details: 'https://www.globalforestwatch.org',
+      person_source_details: GFW_DOMAIN,
       ip_address: ipAddress,
     };
 

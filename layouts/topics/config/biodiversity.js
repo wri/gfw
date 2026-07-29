@@ -18,6 +18,8 @@ import investigateLarge from 'layouts/topics/assets/biodiversity/cards/investiga
 import explore from 'layouts/topics/assets/biodiversity/cards/explore.png';
 import exploreLarge from 'layouts/topics/assets/biodiversity/cards/explore@2x.png';
 import tigers from 'layouts/topics/assets/biodiversity/cards/tigers.png';
+
+import { BLOG_URL } from 'utils/external-links';
 import tigersLarge from 'layouts/topics/assets/biodiversity/cards/tigers@2x.png';
 
 // animations
@@ -127,7 +129,7 @@ export default {
           content:
             'Read how GNW data help protect the Leuser Ecosystem in Indonesia.',
           btnText: 'Read the blog',
-          link: 'https://www.globalforestwatch.org/blog/insights/worlds-last-intact-forests-are-becoming-increasingly-fragmented',
+          link: `${BLOG_URL}/insights/worlds-last-intact-forests-are-becoming-increasingly-fragmented`,
           position: [35, 55],
         },
       ],

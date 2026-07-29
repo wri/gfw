@@ -1,6 +1,8 @@
+import { GFW_DOMAIN } from 'utils/external-links';
+
 export const getServerSideProps = async () => {
   const getFakeData = await fetch(
-    'https://www.globalforestwatch.org/api/gfw/v2/geostore/admin/IDN/?thresh=0.05'
+    `${GFW_DOMAIN}/api/gfw/v2/geostore/admin/IDN/?thresh=0.05`
   );
 
   const data = await getFakeData.json();

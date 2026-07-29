@@ -1,13 +1,14 @@
 import Head from 'next/head';
 import PropTypes from 'prop-types';
 
+import { GFW_DOMAIN } from 'utils/external-links';
+
 const SearchBoxSeo = ({ description }) => {
   const NAME = 'Global Nature Watch';
-  const IMAGE = 'https://www.globalforestwatch.org/assets/card-2.png';
-  const LOGO = 'https://www.globalforestwatch.org/assets/gfw.png';
-  const URL = 'https://www.globalforestwatch.org/';
-  const SEARCH_TARGET =
-    'https://www.globalforestwatch.org/search/?query={search_term_string}';
+  const IMAGE = `${GFW_DOMAIN}/assets/card-2.png`;
+  const LOGO = `${GFW_DOMAIN}/assets/gfw.png`;
+  const URL = `${GFW_DOMAIN}/`;
+  const SEARCH_TARGET = `${GFW_DOMAIN}/search/?query={search_term_string}`;
 
   const ADDRESS = {
     '@type': 'PostalAddress',

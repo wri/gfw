@@ -15,6 +15,8 @@ import mapLayer from 'layouts/topics/assets/fires/cards/map-layer.png';
 import forestFire from 'layouts/topics/assets/fires/cards/forest-fire.png';
 import forestWatcher from 'layouts/topics/assets/fires/cards/forest-watcher.png';
 
+import { BLOG_URL } from 'utils/external-links';
+
 // animations
 import scene1 from 'layouts/topics/assets/fires/animations/scene1.json';
 import birds1 from 'layouts/topics/assets/fires/animations/birds1.json';
@@ -178,7 +180,7 @@ export default {
       title: 'The latest research and insights on fires from GNW',
       summary:
         'Learn about the complex relationship between forests and fires on the GNW blog.',
-      link: 'https://www.globalforestwatch.org/blog/category-and-topics/?topic=fires ',
+      link: `${BLOG_URL}/category-and-topics/?topic=fires `,
       image: forestFire,
       btnText: 'read the blog',
     },
