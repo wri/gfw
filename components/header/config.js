@@ -42,7 +42,7 @@ export default {
       isVisibleOnMobile: false,
       submenu: [
         {
-          label: 'About GFW',
+          label: 'About us',
           href: '/about/',
         },
         {

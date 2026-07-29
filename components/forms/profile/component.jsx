@@ -58,7 +58,7 @@ class ProfileForm extends PureComponent {
                 {submitSucceeded ? (
                   <div className="column small-12">
                     <ConfirmationMessage
-                      title="Thank you for updating your My GFW profile!"
+                      title="Thank you for updating your My GNW profile!"
                       description="You may wish to read our <a href='/privacy-policy' target='_blank'>privacy policy</a>, which provides further information about how we use personal data."
                     />
                     <Button
@@ -75,7 +75,7 @@ class ProfileForm extends PureComponent {
                     <div className="column small-12">
                       <h1>Your profile</h1>
                       <h3>
-                        We use this information to make Global Forest Watch more
+                        We use this information to make Global Nature Watch more
                         useful for you. Your privacy is important to us and
                         we&apos;ll never share your information without your
                         consent.
@@ -103,7 +103,7 @@ class ProfileForm extends PureComponent {
                       />
                       <Checkbox
                         name="receive_updates"
-                        label="WOULD YOU LIKE TO RECEIVE UPDATES ON NEWS AND EVENTS FROM GLOBAL FOREST WATCH?"
+                        label="WOULD YOU LIKE TO RECEIVE UPDATES ON NEWS AND EVENTS FROM GLOBAL NATURE WATCH?"
                         options={[{ label: 'Yes', value: 'true' }]}
                       />
                       <Select
@@ -166,10 +166,15 @@ class ProfileForm extends PureComponent {
                         label="What topics are you interested in?"
                         multiple
                         required
-                        options={interests.map((r) => ({
-                          label: r,
-                          value: r.replace(/( )+|(\/)+/g, '_').toLowerCase(),
-                        }))}
+                        options={interests.map((r) => {
+                          const label = typeof r === 'string' ? r : r.label;
+                          return {
+                            label,
+                            value: label
+                              .replace(/( )+|(\/)+/g, '_')
+                              .toLowerCase(),
+                          };
+                        })}
                       />
                       <Select
                         name="preferred_language"
@@ -180,7 +185,7 @@ class ProfileForm extends PureComponent {
                       />
                       <Checkbox
                         name="howDoYouUse"
-                        label="How do you use global forest watch?"
+                        label="How do you use global nature watch?"
                         multiple
                         required
                         options={[
@@ -203,7 +208,7 @@ class ProfileForm extends PureComponent {
                         options={[
                           {
                             label:
-                              'Subscribe to monthly GFW newsletters and updates based on your interests.',
+                              'Subscribe to monthly GNW newsletters and updates based on your interests.',
                             value: true
                           }
                         ]}
@@ -233,7 +238,7 @@ class ProfileForm extends PureComponent {
                     </div>
                     <div className="column small-12">
                       <p className="delete-profile">
-                        <a href="mailto:gfw@wri.org">Email us </a>
+                        <a href="mailto:gnw@wri.org">Email us </a>
                         to delete your MyGFW account.
                       </p>
                     </div>

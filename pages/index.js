@@ -10,13 +10,13 @@ import { getPublishedNotifications } from 'services/notifications';
 
 const HomePage = (props) => (
   <PageLayout
-    title="Forest Monitoring, Land Use & Deforestation Trends | Global Forest Watch"
-    description="Global Forest Watch offers free, real-time data, technology and tools for monitoring the world’s forests, enabling better protection against illegal deforestation and unsustainable practices."
+    title="Forest Monitoring, Land Use & Deforestation Trends | Global Nature Watch"
+    description="Global Nature Watch offers free, real-time data, technology and tools for monitoring the world’s forests, enabling better protection against illegal deforestation and unsustainable practices."
     notifications={props.notifications}
   >
     <SeoSearchBox
-      title="Forest Monitoring, Land Use & Deforestation Trends | Global Forest Watch"
-      description="Global Forest Watch offers free, real-time data, technology and tools for monitoring the world’s forests, enabling better protection against illegal deforestation and unsustainable practices."
+      title="Forest Monitoring, Land Use & Deforestation Trends | Global Nature Watch"
+      description="Global Nature Watch offers free, real-time data, technology and tools for monitoring the world’s forests, enabling better protection against illegal deforestation and unsustainable practices."
     />
     <Home {...props} />
   </PageLayout>

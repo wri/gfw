@@ -1,6 +1,6 @@
 {
   "name": "global-forest-watch",
-  "version": "6.4.5",
+  "version": "6.4.6",
   "description": "Global Forest Watch",
   "engines": {
     "node": "18.15.0"
@@ -96,7 +96,7 @@
     "@next/bundle-analyzer": "^10.0.1",
     "@reduxjs/toolkit": "^1.4.0",
     "@wordpress/api-fetch": "^3.19.1",
-    "@worldresources/gfw-components": "^3.5.16",
+    "@worldresources/gfw-components": "3.5.20",
     "aws-sdk": "^2.291.0",
     "axios": "1.6.7",
     "chroma-js": "^2.1.0",

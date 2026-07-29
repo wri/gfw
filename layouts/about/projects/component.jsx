@@ -6,6 +6,7 @@ import { Row, Column, Button, Desktop } from '@worldresources/gfw-components';
 
 import Dropdown from 'components/ui/dropdown';
 import Icon from 'components/ui/icon';
+import { GFW_DOMAIN } from 'utils/external-links';
 
 import arrowDownIcon from 'assets/icons/arrow-down.svg?sprite';
 
@@ -38,25 +39,25 @@ const AboutProjectsSection = ({
       <div className="l-section-projects">
         <Row>
           <Column width={[1, 17 / 36]}>
-            <h3>WHO USES GLOBAL FOREST WATCH?</h3>
+            <h3>WHO HAS USED GLOBAL FOREST WATCH?</h3>
             <p>
-              Thousands of people around the world use GFW every day to monitor
-              and manage forests, stop illegal deforestation and fires, call out
-              unsustainable activities, defend their land and resources,
-              sustainably source commodities, and conduct research at the
-              forefront of conservation.
+              Thousands of people around the world have used GFW every day to
+              monitor and manage forests, stop illegal deforestation and fires,
+              call out unsustainable activities, defend their land and
+              resources, sustainably source commodities, and conduct research at
+              the forefront of conservation.
             </p>
             <a
-              href="https://www.globalforestwatch.org/help/"
+              href={`${GFW_DOMAIN}/help/`}
               target="_blank"
               rel="noopener noreferrer"
             >
-              <Button className="help-btn">LEARN HOW TO USE GFW</Button>
+              <Button className="help-btn">Visit our Help Center</Button>
             </a>
           </Column>
           <Column width={[1, 2 / 36]} />
           <Column width={[1, 17 / 36]}>
-            <h3>HOW DO PEOPLE USE GLOBAL FOREST WATCH?</h3>
+            <h3>HOW HAVE PEOPLE USED GLOBAL FOREST WATCH?</h3>
             <p>
               Click{' '}
               <Link href="/grants-and-fellowships">
@@ -64,7 +65,7 @@ const AboutProjectsSection = ({
                   here
                 </a>
               </Link>{' '}
-              to learn about how others have used Global Forest Watch in their
+              to learn about how others have used Global Nature Watch in their
               network.
             </p>
 
@@ -102,7 +103,7 @@ const AboutProjectsSection = ({
           <div className="visitors">
             <h4>
               Since its launch in 2014, over 9 million people have visited
-              Global Forest Watch from every single country in the world.
+              Global Nature Watch from every single country in the world.
             </h4>
           </div>
         </Desktop>

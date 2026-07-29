@@ -1,6 +1,7 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import { trackEvent } from 'utils/analytics';
+import { GFW_DOMAIN } from 'utils/external-links';
 
 import Button from 'components/ui/button';
 import Checkbox from 'components/ui/checkbox';
@@ -87,11 +88,8 @@ class ModalWelcome extends PureComponent {
             >
               Take a tour of the map
             </Button>{' '}
-            or{' '}
-            <a href="https://www.globalforestwatch.org/help/">
-              visit the Help Center
-            </a>{' '}
-            for tutorials.
+            or <a href={`${GFW_DOMAIN}/help/`}>visit the Help Center</a> for
+            tutorials.
           </p>
           <button
             className="show-prompts-btn"
@@ -119,7 +117,7 @@ class ModalWelcome extends PureComponent {
             label: 'Close',
           });
         }}
-        title="Welcome to the Global Forest Watch map!"
+        title="Welcome to the Global Nature Watch map!"
         className="c-modal-welcome"
       >
         {this.getContent()}

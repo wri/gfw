@@ -15,7 +15,7 @@ const SECTIONS = ['projects', 'about', 'apply'];
 const GrantsAndFellowshipsPage = (props) => (
   <PageLayout
     {...props}
-    description="The Small Grants Fund & Tech Fellowship support civil society organizations and individuals around the world to use GFW in their advocacy, research and field work."
+    description="The Small Grants Fund & Tech Fellowship support civil society organizations and individuals around the world to use GNW in their advocacy, research and field work."
   >
     <GrantsAndFellowships {...props} />
   </PageLayout>
@@ -55,7 +55,7 @@ export const getServerSideProps = async ({ query }) => {
 
     return {
       props: {
-        title: 'Projects | Grants & Fellowships | Global Forest Watch',
+        title: 'Projects | Grants & Fellowships | Global Nature Watch',
         section: query?.section,
         projects: parsedProjects || [],
         allCountries: allCountries?.data || [],
@@ -73,7 +73,7 @@ export const getServerSideProps = async ({ query }) => {
     const pageTexts = await getSGFPage();
     return {
       props: {
-        title: 'About | Grants & Fellowships | Global Forest Watch',
+        title: 'About | Grants & Fellowships | Global Nature Watch',
         section: query?.section,
         about: pageTexts?.[0]?.acf?.about_section,
         header: pageTexts[0],
@@ -86,7 +86,7 @@ export const getServerSideProps = async ({ query }) => {
     const pageTexts = await getSGFPage();
     return {
       props: {
-        title: 'Apply | Grants & Fellowships | Global Forest Watch',
+        title: 'Apply | Grants & Fellowships | Global Nature Watch',
         section: query?.section,
         apply: pageTexts?.[0]?.acf?.apply_section,
         header: pageTexts[0],
@@ -99,7 +99,7 @@ export const getServerSideProps = async ({ query }) => {
     props: {
       title: `${capitalize(
         query?.section
-      )} | Grants & Fellowships | Global Forest Watch`,
+      )} | Grants & Fellowships | Global Nature Watch`,
       section: query?.section,
       notifications: notifications || [],
     },

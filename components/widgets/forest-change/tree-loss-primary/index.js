@@ -17,6 +17,7 @@ import {
 } from 'data/layers';
 
 import indonesiaPlaceholder from 'assets/images/indonesia-primary-forest-loss-2023.png';
+import { BLOG_URL } from 'utils/external-links';
 import getWidgetProps from './selectors';
 
 const MIN_YEAR = 2002;
@@ -40,12 +41,12 @@ export default {
   admins: ['global', 'adm0', 'adm1', 'adm2'],
   alerts: [
     {
-      text: 'The methods behind this data have changed over time. Be cautious comparing old and new data, especially before/after 2015. [Read more here](https://www.globalforestwatch.org/blog/data-and-research/tree-cover-loss-satellite-data-trend-analysis/).',
+      text: `The methods behind this data have changed over time. Be cautious comparing old and new data, especially before/after 2015. [Read more here](${BLOG_URL}/data-and-research/tree-cover-loss-satellite-data-trend-analysis/).`,
       visible: ['global', 'country', 'geostore', 'aoi', 'wdpa', 'use'],
       blacklist: ['IND'],
     },
     {
-      text: 'The methods behind this data have changed over time. Be cautious comparing old and new data, especially before/after 2015. [Read more here](https://www.globalforestwatch.org/blog/data-and-research/tree-cover-loss-satellite-data-trend-analysis/). The figures and data may differ from official and other national or regional statistics, which may use diverse and varied methods, definitions, and assumptions.',
+      text: `The methods behind this data have changed over time. Be cautious comparing old and new data, especially before/after 2015. [Read more here](${BLOG_URL}/data-and-research/tree-cover-loss-satellite-data-trend-analysis/). The figures and data may differ from official and other national or regional statistics, which may use diverse and varied methods, definitions, and assumptions.`,
       visible: ['global', 'country', 'geostore', 'aoi', 'wdpa', 'use'],
       whitelist: ['IND'],
     },

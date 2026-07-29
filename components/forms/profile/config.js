@@ -63,9 +63,14 @@ export const interests = [
   'Agricultural Supply Chains',
   'Small Grants Fund and Tech Fellowship',
   'Landscape Restoration',
-  'GFW Users in Action',
-  'Places to Watch alerts',
+  'GNW Users in Action',
   'Deforestation',
+  {
+    label: 'Places to Watch alerts',
+    value: 'Places to Watch alerts',
+    description:
+      'By selecting this interest, you subscribe to receive Places to Watch and understand Places to Watch locations should be interpreted as early indicators of potentially concerning forest disturbances that warrant further investigation. These locations are identified through an automated system based on satellite data. There may be errors in the underlying data and locations always require on-the-ground investigation or additional field intelligence to validate the nature of the disturbance.',
+  },
 ];
 
 export const howDoYouUse = [
@@ -82,7 +87,7 @@ export const howDoYouUse = [
   'Learn about forests/my country',
   'Inform purchasing/procurement/investment decisions',
   'Educational support materials',
-  'Not sure; new to GFW',
+  'Not sure; new to GNW',
 ];
 
 export const topics = [

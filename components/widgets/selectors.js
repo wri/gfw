@@ -3,6 +3,7 @@ import sortBy from 'lodash/sortBy';
 import intersection from 'lodash/intersection';
 import compact from 'lodash/compact';
 import isEmpty from 'lodash/isEmpty';
+import omit from 'lodash/omit';
 import lowerCase from 'lodash/lowerCase';
 import flatMap from 'lodash/flatMap';
 import moment from 'moment';
@@ -493,16 +494,28 @@ export const getWidgets = createSelector(
       const widgetQuerySettings = widgetSettings && widgetSettings[widget];
       const widgetInteraction = interactions && interactions[widget];
 
-      const layerSettings = {
-        ...layerParams,
-        ...decodeParams,
-        ...(startYear && {
-          startYear,
-        }),
-        ...(endYear && {
-          endYear,
-        }),
-      };
+      // Widgets that define their own startYear/endYear defaults manage their
+      // own year range via a settings control; the active map layer's
+      // timeline shouldn't silently override that (see TCL graphs starting
+      // in 2002 instead of 2001 when the loss layer's timeline was trimmed).
+      // Note: layerParams/decodeParams may already carry their own computed
+      // startYear/endYear (see getActiveLayersWithDates), so those need to
+      // be stripped too, not just the locally recomputed startYear/endYear.
+      const widgetHasOwnYearRange = defaultSettings?.startYear !== undefined;
+
+      const layerSettings = omit(
+        {
+          ...layerParams,
+          ...decodeParams,
+          ...(startYear && {
+            startYear,
+          }),
+          ...(endYear && {
+            endYear,
+          }),
+        },
+        widgetHasOwnYearRange ? ['startYear', 'endYear'] : []
+      );
 
       const mergedSettings = {
         ...defaultSettings,

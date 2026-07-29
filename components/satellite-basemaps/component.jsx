@@ -14,6 +14,7 @@ import infoIcon from 'assets/icons/info.svg?sprite';
 import Checkbox from 'components/ui/checkbox';
 
 import satelliteImage from 'components/map/images/satellite.png';
+import { BLOG_URL } from 'utils/external-links';
 import BasemapSettings from './basemap-settings';
 
 function handleTitle(basemap) {
@@ -212,7 +213,7 @@ const SatelliteBasemaps = ({
                 <p className="satellite-basemap--description">
                   Not currently available.{' '}
                   <a
-                    href="https://www.globalforestwatch.org/blog/data-and-tools/planet-imagery-changes-gfw/"
+                    href={`${BLOG_URL}/data-and-tools/planet-imagery-changes-gfw/`}
                     target="_blank"
                     rel="noreferrer"
                   >

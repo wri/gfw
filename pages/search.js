@@ -7,7 +7,7 @@ import { getPublishedNotifications } from 'services/notifications';
 
 const SearchPage = (props) => (
   <PageLayout
-    title="Search | Global Forest Watch"
+    title="Search | Global Nature Watch"
     description="Search forest information, including forest data, news, updates and more."
     notifications={props.notifications}
     noIndex

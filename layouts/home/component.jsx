@@ -36,8 +36,8 @@ const HomePage = ({ summary, uses, apps, news }) => {
     <div className="l-home-page">
       <Cover
         className="home-cover"
-        title="Forest Monitoring Designed for Action"
-        description="Global Forest Watch offers the latest data, technology and tools that empower people everywhere to better protect forests."
+        title="Nature Monitoring Designed for Action"
+        description="Global Nature Watch offers the latest data, technology and tools that empower people everywhere to better protect forests and natural ecosystems."
         bgImage={bgImage}
         webP={bgImageWebP}
         large
@@ -48,7 +48,7 @@ const HomePage = ({ summary, uses, apps, news }) => {
               <Button round className="subscribe-icon">
                 <Icon icon={mailIcon} />
               </Button>
-              <p className="subscribe-msg">SUBSCRIBE TO THE GFW NEWSLETTER</p>
+              <p className="subscribe-msg">SUBSCRIBE TO THE GNW NEWSLETTER</p>
             </a>
           </Link>
         </>
@@ -100,7 +100,7 @@ const HomePage = ({ summary, uses, apps, news }) => {
       </Row>
       <div className="section-uses">
         <h3 className="section-title">
-          What can you do with Global Forest Watch?
+          What can you do with Global Nature Watch?
         </h3>
         {uses && (
           <Carousel
@@ -199,7 +199,7 @@ const HomePage = ({ summary, uses, apps, news }) => {
       <div className="section-news">
         <Row>
           <Column>
-            <h3 className="news-title">New from Global Forest Watch</h3>
+            <h3 className="news-title">New from Global Nature Watch</h3>
             <div className="news-carousel">
               {news ? (
                 <>
@@ -256,10 +256,10 @@ const HomePage = ({ summary, uses, apps, news }) => {
                 <NoContent className="no-news" message="No news available" />
               )}
             </div>
-            <Link href="/my-gfw">
+            <Link href="/my-gnw">
               <a>
                 <Button className="my-gfw-btn" light>
-                  My GFW
+                  My GNW
                 </Button>
               </a>
             </Link>
@@ -272,7 +272,7 @@ const HomePage = ({ summary, uses, apps, news }) => {
         >
           {showSectionNews && (
             <picture>
-              <img src={newsImage} alt="New from Global Forest Watch" />
+              <img src={newsImage} alt="New from Global Nature Watch" />
             </picture>
           )}
         </InView>

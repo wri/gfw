@@ -2,7 +2,8 @@ import { apiRequest, apiAuthRequest } from 'utils/request';
 
 const isServer = typeof window === 'undefined';
 
-const CALLBACK_URL = 'https://www.globalforestwatch.org/my-gfw/';
+const getCallbackUrl = () =>
+  encodeURIComponent(`${window.location.origin}/my-gnw/`);
 
 export function setServerCookie(token) {
   fetch('/api/set-cookie', { method: 'POST', body: JSON.stringify({ token }) });
@@ -48,13 +49,16 @@ export const login = (formData) =>
   });
 
 export const register = (formData) =>
-  apiRequest.post(`/auth/sign-up?callbackUrl=${CALLBACK_URL}`, {
+  apiRequest.post(`/auth/sign-up?callbackUrl=${getCallbackUrl()}`, {
     ...formData,
     apps: ['gfw'],
   });
 
 export const resetPassword = (formData) =>
-  apiRequest.post(`/auth/reset-password?callbackUrl=${CALLBACK_URL}`, formData);
+  apiRequest.post(
+    `/auth/reset-password?callbackUrl=${getCallbackUrl()}`,
+    formData
+  );
 
 export const createProfile = (id, data) =>
   apiAuthRequest({

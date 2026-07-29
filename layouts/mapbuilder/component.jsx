@@ -4,6 +4,8 @@ import ReactHtmlParser from 'react-html-parser';
 
 import Link from 'next/link';
 
+import { GFW_DOMAIN } from 'utils/external-links';
+
 import {
   Button,
   Row,
@@ -83,7 +85,7 @@ const HomePage = ({ page, apps: allApps, tutorials }) => {
           ))}
           <Column width={[1 / 12, 1 / 3, 4.5 / 12]} />
           <Column width={[5 / 6, 1 / 3, 1 / 4]}>
-            <Link href="https://www.globalforestwatch.org/help/mapbuilder/">
+            <Link href={`${GFW_DOMAIN}/help/mapbuilder/`}>
               <a>
                 <Button className="column-btn">get started</Button>
               </a>
@@ -118,7 +120,7 @@ const HomePage = ({ page, apps: allApps, tutorials }) => {
               <Row nested>
                 <Column width={[1 / 12]} />
                 <Column width={[5 / 6]}>
-                  <a href="mailto:gfw@wri.org">
+                  <a href="mailto:gnw@wri.org">
                     <Button className="column-btn" light>
                       submit your map
                     </Button>
@@ -144,7 +146,7 @@ const HomePage = ({ page, apps: allApps, tutorials }) => {
               <Row nested>
                 <Column width={[showViewAllButton ? 1 / 4 : 1 / 3]} />
                 <Column width={[showViewAllButton ? 1 / 4 : 1 / 3]}>
-                  <a href="mailto:gfw@wri.org">
+                  <a href="mailto:gnw@wri.org">
                     <Button className="column-btn" light>
                       submit your map
                     </Button>
@@ -190,7 +192,7 @@ const HomePage = ({ page, apps: allApps, tutorials }) => {
           ))}
           <Column width={[1 / 12, 1 / 3, 4.5 / 12]} />
           <Column width={[5 / 6, 1 / 3, 1 / 4]}>
-            <Link href="https://www.globalforestwatch.org/help/mapbuilder/">
+            <Link href={`${GFW_DOMAIN}/help/mapbuilder/`}>
               <a>
                 <Button className="column-btn">view all</Button>
               </a>

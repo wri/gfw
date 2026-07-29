@@ -18,6 +18,8 @@ import investigateLarge from 'layouts/topics/assets/biodiversity/cards/investiga
 import explore from 'layouts/topics/assets/biodiversity/cards/explore.png';
 import exploreLarge from 'layouts/topics/assets/biodiversity/cards/explore@2x.png';
 import tigers from 'layouts/topics/assets/biodiversity/cards/tigers.png';
+
+import { BLOG_URL } from 'utils/external-links';
 import tigersLarge from 'layouts/topics/assets/biodiversity/cards/tigers@2x.png';
 
 // animations
@@ -46,7 +48,7 @@ export default {
       prompts: [
         {
           id: 'bio-learn',
-          content: 'GFW helps visualize areas most important for biodiversity.',
+          content: 'GNW helps visualize areas most important for biodiversity.',
           btnText: 'Explore the data',
           link: `/map?map=eyJjZW50ZXIiOnsibGF0IjoyNywibG5nIjoxMn0sInpvb20iOjIsImRhdGFzZXRzIjpbeyJkYXRhc2V0IjoiZmRjOGRjMWItMjcyOC00YTc5LWIyM2YtYjA5NDg1MDUyYjhkIiwibGF5ZXJzIjpbIjZmNjc5OGU2LTM5ZWMtNDE2My05NzllLTE4MmE3NGNhNjVlZSIsImM1ZDFlMDEwLTM4M2EtNDcxMy05YWFhLTQ0ZjcyOGMwNTcxYyJdLCJvcGFjaXR5IjoxLCJ2aXNpYmlsaXR5Ijp0cnVlfSx7ImRhdGFzZXQiOiJhNjg0YTliYi02M2YyLTRiZWEtYmY2Mi1mZDVlODBkMjNkNzUiLCJsYXllcnMiOlsiZGZkOWRlYjYtOGQzOS00NjQwLTg1NzEtNDM4OWQ1ZDg4OThhIl0sIm9wYWNpdHkiOjEsInZpc2liaWxpdHkiOnRydWV9LHsiZGF0YXNldCI6ImZlZTVmYzM4LTdhNjItNDliOC04ODc0LWRmYTMxY2JiMWVmNiIsImxheWVycyI6WyI0M2EyMDVmZS1hYWQzLTRkYjEtODgwNy1jMzk5YTMyNjQzNDkiXSwib3BhY2l0eSI6MSwidmlzaWJpbGl0eSI6dHJ1ZX1dLCJiYXNlbWFwIjp7InZhbHVlIjoiZGVmYXVsdCJ9LCJsYWJlbCI6ImRlZmF1bHQiLCJjYW5Cb3VuZCI6dHJ1ZX0%3D&menu=eyJtZW51U2VjdGlvbiI6IiJ9`,
           position: [65, 38],
@@ -74,7 +76,7 @@ export default {
         {
           id: 'bio-learn',
           content:
-            'GFW shows the current status of ecological areas as compared to their natural, undisturbed state.',
+            'GNW shows the current status of ecological areas as compared to their natural, undisturbed state.',
           btnText: 'Explore the data',
           link: `/map?map=eyJjZW50ZXIiOnsibGF0IjoyNywibG5nIjoxMn0sInpvb20iOjIsImRhdGFzZXRzIjpbeyJkYXRhc2V0IjoiZmRjOGRjMWItMjcyOC00YTc5LWIyM2YtYjA5NDg1MDUyYjhkIiwibGF5ZXJzIjpbIjZmNjc5OGU2LTM5ZWMtNDE2My05NzllLTE4MmE3NGNhNjVlZSIsImM1ZDFlMDEwLTM4M2EtNDcxMy05YWFhLTQ0ZjcyOGMwNTcxYyJdLCJvcGFjaXR5IjoxLCJ2aXNpYmlsaXR5Ijp0cnVlfSx7ImRhdGFzZXQiOiJmZWU1ZmMzOC03YTYyLTQ5YjgtODg3NC1kZmEzMWNiYjFlZjYiLCJsYXllcnMiOlsiZjEzZjg2Y2ItMDhiNS00ZTZjLWJiOGQtYjQ3ODIwNTJmOWU1Il0sIm9wYWNpdHkiOjEsInZpc2liaWxpdHkiOnRydWV9XSwiYmFzZW1hcCI6eyJ2YWx1ZSI6ImRlZmF1bHQifSwibGFiZWwiOiJkZWZhdWx0IiwiY2FuQm91bmQiOmZhbHNlLCJiYm94IjpudWxsfQ%3D%3D&menu=eyJtZW51U2VjdGlvbiI6IiIsImRhdGFzZXRDYXRlZ29yeSI6IiJ9`,
           position: [80, 60],
@@ -125,9 +127,9 @@ export default {
         {
           id: 'bio-learn',
           content:
-            'Read how GFW data help protect the Leuser Ecosystem in Indonesia.',
+            'Read how GNW data help protect the Leuser Ecosystem in Indonesia.',
           btnText: 'Read the blog',
-          link: 'https://www.globalforestwatch.org/blog/insights/worlds-last-intact-forests-are-becoming-increasingly-fragmented',
+          link: `${BLOG_URL}/insights/worlds-last-intact-forests-are-becoming-increasingly-fragmented`,
           position: [35, 55],
         },
       ],
@@ -178,7 +180,7 @@ export default {
     {
       id: 'feedback',
       title:
-        'What other biodiversity data and analysis would you like to see on GFW?',
+        'What other biodiversity data and analysis would you like to see on GNW?',
       summary: 'Tell us!',
       theme: 'theme-card-dark',
       btnText: 'feedback',

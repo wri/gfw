@@ -20,7 +20,7 @@ import {
 
 const errorProps = {
   error: 404,
-  title: 'Widget Not Found | Global Forest Watch',
+  title: 'Widget Not Found | Global Nature Watch',
   errorTitle: 'Widget Not Found',
 };
 
@@ -40,7 +40,7 @@ export const getStaticProps = async ({ params }) => {
     return {
       props: {
         widget: widget || '',
-        title: `Global Deforestation Rates & Statistics | GFW`,
+        title: `Global Deforestation Rates & Statistics | GNW`,
         description: `Explore interactive tree cover loss data charts and analyze global forest trends, including land use change, deforestation rates and forest fires.`,
       },
     };
@@ -51,7 +51,7 @@ export const getStaticProps = async ({ params }) => {
       return {
         props: {
           error: 401,
-          title: 'Area is private | Global Forest Watch',
+          title: 'Area is private | Global Nature Watch',
           errorTitle: 'Area is private',
         },
       };
@@ -73,7 +73,7 @@ export const getStaticProps = async ({ params }) => {
   return {
     props: {
       widget: widget || '',
-      title: `${locationName} Deforestation Rates & Statistics | GFW`,
+      title: `${locationName} Deforestation Rates & Statistics | GNW`,
       description: `Explore interactive tree cover loss data charts and analyze ${locationName} forest trends, including land use change, deforestation rates and forest fires.`,
     },
   };

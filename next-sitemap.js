@@ -1,6 +1,12 @@
+const { GFW_DOMAIN } = require('./utils/domain');
+
 module.exports = {
-  siteUrl: 'https://www.globalforestwatch.org',
-  generateRobotsTxt: false,
+  siteUrl: GFW_DOMAIN,
+  generateRobotsTxt: true,
+  robotsTxtOptions: {
+    policies: [{ userAgent: '*', allow: '/' }],
+    additionalSitemaps: [`${GFW_DOMAIN}/help/sitemap.xml`],
+  },
   sitemapSize: 50000,
   priority: 1.0,
   changefreq: 'weekly',
@@ -9,7 +15,7 @@ module.exports = {
     '/search',
     '/thank-you',
     '/terms',
-    '/my-gfw',
+    '/my-gnw',
     '/privacy-policy',
     '/subscribe',
   ],

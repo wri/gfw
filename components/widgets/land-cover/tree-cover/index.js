@@ -19,6 +19,8 @@ import {
   TROPICAL_TREE_COVER_METERS,
 } from 'data/layers';
 
+import { BLOG_URL } from 'utils/external-links';
+
 import getWidgetProps from './selectors';
 
 export default {
@@ -30,7 +32,7 @@ export default {
   alerts: [
     {
       id: 'tree-cover-alert-1',
-      text: 'Datasets available here (Tree Cover 2000/ 2010 and Tropical Tree Cover 2020) use different methodologies to measure tree cover. Read [our blog](https://www.globalforestwatch.org/blog/data-and-research/tree-cover-data-comparison/) for more information.',
+      text: `Datasets available here (Tree Cover 2000/ 2010 and Tropical Tree Cover 2020) use different methodologies to measure tree cover. Read [our blog](${BLOG_URL}/data-and-research/tree-cover-data-comparison/) for more information.`,
       visible: [
         'global',
         'country',

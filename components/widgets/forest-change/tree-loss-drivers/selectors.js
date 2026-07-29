@@ -33,7 +33,6 @@ export const getPermanentCategories = createSelector(
 export const getFilteredData = createSelector(
   [getData, getSortedCategories],
   (data, sortedCategories) => {
-    console.log('tree-loss-drivers', data);
     return data && data.length
       ? sortedCategories
           .map(({ value }) => data.find((item) => item.driver_type === value))
@@ -88,9 +87,8 @@ export const parseSentence = createSelector(
   [getFilteredData, getSentences, getSettings, getLocationLabel],
   (filteredData, sentences, settings, location) => {
     if (!filteredData) return null;
-    const { globalInitial, initial } = sentences;
+    const { globalInitial, initial, noLoss } = sentences;
     const { startYear, endYear } = settings;
-    const sentence = location === 'global' ? globalInitial : initial;
 
     const totalLoss = filteredData.reduce(
       (acc, { loss_area_ha, driver_type }) => {
@@ -114,12 +112,17 @@ export const parseSentence = createSelector(
       0
     );
 
+    let sentence = location === 'global' ? globalInitial : initial;
+    if (totalLoss === 0 && noLoss) {
+      sentence = noLoss;
+    }
+
     const params = {
       location,
       startYear,
       endYear,
       lossPercentage: formatNumber({
-        num: (permanentLoss * 100) / totalLoss,
+        num: totalLoss > 0 ? (permanentLoss * 100) / totalLoss : 0,
         unit: '%',
       }),
     };

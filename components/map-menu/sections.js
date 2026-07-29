@@ -54,7 +54,7 @@ export const mobileSections = [
     Component: Explore,
   },
   {
-    label: 'my gfw',
+    label: 'my gnw',
     slug: 'my-gfw',
     icon: myGFWIcon,
     Component: MyGFW,
@@ -90,7 +90,7 @@ export const searchSections = [
     large: true,
   },
   {
-    label: 'my gfw',
+    label: 'my gnw',
     slug: 'my-gfw',
     icon: userIcon,
     Component: MyGFW,

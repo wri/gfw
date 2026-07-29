@@ -5,14 +5,14 @@ import cx from 'classnames';
 
 import Icon from 'components/ui/icon';
 
+import { GNW_ANNOUNCEMENT_URL } from 'utils/external-links';
+
 import treeFillIcon from 'assets/logos/tree-fill.svg?sprite';
 import unionIcon from 'assets/logos/union.svg?sprite';
 import closeIcon from 'assets/icons/close.svg?sprite';
 
 const isServer = typeof window === 'undefined';
 const STORAGE_KEY = 'gnwAnnouncementBannerDismissed';
-const LEARN_MORE_URL =
-  'https://www.globalforestwatch.org/blog/data-and-tools/gfw-now-global-nature-watch?utm_medium=notification&utm_source=homepage&utm_campaign=gnwannoucement';
 
 const GnwAnnouncementBanner = ({ className }) => {
   const { pathname } = useRouter();
@@ -51,17 +51,17 @@ const GnwAnnouncementBanner = ({ className }) => {
         <Icon icon={treeFillIcon} className="tree-icon" />
         <div className="banner-text">
           <p className="banner-title">
-            Global Forest Watch is becoming Global Nature Watch
+            Global Forest Watch is now Global Nature Watch
           </p>
           <p className="banner-description">
             A new name for the next chapter of our work — continuing to advance
             forest monitoring while expanding monitoring coverage and
-            capabilities. The name is changing, but our commitment remains the
+            capabilities. Our name has changed, but our commitment remains the
             same and your workflows will continue to be supported.
           </p>
           <a
             className="banner-link"
-            href={LEARN_MORE_URL}
+            href={GNW_ANNOUNCEMENT_URL}
             target="_blank"
             rel="noopener noreferrer"
           >

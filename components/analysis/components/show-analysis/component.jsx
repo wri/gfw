@@ -4,6 +4,7 @@ import { formatNumber } from 'utils/format';
 import isEmpty from 'lodash/isEmpty';
 import moment from 'moment';
 import { trackEvent } from 'utils/analytics';
+import { GFW_DOMAIN } from 'utils/external-links';
 import Link from 'next/link';
 
 import Modal from 'components/modal';
@@ -284,7 +285,7 @@ class ShowAnalysis extends PureComponent {
                         </p>
                         <p className="credits">
                           <strong>
-                            Suggested citations for data as displayed on GFW:
+                            Suggested citations for data as displayed on GNW:
                           </strong>{' '}
                           Hansen, M. C., P. V. Potapov, R. Moore, M. Hancher, S.
                           A. Turubanova, A. Tyukavina, D. Thau, S. V. Stehman,
@@ -292,13 +293,13 @@ class ShowAnalysis extends PureComponent {
                           L. Chini, C. O. Justice, and J. R. G. Townshend. 2013.
                           “Hansen/UMD/Google/USGS/NASA Tree Cover Loss and Gain
                           Area.” University of Maryland, Google, USGS, and NASA.
-                          Accessed through Global Forest Watch on [date].{' '}
+                          Accessed through Global Nature Watch on [date].{' '}
                           <a
-                            href="https://www.globalforestwatch.org"
+                            href={GFW_DOMAIN}
                             target="_blank"
                             rel="noopener noreferrer"
                           >
-                            www.globalforestwatch.org
+                            {GFW_DOMAIN.replace(/^https?:\/\//, '')}
                           </a>
                           .
                         </p>

@@ -15,6 +15,8 @@ import Contact from 'layouts/about/contact';
 import Partners from 'layouts/about/partners';
 import Join from 'layouts/about/join';
 
+import { GNW_ANNOUNCEMENT_URL } from 'utils/external-links';
+
 import mailIcon from 'assets/icons/mail.svg?sprite';
 
 import bgImage from './background.jpg';
@@ -22,7 +24,7 @@ import bgImageWebP from './background.webp';
 
 const sections = {
   how: {
-    label: 'GFW in Action',
+    label: 'GNW in Action',
     anchor: 'gfw-in-action',
     component: 'how',
   },
@@ -59,8 +61,24 @@ const sectionComponents = {
 const AboutPage = (props) => (
   <div className="l-about-page">
     <Cover
-      title="About"
-      description="Global Forest Watch, or GFW, is an initiative from the World Resources Institute (WRI) committed to providing the best publicly available data and tools for monitoring and protecting the world’s forests. By harnessing cutting-edge technology, GFW’s free and accessible platform allows anyone anywhere to access near-real-time information on forest change and mobilize action."
+      title="Our History"
+      description={[
+        <p key="history">
+          Global Forest Watch has recently become Global Nature Watch. A new
+          name for the next chapter of our work — continuing to advance forest
+          monitoring while expanding monitoring coverage and capabilities. Read
+          below for more about the history of Global Forest Watch.
+        </p>,
+        <p key="learn-more">
+          <a
+            href={GNW_ANNOUNCEMENT_URL}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Learn more about our new name
+          </a>
+        </p>,
+      ]}
       bgImage={bgImage}
       webP={bgImageWebP}
     >
@@ -69,7 +87,7 @@ const AboutPage = (props) => (
           <Button round className="subscribe-icon">
             <Icon icon={mailIcon} />
           </Button>
-          <p className="subscribe-msg">SUBSCRIBE TO THE GFW NEWSLETTER</p>
+          <p className="subscribe-msg">SUBSCRIBE TO THE GNW NEWSLETTER</p>
         </a>
       </Link>
     </Cover>

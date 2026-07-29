@@ -20,6 +20,7 @@ import {
 
 import { email as validateEmail } from 'components/forms/validations';
 import { ORTTO_REQUESTS_TYPES } from 'pages/api/ortto/constants';
+import { GFW_DOMAIN } from 'utils/external-links';
 import Checkbox from '../components/checkbox/component';
 
 class NewsletterForm extends PureComponent {
@@ -57,7 +58,7 @@ class NewsletterForm extends PureComponent {
       sector,
       preferred_language: language,
       interest: (interest || []).join(),
-      person_source_details: 'https://www.globalforestwatch.org',
+      person_source_details: GFW_DOMAIN,
       ip_address: ipAddress,
     };
 
@@ -87,10 +88,14 @@ class NewsletterForm extends PureComponent {
       value: label,
     }));
 
-    const interestsOptions = interests.map((interest) => ({
-      label: interest,
-      value: interest,
-    }));
+    const interestsOptions = interests.map((interest) =>
+      typeof interest === 'string'
+        ? {
+            label: interest,
+            value: interest,
+          }
+        : interest
+    );
     const preferredLanguageOptions = preferredLanguages.map(
       ({ label, value }) => ({ label, value })
     );
@@ -118,7 +123,7 @@ class NewsletterForm extends PureComponent {
                 <Fragment>
                   <h1>Stay Updated on the World&apos;s Forests</h1>
                   <h3>
-                    Subscribe to monthly GFW newsletters and updates based on
+                    Subscribe to monthly GNW newsletters and updates based on
                     your interests.
                   </h3>
                   <Input
