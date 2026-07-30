@@ -698,5 +698,40 @@
     "source": "/my-gfw/:path*",
     "destination": "/my-gnw/",
     "permanent": true
+  },
+  {
+    "source": "/app/",
+    "destination": "https://horizon.globalnaturewatch.org/app/",
+    "permanent": true
+  },
+  {
+    "source": "/onboarding/",
+    "destination": "https://horizon.globalnaturewatch.org/onboarding/",
+    "permanent": true
+  },
+  {
+    "source": "/auth/",
+    "destination": "https://horizon.globalnaturewatch.org/auth/",
+    "permanent": true
+  },
+  {
+    "source": "/auth/:path*/",
+    "destination": "https://horizon.globalnaturewatch.org/auth/:path*/",
+    "permanent": true
+  },
+  {
+    "source": "/auth/:path*",
+    "destination": "https://horizon.globalnaturewatch.org/auth/:path*",
+    "permanent": true
+  },
+  {
+    "source": "/dashboard/",
+    "destination": "https://horizon.globalnaturewatch.org/dashboard/",
+    "permanent": true
+  },
+  {
+    "source": "/amazonia/",
+    "destination": "https://horizon.globalnaturewatch.org/amazonia/",
+    "permanent": true
   }
 ]
