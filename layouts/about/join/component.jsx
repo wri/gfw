@@ -1,5 +1,3 @@
-import { Link as AnchorLink } from 'react-scroll';
-
 import { Row, Column, Button } from '@worldresources/gfw-components';
 
 const AboutJoinSection = () => (
@@ -9,11 +7,15 @@ const AboutJoinSection = () => (
         <h4>
           <i>We welcome others to join the growing GNW partnership.</i>
         </h4>
-        <AnchorLink to="contact" spy smooth duration={500}>
+        <a
+          href="https://globalnaturewatch.zendesk.com/hc/en-us/requests/new"
+          target="_blank"
+          rel="noreferrer"
+        >
           <Button light className="anchor">
             EMAIL US
           </Button>
-        </AnchorLink>
+        </a>
       </Column>
     </Row>
   </section>
