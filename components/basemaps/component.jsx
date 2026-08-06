@@ -61,7 +61,11 @@ const Basemaps = ({
                 size="small"
                 dark
                 round
-                onClick={() => setModalMetaSettings('flagship_basemaps')}
+                onClick={() =>
+                  setModalMetaSettings({
+                    metakey: 'flagship_basemaps',
+                    metaType: 'layer',
+                  })}
               >
                 <Icon icon={infoIcon} />
               </Button>

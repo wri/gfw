@@ -71,6 +71,9 @@ class Widgets extends PureComponent {
       authenticated,
     } = this.props;
 
+    const handleShowInfo = (metakey) =>
+      setModalMetaSettings({ metakey, metaType: 'widget' });
+
     const widgetGroups = groupBySubcategory
       ? groupedWidgets
       : [{ id: null, label: null, widgets: allWidgets }];
@@ -151,7 +154,7 @@ class Widgets extends PureComponent {
                         label: w.widget,
                       });
                     }}
-                    handleShowInfo={setModalMetaSettings}
+                    handleShowInfo={handleShowInfo}
                     handleShowShare={() =>
                       setShareModal({
                         title: 'Share this widget',

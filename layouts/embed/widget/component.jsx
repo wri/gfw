@@ -16,7 +16,7 @@ const WidgetEmbedPage = ({ widget, trase }) => (
   <div className={cx('l-embed-widget-page', { '-trase': trase })}>
     <Widgets className="embed-widget" embed widget={widget} />
     <Share />
-    <ModalMeta metaType="widget" />
+    <ModalMeta />
     <CountryDataProvider />
     <WhitelistsProvider />
     <GeodescriberProvider embed />

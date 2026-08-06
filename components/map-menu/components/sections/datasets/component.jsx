@@ -30,6 +30,9 @@ class Datasets extends PureComponent {
       handleAddCountry,
     } = this.props;
 
+    const onInfoClick = (metakey) =>
+      setModalMetaSettings({ metakey, metaType: 'layer' });
+
     return (
       <div className="c-datasets">
         {!isDesktop &&
@@ -108,7 +111,7 @@ class Datasets extends PureComponent {
                           className="dataset-toggle"
                           data={{ ...d, dataset: d.id }}
                           onToggle={onToggleLayer}
-                          onInfoClick={setModalMetaSettings}
+                          onInfoClick={onInfoClick}
                           showSubtitle
                           category={datasetCategory}
                         />
@@ -129,7 +132,7 @@ class Datasets extends PureComponent {
                     className="dataset-toggle"
                     data={{ ...d, dataset: d.id }}
                     onToggle={onToggleLayer}
-                    onInfoClick={setModalMetaSettings}
+                    onInfoClick={onInfoClick}
                     category={datasetCategory}
                   />
                 ))}

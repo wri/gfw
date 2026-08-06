@@ -311,7 +311,9 @@ const DashboardsPage = (props) => {
     }
 
     if (modalMeta) {
-      dispatch(setModalMetaSettings(modalMeta));
+      dispatch(
+        setModalMetaSettings({ metakey: modalMeta, metaType: 'widget' })
+      );
     }
 
     if (dashboardPrompts) {

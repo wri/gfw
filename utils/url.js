@@ -40,6 +40,25 @@ const remapDatasets = (datasets) =>
     []
   );
 
+// The `modalMeta` param can be either:
+// - the current shape: { metakey, metaType }
+// - a legacy shape (from previously shared/bookmarked urls): a bare metakey
+//   string with no type information
+// This normalizes both into { metakey, metaType }, falling back to a
+// naming-convention heuristic for legacy links since they carry no type.
+export const resolveModalMeta = (modalMeta) => {
+  if (!modalMeta) return undefined;
+
+  if (typeof modalMeta === 'string') {
+    return {
+      metakey: modalMeta,
+      metaType: modalMeta.startsWith('widget_') ? 'widget' : 'layer',
+    };
+  }
+
+  return modalMeta;
+};
+
 export const decodeQueryParams = (params) => {
   const decodedParams = Object.keys(params)?.reduce((obj, key) => {
     try {
