@@ -171,7 +171,10 @@ const SatelliteBasemaps = ({
                               theme="theme-button-tiny theme-button-grey-filled square"
                               onClick={(e) => {
                                 e.stopPropagation();
-                                setModalMetaSettings(basemap.infoModal);
+                                setModalMetaSettings({
+                                  metakey: basemap.infoModal,
+                                  metaType: 'layer',
+                                });
                               }}
                             >
                               <Icon icon={infoIcon} />

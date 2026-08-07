@@ -3,7 +3,7 @@ import { useState, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 
 import useRouter from 'utils/router';
-import { decodeQueryParams } from 'utils/url';
+import { decodeQueryParams, resolveModalMeta } from 'utils/url';
 
 import { getLocationData } from 'services/location';
 import { getPublishedNotifications } from 'services/notifications';
@@ -154,7 +154,7 @@ const MapPage = (props) => {
     }
 
     if (modalMeta) {
-      dispatch(setModalMetaSettings(modalMeta));
+      dispatch(setModalMetaSettings(resolveModalMeta(modalMeta)));
     }
 
     if (recentImagery) {

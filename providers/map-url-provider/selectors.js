@@ -13,7 +13,13 @@ export const selectMapSettings = (state) => state.map?.settings;
 export const selectMainMapSettings = (state) => state.mainMap;
 export const selectMapMenuSettings = (state) => state.mapMenu?.settings;
 export const selectAnalysisSettings = (state) => state.analysis?.settings;
-export const selectMetaModalKey = (state) => state.modalMeta?.metakey;
+export const selectModalMeta = (state) =>
+  state.modalMeta?.metakey
+    ? {
+        metakey: state.modalMeta.metakey,
+        metaType: state.modalMeta.metaType,
+      }
+    : undefined;
 export const selectRecentImagerySettings = (state) =>
   state.recentImagery?.settings;
 export const selectMapPromptsSettings = (state) => state.mapPrompts?.settings;
@@ -26,7 +32,7 @@ export const getUrlParams = createSelector(
     selectMainMapSettings,
     selectMapMenuSettings,
     selectAnalysisSettings,
-    selectMetaModalKey,
+    selectModalMeta,
     selectRecentImagerySettings,
     selectMapPromptsSettings,
     selectAOIModalSettings,
