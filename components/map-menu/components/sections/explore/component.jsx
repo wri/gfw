@@ -44,7 +44,7 @@ class Explore extends PureComponent {
           trackEvent({
             category: 'Map menu',
             action: 'Select explore category',
-            label: 'Places to watch',
+            label: 'Places to Watch',
           });
         },
       },
@@ -87,7 +87,7 @@ class Explore extends PureComponent {
                           value: 'all',
                         },
                         {
-                          label: 'Mongabay reporting',
+                          label: 'Global PTW',
                           value: 'mongabay',
                         },
                         {
