@@ -65,6 +65,33 @@ export default class MyDocument extends Document {
               src="https://cmp.osano.com/AzyfddTRtqi1560Dk/9ed60354-c199-4e89-92c8-047b83aa65a3/osano.js"
             />
           )}
+          {isOsanoEnabled && (
+            <Script
+              id="osano-ui-customization"
+              strategy="beforeInteractive"
+              dangerouslySetInnerHTML={{
+                __html: `
+                  document.addEventListener('DOMContentLoaded', function(event) {
+                    setTimeout(() => {
+                      document.getElementsByClassName('osano-cm-window__widget osano-cm-widget osano-cm-widget--position_right')[0].style.display = 'none';
+                    }, 100);
+                  });
+
+                  window.Osano('onUiChanged', (component, stateChange) => {
+                    if (component === 'drawer' && stateChange === 'show') {
+
+                      const { length } = document.getElementsByClassName('osano-cm-view__list osano-cm-list')[0].children;
+
+                      if (length > 4) {
+                        // remove "Do not sell"
+                        document.getElementsByClassName('osano-cm-view__list osano-cm-list')[0].children[length - 1].style.display = 'none';
+                      }
+                    }
+                  });
+                `,
+              }}
+            />
+          )}
           <style
             type="text/css"
             dangerouslySetInnerHTML={{ __html: mediaStyles }}
@@ -186,33 +213,6 @@ export default class MyDocument extends Document {
           <main id="maincontent">
             <Main />
           </main>
-          {isOsanoEnabled && (
-            <Script
-              id="osano-ui-customization"
-              strategy="beforeInteractive"
-              dangerouslySetInnerHTML={{
-                __html: `
-                  document.addEventListener('DOMContentLoaded', function(event) {
-                    setTimeout(() => {
-                      document.getElementsByClassName('osano-cm-window__widget osano-cm-widget osano-cm-widget--position_right')[0].style.display = 'none';
-                    }, 100);
-                  });
-
-                  window.Osano('onUiChanged', (component, stateChange) => {
-                    if (component === 'drawer' && stateChange === 'show') {
-
-                      const { length } = document.getElementsByClassName('osano-cm-view__list osano-cm-list')[0].children;
-
-                      if (length > 4) {
-                        // remove "Do not sell"
-                        document.getElementsByClassName('osano-cm-view__list osano-cm-list')[0].children[length - 1].style.display = 'none';
-                      }
-                    }
-                  });
-                `,
-              }}
-            />
-          )}
           <NextScript />
         </body>
       </Html>
