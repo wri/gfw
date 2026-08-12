@@ -6,6 +6,8 @@ import classnames from 'classnames';
 import Icon from 'components/ui/icon';
 import Slider from 'components/slider';
 
+import styles from './styles.module.scss';
+
 // NOTE:
 // This component operates on a linear numeric axis (indices between min and max).
 // For segmented timelines (with grouped ranges), snapping and segment awareness
@@ -451,7 +453,7 @@ class Timestep extends PureComponent {
       <button
         type="button"
         className={classnames({
-          'player-btn': true,
+          [styles['player-btn']]: true,
           '-playing': statePlaying,
         })}
         onClick={this.handleTogglePlay}
@@ -482,11 +484,15 @@ class Timestep extends PureComponent {
     const { playing } = this.state;
 
     return (
-      <div className={`${customClass} c-timestep`}>
+      <div className={`${customClass} ${styles['c-timestep']}`}>
         {canPlay && !PlayButton && this.renderPlay()}
         {canPlay && !!PlayButton && PlayButton}
 
-        <div className={classnames('timestep-slider', { 'can-play': canPlay })}>
+        <div
+          className={classnames(styles['timestep-slider'], {
+            [styles['can-play']]: canPlay,
+          })}
+        >
           <Slider
             range={range}
             marks={marks}

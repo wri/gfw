@@ -19,6 +19,7 @@ import {
   getSegmentByCenterIndex,
   yearToIndex,
 } from './segments';
+import styles from './styles.module.scss';
 
 export class TimestepContainer extends PureComponent {
   timelineParams = null;
@@ -64,12 +65,12 @@ export class TimestepContainer extends PureComponent {
 
         if (!gradient) return t;
 
-        const styles = {
+        const updatedStyle = {
           ...t,
           gradient: gradientConverter(gradient, minDate, interval),
         };
 
-        return styles;
+        return updatedStyle;
       });
     }
 
@@ -217,8 +218,8 @@ export class TimestepContainer extends PureComponent {
     return (
       <div
         className={classnames({
-          'c-legend-timestep': true,
-          '-can-play': canPlay,
+          [styles['c-legend-timestep']]: true,
+          [styles['-can-play']]: canPlay,
         })}
       >
         <Timestep

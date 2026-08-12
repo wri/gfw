@@ -56,11 +56,7 @@ class Card extends PureComponent {
             <picture className="image">
               {webPImage && <source srcSet={webPImage} type="image/webp" />}
               <source srcSet={image || image} type="image/png" />
-              <img
-                src={image || image}
-                alt={title}
-                style={{ width: '100%', height: 'auto' }}
-              />
+              <img src={image || image} alt={title} />
             </picture>
           )}
 
@@ -70,8 +66,6 @@ class Card extends PureComponent {
               srcSet={`${img1x} 2x, ${img2x} 1x`}
               src={`${img1x} 1x`}
               alt={title}
-              width="100%"
-              height="auto"
             />
           )}
         </>
@@ -150,7 +144,8 @@ class Card extends PureComponent {
                     selectorValue:
                       selector.options &&
                       selector.options.find((o) => o.value === value),
-                  })}
+                  })
+                }
                 native
               />
               <a
