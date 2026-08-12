@@ -36,7 +36,6 @@ import '../components/charts/composed-chart/styles.scss';
 import '../components/charts/horizontal-bar-chart/styles.scss';
 import '../components/charts/lollipop-chart/styles.scss';
 import '../components/charts/pie-chart/styles.scss';
-import '../components/charts/sankey-chart/styles.scss';
 import '../components/charts/sankey-chart/sankey-link/styles.scss';
 import '../components/charts/sankey-chart/sankey-node/styles.scss';
 import '../components/charts/sankey-chart/sankey-tooltip/styles.scss';
@@ -78,7 +77,6 @@ import '../components/site-header/styles.scss';
 // legends
 import '../components/legend/styles.scss';
 import '../components/legend/components/legend-item-drag/styles.scss';
-import '../components/legend/components/legend-item-timestep/styles.scss';
 import '../components/legend/components/legend-item-toolbar/legend-item-button-layers/legend-item-button-layers-tooltip/styles.scss';
 import '../components/legend/components/legend-item-toolbar/legend-item-button-opacity/legend-item-button-opacity-tooltip/styles.scss';
 import '../components/legend/components/legend-item-toolbar/styles-button.scss';
@@ -101,7 +99,6 @@ import '../components/map/components/basemaps/styles.scss';
 import '../components/map/components/draw/styles.scss';
 
 import '../components/map/components/legend/components/layer-list-menu/styles.scss';
-import '../components/map/components/legend/components/layer-more-info/styles.scss';
 import '../components/map/components/legend/components/layer-select-menu/styles.scss';
 import '../components/map/components/legend/components/layer-statement/styles.scss';
 import '../components/map/components/legend/components/layer-toggle/styles.scss';
@@ -163,7 +160,6 @@ import '../components/prompts/prompt-tooltip/styles.scss';
 
 // recent imagery
 import '../components/recent-imagery/components/recent-imagery-settings/styles.scss';
-import '../components/recent-imagery/components/recent-imagery-thumbnail/styles.scss';
 
 // satellite basemaps
 import '../components/satellite-basemaps/styles.scss';
@@ -193,9 +189,6 @@ import '../components/success-message/styles.scss';
 
 // tags list
 import '../components/tags-list/styles.scss';
-
-// timestep
-import '../components/timestep/styles.scss';
 
 // tooltip
 import '../components/tooltip/styles.scss';
@@ -312,7 +305,6 @@ import '../layouts/about/projects/styles.scss';
 
 import '../layouts/dashboards/styles.scss';
 import '../layouts/dashboards/components/gfr-banner/styles.scss';
-import '../layouts/dashboards/components/global-sentence/styles.scss';
 
 import '../layouts/dashboards/components/header/styles.scss';
 import '../layouts/dashboards/components/map/styles.scss';

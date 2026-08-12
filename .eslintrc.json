@@ -1,36 +1,31 @@
 {
   "env": {
-      "browser": true,
-      "node": true,
-      "es6": true,
-      "mocha": true
+    "browser": true,
+    "node": true,
+    "es6": true,
+    "mocha": true
   },
   "extends": [
-      "plugin:react/recommended",
-      "plugin:cypress/recommended",
-      "plugin:security/recommended",
-      "airbnb",
-      "prettier"
+    "plugin:react/recommended",
+    "plugin:cypress/recommended",
+    "plugin:security/recommended",
+    "airbnb",
+    "prettier"
   ],
   "globals": {
-      "Atomics": "readonly",
-      "SharedArrayBuffer": "readonly",
-      "hj": "readonly"
+    "Atomics": "readonly",
+    "SharedArrayBuffer": "readonly",
+    "hj": "readonly"
   },
   "parser": "babel-eslint",
   "parserOptions": {
-      "ecmaFeatures": {
-          "jsx": true
-      },
-      "ecmaVersion": 2018,
-      "sourceType": "module"
+    "ecmaFeatures": {
+      "jsx": true
+    },
+    "ecmaVersion": 2018,
+    "sourceType": "module"
   },
-  "plugins": [
-      "react",
-      "prettier",
-      "react-hooks",
-      "security"
-  ],
+  "plugins": ["react", "prettier", "react-hooks", "security"],
   "rules": {
     "react/react-in-jsx-scope": "off",
     "react/jsx-props-no-spreading": "off",
@@ -56,11 +51,17 @@
     "camelcase": "off",
     "security/detect-object-injection": "off",
     "react/jsx-one-expression-per-line": "off",
-    "import/no-extraneous-dependencies": "off"
+    "import/no-extraneous-dependencies": "off",
+    "react/jsx-curly-newline": "off"
   },
   "overrides": [
     {
-      "files": ["**/__tests__/**/*.js", "**/__tests__/**/*.jsx", "**/*.spec.js", "jest.setup.js"],
+      "files": [
+        "**/__tests__/**/*.js",
+        "**/__tests__/**/*.jsx",
+        "**/*.spec.js",
+        "jest.setup.js"
+      ],
       "rules": {
         "react/prop-types": "off",
         "class-methods-use-this": "off",

@@ -1,4 +1,5 @@
 import React, { PureComponent } from 'react';
+import dynamic from 'next/dynamic';
 import PropTypes from 'prop-types';
 import isEmpty from 'lodash/isEmpty';
 import cx from 'classnames';
@@ -17,9 +18,16 @@ import WidgetChartList from 'components/widget/components/widget-chart-list';
 import WidgetChartAndList from 'components/widget/components/widget-chart-and-list';
 import WidgetListLegend from 'components/widget/components/widget-list-legend';
 import WidgetMapList from 'components/widget/components/widget-map-list';
-import WidgetSankey from 'components/widget/components/widget-sankey';
 import WidgetLollipop from 'components/widget/components/widget-lollipop';
 import WidgetInfoList from 'components/widget/components/widget-info-list';
+
+const WidgetSankey = dynamic(
+  () => import('components/widget/components/widget-sankey'),
+  {
+    ssr: false,
+    loading: () => <Loader className="widget-loader" />,
+  }
+);
 
 const chartOptions = {
   composedChart: WidgetComposedChart,

@@ -170,7 +170,12 @@ class Widget extends PureComponent {
         onClick={() => onClickWidget(this.props)}
       >
         {showPlaceholder && (
-          <img data-cy="indonesia-img" src={placeholderImageURL} alt="widget" />
+          <img
+            data-cy="indonesia-img"
+            src={placeholderImageURL}
+            alt="widget"
+            style={{ width: '100%', height: 'auto' }}
+          />
         )}
         {!showPlaceholder && (
           <>

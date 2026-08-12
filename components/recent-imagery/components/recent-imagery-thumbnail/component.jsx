@@ -3,6 +3,8 @@ import PropTypes from 'prop-types';
 
 import Loader from 'components/ui/loader';
 
+import styles from './styles.module.scss';
+
 class RecentImageryThumbnail extends PureComponent {
   render() {
     const {
@@ -16,8 +18,8 @@ class RecentImageryThumbnail extends PureComponent {
 
     return (
       <div
-        className={`c-recent-imagery-thumbnail ${
-          selected ? 'c-recent-imagery-thumbnail--selected' : ''
+        className={`${styles['c-recent-imagery-thumbnail']} ${
+          selected ? styles['c-recent-imagery-thumbnail--selected'] : ''
         }`}
         style={{
           ...(tile.thumbnail && {
