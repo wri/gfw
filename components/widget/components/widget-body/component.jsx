@@ -23,7 +23,10 @@ import WidgetInfoList from 'components/widget/components/widget-info-list';
 
 const WidgetSankey = dynamic(
   () => import('components/widget/components/widget-sankey'),
-  { ssr: false }
+  {
+    ssr: false,
+    loading: () => <Loader className="widget-loader" />,
+  }
 );
 
 const chartOptions = {
