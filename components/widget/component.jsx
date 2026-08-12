@@ -174,8 +174,7 @@ class Widget extends PureComponent {
             data-cy="indonesia-img"
             src={placeholderImageURL}
             alt="widget"
-            width="100%"
-            height="auto"
+            style={{ width: '100%', height: 'auto' }}
           />
         )}
         {!showPlaceholder && (
