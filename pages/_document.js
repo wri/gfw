@@ -62,6 +62,16 @@ export default class MyDocument extends Document {
             type="text/css"
             dangerouslySetInnerHTML={{ __html: mediaStyles }}
           />
+          <link rel="preconnect" href="https://fonts.googleapis.com" />
+          <link
+            rel="preconnect"
+            href="https://fonts.gstatic.com"
+            crossOrigin="anonymous"
+          />
+          <link
+            rel="stylesheet"
+            href="https://fonts.googleapis.com/css?family=Fira+Sans:300,300i,400,400i,500,500i&display=swap"
+          />
           <meta charSet="utf-8" />
           <meta httpEquiv="X-UA-Compatible" content="IE=edge" />
 
