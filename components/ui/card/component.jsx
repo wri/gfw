@@ -59,8 +59,7 @@ class Card extends PureComponent {
               <img
                 src={image || image}
                 alt={title}
-                width="100%"
-                height="auto"
+                style={{ width: '100%', height: 'auto' }}
               />
             </picture>
           )}
