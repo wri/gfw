@@ -1,6 +1,7 @@
 /* eslint-disable react/no-danger */
 import React from 'react';
 import Document, { Html, Main, NextScript, Head } from 'next/document';
+import Script from 'next/script';
 import sprite from 'svg-sprite-loader/runtime/sprite.build';
 import { mediaStyles } from '@worldresources/gfw-components';
 import { staging, production } from '../newrelic/script';
@@ -35,7 +36,9 @@ export default class MyDocument extends Document {
       <Html lang="en">
         <Head>
           {isOsanoEnabled && (
-            <script
+            <Script
+              id="osano-consent-default"
+              strategy="beforeInteractive"
               dangerouslySetInnerHTML={{
                 __html: `
                   window.dataLayer = window.dataLayer || [];
@@ -56,7 +59,11 @@ export default class MyDocument extends Document {
             />
           )}
           {isOsanoEnabled && (
-            <script src="https://cmp.osano.com/AzyfddTRtqi1560Dk/9ed60354-c199-4e89-92c8-047b83aa65a3/osano.js" />
+            <Script
+              id="osano-loader"
+              strategy="beforeInteractive"
+              src="https://cmp.osano.com/AzyfddTRtqi1560Dk/9ed60354-c199-4e89-92c8-047b83aa65a3/osano.js"
+            />
           )}
           <style
             type="text/css"
@@ -180,7 +187,9 @@ export default class MyDocument extends Document {
             <Main />
           </main>
           {isOsanoEnabled && (
-            <script
+            <Script
+              id="osano-ui-customization"
+              strategy="beforeInteractive"
               dangerouslySetInnerHTML={{
                 __html: `
                   document.addEventListener('DOMContentLoaded', function(event) {
