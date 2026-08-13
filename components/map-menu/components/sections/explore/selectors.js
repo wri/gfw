@@ -22,7 +22,7 @@ import { descriptions, topics, stories } from './sections';
 
 const types = {
   mongabay: {
-    label: 'mongabay reporting',
+    label: 'Global PTW',
     color: '#D53369',
   },
   soy: {

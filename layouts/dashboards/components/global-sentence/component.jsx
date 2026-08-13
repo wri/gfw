@@ -5,6 +5,8 @@ import DynamicSentence from 'components/ui/dynamic-sentence';
 
 import SENTENCES from 'data/dashboard-summary-sentence';
 
+import styles from './styles.module.scss';
+
 const isServer = typeof window === 'undefined';
 
 class GlobalSentence extends PureComponent {
@@ -80,8 +82,10 @@ class GlobalSentence extends PureComponent {
 
   render() {
     return (
-      <div className="c-widgets dashboard-widgets global-dashboard-sentence">
-        <div className="c-widget c-dashboard-sentence-widget">
+      <div
+        className={`c-widgets dashboard-widgets ${styles['global-dashboard-sentence']}`}
+      >
+        <div className={`c-widget ${styles['c-dashboard-sentence-widget']}`}>
           <DynamicSentence sentence={this.getSentence()} />
         </div>
       </div>

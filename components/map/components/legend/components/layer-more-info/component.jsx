@@ -1,12 +1,14 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 
+import styles from './styles.module.scss';
+
 class LayerMoreInfo extends PureComponent {
   render() {
     const { className, linkUrl, linkText, text } = this.props;
 
     return (
-      <div className={`c-layer-more-info ${className || ''}`}>
+      <div className={`${styles['c-layer-more-info']} ${className || ''}`}>
         <p>{text}</p>
         <a href={linkUrl} target="_blank" rel="noopener noreferrer nofollower">
           {linkText}

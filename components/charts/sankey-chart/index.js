@@ -9,6 +9,7 @@ import ChartToolTip from '../components/chart-tooltip';
 import Sankey from './component';
 import SankeyLink from './sankey-link';
 import SankeyNode from './sankey-node';
+import styles from './styles.module.scss';
 
 function SankeyChart({
   width,
@@ -27,9 +28,12 @@ function SankeyChart({
   handleOutsideClick,
 }) {
   return (
-    <div className="c-sankey-chart" style={{ height, minWidth: '100%' }}>
+    <div
+      className={styles['c-sankey-chart']}
+      style={{ height, minWidth: '100%' }}
+    >
       <div
-        className="node-titles"
+        className={styles['node-titles']}
         style={{
           paddingLeft: margin.left || 0,
           paddingRight: margin.right || 0,
@@ -47,7 +51,7 @@ function SankeyChart({
           <Sankey
             width={width}
             data={data}
-            className="sankey"
+            className={styles.sankey}
             nodeWidth={nodeWidth}
             nodePadding={nodePadding}
             margin={margin}

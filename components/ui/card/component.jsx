@@ -144,7 +144,8 @@ class Card extends PureComponent {
                     selectorValue:
                       selector.options &&
                       selector.options.find((o) => o.value === value),
-                  })}
+                  })
+                }
                 native
               />
               <a
