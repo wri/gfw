@@ -1,4 +1,4 @@
-import { Row, Column, ContactUsForm } from '@worldresources/gfw-components';
+import { Row, Column } from '@worldresources/gfw-components';
 
 const AboutContactSection = () => (
   <div className="l-section-contact">
@@ -7,7 +7,15 @@ const AboutContactSection = () => (
         <h3>Contact us</h3>
         <p className="intro">
           Question, comment, request, feedback? We want to hear from you! Get in
-          touch by completing the form on the right.
+          touch by completing the&nbsp;
+          <a
+            href="https://globalnaturewatch.zendesk.com/hc/en-us/requests/new"
+            target="_blank"
+            rel="noreferrer"
+          >
+            form
+          </a>
+          .
         </p>
         <p>Global Nature Watch, 10 G Street NE Suite 800</p>
         <p>Washington, DC 20002, USA</p>
@@ -26,9 +34,6 @@ const AboutContactSection = () => (
         >
           Explore jobs
         </a>
-      </Column>
-      <Column width={[1, 1 / 2]}>
-        <ContactUsForm />
       </Column>
     </Row>
   </div>

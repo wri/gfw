@@ -8,9 +8,22 @@
     min-height: calc(100vh - var(--site-header-height, 56px) - 200px);
     margin-top: var(--site-header-height, 56px);
 
+    // Pages that only render their content after hydration (dashboards) paint an
+    // empty wrapper first. The default min-height stops 200px short of the fold,
+    // so the footer lands inside the viewport and is displaced when the content
+    // arrives. Reserving a full viewport keeps the footer below the fold.
+    // Scoped to :empty so settled layouts are never affected.
+    &:empty {
+      min-height: calc(100vh - var(--site-header-height, 56px));
+    }
+
     @media screen and (min-width: $screen-m) {
       min-height: calc(100vh - 56px - 200px);
       margin-top: 0;
+
+      &:empty {
+        min-height: 100vh;
+      }
     }
 
     &.-error {
