@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-curly-newline */
 import PropTypes from 'prop-types';
 import useRouter from 'utils/router';
 
@@ -8,7 +9,7 @@ import gnwBadge from 'assets/logos/gfw.png';
 
 import config from './config';
 
-const Header = ({ setModalContactUsOpen, fullScreen, slim, notifications }) => {
+const Header = ({ fullScreen, slim, notifications }) => {
   const { push, pushQuery, asPath, query } = useRouter();
 
   return (
@@ -22,22 +23,22 @@ const Header = ({ setModalContactUsOpen, fullScreen, slim, notifications }) => {
           <NavLink {...props}>
             <a className={className}>{headerChildren}</a>
           </NavLink>
-        ) : null}
+        ) : null
+      }
       notifications={notifications}
-      openContactUsModal={() => setModalContactUsOpen(true)}
       setQueryToUrl={(search) => push(`/search/?query=${search}`)}
       fullScreen={fullScreen}
       afterLangSelect={(lang) =>
         pushQuery({
           pathname: `${asPath?.split('?')?.[0]}`,
           query: { ...query, lang },
-        })}
+        })
+      }
     />
   );
 };
 
 Header.propTypes = {
-  setModalContactUsOpen: PropTypes.func,
   setSearchQuery: PropTypes.func,
   fullScreen: PropTypes.bool,
   href: PropTypes.string,
