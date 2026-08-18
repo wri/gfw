@@ -1,12 +1,9 @@
 import { jest } from '@jest/globals';
-import { metadataRequest, metadataWidgetRequest } from 'utils/request';
+import { metadataRequest } from 'utils/request';
 import { getMetadata } from 'services/metadata';
 
 jest.mock('utils/request', () => ({
   metadataRequest: {
-    get: jest.fn(),
-  },
-  metadataWidgetRequest: {
     get: jest.fn(),
   },
 }));
@@ -16,21 +13,20 @@ describe('getMetadata', () => {
     jest.clearAllMocks();
   });
 
-  it('uses metadataWidgetRequest when metaType is "widget"', () => {
-    metadataWidgetRequest.get.mockResolvedValueOnce({ data: {} });
-
-    getMetadata('some-widget-slug', 'widget');
-
-    expect(metadataWidgetRequest.get).toHaveBeenCalledWith('some-widget-slug');
-    expect(metadataRequest.get).not.toHaveBeenCalled();
-  });
-
-  it('uses metadataRequest for non-widget meta types', () => {
+  it('uses the unified metadataRequest for any metadata key', () => {
     metadataRequest.get.mockResolvedValueOnce({ data: {} });
 
-    getMetadata('some-dataset-slug', 'dataset');
+    getMetadata('some-dataset-slug');
 
     expect(metadataRequest.get).toHaveBeenCalledWith('some-dataset-slug');
-    expect(metadataWidgetRequest.get).not.toHaveBeenCalled();
+  });
+
+  it('resolves a widget-shaped key identically to a dataset key, with no type argument', () => {
+    metadataRequest.get.mockResolvedValueOnce({ data: {} });
+
+    getMetadata('widget_tree_cover_loss');
+
+    expect(metadataRequest.get).toHaveBeenCalledWith('widget_tree_cover_loss');
+    expect(metadataRequest.get).toHaveBeenCalledTimes(1);
   });
 });

@@ -8,18 +8,18 @@ export const setModalMetaSettings = createThunkAction('setModalMetaSettings');
 
 export const getModalMetaData = createThunkAction(
   'getModalMetaData',
-  ({ metakey, metaType }) =>
+  ({ metakey }) =>
     (dispatch, getState) => {
       const { modalMeta } = getState();
 
       if (modalMeta && !modalMeta.loading) {
         dispatch(setModalMetaLoading({ loading: true, error: false }));
 
-        getMetadata(metakey, metaType)
+        // No backend type to declare: the unified /api/metadata endpoint
+        // determines whether this is a dataset/layer key or a widget key
+        // itself, so callers only ever supply the bare key.
+        getMetadata(metakey)
           .then((response) => {
-            // Both the dataset/layer and widget metadata endpoints now
-            // return the same client-facing shape, so no backend-specific
-            // parsing is needed here.
             dispatch(setModalMetaData(response.data.metadata));
           })
           .catch(() => {

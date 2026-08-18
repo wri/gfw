@@ -1,12 +1,6 @@
-import { metadataRequest, metadataWidgetRequest } from 'utils/request';
+import { metadataRequest } from 'utils/request';
 
-export const getMetadata = (slug, metaType) => {
-  if (metaType === 'widget') {
-    return metadataWidgetRequest.get(slug);
-  }
-
-  return metadataRequest.get(slug);
-};
+export const getMetadata = (slug) => metadataRequest.get(slug);
 
 export default {
   getMetadata,

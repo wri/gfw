@@ -216,7 +216,7 @@ class DashboardsPage extends PureComponent {
           <MapControls className="map-controls" />
         </Desktop>
         <Share />
-        <ModalMeta metaType="widget" />
+        <ModalMeta />
         {widgetAnchor && (
           <ScrollTo target={widgetAnchor} afterScroll={clearScrollTo} />
         )}

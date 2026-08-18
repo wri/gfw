@@ -45,13 +45,10 @@ describe('ModalMeta', () => {
     jest.clearAllMocks();
   });
 
-  it('calls getModalMetaData on mount when metakey is provided', () => {
-    render(
-      <ModalMeta {...defaultProps} metakey="test-key" metaType="dataset" />
-    );
+  it('calls getModalMetaData on mount with just the bare metadata key', () => {
+    render(<ModalMeta {...defaultProps} metakey="test-key" />);
     expect(mockGetModalMetaData).toHaveBeenCalledWith({
       metakey: 'test-key',
-      metaType: 'dataset',
     });
   });
 
@@ -60,17 +57,21 @@ describe('ModalMeta', () => {
     expect(mockGetModalMetaData).not.toHaveBeenCalled();
   });
 
-  it('calls getModalMetaData when metakey changes', () => {
-    const { rerender } = render(
-      <ModalMeta {...defaultProps} metakey="key1" metaType="dataset" />
-    );
+  it('calls getModalMetaData when metakey changes, with no type argument', () => {
+    const { rerender } = render(<ModalMeta {...defaultProps} metakey="key1" />);
 
-    rerender(<ModalMeta {...defaultProps} metakey="key2" metaType="dataset" />);
+    rerender(<ModalMeta {...defaultProps} metakey="key2" />);
 
     expect(mockGetModalMetaData).toHaveBeenCalledTimes(2);
     expect(mockGetModalMetaData).toHaveBeenLastCalledWith({
       metakey: 'key2',
-      metaType: 'dataset',
+    });
+  });
+
+  it('requires no widget-specific arguments for a widget-shaped key', () => {
+    render(<ModalMeta {...defaultProps} metakey="widget_tree_cover_loss" />);
+    expect(mockGetModalMetaData).toHaveBeenCalledWith({
+      metakey: 'widget_tree_cover_loss',
     });
   });
 
