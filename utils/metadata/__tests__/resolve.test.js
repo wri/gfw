@@ -127,4 +127,37 @@ describe('resolveMetadata (fallback test matrix)', () => {
 
     expect(result.metadata.cautions).toBe('new caution');
   });
+
+  it('tolerates a 404 on latest-version metadata (dataset itself was found) without falling back to Resource Watch', async () => {
+    const latestNotFound = new Error('Not Found');
+    latestNotFound.response = { status: 404 };
+    axios.get
+      .mockResolvedValueOnce({
+        data: { data: { metadata: { title: 'Some dataset' } } },
+      })
+      .mockRejectedValueOnce(latestNotFound);
+    global.fetch = jest.fn();
+
+    const result = await resolveMetadata('some_key');
+
+    expect(result.metadata.title).toBe('Some dataset');
+    expect(global.fetch).not.toHaveBeenCalled();
+  });
+
+  it('propagates a genuine failure on latest-version metadata (e.g. 500) without falling back to Resource Watch', async () => {
+    const latestServerError = new Error('Internal Server Error');
+    latestServerError.response = { status: 500 };
+    axios.get
+      .mockResolvedValueOnce({
+        data: { data: { metadata: { title: 'Some dataset' } } },
+      })
+      .mockRejectedValueOnce(latestServerError);
+    global.fetch = jest.fn();
+
+    await expect(resolveMetadata('some_key')).rejects.toBe(latestServerError);
+    // A failure fetching the optional latest-version document is not the
+    // key being "not found" — the dataset itself resolved fine — so this
+    // must not be treated as a fallback trigger.
+    expect(global.fetch).not.toHaveBeenCalled();
+  });
 });

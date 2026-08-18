@@ -14,6 +14,15 @@ import { MetadataNotFoundError } from './errors';
  * doesn't exist (404). Any other failure (network error, 5xx, etc.) is
  * rethrown as-is so callers can tell "not found" apart from "upstream is
  * broken".
+ *
+ * The optional latest-version metadata request is handled the same way, but
+ * more narrowly: a 404 there just means this dataset has no latest-version
+ * metadata, which is expected and tolerated — dataset-level metadata is
+ * still returned on its own, and this does NOT count as the key being
+ * "not found" (the dataset itself was found; only an optional extra
+ * document is missing), so it never triggers Resource Watch fallback. Any
+ * other failure on that request (5xx, timeout, auth) is a genuine upstream
+ * problem and is propagated rather than silently swallowed.
  */
 export const getDataApiMetadata = async (key) => {
   const url = `${GFW_DATA_API}/dataset/${key}`;
@@ -34,13 +43,11 @@ export const getDataApiMetadata = async (key) => {
   try {
     datasetVersionMetadata = await axios.get(`${url}/latest/metadata`);
   } catch (error) {
-    // A missing (or otherwise failing) latest-version metadata document is
-    // currently tolerated: dataset-level metadata is still returned.
-    // Distinguishing "latest metadata doesn't exist" from "latest metadata
-    // request failed" is a deliberate follow-up improvement, kept separate
-    // from this extraction so it doesn't bundle a behavior change in with a
-    // refactor.
-    datasetVersionMetadata = { data: { data: {} } };
+    if (error.response?.status === 404) {
+      datasetVersionMetadata = { data: { data: {} } };
+    } else {
+      throw error;
+    }
   }
   const dataVersionMetadataObject = datasetVersionMetadata?.data?.data;
 

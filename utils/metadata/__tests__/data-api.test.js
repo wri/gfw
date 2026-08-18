@@ -53,16 +53,42 @@ describe('getDataApiMetadata', () => {
     expect(result.metadata.cautions).toBe('dataset-level caution');
   });
 
-  it('tolerates a failing latest-version metadata request and still returns dataset metadata', async () => {
+  it('tolerates a 404 on the latest-version metadata request and still returns dataset metadata', async () => {
+    const notFound = new Error('Not Found');
+    notFound.response = { status: 404 };
     axios.get
       .mockResolvedValueOnce({
         data: { data: { metadata: { title: 'Some dataset' } } },
       })
-      .mockRejectedValueOnce(new Error('latest metadata request failed'));
+      .mockRejectedValueOnce(notFound);
 
     const result = await getDataApiMetadata('some_key');
 
     expect(result.metadata.title).toBe('Some dataset');
+  });
+
+  it('propagates a non-404 failure on the latest-version metadata request instead of silently swallowing it', async () => {
+    const serverError = new Error('Internal Server Error');
+    serverError.response = { status: 500 };
+    axios.get
+      .mockResolvedValueOnce({
+        data: { data: { metadata: { title: 'Some dataset' } } },
+      })
+      .mockRejectedValueOnce(serverError);
+
+    await expect(getDataApiMetadata('some_key')).rejects.toBe(serverError);
+  });
+
+  it('propagates a network/timeout failure on the latest-version metadata request', async () => {
+    const timeoutError = new Error('timeout of 30000ms exceeded');
+    timeoutError.code = 'ECONNABORTED';
+    axios.get
+      .mockResolvedValueOnce({
+        data: { data: { metadata: { title: 'Some dataset' } } },
+      })
+      .mockRejectedValueOnce(timeoutError);
+
+    await expect(getDataApiMetadata('some_key')).rejects.toBe(timeoutError);
   });
 
   it('throws MetadataNotFoundError when the dataset itself is a 404', async () => {
