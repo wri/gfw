@@ -17,11 +17,10 @@ export const getModalMetaData = createThunkAction(
 
         getMetadata(metakey, metaType)
           .then((response) => {
-            if (metaType === 'widget') {
-              dispatch(setModalMetaData(response.data));
-            } else {
-              dispatch(setModalMetaData(response.data.metadata));
-            }
+            // Both the dataset/layer and widget metadata endpoints now
+            // return the same client-facing shape, so no backend-specific
+            // parsing is needed here.
+            dispatch(setModalMetaData(response.data.metadata));
           })
           .catch(() => {
             dispatch(setModalMetaLoading({ loading: false, error: true }));

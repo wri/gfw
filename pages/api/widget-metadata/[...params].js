@@ -31,7 +31,10 @@ export default async (req, res) => {
 
     const data = await response.json();
 
-    return res.status(200).json(data);
+    // Normalize to the same client-facing shape as /api/metadata, so callers
+    // can always read metadata off `response.data.metadata` regardless of
+    // which backend served it.
+    return res.status(200).json({ metadata: data });
   } catch (error) {
     return res.status(400).end(error.message);
   }
