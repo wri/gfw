@@ -1,8 +1,4 @@
-import { GFW_METADATA_API, GFW_STAGING_METADATA_API } from 'utils/apis';
-
-const ENVIRONMENT = process.env.NEXT_PUBLIC_FEATURE_ENV;
-const GFW_METADATA_API_URL =
-  ENVIRONMENT === 'staging' ? GFW_STAGING_METADATA_API : GFW_METADATA_API;
+import { getResourceWatchMetadata } from 'utils/metadata/resource-watch';
 
 export default async (req, res) => {
   try {
@@ -13,28 +9,10 @@ export default async (req, res) => {
     if (!isValidPath) {
       return res.status(400).json({ error: 'Invalid path parameter' });
     }
-    const url = `${GFW_METADATA_API_URL}/${path}/?_=${Date.now()}`;
 
-    const response = await fetch(url, {
-      method: 'GET',
-      headers: {
-        'Cache-Control': 'no-cache',
-        Pragma: 'no-cache',
-        'If-None-Match': '',
-        Accept: 'application/json',
-      },
-    });
+    const response = await getResourceWatchMetadata(path);
 
-    if (!response.ok) {
-      throw new Error(`Request failed with status ${response.status}`);
-    }
-
-    const data = await response.json();
-
-    // Normalize to the same client-facing shape as /api/metadata, so callers
-    // can always read metadata off `response.data.metadata` regardless of
-    // which backend served it.
-    return res.status(200).json({ metadata: data });
+    return res.status(200).json(response);
   } catch (error) {
     return res.status(400).end(error.message);
   }
