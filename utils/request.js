@@ -7,8 +7,6 @@ import {
   GFW_DATA_API,
   GFW_STAGING_DATA_API,
   GFW_API,
-  GFW_METADATA_API,
-  GFW_STAGING_METADATA_API,
 } from 'utils/apis';
 import { PROXIES } from './proxies';
 
@@ -16,8 +14,6 @@ const ENVIRONMENT = process.env.NEXT_PUBLIC_FEATURE_ENV;
 
 // We never use the staging api
 const GFW_API_URL = GFW_API;
-const GFW_WIDGET_METADATA_API_URL =
-  ENVIRONMENT === 'staging' ? GFW_STAGING_METADATA_API : GFW_METADATA_API;
 export const DATA_API_URL =
   ENVIRONMENT === 'staging' ? GFW_STAGING_DATA_API : GFW_DATA_API;
 
@@ -69,44 +65,6 @@ export const metadataRequest = axios.create({
     baseURL: PROXIES.METADATA_API,
   }),
 });
-
-const getWidgetBaseUrl = () => {
-  if (isServer) {
-    return GFW_WIDGET_METADATA_API_URL;
-  }
-  return PROXIES.WIDGET_METADATA_API;
-};
-
-export const metadataWidgetRequest = {
-  get: async (endpoint, options = {}) => {
-    const baseUrl = getWidgetBaseUrl();
-    const config = {
-      method: 'GET',
-      cache: 'no-store',
-      headers: {
-        'Cache-Control': 'no-cache',
-        Pragma: 'no-cache',
-        'If-None-Match': '', // impede cache baseado em ETag
-        ...(options.headers || {}),
-      },
-      ...defaultRequestConfig,
-      ...options,
-    };
-
-    const url = `${baseUrl}/${endpoint}?_=${Date.now()}`;
-    const response = await fetch(url, config);
-    const data = await response.json();
-
-    return {
-      data,
-      status: response.status,
-      statusText: response.statusText,
-      headers: response.headers,
-      config,
-      request: response,
-    };
-  },
-};
 
 export const rwRequest = axios.create({
   ...defaultRequestConfig,
