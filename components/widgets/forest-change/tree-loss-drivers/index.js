@@ -9,7 +9,8 @@ import {
 } from 'data/layers';
 
 import treeLoss from 'components/widgets/forest-change/tree-loss';
-import { getLoss } from 'services/analysis-cached';
+import { getLoss, getLossTscOTF } from 'services/analysis-cached';
+import { shouldQueryPrecomputedTables } from 'components/widgets/utils/helpers';
 
 import getWidgetProps from './selectors';
 
@@ -99,11 +100,9 @@ export default {
     };
   },
   getData: async (params) => {
-    const response = await getLoss({
-      ...params,
-      landCategory: 'tsc',
-      lossTsc: true,
-    });
+    const response = shouldQueryPrecomputedTables(params)
+      ? await getLoss({ ...params, landCategory: 'tsc', lossTsc: true })
+      : await getLossTscOTF(params);
 
     let data = [];
 
