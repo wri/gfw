@@ -57,7 +57,16 @@ const GnwAnnouncementBanner = ({ className }) => {
             A new name for the next chapter of our work — continuing to advance
             forest monitoring while expanding monitoring coverage and
             capabilities. Our name has changed, but our commitment remains the
-            same and your workflows will continue to be supported.
+            same and your workflows will continue to be supported. Check out{' '}
+            <a
+              className="banner-link"
+              href="https://horizon.globalnaturewatch.org/?utm_medium=notification&utm_source=homepage&utm_campaign=gnwannoucement"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Global Nature Watch Horizon
+              <Icon icon={unionIcon} className="union-icon" />
+            </a>
           </p>
           <a
             className="banner-link"
