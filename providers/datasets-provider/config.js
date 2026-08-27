@@ -770,6 +770,59 @@ const decodes = {
     color.g = green;
     color.b = blue; 
   `,
+  // Encoded drivers tiles: date is days since 2014-12-31 in RG (same
+  // as integrated alerts), driver class 1-11 in alpha. The legend
+  // timeline filters via startDayIndex/endDayIndex.
+  alertDriversEncoded: `
+    float driver = alpha * 255.;
+    float r = color.r * 255.;
+    float g = color.g * 255.;
+    float day = r * 255. + g;
+
+    // Overviews keep the driver class but drop the date on most pixels:
+    // ~1% carry a date at z4, ~38% at z10, ~97% at z14. Below z10 there is not
+    // enough date to filter on, so we paint the class unfiltered - what the
+    // true_color layer this replaces showed when zoomed out. From z10 up the
+    // timeline governs every pixel drawn.
+    bool inRange = day > 0. && day >= startDayIndex && day <= endDayIndex;
+
+    if (driver > 0. && (zoom < 10. || inRange)) {
+      float cr = 255.;
+      float cg = 255.;
+      float cb = 255.;
+
+      if (driver == 1.) {
+        cr = 255.; cg = 217.; cb = 102.;
+      } else if (driver == 2.) {
+        cr = 255.; cg = 140.; cb = 66.;
+      } else if (driver == 3.) {
+        cr = 244.; cg = 176.; cb = 131.;
+      } else if (driver == 4.) {
+        cr = 206.; cg = 77.; cb = 30.;
+      } else if (driver == 5.) {
+        cr = 255.; cg = 0.; cb = 0.;
+      } else if (driver == 6.) {
+        cr = 0.; cg = 176.; cb = 240.;
+      } else if (driver == 7.) {
+        cr = 188.; cg = 157.; cb = 217.;
+      } else if (driver == 8.) {
+        cr = 70.; cg = 153.; cb = 144.;
+      } else if (driver == 9.) {
+        cr = 58.; cg = 31.; cb = 154.;
+      } else if (driver == 10.) {
+        cr = 137.; cg = 81.; cb = 40.;
+      } else if (driver == 11.) {
+        cr = 237.; cg = 164.; cb = 195.;
+      }
+
+      color.r = cr / 255.;
+      color.g = cg / 255.;
+      color.b = cb / 255.;
+      alpha = 1.;
+    } else {
+      alpha = 0.;
+    }
+  `,
   treeGain: `
     // Multiply alpha (opacity) by a function that drops super low opacity
     // pixels and scales the rest to higher values
@@ -1241,6 +1294,7 @@ export default {
   RADDsCoverage: decodes.RADDsCoverage,
   staticRemap: decodes.staticRemap,
   staticRemapAlpha: decodes.staticRemapAlpha,
+  alertDriversEncoded: decodes.alertDriversEncoded,
   forestHeight: decodes.forestHeight,
   biomassLoss: decodes.biomassLoss,
   woodyBiomass: decodes.woodyBiomass,

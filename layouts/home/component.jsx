@@ -3,12 +3,12 @@ import PropTypes from 'prop-types';
 import { InView } from 'react-intersection-observer';
 
 import Link from 'next/link';
+import dynamic from 'next/dynamic';
 import cx from 'classnames';
 
 import {
   Desktop,
   Mobile,
-  Carousel,
   Button,
   Row,
   Column,
@@ -27,6 +27,16 @@ import config from './config';
 import newsImage from './assets/news-bg.jpg';
 import bgImage from './assets/home-bg.jpg';
 import bgImageWebP from './assets/home-bg.webp';
+
+// react-slick (used internally by Carousel) is not SSR-safe: it computes
+// slide/clone counts by measuring the DOM, which isn't available on the
+// server. Rendering it server-side produces markup that doesn't match what
+// the client mounts, causing a hydration mismatch. Loading it client-only
+// avoids that at the cost of a brief render delay for the carousel sections.
+const Carousel = dynamic(
+  () => import('@worldresources/gfw-components').then((m) => m.Carousel),
+  { ssr: false }
+);
 
 const HomePage = ({ summary, uses, apps, news }) => {
   const [showSectionNews, setShowSectionNews] = useState(false);

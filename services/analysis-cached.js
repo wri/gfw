@@ -5,6 +5,7 @@ import forestTypes from 'data/forest-types';
 import landCategories from 'data/land-categories';
 import DATASETS from 'data/analysis-datasets.json';
 import DATASETS_VERSIONS from 'data/analysis-datasets-versions.json';
+import TSC_LOSS_CATEGORIES from 'data/tsc-loss-categories.json';
 
 import snakeCase from 'lodash/snakeCase';
 import moment from 'moment';
@@ -99,7 +100,17 @@ const SQL_QUERIES = {
     'SELECT umd_tree_cover_loss__year, SUM(area__ha) FROM data WHERE umd_tree_cover_loss__year >= {startYear} AND umd_tree_cover_loss__year <= {endYear} AND umd_tree_cover_density_{extentYear}__threshold >= {threshold} GROUP BY umd_tree_cover_loss__year&geostore_id={geostoreId}',
   treeLossOTFExtent:
     'SELECT SUM(area__ha) FROM data WHERE umd_tree_cover_density_2000__threshold >= {threshold}&geostore_id={geostoreId}',
+  lossTscOTF:
+    'SELECT wri_google_tree_cover_loss_drivers__category, SUM(area__ha) FROM data WHERE umd_tree_cover_loss__year >= {startYear} AND umd_tree_cover_loss__year <= {endYear} AND umd_tree_cover_density_{extentYear}__threshold >= {threshold} GROUP BY wri_google_tree_cover_loss_drivers__category&geostore_id={geostoreId}',
 };
+
+// the precomputed tables store the driver label, the on-the-fly raster stores
+// the numeric category it was derived from
+const TSC_DRIVER_BY_CATEGORY = Object.fromEntries(
+  TSC_LOSS_CATEGORIES.filter(({ category }) => category).map(
+    ({ category, value }) => [category, value]
+  )
+);
 
 const typeByGrouped = {
   global: {
@@ -750,6 +761,41 @@ export const getTreeLossOTF = async (params) => {
       year: d.umd_tree_cover_loss__year,
     })),
     extent: extent?.data?.[0]?.area__ha,
+  };
+};
+
+// tree cover loss by dominant driver for shapes with no precomputed tables
+export const getLossTscOTF = async (params) => {
+  const { adm0, geostore, startYear, endYear, extentYear, threshold } =
+    params || {};
+
+  const geostoreId = geostore?.id || adm0;
+  const urlBase = '/dataset/umd_tree_cover_loss/latest/query';
+  const sql = `?sql=${SQL_QUERIES.lossTscOTF}`;
+
+  const url = encodeURI(
+    `${urlBase + sql}`
+      .replace('{geostoreId}', geostoreId)
+      .replace('{startYear}', startYear)
+      .replace('{endYear}', endYear)
+      .replace('{threshold}', threshold)
+      .replace('{extentYear}', extentYear)
+  );
+
+  const response = await dataRequest.get(url);
+
+  return {
+    ...response,
+    data: {
+      data: response?.data?.map((d) => ({
+        ...d,
+        driver_type:
+          TSC_DRIVER_BY_CATEGORY[
+            d.wri_google_tree_cover_loss_drivers__category
+          ],
+        umd_tree_cover_loss__ha: d.area__ha,
+      })),
+    },
   };
 };
 

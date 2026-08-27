@@ -3,28 +3,33 @@
     "label": "Hard commodities",
     "value": "Hard commodities",
     "permanent": true,
-    "position": 0
+    "position": 0,
+    "category": 2
   },
   {
     "label": "Logging",
     "value": "Logging",
-    "position": 1
+    "position": 1,
+    "category": 4
   },
   {
     "label": "Other natural disturbances",
     "value": "Other natural disturbances",
-    "position": 2
+    "position": 2,
+    "category": 7
   },
   {
     "label": "Permanent agriculture",
     "value": "Permanent agriculture",
     "permanent": true,
-    "position": 3
+    "position": 3,
+    "category": 1
   },
   {
     "label": "Wildfire",
     "value": "Wildfire",
-    "position": 4
+    "position": 4,
+    "category": 5
   },
   {
     "label": "Unknown",
@@ -34,12 +39,14 @@
   {
     "label": "Settlements & Infrastructure",
     "value": "Settlements & Infrastructure",
-    "position": 6
+    "position": 6,
+    "category": 6
   },
   {
     "label": "Shifting cultivation",
     "value": "Shifting cultivation",
-    "position": 7
+    "position": 7,
+    "category": 3
   },
   {
     "label": "Forestry",
