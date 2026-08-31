@@ -167,12 +167,13 @@ class ProfileForm extends PureComponent {
                         multiple
                         required
                         options={interests.map((r) => {
-                          const label = typeof r === 'string' ? r : r.label;
+                          const isString = typeof r === 'string';
                           return {
-                            label,
-                            value: label
+                            label: isString ? r : r.label,
+                            value: (isString ? r : r.value)
                               .replace(/( )+|(\/)+/g, '_')
                               .toLowerCase(),
+                            ...(!isString && { description: r.description }),
                           };
                         })}
                       />
