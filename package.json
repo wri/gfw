@@ -207,7 +207,8 @@
     "serialize-javascript": "^3.1.0",
     "yargs-parser": "21.1.1",
     "npm-user-validate": "^1.0.1",
-    "@luma.gl/core": "7.3.2"
+    "@luma.gl/core": "7.3.2",
+    "cipher-base": "1.0.5"
   },
   "cacheDirectories": [
     ".next/cache"
