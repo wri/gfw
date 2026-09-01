@@ -1,4 +1,5 @@
 import { GFW_METADATA_API, GFW_STAGING_METADATA_API } from 'utils/apis';
+import { isValidMetadataPath } from 'utils/metadata';
 
 const ENVIRONMENT = process.env.NEXT_PUBLIC_FEATURE_ENV;
 const GFW_METADATA_API_URL =
@@ -9,8 +10,7 @@ export default async (req, res) => {
     const path = req.query.params.join('/');
 
     // Validate the path to prevent SSRF and path traversal attacks
-    const isValidPath = /^[a-zA-Z0-9/_-]+$/.test(path); // Allow only alphanumeric, '/', '_', and '-'
-    if (!isValidPath) {
+    if (!isValidMetadataPath(path)) {
       return res.status(400).json({ error: 'Invalid path parameter' });
     }
     const url = `${GFW_METADATA_API_URL}/${path}/?_=${Date.now()}`;
