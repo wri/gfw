@@ -6,7 +6,6 @@ export const initialState = {
   closing: false,
   data: {},
   metakey: '',
-  metaType: undefined,
 };
 
 const setModalMetaLoading = (state, { payload }) => ({
@@ -14,17 +13,10 @@ const setModalMetaLoading = (state, { payload }) => ({
   ...payload,
 });
 
-const setModalMetaSettings = (state, { payload }) => {
-  const settings =
-    payload && typeof payload === 'object'
-      ? payload
-      : { metakey: payload, metaType: undefined };
-
-  return {
-    ...state,
-    ...settings,
-  };
-};
+const setModalMetaSettings = (state, { payload }) => ({
+  ...state,
+  metakey: payload,
+});
 
 const setModalMetaData = (state, { payload }) => ({
   ...state,
