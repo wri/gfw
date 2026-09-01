@@ -17,7 +17,11 @@ export const getModalMetaData = createThunkAction(
 
         getMetadata(metakey, metaType)
           .then((response) => {
-            dispatch(setModalMetaData(response.data.metadata));
+            if (metaType === 'widget') {
+              dispatch(setModalMetaData(response.data));
+            } else {
+              dispatch(setModalMetaData(response.data.metadata));
+            }
           })
           .catch(() => {
             dispatch(setModalMetaLoading({ loading: false, error: true }));
