@@ -70,6 +70,68 @@ describe('metadata API', () => {
     expect(res.json).toHaveBeenCalledWith({ error: 'Metadata not found' });
   });
 
+  it('merges non-null latest-version metadata over dataset metadata', async () => {
+    axios.get
+      .mockResolvedValueOnce({
+        data: {
+          data: { metadata: { title: 'Dataset', source: 'Dataset source' } },
+        },
+      })
+      .mockResolvedValueOnce({
+        data: { data: { title: 'Latest title', source: null } },
+      });
+    const res = createResponse();
+
+    await handler({ query: { params: ['dataset'] } }, res);
+
+    expect(res.json).toHaveBeenCalledWith({
+      metadata: { title: 'Latest title', source: 'Dataset source' },
+    });
+  });
+
+  it('tolerates a missing latest-version metadata document', async () => {
+    axios.get
+      .mockResolvedValueOnce({
+        data: { data: { metadata: { title: 'Dataset' } } },
+      })
+      .mockRejectedValueOnce({ response: { status: 404 } });
+    const res = createResponse();
+
+    await handler({ query: { params: ['dataset'] } }, res);
+
+    expect(res.status).toHaveBeenCalledWith(200);
+    expect(res.json).toHaveBeenCalledWith({
+      metadata: { title: 'Dataset' },
+    });
+  });
+
+  it('returns 502 when latest-version metadata fails upstream', async () => {
+    axios.get
+      .mockResolvedValueOnce({
+        data: { data: { metadata: { title: 'Dataset' } } },
+      })
+      .mockRejectedValueOnce({
+        response: { status: 500 },
+        message: 'Upstream failed',
+      });
+    const res = createResponse();
+
+    await handler({ query: { params: ['dataset'] } }, res);
+
+    expect(res.status).toHaveBeenCalledWith(502);
+    expect(res.json).toHaveBeenCalledWith({ error: 'Upstream failed' });
+  });
+
+  it('converts legacy Resource Watch semantic errors to 404', async () => {
+    axios.get.mockResolvedValueOnce({ data: { error: 'Metadata not found' } });
+    const res = createResponse();
+
+    await handler({ query: { params: ['satellite_basemap'] } }, res);
+
+    expect(res.status).toHaveBeenCalledWith(404);
+    expect(res.json).toHaveBeenCalledWith({ error: 'Metadata not found' });
+  });
+
   it('rejects invalid paths before contacting an upstream', async () => {
     const res = createResponse();
 

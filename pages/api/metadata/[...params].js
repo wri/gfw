@@ -16,6 +16,10 @@ export default async (req, res) => {
     if (isExternalMetadata) {
       const url = `${GFW_METADATA_API}/${userPath}`;
       const response = await axios.get(url);
+      if (response.data?.error) {
+        return res.status(404).json({ error: response.data.error });
+      }
+
       const transformedResponse = {
         metadata: response.data,
       };
@@ -31,6 +35,9 @@ export default async (req, res) => {
     try {
       datasetVersionMetadata = await axios.get(`${url}/latest/metadata`);
     } catch (error) {
+      if (error.response?.status !== 404) {
+        throw error;
+      }
       datasetVersionMetadata = { data: { data: {} } };
     }
     const dataVersionMetadataObject = datasetVersionMetadata?.data?.data;
