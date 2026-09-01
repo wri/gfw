@@ -2,7 +2,6 @@ import { GFW_DATA_API, GFW_METADATA_API } from 'utils/apis';
 import { isValidMetadataPath } from 'utils/metadata';
 import axios from 'axios';
 
-import METADATA_LIST from '../../../data/metadata.json';
 import METADATA_EXCEPTION_LIST from '../../../data/metadata-exception.json'; // a list of metadata that isn't on Data API
 
 export default async (req, res) => {
@@ -13,16 +12,9 @@ export default async (req, res) => {
       return res.status(400).json({ error: 'Invalid path parameter' });
     }
     const isExternalMetadata = METADATA_EXCEPTION_LIST.includes(userPath);
-    const safePaths = [...METADATA_LIST, ...METADATA_EXCEPTION_LIST].filter(
-      (path) => path === userPath
-    );
-
-    if (safePaths.length === 0) {
-      return res.status(400).end('Invalid path');
-    }
 
     if (isExternalMetadata) {
-      const url = `${GFW_METADATA_API}/${safePaths[0]}`;
+      const url = `${GFW_METADATA_API}/${userPath}`;
       const response = await axios.get(url);
       const transformedResponse = {
         metadata: response.data,
@@ -31,7 +23,7 @@ export default async (req, res) => {
       return res.status(200).json(transformedResponse);
     }
 
-    const url = `${GFW_DATA_API}/dataset/${safePaths[0]}`;
+    const url = `${GFW_DATA_API}/dataset/${userPath}`;
 
     const datasetMetadata = await axios.get(url);
     let datasetVersionMetadata;
@@ -64,6 +56,10 @@ export default async (req, res) => {
 
     return res.status(200).json(response);
   } catch (error) {
-    return res.status(400).end(error.message);
+    if (error.response?.status === 404) {
+      return res.status(404).json({ error: 'Metadata not found' });
+    }
+
+    return res.status(502).json({ error: error.message });
   }
 };
