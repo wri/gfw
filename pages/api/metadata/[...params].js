@@ -1,14 +1,20 @@
 import { GFW_DATA_API, GFW_METADATA_API } from 'utils/apis';
-import { isValidMetadataPath } from 'utils/metadata';
+import { isValidMetadataKey } from 'utils/metadata';
 import axios from 'axios';
 
 import METADATA_EXCEPTION_LIST from '../../../data/metadata-exception.json'; // a list of metadata that isn't on Data API
 
 export default async (req, res) => {
   try {
-    const userPath = req.query.params.join('/');
+    const { params } = req.query;
 
-    if (!isValidMetadataPath(userPath)) {
+    if (!Array.isArray(params) || params.length !== 1) {
+      return res.status(400).json({ error: 'Invalid path parameter' });
+    }
+
+    const userPath = params[0];
+
+    if (!isValidMetadataKey(userPath)) {
       return res.status(400).json({ error: 'Invalid path parameter' });
     }
     const isExternalMetadata = METADATA_EXCEPTION_LIST.includes(userPath);

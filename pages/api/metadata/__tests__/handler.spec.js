@@ -132,12 +132,26 @@ describe('metadata API', () => {
     expect(res.json).toHaveBeenCalledWith({ error: 'Metadata not found' });
   });
 
-  it('rejects invalid paths before contacting an upstream', async () => {
+  it('rejects multiple path segments before contacting an upstream', async () => {
     const res = createResponse();
 
-    await handler({ query: { params: ['..', 'metadata'] } }, res);
+    await handler(
+      { query: { params: ['dataset', 'latest', 'metadata'] } },
+      res
+    );
 
     expect(axios.get).not.toHaveBeenCalled();
     expect(res.status).toHaveBeenCalledWith(400);
+    expect(res.json).toHaveBeenCalledWith({ error: 'Invalid path parameter' });
+  });
+
+  it('rejects an invalid dataset key before contacting an upstream', async () => {
+    const res = createResponse();
+
+    await handler({ query: { params: ['..'] } }, res);
+
+    expect(axios.get).not.toHaveBeenCalled();
+    expect(res.status).toHaveBeenCalledWith(400);
+    expect(res.json).toHaveBeenCalledWith({ error: 'Invalid path parameter' });
   });
 });
