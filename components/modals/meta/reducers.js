@@ -16,8 +16,8 @@ const setModalMetaLoading = (state, { payload }) => ({
 
 const setModalMetaSettings = (state, { payload }) => {
   const settings =
-    payload && typeof payload === 'object'
-      ? payload
+    payload && typeof payload === 'object' && !Array.isArray(payload)
+      ? { metakey: payload.metakey, metaType: payload.metaType }
       : { metakey: payload, metaType: undefined };
 
   return {
