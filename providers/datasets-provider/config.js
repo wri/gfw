@@ -786,7 +786,7 @@ const decodes = {
     // timeline governs every pixel drawn.
     bool inRange = day > 0. && day >= startDayIndex && day <= endDayIndex;
 
-    if (driver > 0. && (zoom < 10. || inRange)) {
+    if (driver > 0. && inRange) {
       float cr = 255.;
       float cg = 255.;
       float cb = 255.;
@@ -796,7 +796,7 @@ const decodes = {
       } else if (driver == 2.) {
         cr = 255.; cg = 140.; cb = 66.;
       } else if (driver == 3.) {
-        cr = 244.; cg = 176.; cb = 131.;
+        cr = 244.; cg = 177.; cb = 131.;
       } else if (driver == 4.) {
         cr = 206.; cg = 77.; cb = 30.;
       } else if (driver == 5.) {
@@ -808,9 +808,9 @@ const decodes = {
       } else if (driver == 8.) {
         cr = 70.; cg = 153.; cb = 144.;
       } else if (driver == 9.) {
-        cr = 58.; cg = 31.; cb = 154.;
-      } else if (driver == 10.) {
         cr = 137.; cg = 81.; cb = 40.;
+      } else if (driver == 10.) {
+        cr = 58.; cg = 31.; cb = 154.;
       } else if (driver == 11.) {
         cr = 237.; cg = 164.; cb = 195.;
       }

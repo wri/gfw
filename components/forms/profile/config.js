@@ -66,10 +66,11 @@ export const interests = [
   'GNW Users in Action',
   'Deforestation',
   {
-    label: 'Places to Watch alerts',
+    label: 'Places to Watch',
+    // keep the original value so interests already saved by users stay selected
     value: 'Places to Watch alerts',
     description:
-      'By selecting this interest, you subscribe to receive Places to Watch and understand Places to Watch locations should be interpreted as early indicators of potentially concerning forest disturbances that warrant further investigation. These locations are identified through an automated system based on satellite data. There may be errors in the underlying data and locations always require on-the-ground investigation or additional field intelligence to validate the nature of the disturbance.',
+      'Curated leads for investigating potential deforestation. By selecting this interest, you subscribe to receive Places to Watch and understand Places to Watch locations should be interpreted as early indicators of potentially concerning forest disturbances that warrant further investigation. These locations are identified through an automated system based on satellite data. There may be errors in the underlying data and locations always require on-the-ground investigation or additional field intelligence to validate the nature of the disturbance.',
   },
 ];
 
