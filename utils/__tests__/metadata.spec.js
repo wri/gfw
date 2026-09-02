@@ -10,10 +10,18 @@ describe('isValidMetadataPath', () => {
     expect(isValidMetadataPath(path)).toBe(true);
   });
 
-  it.each(['../foo', 'foo?bar=baz', 'foo bar', '', null, undefined])(
-    'rejects unsafe metadata path %s',
-    (path) => {
-      expect(isValidMetadataPath(path)).toBe(false);
-    }
-  );
+  it.each([
+    '../foo',
+    'foo?bar=baz',
+    'foo bar',
+    '/',
+    '/foo',
+    'foo/',
+    'foo//bar',
+    '',
+    null,
+    undefined,
+  ])('rejects unsafe metadata path %s', (path) => {
+    expect(isValidMetadataPath(path)).toBe(false);
+  });
 });
