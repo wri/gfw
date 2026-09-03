@@ -17,10 +17,11 @@ export default async (req, res) => {
     if (!isValidMetadataKey(userPath)) {
       return res.status(400).json({ error: 'Invalid path parameter' });
     }
+    const metadataKey = encodeURIComponent(userPath);
     const isExternalMetadata = METADATA_EXCEPTION_LIST.includes(userPath);
 
     if (isExternalMetadata) {
-      const url = `${GFW_METADATA_API}/${userPath}`;
+      const url = `${GFW_METADATA_API}/${metadataKey}`;
       const response = await axios.get(url);
       if (response.data?.error) {
         return res.status(404).json({ error: response.data.error });
@@ -33,7 +34,7 @@ export default async (req, res) => {
       return res.status(200).json(transformedResponse);
     }
 
-    const url = `${GFW_DATA_API}/dataset/${userPath}`;
+    const url = `${GFW_DATA_API}/dataset/${metadataKey}`;
 
     const datasetMetadata = await axios.get(url);
     let datasetVersionMetadata;

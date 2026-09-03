@@ -13,6 +13,7 @@ const createResponse = () => {
 
 describe('metadata API', () => {
   afterEach(() => {
+    jest.restoreAllMocks();
     jest.clearAllMocks();
   });
 
@@ -41,6 +42,30 @@ describe('metadata API', () => {
       id: 'new_dataset',
       metadata: { title: 'New dataset' },
     });
+  });
+
+  it('encodes the validated dataset key before constructing upstream URLs', async () => {
+    const encodeSpy = jest
+      .spyOn(global, 'encodeURIComponent')
+      .mockReturnValue('encoded-dataset-key');
+    axios.get
+      .mockResolvedValueOnce({
+        data: { data: { metadata: { title: 'Dataset' } } },
+      })
+      .mockResolvedValueOnce({ data: { data: {} } });
+    const res = createResponse();
+
+    await handler({ query: { params: ['valid_dataset-key'] } }, res);
+
+    expect(encodeSpy).toHaveBeenCalledWith('valid_dataset-key');
+    expect(axios.get).toHaveBeenNthCalledWith(
+      1,
+      `${GFW_DATA_API}/dataset/encoded-dataset-key`
+    );
+    expect(axios.get).toHaveBeenNthCalledWith(
+      2,
+      `${GFW_DATA_API}/dataset/encoded-dataset-key/latest/metadata`
+    );
   });
 
   it('preserves legacy Resource Watch exception routing', async () => {
