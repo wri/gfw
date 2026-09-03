@@ -142,7 +142,9 @@ class WidgetHeader extends PureComponent {
             {showMetaBtn && (
               <WidgetInfoButton
                 square={simple}
-                handleOpenInfo={() => handleShowInfo(metaInfo)}
+                handleOpenInfo={() =>
+                  handleShowInfo({ metakey: metaInfo, metaType: 'widget' })
+                }
                 widget={widget}
               />
             )}

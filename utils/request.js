@@ -97,6 +97,12 @@ export const metadataWidgetRequest = {
     const response = await fetch(url, config);
     const data = await response.json();
 
+    if (!response.ok) {
+      throw new Error(
+        data?.error || `Request failed with status ${response.status}`
+      );
+    }
+
     return {
       data,
       status: response.status,

@@ -1,18 +1,18 @@
 import { GFW_METADATA_API, GFW_STAGING_METADATA_API } from 'utils/apis';
+import { isValidMetadataPath } from 'utils/metadata';
 
 const ENVIRONMENT = process.env.NEXT_PUBLIC_FEATURE_ENV;
 const GFW_METADATA_API_URL =
   ENVIRONMENT === 'staging' ? GFW_STAGING_METADATA_API : GFW_METADATA_API;
 
 export default async (req, res) => {
-  try {
-    const path = req.query.params.join('/');
+  const path = req.query.params.join('/');
 
-    // Validate the path to prevent SSRF and path traversal attacks
-    const isValidPath = /^[a-zA-Z0-9/_-]+$/.test(path); // Allow only alphanumeric, '/', '_', and '-'
-    if (!isValidPath) {
-      return res.status(400).json({ error: 'Invalid path parameter' });
-    }
+  if (!isValidMetadataPath(path)) {
+    return res.status(400).json({ error: 'Invalid path parameter' });
+  }
+
+  try {
     const url = `${GFW_METADATA_API_URL}/${path}/?_=${Date.now()}`;
 
     const response = await fetch(url, {
@@ -26,13 +26,21 @@ export default async (req, res) => {
     });
 
     if (!response.ok) {
-      throw new Error(`Request failed with status ${response.status}`);
+      const status = response.status === 404 ? 404 : 502;
+      return res.status(status).json({
+        error: `Metadata request failed with status ${response.status}`,
+      });
     }
 
     const data = await response.json();
 
-    return res.status(200).json(data);
+    // gfw-metadata reports missing keys as HTTP 200 with an error payload.
+    if (data?.error) {
+      return res.status(404).json({ error: data.error });
+    }
+
+    return res.status(200).json({ metadata: data });
   } catch (error) {
-    return res.status(400).end(error.message);
+    return res.status(502).json({ error: error.message });
   }
 };
