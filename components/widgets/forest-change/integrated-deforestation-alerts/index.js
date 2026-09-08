@@ -64,7 +64,7 @@ const clampRangeToAlertSystem = (params, defaultStartDate, defaultEndDate) => {
   return {
     // The whole range sits past this dataset: clamping would leave start after
     // end, so fall back to the range this alert system actually has data for.
-    startDate: moment(startDate).isBefore(defaultEndDate)
+    startDate: moment(startDate).isSameOrBefore(defaultEndDate)
       ? startDate
       : defaultStartDate,
     endDate: defaultEndDate,
