@@ -2295,12 +2295,49 @@ export const getTreeCoverDensity = (params) => {
 // Fallback for Latest Dates Alerts
 const lastFriday = moment().day(-2).format('YYYY-MM-DD');
 
+// Alert datasets are republished daily, so content_date_range.end_date tracks the
+// publication date rather than the most recent alert present in the data. When an
+// upstream feed stalls, the two drift apart and every default date range (the last
+// 7 days) lands on an empty window, showing zero alerts with no hint that the data
+// is behind. Anchor on the latest alert the dashboards can actually query.
+const LATEST_ALERT_TABLES = {
+  glad: {
+    table: 'gadm__glad__iso_daily_alerts',
+    dateColumn: 'umd_glad_landsat_alerts__date',
+  },
+  integrated: {
+    table: 'gadm__integrated_alerts__iso_daily_alerts',
+    dateColumn: 'gfw_integrated_alerts__date',
+  },
+};
+
+const fetchLatestAlertDate = ({ table, dateColumn }, publishedEndDate) =>
+  dataRequest
+    .get(
+      encodeURI(
+        `/dataset/${table}/latest/query?sql=SELECT MAX(${dateColumn}) FROM data`
+      )
+    )
+    .then((response) => {
+      const latestAlertDate = response?.data?.[0]?.max;
+
+      if (!latestAlertDate) {
+        return publishedEndDate;
+      }
+
+      // The precomputed table is derived from the raster, so it can never lead it.
+      return moment(latestAlertDate).isBefore(publishedEndDate)
+        ? latestAlertDate
+        : publishedEndDate;
+    })
+    .catch(() => publishedEndDate);
+
 export const fetchGLADLatest = () => {
   const url = 'dataset/umd_glad_landsat_alerts/latest';
 
   return dataRequest
     .get(url)
-    .then((response) => {
+    .then(async (response) => {
       const {
         metadata: {
           content_date_range: { end_date },
@@ -2309,7 +2346,10 @@ export const fetchGLADLatest = () => {
 
       return {
         attributes: {
-          updatedAt: end_date,
+          updatedAt: await fetchLatestAlertDate(
+            LATEST_ALERT_TABLES.glad,
+            end_date
+          ),
         },
         id: null,
         type: 'glad-alerts',
@@ -2331,11 +2371,17 @@ export const fetchIntegratedLatest = () => {
   const url = 'dataset/gfw_integrated_alerts/latest';
   return dataRequest
     .get(url)
-    .then((response) => {
-      const date = response.metadata.last_update;
+    .then(async (response) => {
+      // dataRequest unwraps the API envelope, so the payload lives on `data`.
+      const date = response.data.metadata.last_update;
 
       return {
-        attributes: { updatedAt: date },
+        attributes: {
+          updatedAt: await fetchLatestAlertDate(
+            LATEST_ALERT_TABLES.integrated,
+            date
+          ),
+        },
         id: null,
         type: 'glad-alerts',
       };
