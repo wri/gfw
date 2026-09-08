@@ -64,3 +64,39 @@ describe('utils/gfw-meta', () => {
     expect(result.VIIRS).toBeDefined();
   });
 });
+
+describe('utils/gfw-meta concurrency', () => {
+  afterEach(() => {
+    jest.clearAllMocks();
+  });
+
+  it('fetches the three dataset dates concurrently', async () => {
+    // Each fetch now also queries its precomputed table for the latest alert
+    // date, so running them in series would add seconds to app boot.
+    const resolvers = [];
+    const pending = () =>
+      new Promise((resolve) => {
+        resolvers.push(resolve);
+      });
+
+    fetchGLADLatest.mockReturnValueOnce(pending());
+    fetchIntegratedLatest.mockReturnValueOnce(pending());
+    fetchVIIRSLatest.mockReturnValueOnce(pending());
+
+    const metaPromise = getGfwMeta();
+
+    // Let any already-queued microtasks drain without resolving the fetches.
+    await Promise.resolve();
+    await Promise.resolve();
+
+    expect(fetchGLADLatest).toHaveBeenCalledTimes(1);
+    expect(fetchIntegratedLatest).toHaveBeenCalledTimes(1);
+    expect(fetchVIIRSLatest).toHaveBeenCalledTimes(1);
+
+    resolvers[0]({ attributes: { updatedAt: '2024-01-08' } });
+    resolvers[1]({ attributes: { updatedAt: '2024-01-15' } });
+    resolvers[2]({ date: '2024-01-20' });
+
+    await metaPromise;
+  });
+});

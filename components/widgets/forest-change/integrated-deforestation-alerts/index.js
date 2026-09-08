@@ -48,6 +48,29 @@ const setStartDateByAlertSystem = (alertSystem, params, selectedDate) => {
   };
 };
 
+// getData feeds the range it resolved back into the widget settings, so the dates
+// of the previously selected alert system come back as `params` on the next call.
+// Alert systems stop at different dates, so a range carried over from a fresher
+// one would query a window the new one has no alerts for and report zero — while
+// the datepicker, bounded by `maxDate`, shows a different range entirely.
+const clampRangeToAlertSystem = (params, defaultStartDate, defaultEndDate) => {
+  const startDate = params?.startDate || defaultStartDate;
+  const endDate = params?.endDate || defaultEndDate;
+
+  if (!defaultEndDate || !moment(endDate).isAfter(defaultEndDate)) {
+    return { startDate, endDate };
+  }
+
+  return {
+    // The whole range sits past this dataset: clamping would leave start after
+    // end, so fall back to the range this alert system actually has data for.
+    startDate: moment(startDate).isBefore(defaultEndDate)
+      ? startDate
+      : defaultStartDate,
+    endDate: defaultEndDate,
+  };
+};
+
 export default {
   widget: 'integratedDeforestationAlerts',
   published: true,
@@ -185,15 +208,22 @@ export default {
     distAlertOptions: 'vegetation',
   },
   getData: async (params) => {
-    // Gets pre-fetched GLAD-related metadata from the state...
-    const { GLAD } = await handleGfwParamsMeta(params); // 'true' means getting last update from integrated alerts API in GFW.org
+    // Gets pre-fetched alert metadata from the state...
+    const { GLAD, INTEGRATED } = await handleGfwParamsMeta(params);
     const alertSystem = handleAlertSystem(params, 'deforestationAlertsDataset');
 
     // extract relevant metadata
-    const defaultStartDate = GLAD?.defaultStartDate;
-    const defaultEndDate = GLAD?.defaultEndDate;
-    const selectedDate = params?.startDate || defaultStartDate;
-    const endDate = params?.endDate || defaultEndDate;
+    // GLAD-L is served by the standalone GLAD tables, every other alert system by
+    // the integrated ones. Those pipelines update independently, so each has to
+    // take its default date range from the dataset it actually queries.
+    const alertsMeta = alertSystem === 'glad_l' ? GLAD : INTEGRATED;
+    const defaultStartDate = alertsMeta?.defaultStartDate;
+    const defaultEndDate = alertsMeta?.defaultEndDate;
+    const { startDate: selectedDate, endDate } = clampRangeToAlertSystem(
+      params,
+      defaultStartDate,
+      defaultEndDate
+    );
 
     const isAoi = params?.locationType === 'aoi';
     const status = params?.status || 'unsaved';
@@ -483,12 +513,17 @@ export default {
   },
   // Downloads
   getDataURL: async (params) => {
-    const { GLAD } = await handleGfwParamsMeta(params);
-    const defaultStartDate = GLAD?.defaultStartDate;
-    const defaultEndDate = GLAD?.defaultEndDate;
-    const selectedDate = params?.startDate || defaultStartDate;
-    const endDate = params?.endDate || defaultEndDate;
+    const { GLAD, INTEGRATED } = await handleGfwParamsMeta(params);
     const alertSystem = handleAlertSystem(params, 'deforestationAlertsDataset');
+
+    const alertsMeta = alertSystem === 'glad_l' ? GLAD : INTEGRATED;
+    const defaultStartDate = alertsMeta?.defaultStartDate;
+    const defaultEndDate = alertsMeta?.defaultEndDate;
+    const { startDate: selectedDate, endDate } = clampRangeToAlertSystem(
+      params,
+      defaultStartDate,
+      defaultEndDate
+    );
 
     // overriding start date (FLAG-593)
     const { startDate } = setStartDateByAlertSystem(
