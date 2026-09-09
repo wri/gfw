@@ -152,4 +152,84 @@ describe('integrated-deforestation-alerts widget', () => {
       expect(callParams.endDate).toBe('2026-07-25');
     });
   });
+
+  // The download path resolves its own dates rather than sharing getData's, so it
+  // needs its own coverage: otherwise the exported period can drift away from the
+  // count shown in the widget without any test noticing.
+  describe('getDataURL', () => {
+    const downloadParams = {
+      ...baseParams,
+      geostore: { id: 'geostore-id', hash: 'geostore-hash' },
+    };
+
+    it('exports the selected range when it runs past the GLAD dataset', async () => {
+      await widgetConfig.getDataURL({
+        ...downloadParams,
+        deforestationAlertsDataset: 'glad_l',
+        startDate: '2026-07-20',
+        endDate: '2026-08-29',
+      });
+
+      expect(fetchIntegratedAlerts).toHaveBeenCalledTimes(1);
+      const callParams = fetchIntegratedAlerts.mock.calls[0][0];
+      expect(callParams.startDate).toBe('2026-07-20');
+      expect(callParams.endDate).toBe('2026-08-29');
+      expect(callParams.download).toBe(true);
+    });
+
+    it('exports a window that starts past the GLAD dataset as selected', async () => {
+      await widgetConfig.getDataURL({
+        ...downloadParams,
+        deforestationAlertsDataset: 'glad_l',
+        startDate: '2026-08-22',
+        endDate: '2026-08-29',
+      });
+
+      const callParams = fetchIntegratedAlerts.mock.calls[0][0];
+      expect(callParams.startDate).toBe('2026-08-22');
+      expect(callParams.endDate).toBe('2026-08-29');
+    });
+
+    it('exports the same range getData queries for the same params', async () => {
+      const params = {
+        ...downloadParams,
+        deforestationAlertsDataset: 'glad_l',
+        startDate: '2026-07-20',
+        endDate: '2026-08-29',
+      };
+
+      await widgetConfig.getData(params);
+      const queried = fetchIntegratedAlerts.mock.calls[0][0];
+
+      jest.clearAllMocks();
+      fetchIntegratedAlerts.mockResolvedValue({ data: { data: [] } });
+
+      await widgetConfig.getDataURL(params);
+      const exported = fetchIntegratedAlerts.mock.calls[0][0];
+
+      expect(exported.startDate).toBe(queried.startDate);
+      expect(exported.endDate).toBe(queried.endDate);
+    });
+
+    it('falls back to the GLAD dataset dates when GLAD-L has no range selected', async () => {
+      await widgetConfig.getDataURL({
+        ...downloadParams,
+        deforestationAlertsDataset: 'glad_l',
+      });
+
+      const callParams = fetchIntegratedAlerts.mock.calls[0][0];
+      expect(callParams.endDate).toBe('2026-07-25');
+    });
+
+    it('falls back to the integrated dataset dates for the other systems', async () => {
+      await widgetConfig.getDataURL({
+        ...downloadParams,
+        deforestationAlertsDataset: 'all',
+      });
+
+      const callParams = fetchIntegratedAlerts.mock.calls[0][0];
+      expect(callParams.startDate).toBe('2026-08-22');
+      expect(callParams.endDate).toBe('2026-08-29');
+    });
+  });
 });
