@@ -28,6 +28,7 @@ const selectModalMetaData = (state) => state.modalMeta && state.modalMeta.data;
 const selectModalMetaLoading = (state) =>
   state.modalMeta && state.modalMeta.loading;
 const selectMetakey = (state) => state.modalMeta?.metakey;
+const selectMetaType = (state) => state.modalMeta?.metaType;
 
 export const getMetadata = createSelector(
   [selectModalMetaData],
@@ -42,6 +43,7 @@ export const getTableData = createSelector(
 export const getMetaModalProps = createStructuredSelector({
   metaData: getMetadata,
   metakey: selectMetakey,
+  metaType: selectMetaType,
   tableData: getTableData,
   loading: selectModalMetaLoading,
   locationName: getGeodescriberTitleFull,

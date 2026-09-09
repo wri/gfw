@@ -11,6 +11,7 @@ import snakeCase from 'lodash/snakeCase';
 import moment from 'moment';
 
 import { getWHEREQuery } from './get-where-query';
+import { LATEST_ALERT_TABLES, fetchLatestAlertDate } from './latest-alert-date';
 
 const VIIRS_START_YEAR = 2012;
 
@@ -2300,7 +2301,7 @@ export const fetchGLADLatest = () => {
 
   return dataRequest
     .get(url)
-    .then((response) => {
+    .then(async (response) => {
       const {
         metadata: {
           content_date_range: { end_date },
@@ -2309,7 +2310,10 @@ export const fetchGLADLatest = () => {
 
       return {
         attributes: {
-          updatedAt: end_date,
+          updatedAt: await fetchLatestAlertDate(
+            LATEST_ALERT_TABLES.umd_glad_landsat_alerts,
+            end_date
+          ),
         },
         id: null,
         type: 'glad-alerts',
@@ -2331,11 +2335,17 @@ export const fetchIntegratedLatest = () => {
   const url = 'dataset/gfw_integrated_alerts/latest';
   return dataRequest
     .get(url)
-    .then((response) => {
-      const date = response.metadata.last_update;
+    .then(async (response) => {
+      // dataRequest unwraps the API envelope, so the payload lives on `data`.
+      const date = response.data.metadata.last_update;
 
       return {
-        attributes: { updatedAt: date },
+        attributes: {
+          updatedAt: await fetchLatestAlertDate(
+            LATEST_ALERT_TABLES.gfw_integrated_alerts,
+            date
+          ),
+        },
         id: null,
         type: 'glad-alerts',
       };

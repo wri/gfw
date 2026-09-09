@@ -6,7 +6,12 @@ import { initialState as mapInitialState } from 'components/map/reducers';
 import { initialState as dashboardPromptsInitialState } from 'components/prompts/dashboard-prompts/reducers';
 
 export const selectMapSettings = (state) => state.map?.settings;
-export const selectMetaModalKey = (state) => state.modalMeta?.metakey;
+export const selectMetaModalSettings = (state) => {
+  const metakey = state.modalMeta?.metakey;
+  const metaType = state.modalMeta?.metaType;
+
+  return metaType ? { metakey, metaType } : metakey;
+};
 export const selectDashboardPrompts = (state) =>
   state.dashboardPrompts?.settings;
 export const selectWidgetSettings = (state) => state.widgets?.settings;
@@ -16,7 +21,7 @@ export const selectShowMap = (state) => state.widgets?.showMap;
 export const getUrlParams = createSelector(
   [
     selectMapSettings,
-    selectMetaModalKey,
+    selectMetaModalSettings,
     selectDashboardPrompts,
     selectWidgetSettings,
     selectWidgetsCategory,

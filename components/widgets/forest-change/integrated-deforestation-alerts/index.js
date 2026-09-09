@@ -185,13 +185,20 @@ export default {
     distAlertOptions: 'vegetation',
   },
   getData: async (params) => {
-    // Gets pre-fetched GLAD-related metadata from the state...
-    const { GLAD } = await handleGfwParamsMeta(params); // 'true' means getting last update from integrated alerts API in GFW.org
+    // Gets pre-fetched alert metadata from the state...
+    const { GLAD, INTEGRATED } = await handleGfwParamsMeta(params);
     const alertSystem = handleAlertSystem(params, 'deforestationAlertsDataset');
 
     // extract relevant metadata
-    const defaultStartDate = GLAD?.defaultStartDate;
-    const defaultEndDate = GLAD?.defaultEndDate;
+    // GLAD-L is served by the standalone GLAD tables, every other alert system by
+    // the integrated ones. Those pipelines update independently, so each has to
+    // take its default date range from the dataset it actually queries.
+    const alertsMeta = alertSystem === 'glad_l' ? GLAD : INTEGRATED;
+    const defaultStartDate = alertsMeta?.defaultStartDate;
+    const defaultEndDate = alertsMeta?.defaultEndDate;
+    // A range the user picked is queried as picked, even when the alert system
+    // has no data for it: reporting another window's count under the selected
+    // dates would invent alerts for days that have none (PZB-1285 follow-up).
     const selectedDate = params?.startDate || defaultStartDate;
     const endDate = params?.endDate || defaultEndDate;
 
@@ -483,12 +490,15 @@ export default {
   },
   // Downloads
   getDataURL: async (params) => {
-    const { GLAD } = await handleGfwParamsMeta(params);
-    const defaultStartDate = GLAD?.defaultStartDate;
-    const defaultEndDate = GLAD?.defaultEndDate;
+    const { GLAD, INTEGRATED } = await handleGfwParamsMeta(params);
+    const alertSystem = handleAlertSystem(params, 'deforestationAlertsDataset');
+
+    const alertsMeta = alertSystem === 'glad_l' ? GLAD : INTEGRATED;
+    const defaultStartDate = alertsMeta?.defaultStartDate;
+    const defaultEndDate = alertsMeta?.defaultEndDate;
+    // Same as getData: the selected range is queried as selected.
     const selectedDate = params?.startDate || defaultStartDate;
     const endDate = params?.endDate || defaultEndDate;
-    const alertSystem = handleAlertSystem(params, 'deforestationAlertsDataset');
 
     // overriding start date (FLAG-593)
     const { startDate } = setStartDateByAlertSystem(

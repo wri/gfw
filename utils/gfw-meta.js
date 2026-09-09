@@ -7,9 +7,13 @@ import moment from 'moment';
 import isEmpty from 'lodash/isEmpty';
 
 export default async function getGfwMeta() {
-  const gladLatest = await fetchGLADLatest();
-  const integratedLatest = await fetchIntegratedLatest();
-  const viirsLatest = await fetchVIIRSLatest();
+  // These are independent, and each one now also resolves the latest alert date
+  // from its precomputed table, so run them concurrently rather than in series.
+  const [gladLatest, integratedLatest, viirsLatest] = await Promise.all([
+    fetchGLADLatest(),
+    fetchIntegratedLatest(),
+    fetchVIIRSLatest(),
+  ]);
 
   return {
     datasets: {
