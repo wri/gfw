@@ -11,6 +11,7 @@ import snakeCase from 'lodash/snakeCase';
 import moment from 'moment';
 
 import { getWHEREQuery } from './get-where-query';
+import { LATEST_ALERT_TABLES, fetchLatestAlertDate } from './latest-alert-date';
 
 const VIIRS_START_YEAR = 2012;
 
@@ -2295,43 +2296,6 @@ export const getTreeCoverDensity = (params) => {
 // Fallback for Latest Dates Alerts
 const lastFriday = moment().day(-2).format('YYYY-MM-DD');
 
-// Alert datasets are republished daily, so content_date_range.end_date tracks the
-// publication date rather than the most recent alert present in the data. When an
-// upstream feed stalls, the two drift apart and every default date range (the last
-// 7 days) lands on an empty window, showing zero alerts with no hint that the data
-// is behind. Anchor on the latest alert the dashboards can actually query.
-const LATEST_ALERT_TABLES = {
-  glad: {
-    table: 'gadm__glad__iso_daily_alerts',
-    dateColumn: 'umd_glad_landsat_alerts__date',
-  },
-  integrated: {
-    table: 'gadm__integrated_alerts__iso_daily_alerts',
-    dateColumn: 'gfw_integrated_alerts__date',
-  },
-};
-
-const fetchLatestAlertDate = ({ table, dateColumn }, publishedEndDate) =>
-  dataRequest
-    .get(
-      encodeURI(
-        `/dataset/${table}/latest/query?sql=SELECT MAX(${dateColumn}) FROM data`
-      )
-    )
-    .then((response) => {
-      const latestAlertDate = response?.data?.[0]?.max;
-
-      if (!latestAlertDate) {
-        return publishedEndDate;
-      }
-
-      // The precomputed table is derived from the raster, so it can never lead it.
-      return moment(latestAlertDate).isBefore(publishedEndDate)
-        ? latestAlertDate
-        : publishedEndDate;
-    })
-    .catch(() => publishedEndDate);
-
 export const fetchGLADLatest = () => {
   const url = 'dataset/umd_glad_landsat_alerts/latest';
 
@@ -2347,7 +2311,7 @@ export const fetchGLADLatest = () => {
       return {
         attributes: {
           updatedAt: await fetchLatestAlertDate(
-            LATEST_ALERT_TABLES.glad,
+            LATEST_ALERT_TABLES.umd_glad_landsat_alerts,
             end_date
           ),
         },
@@ -2378,7 +2342,7 @@ export const fetchIntegratedLatest = () => {
       return {
         attributes: {
           updatedAt: await fetchLatestAlertDate(
-            LATEST_ALERT_TABLES.integrated,
+            LATEST_ALERT_TABLES.gfw_integrated_alerts,
             date
           ),
         },

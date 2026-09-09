@@ -4,9 +4,27 @@ import { all, spread } from 'axios';
 
 import { fetchLatestDate } from 'services/latest';
 import { statsLatestDecoder } from 'services/stats-latest-decoder';
+import {
+  alertDatasetFromUrl,
+  resolveLatestAlertDate,
+} from 'services/latest-alert-date';
 
 export const setLatestLoading = createAction('setLatestLoading');
 export const setLatestDates = createAction('setLatestDates');
+
+// The metadata endpoint reports when a dataset was last published, which for the
+// alert datasets is every day — including while an upstream feed is stalled. Left
+// alone it puts the end of the time slider on a day that holds no alerts, and the
+// analysis (which reads the last date from the alert tables) disagrees with it.
+export const resolveAlertDates = (latestDates, endpoints) =>
+  Promise.all(
+    endpoints.map(({ id, latestUrl }) =>
+      resolveLatestAlertDate(
+        alertDatasetFromUrl(latestUrl),
+        latestDates[id]
+      ).then((date) => [id, date])
+    )
+  ).then((entries) => Object.fromEntries(entries));
 
 export const getLatest = createThunkAction(
   'getLatest',
@@ -20,7 +38,7 @@ export const getLatest = createThunkAction(
       dispatch(setLatestLoading({ loading: true, error: false }));
       all(newEndpoints.map((n) => fetchLatestDate(n.latestUrl)))
         .then(
-          spread((...responses) => {
+          spread(async (...responses) => {
             const latestDates =
               responses &&
               responses.reduce((obj, response, index) => {
@@ -73,7 +91,9 @@ export const getLatest = createThunkAction(
                   [newEndpoints[index].id]: latestDate.format('YYYY-MM-DD'),
                 };
               }, {});
-            dispatch(setLatestDates(latestDates));
+            dispatch(
+              setLatestDates(await resolveAlertDates(latestDates, newEndpoints))
+            );
           })
         )
         .catch(() => {
