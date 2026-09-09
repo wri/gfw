@@ -91,12 +91,13 @@ describe('integrated-deforestation-alerts widget', () => {
     });
   });
 
-  // getData feeds the range it resolved back into the widget settings, so the
-  // dates from the previously selected alert system arrive as `params` on the
-  // next call. Switching to a system whose data stops earlier would otherwise
-  // keep querying a window that system has no alerts for, and report zero.
-  describe('range carried over from another alert system', () => {
-    it('clamps an end date that runs past the GLAD dataset', async () => {
+  // A window that lands entirely past the end of an alert system's data — carried
+  // over from a fresher system, or dragged there on the time slider — is queried
+  // as selected. Substituting the system's own default window instead reported
+  // another period's count under the selected dates: every range after
+  // 2026-07-25 showed the same 329,403 GLAD-L alerts for Brazil.
+  describe('range past the end of the alert system data', () => {
+    it('keeps an end date that runs past the GLAD dataset', async () => {
       await widgetConfig.getData({
         ...baseParams,
         deforestationAlertsDataset: 'glad_l',
@@ -106,10 +107,10 @@ describe('integrated-deforestation-alerts widget', () => {
 
       const callParams = fetchIntegratedAlerts.mock.calls[0][0];
       expect(callParams.startDate).toBe('2026-07-20');
-      expect(callParams.endDate).toBe('2026-07-25');
+      expect(callParams.endDate).toBe('2026-08-29');
     });
 
-    it('falls back to the default range when it starts past the dataset', async () => {
+    it('keeps a window that starts past the dataset, empty as it is', async () => {
       await widgetConfig.getData({
         ...baseParams,
         deforestationAlertsDataset: 'glad_l',
@@ -118,11 +119,11 @@ describe('integrated-deforestation-alerts widget', () => {
       });
 
       const callParams = fetchIntegratedAlerts.mock.calls[0][0];
-      expect(callParams.startDate).toBe('2026-07-18');
-      expect(callParams.endDate).toBe('2026-07-25');
+      expect(callParams.startDate).toBe('2026-08-22');
+      expect(callParams.endDate).toBe('2026-08-29');
     });
 
-    it('reports the clamped range back to the widget settings', async () => {
+    it('reports the selected range back to the widget settings', async () => {
       const data = await widgetConfig.getData({
         ...baseParams,
         deforestationAlertsDataset: 'glad_l',
@@ -131,9 +132,10 @@ describe('integrated-deforestation-alerts widget', () => {
       });
 
       expect(data.settings).toEqual({
-        startDate: '2026-07-18',
-        endDate: '2026-07-25',
+        startDate: '2026-08-22',
+        endDate: '2026-08-29',
       });
+      // the datepicker still stops at the last day GLAD-L actually has
       expect(data.options.maxDate).toBe('2026-07-25');
     });
 

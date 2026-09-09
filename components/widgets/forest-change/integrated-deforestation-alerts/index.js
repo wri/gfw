@@ -48,29 +48,6 @@ const setStartDateByAlertSystem = (alertSystem, params, selectedDate) => {
   };
 };
 
-// getData feeds the range it resolved back into the widget settings, so the dates
-// of the previously selected alert system come back as `params` on the next call.
-// Alert systems stop at different dates, so a range carried over from a fresher
-// one would query a window the new one has no alerts for and report zero — while
-// the datepicker, bounded by `maxDate`, shows a different range entirely.
-const clampRangeToAlertSystem = (params, defaultStartDate, defaultEndDate) => {
-  const startDate = params?.startDate || defaultStartDate;
-  const endDate = params?.endDate || defaultEndDate;
-
-  if (!defaultEndDate || !moment(endDate).isAfter(defaultEndDate)) {
-    return { startDate, endDate };
-  }
-
-  return {
-    // The whole range sits past this dataset: clamping would leave start after
-    // end, so fall back to the range this alert system actually has data for.
-    startDate: moment(startDate).isSameOrBefore(defaultEndDate)
-      ? startDate
-      : defaultStartDate,
-    endDate: defaultEndDate,
-  };
-};
-
 export default {
   widget: 'integratedDeforestationAlerts',
   published: true,
@@ -219,11 +196,11 @@ export default {
     const alertsMeta = alertSystem === 'glad_l' ? GLAD : INTEGRATED;
     const defaultStartDate = alertsMeta?.defaultStartDate;
     const defaultEndDate = alertsMeta?.defaultEndDate;
-    const { startDate: selectedDate, endDate } = clampRangeToAlertSystem(
-      params,
-      defaultStartDate,
-      defaultEndDate
-    );
+    // A range the user picked is queried as picked, even when the alert system
+    // has no data for it: reporting another window's count under the selected
+    // dates would invent alerts for days that have none (PZB-1285 follow-up).
+    const selectedDate = params?.startDate || defaultStartDate;
+    const endDate = params?.endDate || defaultEndDate;
 
     const isAoi = params?.locationType === 'aoi';
     const status = params?.status || 'unsaved';
@@ -519,11 +496,9 @@ export default {
     const alertsMeta = alertSystem === 'glad_l' ? GLAD : INTEGRATED;
     const defaultStartDate = alertsMeta?.defaultStartDate;
     const defaultEndDate = alertsMeta?.defaultEndDate;
-    const { startDate: selectedDate, endDate } = clampRangeToAlertSystem(
-      params,
-      defaultStartDate,
-      defaultEndDate
-    );
+    // Same as getData: the selected range is queried as selected.
+    const selectedDate = params?.startDate || defaultStartDate;
+    const endDate = params?.endDate || defaultEndDate;
 
     // overriding start date (FLAG-593)
     const { startDate } = setStartDateByAlertSystem(
