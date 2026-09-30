@@ -111,6 +111,12 @@ class Header extends PureComponent {
   getCountrySelectorData() {
     const { locationNames, adm0s, handleSSRLocation } = this.props;
 
+    console.log('adm0s', adm0s);
+    console.log(
+      'handleSSRLocation country data ',
+      handleSSRLocation?.countryData?.countries
+    );
+
     return {
       value: locationNames?.adm0 || handleSSRLocation?.adm0,
       options:
@@ -317,7 +323,9 @@ class Header extends PureComponent {
                 noItemsFound={`No ${selectorMeta.typeName} found`}
                 noSelectedValue={`Select ${selectorMeta.typeName}`}
                 value={countrySelectorData.value}
-                options={countrySelectorData.options}
+                options={countrySelectorData.options.filter(
+                  (country) => country.value !== 'IND'
+                )}
                 onChange={(adm0) =>
                   handleLocationChange({ adm0: adm0 && adm0.value })}
                 searchable
