@@ -195,16 +195,23 @@ class MapComponent extends Component {
     if (!drawing && e.features && e.features.length) {
       const { features, lngLat } = e;
       const { setMapInteractions } = this.props;
-      setMapInteractions({
-        features: features.map((f) => ({
-          ...f,
-          geometry: f.geometry,
-          // _vectorTileFeature cannot be serialized by redux
-          // so we must remove them before dispatching the action
-          _vectorTileFeature: null,
-        })),
-        lngLat,
-      });
+      const filteredFeatures = features.filter(
+        (f) => f.properties?.gid_0 !== 'IND'
+      );
+      if (filteredFeatures.length) {
+        setMapInteractions({
+          features: filteredFeatures.map((f) => ({
+            ...f,
+            geometry: f.geometry,
+            // _vectorTileFeature cannot be serialized by redux
+            // so we must remove them before dispatching the action
+            _vectorTileFeature: null,
+          })),
+          lngLat,
+        });
+      } else {
+        clearMapInteractions();
+      }
     } else if (drawing) {
       this.setState({ drawClicks: this.state.drawClicks + 1 });
     } else {
