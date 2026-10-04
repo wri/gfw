@@ -128,7 +128,7 @@
     "luma.gl": "^7.3.2",
     "mapbox-gl": "^1.11.1",
     "marked-react": "^1.3.2",
-    "moment": "2.24.0",
+    "moment": "2.31.0",
     "newrelic": "^10.6.1",
     "next": "11",
     "next-http-proxy-middleware": "^1.0.10",
