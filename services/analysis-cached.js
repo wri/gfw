@@ -2587,23 +2587,29 @@ export const fetchFiresWithin = (params) => {
   }));
 };
 
+// The raw points table (map tiles, on-the-fly AOI analysis) and the precomputed
+// tables the dashboards query are fed by separate pipelines, and can be weeks
+// apart. `date` is the latest alert the precomputed tables hold, so the widgets
+// don't cut their charts at the raw table's date; `rawDate` is where the raw
+// table ends, for anything that queries it directly. Read the pinned version the
+// widgets query (`latest` can point at a stale or failed build), and from its
+// metadata: a MAX(alert__date) over the table takes 10s+.
 export const fetchVIIRSLatest = () =>
-  dataRequest
-    .get('dataset/nasa_viirs_fire_alerts/latest/')
-    .then(({ data }) => {
-      const {
-        metadata: {
-          content_date_range: { end_date },
-        },
-      } = data;
-
-      return {
-        date: end_date,
-      };
-    })
-    .catch(() => ({
-      date: moment().utc().subtract('weeks', 2).format('YYYY-MM-DD'),
-    }));
+  Promise.all([
+    dataRequest
+      .get('dataset/nasa_viirs_fire_alerts/latest/')
+      .then(({ data }) => data.metadata.content_date_range.end_date)
+      .catch(() => moment().utc().subtract(2, 'weeks').format('YYYY-MM-DD')),
+    dataRequest
+      .get(
+        `dataset/${DATASETS.VIIRS_ADM2_DAILY}/${DATASETS_VERSIONS.VIIRS_ADM2_DAILY}`
+      )
+      .then(({ data }) => data?.metadata?.content_date_range?.end_date)
+      .catch(() => null),
+  ]).then(([rawDate, tablesDate]) => ({
+    date: tablesDate || rawDate,
+    rawDate,
+  }));
 
 export const fetchMODISLatest = () =>
   dataRequest

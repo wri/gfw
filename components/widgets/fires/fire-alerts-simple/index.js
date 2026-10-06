@@ -1,3 +1,4 @@
+import moment from 'moment';
 import tropicalIsos from 'data/tropical-isos.json';
 
 import { handleGfwParamsMeta } from 'utils/gfw-meta';
@@ -23,6 +24,18 @@ import {
 import { shouldQueryPrecomputedTables } from 'components/widgets/utils/helpers';
 
 import getWidgetProps from './selectors';
+
+// The raw `nasa_viirs_fire_alerts` table, queried on the fly, is fed separately
+// from the precomputed tables and can end weeks earlier. Defaulting it to the
+// precomputed tables' last week would query a window it holds no alerts for.
+const getRawTableDefaults = (VIIRS) => {
+  const endDate = VIIRS?.rawEndDate || VIIRS?.defaultEndDate;
+
+  return {
+    startDate: moment(endDate).add(-7, 'days').format('YYYY-MM-DD'),
+    endDate,
+  };
+};
 
 export default {
   widget: 'firesAlertsSimple',
@@ -112,8 +125,11 @@ export default {
   },
   getData: async (params) => {
     const { VIIRS } = await handleGfwParamsMeta(params);
-    const defaultStartDate = VIIRS?.defaultStartDate;
-    const defaultEndDate = VIIRS?.defaultEndDate;
+    const isPrecomputed = shouldQueryPrecomputedTables(params);
+    const { startDate: defaultStartDate, endDate: defaultEndDate } =
+      isPrecomputed
+        ? { startDate: VIIRS?.defaultStartDate, endDate: VIIRS?.defaultEndDate }
+        : getRawTableDefaults(VIIRS);
     const startDate = params?.startDate || defaultStartDate;
     const endDate = params?.endDate || defaultEndDate;
     const {
@@ -121,7 +137,7 @@ export default {
     } = params;
     const geostoreId = hash || id;
 
-    if (shouldQueryPrecomputedTables(params)) {
+    if (isPrecomputed) {
       return fetchVIIRSAlertsSum({
         ...params,
         startDate,
@@ -185,9 +201,10 @@ export default {
   },
   getDataURL: async (params) => {
     const { VIIRS } = await handleGfwParamsMeta(params);
+    const rawTableDefaults = getRawTableDefaults(VIIRS);
     const {
-      startDate = VIIRS?.defaultStartDate,
-      endDate = VIIRS?.defaultEndDate,
+      startDate = rawTableDefaults.startDate,
+      endDate = rawTableDefaults.endDate,
     } = params;
     const {
       geostore: { id, hash },
