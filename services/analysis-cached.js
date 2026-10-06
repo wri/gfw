@@ -2594,22 +2594,38 @@ export const fetchFiresWithin = (params) => {
 // table ends, for anything that queries it directly. Read the pinned version the
 // widgets query (`latest` can point at a stale or failed build), and from its
 // metadata: a MAX(alert__date) over the table takes 10s+.
+// The raw table's content_date_range can track its publication date rather than
+// its last alert (see services/latest-alert-date.js), so bound it by the latest
+// alert the tile server reports: the same date the map layer ends on.
 export const fetchVIIRSLatest = () =>
   Promise.all([
     dataRequest
       .get('dataset/nasa_viirs_fire_alerts/latest/')
       .then(({ data }) => data.metadata.content_date_range.end_date)
-      .catch(() => moment().utc().subtract(2, 'weeks').format('YYYY-MM-DD')),
+      .catch(() => null),
+    dataRequest
+      .get(
+        'https://tiles.globalforestwatch.org/nasa_viirs_fire_alerts/latest/max_alert__date'
+      )
+      .then(({ data }) => data?.max_date)
+      .catch(() => null),
     dataRequest
       .get(
         `dataset/${DATASETS.VIIRS_ADM2_DAILY}/${DATASETS_VERSIONS.VIIRS_ADM2_DAILY}`
       )
       .then(({ data }) => data?.metadata?.content_date_range?.end_date)
       .catch(() => null),
-  ]).then(([rawDate, tablesDate]) => ({
-    date: tablesDate || rawDate,
-    rawDate,
-  }));
+  ]).then(([publishedDate, maxAlertDate, tablesDate]) => {
+    const rawDates = [publishedDate, maxAlertDate].filter(Boolean);
+    const rawDate = rawDates.length
+      ? moment.min(rawDates.map((d) => moment(d))).format('YYYY-MM-DD')
+      : moment().utc().subtract(2, 'weeks').format('YYYY-MM-DD');
+
+    return {
+      date: tablesDate || rawDate,
+      rawDate,
+    };
+  });
 
 export const fetchMODISLatest = () =>
   dataRequest

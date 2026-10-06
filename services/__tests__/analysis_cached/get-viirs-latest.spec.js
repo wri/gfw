@@ -20,10 +20,16 @@ const metadataResponse = (endDate) => ({
 });
 
 // The requests run concurrently, so route mocks by URL rather than call order.
-const mockRequests = ({ raw, tables }) =>
-  dataRequest.get.mockImplementation((url) =>
-    url.includes('nasa_viirs_fire_alerts') ? raw() : tables()
-  );
+const mockRequests = ({
+  raw,
+  maxAlert = () => Promise.resolve({ data: { max_date: '2026-08-17' } }),
+  tables,
+}) =>
+  dataRequest.get.mockImplementation((url) => {
+    if (url.includes('max_alert__date')) return maxAlert();
+    if (url.includes('nasa_viirs_fire_alerts')) return raw();
+    return tables();
+  });
 
 describe('fetchVIIRSLatest', () => {
   afterEach(() => {
@@ -80,5 +86,30 @@ describe('fetchVIIRSLatest', () => {
     const result = await fetchVIIRSLatest();
 
     expect(result.date).toBe('2026-08-17');
+  });
+
+  it('ends the raw date at the last alert when the raw table is republished past it', async () => {
+    // content_date_range can track the publication date of a stalled feed.
+    mockRequests({
+      raw: () => Promise.resolve(metadataResponse('2026-10-05')),
+      maxAlert: () => Promise.resolve({ data: { max_date: '2026-08-17' } }),
+      tables: () => Promise.resolve(metadataResponse('2026-10-05')),
+    });
+
+    const result = await fetchVIIRSLatest();
+
+    expect(result.rawDate).toBe('2026-08-17');
+  });
+
+  it('keeps the published raw date when the max alert date request fails', async () => {
+    mockRequests({
+      raw: () => Promise.resolve(metadataResponse('2026-08-17')),
+      maxAlert: () => Promise.reject(new Error('request failed')),
+      tables: () => Promise.resolve(metadataResponse('2026-10-05')),
+    });
+
+    const result = await fetchVIIRSLatest();
+
+    expect(result.rawDate).toBe('2026-08-17');
   });
 });
