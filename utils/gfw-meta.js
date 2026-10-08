@@ -39,6 +39,8 @@ export default async function getGfwMeta() {
           .add(-7, 'days')
           .format('YYYY-MM-DD'),
         defaultEndDate: viirsLatest?.date,
+        // where the raw points table ends; on-the-fly analysis queries it
+        rawEndDate: viirsLatest?.rawDate,
       },
     },
   };

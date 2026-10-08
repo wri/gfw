@@ -24,6 +24,7 @@ describe('utils/gfw-meta', () => {
     });
     fetchVIIRSLatest.mockResolvedValue({
       date: '2024-01-20',
+      rawDate: '2024-01-10',
     });
   });
 
@@ -42,6 +43,12 @@ describe('utils/gfw-meta', () => {
 
     expect(meta.datasets.VIIRS.defaultEndDate).toBe('2024-01-20');
     expect(meta.datasets.VIIRS.defaultStartDate).toBe('2024-01-13');
+  });
+
+  it('keeps the VIIRS raw table end date apart from the precomputed one', async () => {
+    const meta = await getGfwMeta();
+
+    expect(meta.datasets.VIIRS.rawEndDate).toBe('2024-01-10');
   });
 
   it('returns existing meta datasets from params when present', async () => {
