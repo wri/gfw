@@ -244,7 +244,8 @@ export const getStartEndIndexes = createSelector(
       };
     }
 
-    const end = currentData.length - 1;
+    const last = currentData.length - 1;
+    const end = endIndex === null ? last : Math.min(endIndex, last);
     const start = startIndex;
 
     return {
@@ -399,6 +400,7 @@ export const parseConfig = createSelector(
         ...(typeof endIndex === 'number' &&
           typeof startIndex === 'number' &&
           endIndex - startIndex < 10 && {
+            dataKey: 'date',
             tickCount: 5,
             interval: 0,
             tickFormatter: (t) => moment(t).format('MMM-DD'),
