@@ -42,5 +42,5 @@ export const getHorizonPromptUrl = (datasetSlug) => {
     utm_medium: 'map-datasets',
     utm_campaign: 'horizon-dataset-prompt',
   });
-  return `${HORIZON_APP_URL}?${params.toString()}`;
+  return `${HORIZON_APP_URL}?${params}`;
 };
