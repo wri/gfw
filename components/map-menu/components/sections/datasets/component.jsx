@@ -7,6 +7,7 @@ import LayerToggle from 'components/map/components/legend/components/layer-toggl
 import Pill from 'components/ui/pill';
 import Dropdown from 'components/ui/dropdown';
 import Basemaps from 'components/basemaps';
+import { getHorizonPromptUrl } from 'utils/horizon-prompt';
 
 import DatasetSection from './dataset-section';
 import CategoriesMenu from './categories-menu';
@@ -111,6 +112,7 @@ class Datasets extends PureComponent {
                           onInfoClick={setModalMetaSettings}
                           showSubtitle
                           category={datasetCategory}
+                          horizonUrl={getHorizonPromptUrl(d.id)}
                         />
                       ))
                     ) : (
@@ -131,6 +133,7 @@ class Datasets extends PureComponent {
                     onToggle={onToggleLayer}
                     onInfoClick={setModalMetaSettings}
                     category={datasetCategory}
+                    horizonUrl={getHorizonPromptUrl(d.id)}
                   />
                 ))}
           </Fragment>

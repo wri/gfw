@@ -46,6 +46,28 @@
     word-break: break-word;
   }
 
+  .horizon-link {
+    display: inline-flex;
+    align-items: center;
+    gap: rem(4px);
+    font-size: 12px;
+    line-height: 1.5;
+    letter-spacing: -0.3px;
+    color: $dark-green;
+    margin-top: rem(3px);
+    padding-left: rem(6px);
+
+    &:hover {
+      text-decoration: underline;
+    }
+
+    .horizon-link-icon {
+      width: rem(10px);
+      height: rem(10px);
+      fill: currentColor;
+    }
+  }
+
   .info-button {
     margin-left: rem(5px);
 
