@@ -11,6 +11,7 @@ import Tip from 'components/ui/tip';
 import infoIcon from 'assets/icons/info.svg?sprite';
 import helpIcon from 'assets/icons/help.svg?sprite';
 import warningIcon from 'assets/icons/warning-nofill.svg?sprite';
+import externalLinkIcon from 'assets/logos/union.svg?sprite';
 
 class LayerToggle extends PureComponent {
   componentDidMount() {
@@ -32,6 +33,7 @@ class LayerToggle extends PureComponent {
       tabIndex,
       showSubtitle,
       category,
+      horizonUrl,
     } = this.props;
     const {
       name,
@@ -57,7 +59,8 @@ class LayerToggle extends PureComponent {
           theme={!small ? 'toggle-large' : ''}
           value={active}
           onToggle={(value) =>
-            onToggle({ dataset, layer, iso, category }, value)}
+            onToggle({ dataset, layer, iso, category }, value)
+          }
           color={color}
         />
         <div className="content">
@@ -109,7 +112,8 @@ class LayerToggle extends PureComponent {
                       category: 'Open modal',
                       action: 'Hover modal button',
                       label: `${layer}: ${metadata || description}`,
-                    })}
+                    })
+                  }
                 >
                   <Button
                     id={`metadata-${layer}`}
@@ -134,6 +138,24 @@ class LayerToggle extends PureComponent {
               {`${citation}`}
             </div>
           )}
+          {horizonUrl && (
+            <a
+              className="horizon-link"
+              href={horizonUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              onClick={() =>
+                trackEvent({
+                  category: 'Map data',
+                  action: 'Open dataset in Horizon',
+                  label: dataset,
+                })
+              }
+            >
+              Explore with AI in Horizon
+              <Icon icon={externalLinkIcon} className="horizon-link-icon" />
+            </a>
+          )}
         </div>
       </div>
     );
@@ -149,6 +171,7 @@ LayerToggle.propTypes = {
   small: PropTypes.bool,
   tabIndex: PropTypes.number,
   category: PropTypes.string,
+  horizonUrl: PropTypes.string,
 };
 
 export default LayerToggle;
