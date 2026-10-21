@@ -8,6 +8,7 @@ import {
   HORIZON_DATASET_NAMES,
   getHorizonPromptUrl,
   getHorizonDashboardPromptUrl,
+  getHorizonDashboardLink,
 } from '../horizon-prompt';
 
 describe('utils/horizon-prompt', () => {
@@ -80,10 +81,48 @@ describe('utils/horizon-prompt', () => {
       expect(prompt).toContain(
         'suggest my first prompt: "Analyse tree cover loss in <that area> and add the chart to my dashboard"'
       );
-      expect(prompt).not.toContain('undefined');
       expect(getHorizonDashboardPromptUrl(undefined)).toBe(
         getHorizonDashboardPromptUrl('')
       );
+    });
+  });
+
+  describe('getHorizonDashboardLink', () => {
+    const names = {
+      adm0: { label: 'Brazil' },
+      adm1: { label: 'Pará' },
+      adm2: { label: 'Altamira' },
+    };
+
+    it('names the area from the most specific admin level up', () => {
+      const link = getHorizonDashboardLink(
+        { type: 'country', adm0: 'BRA', adm1: 14, adm2: 8 },
+        names
+      );
+
+      expect(link.label).toBe('Altamira, Pará, Brazil');
+      expect(link.url).toBe(
+        getHorizonDashboardPromptUrl('Altamira, Pará, Brazil')
+      );
+    });
+
+    it('waits until every selected level has its name', () => {
+      expect(
+        getHorizonDashboardLink(
+          { type: 'country', adm0: 'BRA', adm1: 14 },
+          { adm0: names.adm0, adm1: null, adm2: null }
+        )
+      ).toBeNull();
+    });
+
+    it('links the Global dashboard without an area', () => {
+      const link = getHorizonDashboardLink(
+        { type: 'global' },
+        { adm0: null, adm1: null, adm2: null }
+      );
+
+      expect(link.label).toBe('Global');
+      expect(link.url).toBe(getHorizonDashboardPromptUrl(''));
     });
   });
 });

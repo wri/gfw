@@ -58,16 +58,17 @@ export const getHorizonPromptUrl = (datasetSlug) => {
 // example prompts are fixed because each was checked on staging to add its
 // widget; free ones promised satellite imagery, which Horizon cannot show for
 // areas over 50,000 km², and notes making claims no analysis had checked.
-const getStarterDashboardSteps = (areaName) =>
-  `create a dashboard for it and add one short text note to the dashboard, without figures, that welcomes me and explains how to add analyses, map layers and notes, using these example prompts word for word: "Analyse tree cover loss in ${areaName} and add the chart to my dashboard", "Add the tree cover loss layer to my dashboard" and "Add a note to my dashboard summarising the chart". In your reply, say in two or three short sentences that the dashboard is ready and what the note explains, then suggest my first prompt: "Analyse tree cover loss in ${areaName} and add the chart to my dashboard".`;
-
 // A Horizon dashboard covers one area and Horizon has no world-level area, so
 // the Global dashboard's prompt asks for one before building.
 export const getHorizonDashboardPrompt = (areaName) => {
-  const steps = getStarterDashboardSteps(areaName || '<that area>');
-  return areaName
-    ? `This is a user tutorial: Create a dashboard for ${areaName} straight away, then show me how to build it up. Select ${areaName} on the map, ${steps}`
-    : `This is a user tutorial: Create a dashboard for me straight away, then show me how to build it up. First ask me in one line which country or region it should cover, suggesting one, e.g. Brazil. Once I answer, select that area on the map, ${steps}`;
+  const forWhom = areaName || 'me';
+  const promptArea = areaName || '<that area>';
+  const firstPrompt = `"Analyse tree cover loss in ${promptArea} and add the chart to my dashboard"`;
+  const selectArea = areaName
+    ? `Select ${areaName} on the map`
+    : 'First ask me in one line which country or region it should cover, suggesting one, e.g. Brazil. Once I answer, select that area on the map';
+
+  return `This is a user tutorial: Create a dashboard for ${forWhom} straight away, then show me how to build it up. ${selectArea}, create a dashboard for it and add one short text note to the dashboard, without figures, that welcomes me and explains how to add analyses, map layers and notes, using these example prompts word for word: ${firstPrompt}, "Add the tree cover loss layer to my dashboard" and "Add a note to my dashboard summarising the chart". In your reply, say in two or three short sentences that the dashboard is ready and what the note explains, then suggest my first prompt: ${firstPrompt}.`;
 };
 
 /**
@@ -80,3 +81,21 @@ export const getHorizonDashboardPromptUrl = (areaName) =>
     medium: 'dashboards-header',
     campaign: 'horizon-dashboard-prompt',
   });
+
+/**
+ * The dashboards header's Horizon link, or null until the name of every admin
+ * level in the location has loaded: names resolve after the location does, and
+ * linking earlier would send Horizon a broader area than the dashboard shows.
+ */
+export const getHorizonDashboardLink = (location, locationNames) => {
+  const names = ['adm2', 'adm1', 'adm0']
+    .filter((adm) => location[adm])
+    .map((adm) => locationNames[adm]?.label);
+  if (names.some((name) => !name)) return null;
+
+  const areaName = names.join(', ');
+  return {
+    url: getHorizonDashboardPromptUrl(areaName),
+    label: areaName || 'Global',
+  };
+};

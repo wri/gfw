@@ -6,7 +6,7 @@ import Router from 'next/router';
 import isEmpty from 'lodash/isEmpty';
 
 import { trackEvent } from 'utils/analytics';
-import { getHorizonDashboardPromptUrl } from 'utils/horizon-prompt';
+import { getHorizonDashboardLink } from 'utils/horizon-prompt';
 
 import Dropdown from 'components/ui/dropdown';
 import Loader from 'components/ui/loader';
@@ -169,20 +169,6 @@ class Header extends PureComponent {
     };
   }
 
-  getHorizonLink(location) {
-    const { locationNames } = this.props;
-    const adms = ['adm2', 'adm1', 'adm0'].filter((adm) => location?.[adm]);
-    // Names resolve after the location does; linking before then would send
-    // Horizon a broader area than the dashboard shows.
-    if (adms.some((adm) => !locationNames?.[adm]?.label)) return null;
-
-    const areaName = adms.map((adm) => locationNames[adm].label).join(', ');
-    return {
-      url: getHorizonDashboardPromptUrl(areaName),
-      label: areaName || 'Global',
-    };
-  }
-
   render() {
     const {
       className,
@@ -239,7 +225,7 @@ class Header extends PureComponent {
       !loading &&
       !this.state.navigating &&
       isCountryDashboard &&
-      this.getHorizonLink(location);
+      getHorizonDashboardLink(location, locationNames);
 
     return (
       <div className={cx('c-dashboards-header', className)}>
