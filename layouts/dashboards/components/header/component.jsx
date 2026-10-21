@@ -2,6 +2,7 @@ import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
 import Link from 'next/link';
+import Router from 'next/router';
 import isEmpty from 'lodash/isEmpty';
 
 import { trackEvent } from 'utils/analytics';
@@ -22,6 +23,8 @@ import saveUserIcon from 'assets/icons/save-user.svg?sprite';
 import subscribedIcon from 'assets/icons/subscribed.svg?sprite';
 import arrowIcon from 'assets/icons/arrow-down.svg?sprite';
 import externalLinkIcon from 'assets/logos/union.svg?sprite';
+
+const getPath = (url) => url.split(/[?#]/)[0].replace(/\/$/, '');
 
 class Header extends PureComponent {
   static propTypes = {
@@ -47,6 +50,31 @@ class Header extends PureComponent {
     activeArea: PropTypes.object,
     firstArea: PropTypes.object,
   };
+
+  state = { navigating: false };
+
+  componentDidMount() {
+    Router.events.on('routeChangeStart', this.handleRouteChangeStart);
+    Router.events.on('routeChangeComplete', this.handleRouteChangeEnd);
+    Router.events.on('routeChangeError', this.handleRouteChangeEnd);
+  }
+
+  componentWillUnmount() {
+    Router.events.off('routeChangeStart', this.handleRouteChangeStart);
+    Router.events.off('routeChangeComplete', this.handleRouteChangeEnd);
+    Router.events.off('routeChangeError', this.handleRouteChangeEnd);
+  }
+
+  // The new location only reaches the store once its page has loaded, so
+  // until then the Horizon link would still name the area being left.
+  // Query-only changes (tabs, widget settings) keep the area.
+  handleRouteChangeStart = (url) => {
+    if (getPath(url) !== getPath(Router.asPath)) {
+      this.setState({ navigating: true });
+    }
+  };
+
+  handleRouteChangeEnd = () => this.setState({ navigating: false });
 
   renderAreaActions() {
     const {
@@ -207,7 +235,10 @@ class Header extends PureComponent {
     const regionData = this.getAdm1SelectorData();
     const subRegionData = this.getAdm2SelectorData();
     const horizonLink =
-      !loading && isCountryDashboard && this.getHorizonLink(location);
+      !loading &&
+      !this.state.navigating &&
+      isCountryDashboard &&
+      this.getHorizonLink(location);
 
     return (
       <div className={cx('c-dashboards-header', className)}>
