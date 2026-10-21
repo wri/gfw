@@ -206,6 +206,22 @@
     max-width: rem(200px);
   }
 
+  .horizon-btn {
+    gap: rem(6px);
+    margin-bottom: rem(20px);
+    // The uppercase label is wider than a phone column, so let it wrap.
+    height: auto;
+    min-height: rem(40px);
+    padding: rem(8px) rem(15px);
+
+    .horizon-btn-icon {
+      flex-shrink: 0;
+      width: rem(12px);
+      height: rem(12px);
+      fill: $white;
+    }
+  }
+
   #button-download-data {
     color: #fff;
     background-color: #97be32;

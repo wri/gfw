@@ -5,6 +5,7 @@ import Link from 'next/link';
 import isEmpty from 'lodash/isEmpty';
 
 import { trackEvent } from 'utils/analytics';
+import { getHorizonDashboardPromptUrl } from 'utils/horizon-prompt';
 
 import Dropdown from 'components/ui/dropdown';
 import Loader from 'components/ui/loader';
@@ -20,6 +21,7 @@ import downloadIcon from 'assets/icons/download.svg?sprite';
 import saveUserIcon from 'assets/icons/save-user.svg?sprite';
 import subscribedIcon from 'assets/icons/subscribed.svg?sprite';
 import arrowIcon from 'assets/icons/arrow-down.svg?sprite';
+import externalLinkIcon from 'assets/logos/union.svg?sprite';
 
 class Header extends PureComponent {
   static propTypes = {
@@ -138,6 +140,20 @@ class Header extends PureComponent {
     };
   }
 
+  getHorizonLink(location) {
+    const { locationNames } = this.props;
+    const adms = ['adm2', 'adm1', 'adm0'].filter((adm) => location?.[adm]);
+    // Names resolve after the location does; linking before then would send
+    // Horizon a broader area than the dashboard shows.
+    if (adms.some((adm) => !locationNames?.[adm]?.label)) return null;
+
+    const areaName = adms.map((adm) => locationNames[adm].label).join(', ');
+    return {
+      url: getHorizonDashboardPromptUrl(areaName),
+      label: areaName || 'Global',
+    };
+  }
+
   render() {
     const {
       className,
@@ -190,6 +206,8 @@ class Header extends PureComponent {
     const countrySelectorData = this.getCountrySelectorData();
     const regionData = this.getAdm1SelectorData();
     const subRegionData = this.getAdm2SelectorData();
+    const horizonLink =
+      !loading && isCountryDashboard && this.getHorizonLink(location);
 
     return (
       <div className={cx('c-dashboards-header', className)}>
@@ -279,7 +297,8 @@ class Header extends PureComponent {
                           action:
                             'User changes between global and areas dashboard',
                           label: 'changes to global',
-                        })}
+                        })
+                      }
                     >
                       <Icon icon={arrowIcon} className="breadcrumb-icon" />
                       Go to Global dashboard
@@ -300,7 +319,8 @@ class Header extends PureComponent {
                           action:
                             'User changes between global and areas dashboard',
                           label: 'changes to areas',
-                        })}
+                        })
+                      }
                     >
                       <Icon icon={arrowIcon} className="breadcrumb-icon" />
                       Go to Areas dashboard
@@ -319,7 +339,8 @@ class Header extends PureComponent {
                 value={countrySelectorData.value}
                 options={countrySelectorData.options}
                 onChange={(adm0) =>
-                  handleLocationChange({ adm0: adm0 && adm0.value })}
+                  handleLocationChange({ adm0: adm0 && adm0.value })
+                }
                 searchable
                 disabled={loading}
                 tooltip={{
@@ -345,7 +366,8 @@ class Header extends PureComponent {
                       handleLocationChange({
                         adm0: location.adm0,
                         adm1: adm1 && adm1.value,
-                      })}
+                      })
+                    }
                     searchable
                     disabled={loading}
                     tooltip={{
@@ -373,7 +395,8 @@ class Header extends PureComponent {
                         adm0: location.adm0,
                         adm1: location.adm1,
                         adm2: adm2 && adm2.value,
-                      })}
+                      })
+                    }
                     searchable
                     disabled={loading}
                     tooltip={{
@@ -420,6 +443,26 @@ class Header extends PureComponent {
                     extLink={forestAtlasLink.url}
                   >
                     EXPLORE FOREST ATLAS
+                  </Button>
+                )}
+                {horizonLink && (
+                  <Button
+                    id="button-horizon-dashboard"
+                    className="horizon-btn"
+                    extLink={horizonLink.url}
+                    onClick={() =>
+                      trackEvent({
+                        category: 'Dashboards page',
+                        action: 'Open area in Horizon',
+                        label: horizonLink.label,
+                      })
+                    }
+                  >
+                    Build a dashboard with AI in Horizon
+                    <Icon
+                      icon={externalLinkIcon}
+                      className="horizon-btn-icon"
+                    />
                   </Button>
                 )}
               </div>
