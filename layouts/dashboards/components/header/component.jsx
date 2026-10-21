@@ -22,7 +22,8 @@ import downloadIcon from 'assets/icons/download.svg?sprite';
 import saveUserIcon from 'assets/icons/save-user.svg?sprite';
 import subscribedIcon from 'assets/icons/subscribed.svg?sprite';
 import arrowIcon from 'assets/icons/arrow-down.svg?sprite';
-import externalLinkIcon from 'assets/logos/union.svg?sprite';
+import sparkleIcon from 'assets/icons/sparkle.svg?sprite';
+import arrowUpRightIcon from 'assets/icons/arrow-up-right.svg?sprite';
 
 const getPath = (url) => url.split(/[?#]/)[0].replace(/\/$/, '');
 
@@ -489,10 +490,11 @@ class Header extends PureComponent {
                       })
                     }
                   >
+                    <Icon icon={sparkleIcon} className="horizon-btn-icon" />
                     Build a dashboard with AI in Horizon
                     <Icon
-                      icon={externalLinkIcon}
-                      className="horizon-btn-icon"
+                      icon={arrowUpRightIcon}
+                      className="horizon-btn-icon horizon-btn-arrow"
                     />
                   </Button>
                 )}

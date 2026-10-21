@@ -207,18 +207,31 @@
   }
 
   .horizon-btn {
-    gap: rem(6px);
+    gap: rem(8px);
     margin-bottom: rem(20px);
+    padding: rem(8px) rem(18px) rem(8px) rem(14px);
     // The uppercase label is wider than a phone column, so let it wrap.
     height: auto;
     min-height: rem(40px);
-    padding: rem(8px) rem(15px);
+    background-color: transparent;
+    border: 1.5px solid $green-gfw;
+    font-size: rem(14px);
+    letter-spacing: 0.3px;
+
+    &:hover {
+      background-color: rgba($green-gfw, 0.16);
+    }
 
     .horizon-btn-icon {
       flex-shrink: 0;
+      width: rem(16px);
+      height: rem(16px);
+      color: $green-gfw;
+    }
+
+    .horizon-btn-arrow {
       width: rem(12px);
       height: rem(12px);
-      fill: $white;
     }
   }
 
