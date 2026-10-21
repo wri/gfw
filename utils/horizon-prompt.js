@@ -52,12 +52,23 @@ export const getHorizonPromptUrl = (datasetSlug) => {
   });
 };
 
+// The person gets a dashboard for their area within seconds, so the prompt
+// skips analysis: the note and the reply teach the next steps instead. The
+// note stays free of figures because no analysis has run to back them. The
+// example prompts are fixed because each was checked on staging to add its
+// widget; free ones promised satellite imagery, which Horizon cannot show for
+// areas over 50,000 km², and notes making claims no analysis had checked.
+const getStarterDashboardSteps = (areaName) =>
+  `create a dashboard for it and add one short text note to the dashboard, without figures, that welcomes me and explains how to add analyses, map layers and notes, using these example prompts word for word: "Analyse tree cover loss in ${areaName} and add the chart to my dashboard", "Add the tree cover loss layer to my dashboard" and "Add a note to my dashboard summarising the chart". In your reply, say in two or three short sentences that the dashboard is ready and what the note explains, then suggest my first prompt: "Analyse tree cover loss in ${areaName} and add the chart to my dashboard".`;
+
 // A Horizon dashboard covers one area and Horizon has no world-level area, so
-// the Global dashboard's prompt asks the person to choose a country instead.
-export const getHorizonDashboardPrompt = (areaName) =>
-  areaName
-    ? `This is a user tutorial: Select ${areaName} on the map and guide me through creating my first dashboard for it. Explain what a dashboard is and what can go on one, then suggest a first analysis to add, spelling out for the user how to form and send the prompt.`
-    : 'This is a user tutorial: Guide me through creating my first dashboard. Explain what a dashboard is and what can go on one, then ask me which area it should cover, suggesting a country, e.g. Brazil, and spelling out for the user how to form and send the prompt.';
+// the Global dashboard's prompt asks for one before building.
+export const getHorizonDashboardPrompt = (areaName) => {
+  const steps = getStarterDashboardSteps(areaName || '<that area>');
+  return areaName
+    ? `This is a user tutorial: Create a dashboard for ${areaName} straight away, then show me how to build it up. Select ${areaName} on the map, ${steps}`
+    : `This is a user tutorial: Create a dashboard for me straight away, then show me how to build it up. First ask me in one line which country or region it should cover, suggesting one, e.g. Brazil. Once I answer, select that area on the map, ${steps}`;
+};
 
 /**
  * The Horizon link for a GFW dashboard. areaName lists the admin levels from

@@ -65,7 +65,7 @@ describe('utils/horizon-prompt', () => {
       );
 
       expect(url.searchParams.get('prompt')).toBe(
-        'This is a user tutorial: Select Altamira, Pará, Brazil on the map and guide me through creating my first dashboard for it. Explain what a dashboard is and what can go on one, then suggest a first analysis to add, spelling out for the user how to form and send the prompt.'
+        'This is a user tutorial: Create a dashboard for Altamira, Pará, Brazil straight away, then show me how to build it up. Select Altamira, Pará, Brazil on the map, create a dashboard for it and add one short text note to the dashboard, without figures, that welcomes me and explains how to add analyses, map layers and notes, using these example prompts word for word: "Analyse tree cover loss in Altamira, Pará, Brazil and add the chart to my dashboard", "Add the tree cover loss layer to my dashboard" and "Add a note to my dashboard summarising the chart". In your reply, say in two or three short sentences that the dashboard is ready and what the note explains, then suggest my first prompt: "Analyse tree cover loss in Altamira, Pará, Brazil and add the chart to my dashboard".'
       );
     });
 
@@ -74,8 +74,13 @@ describe('utils/horizon-prompt', () => {
         'prompt'
       );
 
-      expect(prompt).toContain('ask me which area it should cover');
-      expect(prompt).not.toContain('Select');
+      expect(prompt).toContain(
+        'First ask me in one line which country or region it should cover'
+      );
+      expect(prompt).toContain(
+        'suggest my first prompt: "Analyse tree cover loss in <that area> and add the chart to my dashboard"'
+      );
+      expect(prompt).not.toContain('undefined');
       expect(getHorizonDashboardPromptUrl(undefined)).toBe(
         getHorizonDashboardPromptUrl('')
       );
