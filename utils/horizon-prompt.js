@@ -28,6 +28,16 @@ export const HORIZON_DATASET_NAMES = {
   [CARBON_FLUX_DATASET]: 'Forest greenhouse gas net flux',
 };
 
+const getHorizonUrl = (prompt, { medium, campaign }) => {
+  const params = new URLSearchParams({
+    prompt,
+    utm_source: 'gfw',
+    utm_medium: medium,
+    utm_campaign: campaign,
+  });
+  return `${HORIZON_APP_URL}?${params}`;
+};
+
 export const getHorizonPrompt = (horizonDatasetName) =>
   `This is a user tutorial: Add ${horizonDatasetName} to the map and ask me what I'd like to analyse. Explain the analysis parameters available and then suggest analysing a country, e.g. Brazil, spelling out for the user how to form and send the prompt.`;
 
@@ -36,11 +46,26 @@ export const getHorizonPromptUrl = (datasetSlug) => {
   const horizonDatasetName = HORIZON_DATASET_NAMES[datasetSlug];
   if (!horizonDatasetName) return null;
 
-  const params = new URLSearchParams({
-    prompt: getHorizonPrompt(horizonDatasetName),
-    utm_source: 'gfw',
-    utm_medium: 'map-datasets',
-    utm_campaign: 'horizon-dataset-prompt',
+  return getHorizonUrl(getHorizonPrompt(horizonDatasetName), {
+    medium: 'map-datasets',
+    campaign: 'horizon-dataset-prompt',
   });
-  return `${HORIZON_APP_URL}?${params}`;
 };
+
+// A Horizon dashboard covers one area and Horizon has no world-level area, so
+// the Global dashboard's prompt asks the person to choose a country instead.
+export const getHorizonDashboardPrompt = (areaName) =>
+  areaName
+    ? `This is a user tutorial: Select ${areaName} on the map and guide me through creating my first dashboard for it. Explain what a dashboard is and what can go on one, then suggest a first analysis to add, spelling out for the user how to form and send the prompt.`
+    : 'This is a user tutorial: Guide me through creating my first dashboard. Explain what a dashboard is and what can go on one, then ask me which area it should cover, suggesting a country, e.g. Brazil, and spelling out for the user how to form and send the prompt.';
+
+/**
+ * The Horizon link for a GFW dashboard. areaName lists the admin levels from
+ * the most specific up ("Altamira, Pará, Brazil") so the agent picks the right
+ * area; leave it empty for the Global dashboard.
+ */
+export const getHorizonDashboardPromptUrl = (areaName) =>
+  getHorizonUrl(getHorizonDashboardPrompt(areaName), {
+    medium: 'dashboards-header',
+    campaign: 'horizon-dashboard-prompt',
+  });
