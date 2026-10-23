@@ -206,6 +206,37 @@
     max-width: rem(200px);
   }
 
+  // Horizon's own secondary (lime) button, so the link reads as leaving GFW
+  // for Horizon rather than as another GFW action.
+  .horizon-btn {
+    gap: rem(8px);
+    margin-bottom: rem(20px);
+    padding: rem(8px) rem(20px);
+    // The label is wider than a phone column, so let it wrap.
+    height: auto;
+    min-height: rem(44px);
+    background-color: #cad470; // Horizon secondary-400
+    color: #323625; // Horizon secondary-900
+    font-size: rem(16px);
+    text-transform: none;
+
+    &:hover {
+      background-color: #9ca25a; // Horizon secondary-500
+    }
+
+    .horizon-btn-icon {
+      flex-shrink: 0;
+      width: rem(18px);
+      height: rem(18px);
+      color: inherit;
+    }
+
+    .horizon-btn-arrow {
+      width: rem(14px);
+      height: rem(14px);
+    }
+  }
+
   #button-download-data {
     color: #fff;
     background-color: #97be32;
