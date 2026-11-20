@@ -2,9 +2,11 @@ import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
 import Link from 'next/link';
+import Router from 'next/router';
 import isEmpty from 'lodash/isEmpty';
 
 import { trackEvent } from 'utils/analytics';
+import { getHorizonDashboardLink } from 'utils/horizon-prompt';
 
 import Dropdown from 'components/ui/dropdown';
 import Loader from 'components/ui/loader';
@@ -20,6 +22,10 @@ import downloadIcon from 'assets/icons/download.svg?sprite';
 import saveUserIcon from 'assets/icons/save-user.svg?sprite';
 import subscribedIcon from 'assets/icons/subscribed.svg?sprite';
 import arrowIcon from 'assets/icons/arrow-down.svg?sprite';
+import sparkleIcon from 'assets/icons/sparkle.svg?sprite';
+import arrowUpRightIcon from 'assets/icons/arrow-up-right.svg?sprite';
+
+const getPath = (url) => url.split(/[?#]/)[0].replace(/\/$/, '');
 
 class Header extends PureComponent {
   static propTypes = {
@@ -45,6 +51,31 @@ class Header extends PureComponent {
     activeArea: PropTypes.object,
     firstArea: PropTypes.object,
   };
+
+  state = { navigating: false };
+
+  componentDidMount() {
+    Router.events.on('routeChangeStart', this.handleRouteChangeStart);
+    Router.events.on('routeChangeComplete', this.handleRouteChangeEnd);
+    Router.events.on('routeChangeError', this.handleRouteChangeEnd);
+  }
+
+  componentWillUnmount() {
+    Router.events.off('routeChangeStart', this.handleRouteChangeStart);
+    Router.events.off('routeChangeComplete', this.handleRouteChangeEnd);
+    Router.events.off('routeChangeError', this.handleRouteChangeEnd);
+  }
+
+  // The new location only reaches the store once its page has loaded, so
+  // until then the Horizon link would still name the area being left.
+  // Query-only changes (tabs, widget settings) keep the area.
+  handleRouteChangeStart = (url) => {
+    if (getPath(url) !== getPath(Router.asPath)) {
+      this.setState({ navigating: true });
+    }
+  };
+
+  handleRouteChangeEnd = () => this.setState({ navigating: false });
 
   renderAreaActions() {
     const {
@@ -190,6 +221,11 @@ class Header extends PureComponent {
     const countrySelectorData = this.getCountrySelectorData();
     const regionData = this.getAdm1SelectorData();
     const subRegionData = this.getAdm2SelectorData();
+    const horizonLink =
+      !loading &&
+      !this.state.navigating &&
+      isCountryDashboard &&
+      getHorizonDashboardLink(location, locationNames);
 
     return (
       <div className={cx('c-dashboards-header', className)}>
@@ -279,7 +315,8 @@ class Header extends PureComponent {
                           action:
                             'User changes between global and areas dashboard',
                           label: 'changes to global',
-                        })}
+                        })
+                      }
                     >
                       <Icon icon={arrowIcon} className="breadcrumb-icon" />
                       Go to Global dashboard
@@ -300,7 +337,8 @@ class Header extends PureComponent {
                           action:
                             'User changes between global and areas dashboard',
                           label: 'changes to areas',
-                        })}
+                        })
+                      }
                     >
                       <Icon icon={arrowIcon} className="breadcrumb-icon" />
                       Go to Areas dashboard
@@ -319,7 +357,8 @@ class Header extends PureComponent {
                 value={countrySelectorData.value}
                 options={countrySelectorData.options}
                 onChange={(adm0) =>
-                  handleLocationChange({ adm0: adm0 && adm0.value })}
+                  handleLocationChange({ adm0: adm0 && adm0.value })
+                }
                 searchable
                 disabled={loading}
                 tooltip={{
@@ -345,7 +384,8 @@ class Header extends PureComponent {
                       handleLocationChange({
                         adm0: location.adm0,
                         adm1: adm1 && adm1.value,
-                      })}
+                      })
+                    }
                     searchable
                     disabled={loading}
                     tooltip={{
@@ -373,7 +413,8 @@ class Header extends PureComponent {
                         adm0: location.adm0,
                         adm1: location.adm1,
                         adm2: adm2 && adm2.value,
-                      })}
+                      })
+                    }
                     searchable
                     disabled={loading}
                     tooltip={{
@@ -420,6 +461,27 @@ class Header extends PureComponent {
                     extLink={forestAtlasLink.url}
                   >
                     EXPLORE FOREST ATLAS
+                  </Button>
+                )}
+                {horizonLink && (
+                  <Button
+                    id="button-horizon-dashboard"
+                    className="horizon-btn"
+                    extLink={horizonLink.url}
+                    onClick={() =>
+                      trackEvent({
+                        category: 'Dashboards page',
+                        action: 'Open area in Horizon',
+                        label: horizonLink.label,
+                      })
+                    }
+                  >
+                    <Icon icon={sparkleIcon} className="horizon-btn-icon" />
+                    Build a dashboard with AI in Horizon
+                    <Icon
+                      icon={arrowUpRightIcon}
+                      className="horizon-btn-icon horizon-btn-arrow"
+                    />
                   </Button>
                 )}
               </div>
