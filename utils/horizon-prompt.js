@@ -38,8 +38,12 @@ const getHorizonUrl = (prompt, { medium, campaign }) => {
   return `${HORIZON_APP_URL}?${params}`;
 };
 
+// Horizon shows the prompt as the person's own first message, so it is written
+// in their voice. The reply stays short and asks only for a place to analyse,
+// so their first prompt can be just a place name. "No numbers yet" keeps the
+// agent from quoting figures from memory before it has run an analysis.
 export const getHorizonPrompt = (horizonDatasetName) =>
-  `This is a user tutorial: Add ${horizonDatasetName} to the map and ask me what I'd like to analyse. Explain the analysis parameters available and then suggest analysing a country, e.g. Brazil, spelling out for the user how to form and send the prompt.`;
+  `Walk me through a quick tutorial on analysing ${horizonDatasetName} in Global Nature Watch Horizon. Add it to the map, tell me in a sentence or two what it shows (no numbers yet), then ask me which place to analyse: a country, province, district or protected area. When I name one, run the analysis there and show me the chart.`;
 
 /** The Horizon link for a GFW dataset slug, or null when Horizon lacks it. */
 export const getHorizonPromptUrl = (datasetSlug) => {
