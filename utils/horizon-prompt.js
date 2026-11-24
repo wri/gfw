@@ -28,19 +28,78 @@ export const HORIZON_DATASET_NAMES = {
   [CARBON_FLUX_DATASET]: 'Forest greenhouse gas net flux',
 };
 
+const getHorizonUrl = (prompt, { medium, campaign }) => {
+  const params = new URLSearchParams({
+    prompt,
+    utm_source: 'gfw',
+    utm_medium: medium,
+    utm_campaign: campaign,
+  });
+  return `${HORIZON_APP_URL}?${params}`;
+};
+
+// Horizon shows the prompt as the person's own first message, so it is written
+// in their voice. The reply stays short and asks only for a place to analyse,
+// so their first prompt can be just a place name. "No numbers yet" keeps the
+// agent from quoting figures from memory before it has run an analysis.
 export const getHorizonPrompt = (horizonDatasetName) =>
-  `This is a user tutorial: Add ${horizonDatasetName} to the map and ask me what I'd like to analyse. Explain the analysis parameters available and then suggest analysing a country, e.g. Brazil, spelling out for the user how to form and send the prompt.`;
+  `Walk me through a quick tutorial on analysing ${horizonDatasetName} in Global Nature Watch Horizon. Add it to the map, tell me in a sentence or two what it shows (no numbers yet), then ask me which place to analyse: a country, province, district or protected area. When I name one, run the analysis there and show me the chart.`;
 
 /** The Horizon link for a GFW dataset slug, or null when Horizon lacks it. */
 export const getHorizonPromptUrl = (datasetSlug) => {
   const horizonDatasetName = HORIZON_DATASET_NAMES[datasetSlug];
   if (!horizonDatasetName) return null;
 
-  const params = new URLSearchParams({
-    prompt: getHorizonPrompt(horizonDatasetName),
-    utm_source: 'gfw',
-    utm_medium: 'map-datasets',
-    utm_campaign: 'horizon-dataset-prompt',
+  return getHorizonUrl(getHorizonPrompt(horizonDatasetName), {
+    medium: 'map-datasets',
+    campaign: 'horizon-dataset-prompt',
   });
-  return `${HORIZON_APP_URL}?${params}`;
+};
+
+// The person gets a dashboard for their area within seconds, so the prompt
+// skips analysis: the note and the reply teach the next steps instead. The
+// note stays free of figures because no analysis has run to back them. The
+// example prompts are fixed because each was checked on staging to add its
+// widget; free ones promised satellite imagery, which Horizon cannot show for
+// areas over 50,000 km², and notes making claims no analysis had checked.
+// A Horizon dashboard covers one area and Horizon has no world-level area, so
+// the Global dashboard's prompt asks for one before building.
+export const getHorizonDashboardPrompt = (areaName) => {
+  const forArea = areaName ? ` for ${areaName}` : '';
+  const promptArea = areaName || '<that area>';
+  const firstPrompt = `"Analyse tree cover loss in ${promptArea} and add the chart to my dashboard"`;
+  const selectArea = areaName
+    ? `Select ${areaName} on the map`
+    : 'First ask me in one line which country or region it should cover, suggesting one, e.g. Brazil. Once I answer, select that area on the map';
+
+  return `Walk me through a quick tutorial on building a dashboard in Global Nature Watch Horizon${forArea}. Create it straight away, then show me how to build it up. ${selectArea}, create a dashboard for it and add one short text note to the dashboard, without figures, that welcomes me and explains how to add analyses, map layers and notes, using these example prompts word for word: ${firstPrompt}, "Add the tree cover loss layer to my dashboard" and "Add a note to my dashboard summarising the chart". In your reply, say in two or three short sentences that the dashboard is ready and what the note explains, then suggest my first prompt: ${firstPrompt}.`;
+};
+
+/**
+ * The Horizon link for a GFW dashboard. areaName lists the admin levels from
+ * the most specific up ("Altamira, Pará, Brazil") so the agent picks the right
+ * area; leave it empty for the Global dashboard.
+ */
+export const getHorizonDashboardPromptUrl = (areaName) =>
+  getHorizonUrl(getHorizonDashboardPrompt(areaName), {
+    medium: 'dashboards-header',
+    campaign: 'horizon-dashboard-prompt',
+  });
+
+/**
+ * The dashboards header's Horizon link, or null until the name of every admin
+ * level in the location has loaded: names resolve after the location does, and
+ * linking earlier would send Horizon a broader area than the dashboard shows.
+ */
+export const getHorizonDashboardLink = (location, locationNames) => {
+  const names = ['adm2', 'adm1', 'adm0']
+    .filter((adm) => location[adm])
+    .map((adm) => locationNames[adm]?.label);
+  if (names.some((name) => !name)) return null;
+
+  const areaName = names.join(', ');
+  return {
+    url: getHorizonDashboardPromptUrl(areaName),
+    label: areaName || 'Global',
+  };
 };
