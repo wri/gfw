@@ -24,7 +24,9 @@ describe('utils/horizon-prompt', () => {
       const url = new URL(getHorizonPromptUrl(INTEGRATED_DEFORESTATION_ALERTS));
       const prompt = url.searchParams.get('prompt');
 
-      expect(prompt).toContain('Add Integrated alerts to the map');
+      expect(prompt).toContain(
+        'tutorial on analysing Integrated alerts in Global Nature Watch Horizon'
+      );
       expect(prompt).not.toContain(INTEGRATED_DEFORESTATION_ALERTS);
     });
 
@@ -32,7 +34,7 @@ describe('utils/horizon-prompt', () => {
       const url = new URL(getHorizonPromptUrl(FOREST_LOSS_DATASET));
 
       expect(url.searchParams.get('prompt')).toBe(
-        "This is a user tutorial: Add Tree cover loss to the map and ask me what I'd like to analyse. Explain the analysis parameters available and then suggest analysing a country, e.g. Brazil, spelling out for the user how to form and send the prompt."
+        'Walk me through a quick tutorial on analysing Tree cover loss in Global Nature Watch Horizon. Add it to the map, tell me in a sentence or two what it shows (no numbers yet), then ask me which place to analyse: a country, province, district or protected area. When I name one, run the analysis there and show me the chart.'
       );
     });
 
@@ -66,7 +68,7 @@ describe('utils/horizon-prompt', () => {
       );
 
       expect(url.searchParams.get('prompt')).toBe(
-        'This is a user tutorial: Create a dashboard for Altamira, Pará, Brazil straight away, then show me how to build it up. Select Altamira, Pará, Brazil on the map, create a dashboard for it and add one short text note to the dashboard, without figures, that welcomes me and explains how to add analyses, map layers and notes, using these example prompts word for word: "Analyse tree cover loss in Altamira, Pará, Brazil and add the chart to my dashboard", "Add the tree cover loss layer to my dashboard" and "Add a note to my dashboard summarising the chart". In your reply, say in two or three short sentences that the dashboard is ready and what the note explains, then suggest my first prompt: "Analyse tree cover loss in Altamira, Pará, Brazil and add the chart to my dashboard".'
+        'Walk me through a quick tutorial on building a dashboard in Global Nature Watch Horizon for Altamira, Pará, Brazil. Create it straight away, then show me how to build it up. Select Altamira, Pará, Brazil on the map, create a dashboard for it and add one short text note to the dashboard, without figures, that welcomes me and explains how to add analyses, map layers and notes, using these example prompts word for word: "Analyse tree cover loss in Altamira, Pará, Brazil and add the chart to my dashboard", "Add the tree cover loss layer to my dashboard" and "Add a note to my dashboard summarising the chart". In your reply, say in two or three short sentences that the dashboard is ready and what the note explains, then suggest my first prompt: "Analyse tree cover loss in Altamira, Pará, Brazil and add the chart to my dashboard".'
       );
     });
 
