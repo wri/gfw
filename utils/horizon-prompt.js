@@ -65,14 +65,14 @@ export const getHorizonPromptUrl = (datasetSlug) => {
 // A Horizon dashboard covers one area and Horizon has no world-level area, so
 // the Global dashboard's prompt asks for one before building.
 export const getHorizonDashboardPrompt = (areaName) => {
-  const forWhom = areaName || 'me';
+  const forArea = areaName ? ` for ${areaName}` : '';
   const promptArea = areaName || '<that area>';
   const firstPrompt = `"Analyse tree cover loss in ${promptArea} and add the chart to my dashboard"`;
   const selectArea = areaName
     ? `Select ${areaName} on the map`
     : 'First ask me in one line which country or region it should cover, suggesting one, e.g. Brazil. Once I answer, select that area on the map';
 
-  return `This is a user tutorial: Create a dashboard for ${forWhom} straight away, then show me how to build it up. ${selectArea}, create a dashboard for it and add one short text note to the dashboard, without figures, that welcomes me and explains how to add analyses, map layers and notes, using these example prompts word for word: ${firstPrompt}, "Add the tree cover loss layer to my dashboard" and "Add a note to my dashboard summarising the chart". In your reply, say in two or three short sentences that the dashboard is ready and what the note explains, then suggest my first prompt: ${firstPrompt}.`;
+  return `Walk me through a quick tutorial on building a dashboard in Global Nature Watch Horizon${forArea}. Create it straight away, then show me how to build it up. ${selectArea}, create a dashboard for it and add one short text note to the dashboard, without figures, that welcomes me and explains how to add analyses, map layers and notes, using these example prompts word for word: ${firstPrompt}, "Add the tree cover loss layer to my dashboard" and "Add a note to my dashboard summarising the chart". In your reply, say in two or three short sentences that the dashboard is ready and what the note explains, then suggest my first prompt: ${firstPrompt}.`;
 };
 
 /**
