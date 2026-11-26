@@ -461,6 +461,7 @@ export const getActiveLayers = createSelector(
     const filteredLayers = layers.filter((l) => !l.confirmedOnly);
     if (!geostore || !geostore.id) return filteredLayers;
     const { type, adm0 } = location || {};
+    if (adm0 === 'IND') return filteredLayers;
     const isAoI = type === 'aoi' && adm0;
 
     const geojson = {

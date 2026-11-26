@@ -202,7 +202,7 @@ class MapGeostore extends Component {
           >
             {(map) => (
               <LayerManager map={map} plugin={PluginMapboxGl}>
-                {geostore && (
+                {geostore && this.props.location?.adm0 !== 'IND' && (
                   <Layer
                     id={geostore.id}
                     name="Geojson"
